@@ -1,0 +1,31 @@
+{{< govuk-template}}
+
+{{$head}}{{> partials-head}}{{/head}}
+
+{{$pageTitle}}
+    {{$title}}{{/title}} &ndash; GOV.UK
+{{/pageTitle}}
+
+{{$headerClass}}with-proposition{{/headerClass}}
+{{$insideHeader}}{{/insideHeader}}
+
+{{$main}}
+  <main id="content" class="main" role="main">
+    <div class="phase-banner">
+      <p>
+        <strong class="phase-tag">BETA</strong>
+        <span>This is a new service – your <a href="mailto:update_this_email_address">feedback</a> will help us to improve it.</span>
+      </p>
+    </div>
+    <div class="grid-row">
+      {{> partials-maincontent-left}}
+    </div>
+    {{> partials-analytics}}
+  </main>
+{{/main}}
+
+{{$footerSupportLinks}}
+  {{> partials-footer-links}}
+{{/footerSupportLinks}}
+
+{{/ govuk-template}}
