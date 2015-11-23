@@ -1,0 +1,17 @@
+{
+  "name": "lev-web",
+  "description": "Life Event Verification Web Interface",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon ."
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-partial-templates": "^0.1.0",
+    "hmpo-govuk-template": "0.0.3",
+    "hogan-express-strict": "^0.5.4",
+    "mustache": "^2.2.0"
+  }
+}
