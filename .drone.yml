@@ -1,4 +1,3 @@
-
 publish:
   docker:
     registry: quay.io
@@ -13,6 +12,10 @@ publish:
       - "$$BUILD_NUMBER"
     when:
       branch: master
-
     branch: master
 
+build:
+  image: node:4-onbuild
+  commands:
+    - npm install
+    - npm test
