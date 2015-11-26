@@ -1,0 +1,18 @@
+
+publish:
+  docker:
+    registry: quay.io
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    username: $$QUAY_USER
+    password: $$QUAY_PASSWORD
+    email: $$QUAY_EMAIL
+    repo: quay.io/ukhomeofficedigital/levweb
+    tag:
+      - latest
+      - "$$BUILD_NUMBER"
+    when:
+      branch: master
+
+    branch: master
+
