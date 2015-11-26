@@ -1,0 +1,38 @@
+.form-group.validation-error {
+
+  label span.error-message {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+  }
+
+  label span.visuallyhidden {
+    position: inherit;
+    overflow: inherit;
+    clip: inherit;
+    height: inherit;
+    width: inherit;
+    margin: inherit;
+    padding: inherit;
+    border: inherit;
+
+    display: block;
+    font-family: "nta", Arial, sans-serif;
+    font-size: 19px;
+    line-height: 1.31579;
+    font-weight: 700;
+    text-transform: none;
+    color: #af1324;
+  }
+}
+
+.form-date .form-group.validation-error,
+.panel-indent .form-group.validation-error {
+  border-left: none;
+  padding-left: 0;
+}
