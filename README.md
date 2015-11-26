@@ -1,5 +1,6 @@
 # LEV Front End
 
+[![Build Status](https://drone.notprod.homeoffice.gov.uk/api/badges/UKHomeOffice/lev-web/status.svg)](https://drone.notprod.homeoffice.gov.uk/UKHomeOffice/lev-web)
 
 ## Getting Started
 
