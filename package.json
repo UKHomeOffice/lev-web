@@ -4,14 +4,17 @@
   "version": "0.0.1",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon ."
+    "dev": "NODE_ENV=development nodemon .",
+    "test": "NODE_ENV=test mocha"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "chai": "^3.4.1",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
     "hmpo-govuk-template": "0.0.3",
     "hogan-express-strict": "^0.5.4",
+    "mocha": "^2.3.4",
     "mustache": "^2.2.0"
   }
 }
