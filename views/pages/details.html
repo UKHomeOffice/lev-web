@@ -1,11 +1,96 @@
 {{<layout}}
 
-{{$title}}Details{{/title}}
+{{$title}}Birth record check{{/title}}
 
-{{$header}}{{/header}}
+{{$journeyHeader}}
+  Birth record check
+{{/journeyHeader}}
+
+{{$propositionHeader}}
+  {{> partials-navigation}}
+{{/propositionHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      <strong>Record of</strong>{{#fullname}}{{fullname}}{{/fullname}} {{#dob}}{{dob}}{{/dob}}
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
 
 {{$content}}
-  <p>Hello</p>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>System Number</th>
+        <td>{{records.system-number}}</td>
+      </tr>
+      <tr>
+        <th>Surname</th>
+        <td>{{records.surname}}</td>
+      </tr>
+      <tr>
+        <th>Forename(s)</th>
+        <td>{{records.forenames}}</td>
+      </tr>
+      <tr>
+        <th>Date of birth</th>
+        <td>{{records.dob}}</td>
+      </tr>
+      <tr>
+        <th>Sex</th>
+        <td>{{records.gender}}</td>
+      </tr>
+      <tr>
+        <th>Place of birth</th>
+        <td>{{records.birth-place}}</td>
+      </tr>
+      <tr class="no-separation">
+        <th>Father</th>
+        <td>{{records.fathers-name}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Fathers </span>Occupation</th>
+        <td>{{records.fathers-work}}</td>
+      </tr>
+      <tr class="no-separation">
+        <th>Mother</th>
+        <td>{{records.mothers-name}}</td>
+      </tr>
+      <tr class="no-separation">
+        <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Maiden name</th>
+        <td>{{records.mothers-maiden}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Occupation</th>
+        <td>{{records.mothers-work}}</td>
+      </tr>
+      <tr>
+        <th>Birth jointly registered</th>
+        <td>{{records.birth-jointly-registered}}</td>
+      </tr>
+      <tr class="no-separation">
+        <th>Registration district</th>
+        <td>{{records.reg-district}}</td>
+      </tr>
+      <tr class="no-separation">
+        <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
+        <td>{{records.reg-sub-district}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Administrative area</th>
+        <td>{{records.reg-admin-area}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="/" class="button">New search</a>
+
+  <div>
+    <a href="/edit/">Edit search</a>
+  </div>
+
 {{/content}}
 
 {{/layout}}
