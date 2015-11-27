@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon .",
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha",
+    "sass": "./node_modules/node-sass/bin/node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -13,10 +14,12 @@
     "express-partial-templates": "^0.1.0",
     "hmpo-govuk-template": "0.0.3",
     "hogan-express-strict": "^0.5.4",
-    "mustache": "^2.2.0"
+    "mustache": "^2.2.0",
+    "hmpo-frontend-toolkit": "^1.5.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "node-sass": "^3.4.2"
   }
 }

@@ -1,5 +1,5 @@
 {{#errorlist.length}}
-<div class="validation-summary" tabindex="-1">
+  <div class="validation-summary" tabindex="-1">
     {{$errorlist-title}}
 
       {{#errorLength.single}}
@@ -12,13 +12,13 @@
     {{/errorlist-title}}
 
     {{<partials-validation-list}}
-        {{$validation-list}}
-            {{#errorlist}}
-                {{#message}}
-                  <li><a href="#{{key}}-group">{{ message }}</a></li>
-                {{/message}}
-            {{/errorlist}}
-        {{/validation-list}}
+      {{$validation-list}}
+        {{#errorlist}}
+          {{#message}}
+            <li><a href="#{{key}}-group">{{ message }}</a></li>
+          {{/message}}
+        {{/errorlist}}
+      {{/validation-list}}
     {{/partials-validation-list}}
-</div>
+  </div>
 {{/errorlist.length}}
