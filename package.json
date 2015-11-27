@@ -4,8 +4,12 @@
   "version": "0.0.1",
   "main": "app.js",
   "scripts": {
+    "start": "node .",
+    "stop": "pkill levweb",
     "dev": "NODE_ENV=development nodemon .",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha ./test/unit",
+    "chimp": "chimp --mocha --path=./test/acceptance/ --browser=phantomjs",
+    "test:acceptance": "npm start & npm run chimp",
     "lint": "eslint .",
     "style": "jscs **/*.js --config=./.jscsrc.json",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
@@ -14,12 +18,14 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "chimp": "^0.20.2",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
+    "hmpo-frontend-toolkit": "^1.5.0",
     "hmpo-govuk-template": "0.0.3",
     "hogan-express-strict": "^0.5.4",
     "mustache": "^2.2.0",
-    "hmpo-frontend-toolkit": "^1.5.0"
+    "nodemon": "^1.8.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
