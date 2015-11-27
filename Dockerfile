@@ -1,9 +1,8 @@
 FROM node:4-onbuild
 
-RUN npm install express serve-favicon config morgan async node-minify \
-    handlebars lodash walk pm2
-
 VOLUME ["/usr/src/app"]
+
+RUN npm install
 
 EXPOSE 4000
 

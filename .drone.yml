@@ -19,3 +19,4 @@ build:
   commands:
     - npm install
     - npm test
+    - npm test:acceptance
