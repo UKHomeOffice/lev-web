@@ -8,7 +8,9 @@
     "test": "NODE_ENV=test mocha",
     "lint": "eslint .",
     "style": "jscs **/*.js --config=./.jscsrc.json",
-    "sass": "./node_modules/node-sass/bin/node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules"
+    "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
+    "create:public": "mkdir -p ./public/css",
+    "postinstall": "npm run create:public; npm run sass"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
