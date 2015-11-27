@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon .",
     "test": "NODE_ENV=test mocha",
+    "lint": "eslint .",
+    "style": "jscs **/*.js --config=./.jscsrc.json",
     "sass": "./node_modules/node-sass/bin/node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules"
   },
   "dependencies": {
@@ -20,6 +22,11 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "mocha": "^2.3.4",
-    "node-sass": "^3.4.2"
+    "node-sass": "^3.4.2",
+    "eslint": "^0.23.0",
+    "eslint-plugin-filenames": "^0.1.1",
+    "eslint-plugin-mocha": "^0.2.2",
+    "eslint-plugin-one-variable-per-var": "0.0.3",
+    "jscs": "^1.13.1"
   }
 }
