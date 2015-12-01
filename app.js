@@ -29,7 +29,7 @@ app.engine('html', require('hogan-express-strict'));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
+app.use(session({secret: config.session.secret, resave: true, saveUninitialized: true}));
 
 require('./routes')(app);
 
