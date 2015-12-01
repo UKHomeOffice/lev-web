@@ -13,7 +13,7 @@
 {{$header}}
   {{<partials-page-header}}
     {{$page-header}}
-      <strong>Record of</strong>{{#fullname}}{{fullname}}{{/fullname}} {{#dob}}{{dob}}{{/dob}}
+      Record of <span class="record">{{record.forenames}} {{record.surname}} {{record.dob}}</span>
     {{/page-header}}
   {{/partials-page-header}}
 {{/header}}
@@ -24,72 +24,68 @@
     <tbody>
       <tr>
         <th>System Number</th>
-        <td>{{records.system-number}}</td>
+        <td>{{record.system-number}}</td>
       </tr>
       <tr>
         <th>Surname</th>
-        <td>{{records.surname}}</td>
+        <td>{{record.surname}}</td>
       </tr>
       <tr>
         <th>Forename(s)</th>
-        <td>{{records.forenames}}</td>
+        <td>{{record.forenames}}</td>
       </tr>
       <tr>
         <th>Date of birth</th>
-        <td>{{records.dob}}</td>
+        <td>{{record.dob}}</td>
       </tr>
       <tr>
         <th>Sex</th>
-        <td>{{records.gender}}</td>
+        <td>{{record.gender}}</td>
       </tr>
       <tr>
         <th>Place of birth</th>
-        <td>{{records.birth-place}}</td>
+        <td>{{record.birth-place}}</td>
       </tr>
       <tr class="no-separation">
         <th>Father</th>
-        <td>{{records.fathers-name}}</td>
+        <td>{{record.father.name}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Fathers </span>Occupation</th>
-        <td>{{records.fathers-work}}</td>
+        <td>{{record.father.occupation}}</td>
       </tr>
       <tr class="no-separation">
         <th>Mother</th>
-        <td>{{records.mothers-name}}</td>
+        <td>{{record.mother.name}}</td>
       </tr>
       <tr class="no-separation">
         <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Maiden name</th>
-        <td>{{records.mothers-maiden}}</td>
+        <td>{{record.mother.nee}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Occupation</th>
-        <td>{{records.mothers-work}}</td>
+        <td>{{record.mother.occupation}}</td>
       </tr>
       <tr>
         <th>Birth jointly registered</th>
-        <td>{{records.birth-jointly-registered}}</td>
+        <td>{{record.registered.jointly}}</td>
       </tr>
       <tr class="no-separation">
         <th>Registration district</th>
-        <td>{{records.reg-district}}</td>
+        <td>{{record.registered.district}}</td>
       </tr>
       <tr class="no-separation">
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
-        <td>{{records.reg-sub-district}}</td>
+        <td>{{record.registered.sub-district}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Administrative area</th>
-        <td>{{records.reg-admin-area}}</td>
+        <td>{{record.registered.admin-area}}</td>
       </tr>
     </tbody>
   </table>
 
-  <a href="/" class="button">New search</a>
-
-  <div>
-    <a href="/edit/">Edit search</a>
-  </div>
+  {{>partials-buttons}}
 
 {{/content}}
 
