@@ -12,6 +12,9 @@ $path: "../img/";
 
 h1 {
   @include bold-24;
+  .query {
+    font-weight: normal;
+  }
 }
 
 .button {

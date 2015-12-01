@@ -13,13 +13,12 @@
 {{$header}}
   {{<partials-page-header}}
     {{$page-header}}
-      Record of <span class="record">{{record.forenames}} {{record.surname}} {{record.dob}}</span>
+      Record of <span class="query">{{record.forenames}} {{record.surname}} {{record.dob}}</span>
     {{/page-header}}
   {{/partials-page-header}}
 {{/header}}
 
 {{$content}}
-
   <table>
     <tbody>
       <tr>
@@ -86,7 +85,6 @@
   </table>
 
   {{>partials-buttons}}
-
 {{/content}}
 
 {{/layout}}
