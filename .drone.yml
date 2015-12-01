@@ -1,3 +1,14 @@
+build:
+  image: node:4-onbuild
+  commands:
+    - npm install
+    - npm test
+
+cache:
+  mount:
+    - node_modules
+
+
 publish:
   docker:
     registry: quay.io
@@ -13,9 +24,3 @@ publish:
     when:
       branch: master
     branch: master
-
-build:
-  image: node:4-onbuild
-  commands:
-    - npm install
-    - npm test
