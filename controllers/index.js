@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  query: require('./query'),
+  search: require('./search'),
   details: require('./details'),
-  list: require('./list')
+  results: require('./results')
 };

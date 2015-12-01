@@ -2,11 +2,12 @@
 
 var proxyquire = require('proxyquire');
 
-describe('controllers/query', function () {
+describe('controllers/search', function () {
   var Model = function () {};
-  Model.prototype.get = sinon.stub();
+  Model.prototype.read = sinon.stub();
+  Model.prototype.set = sinon.stub();
 
-  var queryController = proxyquire('../../../controllers/query', {
+  var searchController = proxyquire('../../../controllers/search', {
     '../models': Model
   });
 
@@ -18,18 +19,19 @@ describe('controllers/query', function () {
     };
 
     beforeEach(function () {
-      queryController.show(req, res);
+      searchController.show(req, res);
     });
 
-    it('renders the query page', function () {
-      res.render.should.have.been.calledWith('pages/query');
+    it('renders the search page', function () {
+      res.render.should.have.been.calledWith('pages/search');
     });
 
   });
 
-  describe('.get()', function () {
+  describe('.query()', function () {
 
     var req = {
+      session: {},
       body: {}
     };
     var res = {
@@ -38,16 +40,15 @@ describe('controllers/query', function () {
     };
     var promise;
 
-    describe('model returns a single record', function () {
+    describe('when the model returns a single record', function () {
 
       beforeEach(function () {
-        Model.prototype.get.returns(Promise.resolve({records: [1]}));
-        promise = queryController.get(req, res);
+        Model.prototype.read.returns(Promise.resolve({records: [1]}));
+        promise = searchController.query(req, res);
       });
 
       it('redirects to the details page ', function (done) {
         return promise.then(function (data) {
-          res.locals.should.have.property('records').and.equal(1);
           res.redirect.should.have.been.calledWith('/details');
           done();
         });
@@ -58,14 +59,13 @@ describe('controllers/query', function () {
     describe('model returns many records', function () {
 
       beforeEach(function () {
-        Model.prototype.get.returns(Promise.resolve({records: [1,2,3]}));
-        promise = queryController.get(req, res);
+        Model.prototype.read.returns(Promise.resolve({records: [1,2,3]}));
+        promise = searchController.query(req, res);
       });
 
-      it('redirects to the list page ', function (done) {
+      it('redirects to the results page ', function (done) {
         return promise.then(function () {
-          res.locals.should.have.property('records').and.deep.equal([1,2,3]);
-          res.redirect.should.have.been.calledWith('/list');
+          res.redirect.should.have.been.calledWith('/results');
           done();
         });
       });
@@ -76,8 +76,8 @@ describe('controllers/query', function () {
       var message = 'Error message';
 
       beforeEach(function () {
-        Model.prototype.get.returns(Promise.reject(message));
-        promise = queryController.get(req, res);
+        Model.prototype.read.returns(Promise.reject(message));
+        promise = searchController.query(req, res);
       });
 
       it('handles the error', function (done) {

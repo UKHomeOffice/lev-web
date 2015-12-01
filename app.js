@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -28,6 +29,7 @@ app.engine('html', require('hogan-express-strict'));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
 
 require('./routes')(app);
 

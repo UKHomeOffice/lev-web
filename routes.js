@@ -4,8 +4,9 @@ var controllers = require('./controllers');
 
 module.exports = function defineRoutes(app) {
   app
-    .get('/', controllers.query.show)
-    .post('/', controllers.query.get)
-    .get('/list', controllers.list)
-    .get('/details', controllers.details);
+    .get('/', controllers.search.show)
+    .post('/', controllers.search.query)
+    .get('/results', controllers.results)
+    .get('/details/:sysnum?', controllers.details);
 };
+

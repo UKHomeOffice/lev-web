@@ -1,0 +1,54 @@
+{{<layout}}
+
+{{$title}}Birth record check{{/title}}
+
+{{$journeyHeader}}
+  Birth record check
+{{/journeyHeader}}
+
+{{$propositionHeader}}
+  {{> partials-navigation}}
+{{/propositionHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      <span class="records-count">{{count}} records found for</span>
+      <span clas="query">
+        {{#query.forenames}}{{query.forenames}}{{/query.forenames}}
+        {{#query.surname}}{{query.surname}}{{/query.surname}}
+        {{#query.dob}}{{query.dob}}{{/query.dob}}
+      </span>
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$content}}
+
+  {{#records}}
+    <article>
+      <h2><a href="/details/{{system-number}}">{{forenames}} {{surname}}</a></h2>
+      <table>
+        <tbody>
+          <tr>
+            <th>Place of birth</th>
+            <td>{{birth-place}}</td>
+          </tr>
+          <tr>
+            <th>Father</th>
+            <td>{{father.name}}</td>
+          </tr>
+          <tr>
+            <th>Mother</th>
+            <td>{{mother.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  {{/records}}
+
+  {{>partials-buttons}}
+
+{{/content}}
+
+{{/layout}}
