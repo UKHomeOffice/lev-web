@@ -15,9 +15,13 @@
     {{$page-header}}
       <span class="records-count">{{count}} records found for</span>
       <span clas="query">
-        {{#query.forenames}}{{query.forenames}}{{/query.forenames}}
-        {{#query.surname}}{{query.surname}}{{/query.surname}}
-        {{#query.dob}}{{query.dob}}{{/query.dob}}
+        {{#query}}
+          {{system-number}}
+          {{forenames}}
+          {{surname}}
+          {{dob}}
+          {{nationality}}
+        {{/query}}
       </span>
     {{/page-header}}
   {{/partials-page-header}}
