@@ -1,3 +1,9 @@
-FROM node:4-onbuild
+FROM node:4.2
 
-CMD ["node", "app.js"]
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app
+RUN npm install
+
+CMD [ "npm", "start" ]
