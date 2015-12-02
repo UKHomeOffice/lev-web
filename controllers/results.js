@@ -1,6 +1,8 @@
 'use strict';
 
-var Model = require('../models')
+var Model = require('../models');
+var _ = require('underscore');
+var helpers = require('../lib/helpers');
 
 module.exports = function renderResults(req, res) {
   var model = new Model(req.session.model);
@@ -10,6 +12,7 @@ module.exports = function renderResults(req, res) {
   res.render('pages/results', {
     count: records && records.length,
     records: records,
-    query: query
+    query: query,
+    querystring: helpers.serialize(query)
   });
 };

@@ -14,7 +14,6 @@ describe('controllers/details', function () {
 
     var req;
     var res;
-    var records;
 
     beforeEach(function () {
       req = {session: {model: {}}};
@@ -22,8 +21,9 @@ describe('controllers/details', function () {
     });
 
     it('calls the Model with the session model attributes', function () {
-      records = [{foo: 'foo'}];
+      var records = [{foo: 'foo'}];
       Model.prototype.get.withArgs('records').returns(records);
+
       detailsController(req, res);
 
       Model.should.have.been.calledWithExactly(req.session.model);
@@ -32,36 +32,32 @@ describe('controllers/details', function () {
     describe('renders the details page', function () {
 
       it('with the record', function () {
-        records = [{foo: 'foo'}];
+        var records = [{foo: 'foo'}];
+        var query = {bar: 'baz'}
         Model.prototype.get.withArgs('records').returns(records);
+        Model.prototype.get.withArgs('query').returns(query);
+
         detailsController(req, res);
 
         res.render.should.have.been.calledWithExactly('pages/details', {
-          record: records[0]
+          record: records[0],
+          querystring: 'bar=baz'
         });
       });
 
       it('with a record containing the system-number', function () {
-        records = [{'system-number': '00000'}, {'system-number': '12345'}];
+        var records = [{'system-number': '00000'}, {'system-number': '12345'}];
+        var query = {bar: 'baz'}
         req.params = {sysnum: '12345'};
         Model.prototype.get.withArgs('records').returns(records);
         Model.prototype.toJSON.returns({records: records});
+        Model.prototype.get.withArgs('query').returns(query);
 
         detailsController(req, res);
 
         res.render.should.have.been.calledWithExactly('pages/details', {
-          record: records[1]
-        });
-      });
-
-      it('with a message when no records exist', function () {
-        records = [];
-        req.params = {};
-        Model.prototype.get.withArgs('records').returns(records);
-        detailsController(req, res);
-
-        res.render.should.have.been.calledWithExactly('pages/details', {
-          message: 'No records available'
+          record: records[1],
+          querystring: 'bar=baz'
         });
       });
 
