@@ -10,10 +10,12 @@ module.exports = [{
   gender: 'Male',
   father: {
     name: 'Robert Adam Smith',
+    'birth-place': 'Dudley',
     occupation: 'Welder'
   },
   mother: {
     name: 'Anne Catherine Smith',
+    'birth-place': 'Dudley',
     occupation: 'Doctor',
     neenee: 'Bob'
   },
@@ -33,10 +35,12 @@ module.exports = [{
   gender: 'Male',
   father: {
     name: 'Paul Davis',
+    'birth-place': 'Croydon',
     occupation: 'Self-employed'
   },
   mother: {
     name: 'Janet Smith',
+    'birth-place': 'Manchester',
     occupation: 'Engineer',
     nee: 'Alice'
   },
@@ -56,10 +60,12 @@ module.exports = [{
   gender: 'Male',
   father: {
     name: 'Alan Monk',
+    'birth-place': 'Essex',
     occupation: 'Shoe shine'
   },
   mother: {
     name: 'Pauline Smith',
+    'birth-place': 'Bermondsey',
     occupation: 'Cleaner',
     nee: 'Tony'
   },
@@ -79,10 +85,12 @@ module.exports = [{
   gender: 'Female',
   father: {
     name: 'Kanye Marshall',
+    'birth-place': 'Sheffield',
     occupation: 'Biologist'
   },
   mother: {
     name: 'Louise Campell Marshall',
+    'birth-place': 'Cardiff',
     occupation: 'Hat maker',
     nee: 'Campbell'
   },
