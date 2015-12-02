@@ -2,24 +2,19 @@
 
 var _ = require('underscore');
 var Model = require('../models');
+var helpers = require('../lib/helpers');
 
 module.exports = function renderDetails(req, res) {
   var model = new Model(req.session.model);
-  var records = model.get('records');
-  var record = records[0];
-  var locals;
+  var record = {record: model.get('records')[0]};
 
   if (req.params && req.params.sysnum) {
-    record = _.findWhere(model.toJSON().records, {
+    record.record = _.findWhere(model.toJSON().records, {
       'system-number': req.params.sysnum
     });
   }
 
-  if (record) {
-    locals = {record: record};
-  } else {
-    locals = {message: 'No records available'};
-  }
-
-  res.render('pages/details', locals);
+  res.render('pages/details', _.extend({
+    querystring: helpers.serialize(model.get('query'))
+  }, record));
 };

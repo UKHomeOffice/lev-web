@@ -9,4 +9,3 @@ module.exports = function defineRoutes(app) {
     .get('/results', controllers.results)
     .get('/details/:sysnum?', controllers.details);
 };
-

@@ -1,11 +1,12 @@
 'use strict';
 
 var Model = require('../models');
+var _ = require('underscore');
 
 module.exports = {
 
   show: function show(req, res) {
-    res.render('pages/search');
+    res.render('pages/search', {values: req.query});
   },
 
   query: function query(req, res) {

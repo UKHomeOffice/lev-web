@@ -12,29 +12,23 @@ describe('controllers/results', function () {
 
   describe('when called', function () {
 
-    var req = {};
-    var res = {
-      render: sinon.spy()
-    };
-    var records;
-    var query;
+    var req = req = {session: {model: {}}};
+    var res = {render: sinon.spy()};
+    var records = [{foo: 'foo'}, {bar: 'baz'}];
+    var query = {name: 'foo'};
 
     beforeEach(function () {
-      req = {session: {model: {}}};
-      res = {render: sinon.spy()};
-      records = [{foo: 'foo'}, {bar: 'baz'}];
       Model.prototype.get.withArgs('records').returns(records);
-      query = {name: 'foo'};
       Model.prototype.get.withArgs('query').returns(query);
       resultsController(req, res);
     });
 
     it('renders the results page', function () {
-
       res.render.should.have.been.calledWithExactly('pages/results', {
         count: 2,
         records: records,
-        query: query
+        query: query,
+        querystring: "name=foo",
       });
     });
 
