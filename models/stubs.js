@@ -23,7 +23,8 @@ module.exports = [{
     'jointly': 'Yes',
     'district': 'Oxfordshire',
     'sub-district': 'Cherwell',
-    'admin-area': 'Oxfordshire'
+    'admin-area': 'Oxfordshire',
+    'date': '12/12/1983'
   }
 }, {
   'system-number': '98765',
@@ -48,7 +49,8 @@ module.exports = [{
     'jointly': 'No',
     'district': 'Norfolk',
     'sub-district': 'Norwich',
-    'admin-area': 'Norfolk'
+    'admin-area': 'Norfolk',
+    'date': '25/09/1976'
   }
 }, {
   'system-number': '00001',
@@ -73,8 +75,9 @@ module.exports = [{
     'jointly': 'Yes',
     'district': 'Kent',
     'sub-district': 'Medway',
-    'admin-area': 'Kent'
-  },
+    'admin-area': 'Kent',
+    'date': '15/02/1980'
+  }
 }, {
   'system-number': '99999',
   forenames: 'Sarah',
@@ -98,6 +101,7 @@ module.exports = [{
     'jointly': 'Yes',
     'district': 'Sussex',
     'sub-district': 'Brighton & Hove',
-    'admin-area': 'Sussex'
+    'admin-area': 'Sussex',
+    'date': '04/02/1979'
   }
 }];
