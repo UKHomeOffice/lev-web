@@ -89,6 +89,10 @@ table {
         border-bottom: none;
       }
     }
+    th, td {
+      font-size: 20px;
+      padding: 20px 0 16px 0;
+    }
     th {
       width: 45%;
     }
@@ -109,7 +113,9 @@ article {
     border-top: none;
     th, td {
       border-bottom: none;
-      font-size: 20px;
+    }
+    th {
+      width: 25%;
     }
   }
 }
