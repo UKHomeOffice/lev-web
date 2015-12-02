@@ -13,6 +13,7 @@ module.exports = {
     var model = new Model(req.body);
 
     return model.read().then(function resolved(result) {
+
       var records = result.records;
       model.set('records', records);
       model.set('query', req.body);
@@ -21,8 +22,7 @@ module.exports = {
 
       if (records.length === 1) {
         res.redirect('/details');
-      }
-      if (records.length > 1) {
+      } else {
         res.redirect('/results');
       }
 

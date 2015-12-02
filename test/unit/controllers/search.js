@@ -63,7 +63,23 @@ describe('controllers/search', function () {
         promise = searchController.query(req, res);
       });
 
-      it('redirects to the results page ', function (done) {
+      it('redirects to the results page', function (done) {
+        return promise.then(function () {
+          res.redirect.should.have.been.calledWith('/results');
+          done();
+        });
+      });
+
+    });
+
+    describe('model returns no records', function () {
+
+      beforeEach(function () {
+        Model.prototype.read.returns(Promise.resolve({records: []}));
+        promise = searchController.query(req, res);
+      });
+
+      it('redirects to the results page', function (done) {
         return promise.then(function () {
           res.redirect.should.have.been.calledWith('/results');
           done();
