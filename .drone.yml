@@ -1,26 +1,18 @@
-build:
-  image: node:4-onbuild
-  commands:
-    - npm install
-    - npm test
-
-cache:
-  mount:
-    - node_modules
-
-
 publish:
   docker:
-    registry: quay.io
     environment:
       - DOCKER_LAUNCH_DEBUG=true
+    registry: quay.io
     username: $$QUAY_USER
     password: $$QUAY_PASSWORD
     email: $$QUAY_EMAIL
     repo: quay.io/ukhomeofficedigital/levweb
+    storage_driver: overlay
     tag:
       - latest
       - "$$BUILD_NUMBER"
-    when:
-      branch: master
-    branch: master
+
+build:
+  image: node:4.2.2
+  commands:
+    - sh test/do_test.sh
