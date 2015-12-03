@@ -6,7 +6,7 @@ publish:
     username: $$QUAY_USER
     password: $$QUAY_PASSWORD
     email: $$QUAY_EMAIL
-    repo: quay.io/ukhomeofficedigital/levweb
+    repo: quay.io/ukhomeofficedigital/lev-web
     storage_driver: overlay
     tag:
       - latest
