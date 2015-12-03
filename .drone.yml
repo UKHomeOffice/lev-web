@@ -11,8 +11,3 @@ publish:
     tag:
       - latest
       - "$$BUILD_NUMBER"
-
-build:
-  image: node:4.2.2
-  commands:
-    - sh test/do_test.sh
