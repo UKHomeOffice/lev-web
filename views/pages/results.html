@@ -13,7 +13,8 @@
 {{$header}}
   {{<partials-page-header}}
     {{$page-header}}
-      <span class="records-count">{{count}} records found for</span>
+      {{#count}}<span class="records-count">{{count}} records found for</span>{{/count}}
+      {{^count}}<span class="records-count">No records found for</span>{{/count}}
       <span class="query">
         {{#query}}
           {{system-number}}
