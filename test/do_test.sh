@@ -2,7 +2,7 @@
 
 set -e
 
-npm install && npm test;
+npm install --quiet && npm test;
 
 if [ $? -eq 0 ]
 then
