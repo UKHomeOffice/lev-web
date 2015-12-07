@@ -13,7 +13,7 @@ describe('Query Page', function() {
     });
 
     it('has the correct form elements', function () {
-      browser.getText('#content form > div:nth-child(1) > label').should.equal('System number');
+      browser.getText('#content form > div:nth-child(1) > label').should.equal('System number from birth certificate');
       browser.waitForVisible('input[name="system-number"]', 5000);
 
       browser.getText('#content form > div:nth-child(2) > label').should.equal('Surname');
