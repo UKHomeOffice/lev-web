@@ -1,9 +1,13 @@
 FROM node:4.2
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN useradd -d /app app
+RUN mkdir -p /app
+RUN chown app:app /app
 
-COPY . /usr/src/app
-RUN npm install
+USER app
+WORKDIR /app
+
+COPY . /app
+RUN npm install --quiet
 
 CMD [ "npm", "start" ]
