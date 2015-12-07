@@ -43,14 +43,14 @@ describe('Results page @watch', function() {
       });
 
       it('displays a subset of each record in a list', function () {
-        browser.getText('#records li:nth-child(1) tr')
+        browser.getText('#records li:first-child tr')
           .should.deep.equal([
             'Place of birth Oxford',
             'Father Robert Adam Smith',
             'Mother Anne Catherine Smith'
           ]);
 
-        browser.getText('#records li:nth-child(2) tr')
+        browser.getText('#records li:last-child tr')
           .should.deep.equal([
             'Place of birth Tonbridge',
             'Father Alan Monk',
