@@ -9,14 +9,16 @@ var Model = module.exports = function Model(attr) {
 
 Model.prototype.read = function getRecords() {
   return new Promise(function returnRecords(resolve, reject) {
-    var records = _.where(stubs, this.toJSON());
-    if (records) {
-      resolve({
-        records: records
-      });
-    } else {
-      reject(new Error('No records available'));
-    }
+    var query = this.toJSON();
+    var lowerCaseQuery = JSON.stringify(query).toLowerCase();
+    var queryKeys = _.keys(query);
+    var records = _.filter(stubs, function(e) {
+      return JSON.stringify(_.pick(e, queryKeys)).toLowerCase() == lowerCaseQuery;
+    });
+
+    resolve({
+      records: records
+    });
   }.bind(this));
 };
 
