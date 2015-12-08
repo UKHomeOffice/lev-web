@@ -26,9 +26,8 @@ module.exports = {
         res.redirect('/results');
       }
 
-    }, function rejected(err) {
-      console.log('Error: ' + err.message);
-      res.redirect('/results');
+    }).catch(function rejected(err) {
+      throw new Error(err);
     });
   }
 };
