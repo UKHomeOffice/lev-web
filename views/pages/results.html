@@ -34,27 +34,33 @@
 
 {{$content}}
 
-  {{#records}}
-    <article>
-      <h2><a href="/details/{{system-number}}">{{forenames}} {{surname}}</a></h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Place of birth</th>
-            <td>{{birth-place}}</td>
-          </tr>
-          <tr>
-            <th>Father</th>
-            <td>{{father.name}}</td>
-          </tr>
-          <tr>
-            <th>Mother</th>
-            <td>{{mother.name}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </article>
-  {{/records}}
+  <ul id="records">
+    {{#records}}
+    <li>
+      <article>
+        <a href="/details/{{system-number}}">
+          <h2>{{forenames}} {{surname}}</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Place of birth</th>
+                <td>{{birth-place}}</td>
+              </tr>
+              <tr>
+                <th>Father</th>
+                <td>{{father.name}}</td>
+              </tr>
+              <tr>
+                <th>Mother</th>
+                <td>{{mother.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </a>
+      </article>
+    </li>
+    {{/records}}
+  </ul>
 
   {{>partials-buttons}}
 

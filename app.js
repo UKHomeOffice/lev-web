@@ -7,6 +7,8 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var config = require('./config');
 
+process.title = 'levweb';
+
 if (config.env === 'development') {
   app.use('/public', express.static(path.resolve(__dirname, './public')));
 }
