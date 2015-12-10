@@ -24,7 +24,7 @@
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
     "express-session": "^1.12.1",
-    "hmpo-frontend-toolkit": "^1.5.0",
+    "hmpo-frontend-toolkit": "^2.0.0",
     "hmpo-govuk-template": "0.0.3",
     "hogan-express-strict": "^0.5.4",
     "mustache": "^2.2.0",
