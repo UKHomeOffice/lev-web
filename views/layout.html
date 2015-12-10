@@ -82,9 +82,9 @@
       <div class="header-wrapper">
         <div class="header-global">
           <div class="header-logo">
-            <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" id="logo" class="content">
-              <img src="{{govukAssetPath}}images/gov.uk_logotype_crown.png?0.12.0" width="35" height="31" alt=""> GOV.UK
-            </a>
+            <div id="logo" class="content">
+              <img src="{{govukAssetPath}}images/gov.uk_logotype_crown.png?0.12.0" width="35" height="31" alt="">
+            </div>
           </div>
           {{$insideHeader}}{{/insideHeader}}
         </div>
@@ -105,12 +105,6 @@
 
     {{$main}}
       <main id="content" class="main" role="main">
-        <div class="phase-banner">
-          <p>
-            <strong class="phase-tag">BETA</strong>
-            <span>This is a new service – your <a href="mailto:update_this_email_address">feedback</a> will help us to improve it.</span>
-          </p>
-        </div>
         <div class="grid-row">
           {{$maincontent}}{{/maincontent}}
         </div>
