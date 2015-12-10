@@ -84,17 +84,29 @@ h1 {
 table {
   border-top: 1px solid $border-colour;;
   tbody {
-    tr.no-separation {
+    th, td {
+      font-size: 19px;
+      padding: 20px 0;
+    }
+    th {
+      width: 27.5%;
+    }
+    tr.group-item {
       th, td {
+        padding: 8.5px 0;
         border-bottom: none;
       }
     }
-    th, td {
-      font-size: 20px;
-      padding: 20px 0 16px 0;
+    tr.first-group-item {
+      th, td {
+        padding-top: 20px;
+      }
     }
-    th {
-      width: 45%;
+    tr.last-group-item {
+      th, td {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+      }
     }
   }
 }
