@@ -1,3 +1,9 @@
+build:
+  image: node:4.2.2
+  commands:
+      - npm install --quiet
+      - npm test
+
 publish:
   docker:
     environment:
@@ -8,12 +14,8 @@ publish:
     email: $$QUAY_EMAIL
     repo: quay.io/ukhomeofficedigital/lev-web
     storage_driver: overlay
+    when:
+      branch: master
     tag:
       - latest
       - "$$BUILD_NUMBER"
-
-build:
-  image: node:4.2.2
-  commands:
-      - npm install --quiet
-      - npm test
