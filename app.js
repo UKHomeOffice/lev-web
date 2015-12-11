@@ -35,6 +35,8 @@ app.use(session({secret: config.session.secret, resave: true, saveUninitialized:
 
 require('./routes')(app);
 
+app.use(require('./middleware/error')());
+
 app.listen(config.port, config.listen_host);
 /*eslint no-console: 0*/
 console.log('App listening on port', config.port);
