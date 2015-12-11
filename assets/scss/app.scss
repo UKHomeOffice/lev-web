@@ -11,7 +11,7 @@ $path: "../img/";
 }
 
 h1 {
-  @include bold-24;
+  font-size: 24px;
   .query {
     font-weight: normal;
   }
@@ -22,7 +22,11 @@ h1 {
 }
 
 .form-label-bold {
-  @include core-19;
+  font-size: 19px;
+}
+
+#global-header .header-proposition #proposition-name {
+  font-size: 24px;
 }
 
 //autocomplete styling
@@ -69,7 +73,7 @@ h1 {
     padding-left: 0;
 
     label {
-        @include core-19();
+        font-size: 19px;
     }
 
     .form-group {
@@ -87,6 +91,7 @@ table {
     th, td {
       font-size: 19px;
       padding: 20px 0;
+      vertical-align: top;
     }
     th {
       width: 27.5%;
