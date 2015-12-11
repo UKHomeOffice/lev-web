@@ -9,7 +9,7 @@ describe('Query Page @watch', function() {
   describe('the form', function () {
 
     it('has a title', function () {
-      browser.getText('h1').should.equal('Applicants Details');
+      browser.getText('h1').should.equal('Applicant\'s details');
     });
 
     it('has the correct form elements', function () {
