@@ -39,7 +39,7 @@ describe('Results page @watch', function() {
       });
 
       it('displays an appropriate message', function () {
-        browser.getText('h1').should.equal('2 records found for John Smith');
+        browser.getText('h1').should.equal('3 records found for John Smith');
       });
 
       it('displays a subset of each record in a list', function () {
