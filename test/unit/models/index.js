@@ -1,6 +1,9 @@
 'use strict';
 
 var proxyquire = require('proxyquire');
+var api = {
+  read: sinon.stub()
+};
 
 describe('models/index', function () {
   var stubs = [{
@@ -11,17 +14,18 @@ describe('models/index', function () {
     baz: 'baz'
   }];
   var Model = proxyquire('../../../models', {
-    './stubs': stubs
+    '../api': api
   });
   var model;
+  var attributes = {foo: 'bar'};
 
   beforeEach(function () {
-    model = new Model({foo: 'bar'});
+    model = new Model(attributes);
   });
 
   describe('with an argument', function () {
     it('assigns the argument to the attributes', function () {
-      model.attributes.should.deep.equal({foo: 'bar'});
+      model.attributes.should.deep.equal(attributes);
     });
   });
 
@@ -39,26 +43,18 @@ describe('models/index', function () {
 
   describe('.toJSON())', function () {
     it('returns all the attributes', function () {
-      model.toJSON().should.deep.equal({foo: 'bar'});
+      model.toJSON().should.deep.equal(attributes);
     });
   });
 
   describe('.read()', function () {
 
-    var promise;
-
     beforeEach(function () {
-      promise = model.read();
+      var promise = model.read();
     });
 
-    it('resolves with records', function (done) {
-      promise.then(function (result) {
-        result.records.should.deep.equal([{
-          foo: 'bar',
-          bar: 'baz'
-        }]);
-        done();
-      });
+    it('calls the api', function () {
+      api.read.should.have.been.calledWith(attributes);
     });
 
   });
