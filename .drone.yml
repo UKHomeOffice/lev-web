@@ -19,3 +19,12 @@ publish:
     tag:
       - latest
       - "$$BUILD_NUMBER"
+deploy:
+  kubernetes:
+    image: ukhomeofficedigital/drone-kubernetes
+    replicationcontrollers:
+      - kubernetes/lev-rc.json
+    services: []
+    token: $$TOKEN
+    apiserver: $$APISERVER
+    namespace:  lev-web
