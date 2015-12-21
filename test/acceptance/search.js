@@ -68,7 +68,7 @@ describe('Search Page @watch', function() {
         browser.submitForm('form');
       });
 
-      it('the url should contain /results', function () {
+      it('the url should contain /details', function () {
         browser.getUrl().should.contain('/details');
       });
 
