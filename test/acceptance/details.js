@@ -2,42 +2,71 @@
 
 describe('Details Page @watch', function() {
 
+  var urlShouldContain = function urlShouldContain() {
+    it('the url should contain /details', function () {
+      browser.getUrl().should.contain('/details');
+    });
+  };
+
+  var messageDisplayed = function messageDisplayed() {
+    it('an appropriate message is displayed', function () {
+      browser.getText('h1').should.equal('Record of John Francis Smith 23/09/1976');
+    });
+  };
+
+  var recordDisplayed = function recordDisplayed() {
+    it('the complete record is displayed in a table', function () {
+      browser.getText('table tr')
+        .should.deep.equal([
+          'System number 98765',
+          'Surname Smith',
+          'Forename(s) John Francis',
+          'Date of birth 23/09/1976',
+          'Sex Male',
+          'Place of birth Coltishall',
+          'Mother Janet Smith',
+          'Maiden name Alice*',
+          'Place of birth Manchester*',
+          'Occupation Engineer*',
+          'Father Paul Davis',
+          'Place of birth Croydon*',
+          'Occupation Self-employed*',
+          'Birth jointly registered No*',
+          'Registration district Norfolk*',
+          'Sub-district Norwich*',
+          'Administrative area Norfolk*',
+          'Date of registration 25/09/1976*'
+        ]);
+    });
+  };
+
   beforeEach(function () {
     browser.url('http://localhost:8001/search');
     browser.setValue('input[name="surname"]', 'Smith')
-    browser.setValue('input[name="forenames"]', 'John Francis')
-    browser.submitForm('form');
   });
 
-  it('the url should contain /details', function () {
-    browser.getUrl().should.contain('/details');
+  describe('When there is one result', function () {
+
+    beforeEach(function () {
+      browser.setValue('input[name="forenames"]', 'John Francis')
+      browser.submitForm('form');
+    });
+
+    urlShouldContain();
+    messageDisplayed();
+    recordDisplayed();
   });
 
-  it('an appropriate message is displayed', function () {
-    browser.getText('h1').should.equal('Record of John Francis Smith 23/09/1976');
-  });
+  describe('When there is more than one result', function () {
 
-  it('the complete record is displayed in a table', function () {
-    browser.getText('table tr')
-      .should.deep.equal([
-        'System number 98765',
-        'Surname Smith',
-        'Forename(s) John Francis',
-        'Date of birth 23/09/1976',
-        'Sex Male',
-        'Place of birth Coltishall',
-        'Mother Janet Smith',
-        'Maiden name Alice',
-        'Place of birth Manchester',
-        'Father Paul Davis',
-        'Place of birth Croydon',
-        'Birth jointly registered No',
-        'Registration district Norfolk',
-        'Sub-district Norwich',
-        'Administrative area Norfolk',
-        'Date of registration 25/09/1976'
-      ]);
+    beforeEach(function () {
+      browser.submitForm('form');
+      browser.click('a[href="/details/98765"]');
+    });
 
+    urlShouldContain();
+    messageDisplayed();
+    recordDisplayed();
   });
 
   describe('When I select the "New search" button', function () {
