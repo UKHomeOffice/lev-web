@@ -46,7 +46,7 @@ describe('controllers/details', function () {
       });
 
       it('with a record containing the system-number', function () {
-        var records = [{'system-number': '00000'}, {'system-number': '12345'}];
+        var records = [{'system-number': 0}, {'system-number': 12345}];
         var query = {bar: 'baz'}
         req.params = {sysnum: '12345'};
         Model.prototype.get.withArgs('records').returns(records);

@@ -1,7 +1,6 @@
 'use strict';
 
 var Model = require('../models');
-var _ = require('underscore');
 var helpers = require('../lib/helpers');
 
 module.exports = function renderResults(req, res) {

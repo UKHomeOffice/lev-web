@@ -10,7 +10,7 @@ module.exports = function renderDetails(req, res) {
 
   if (req.params && req.params.sysnum) {
     record.record = _.findWhere(model.toJSON().records, {
-      'system-number': req.params.sysnum
+      'system-number': parseInt(req.params.sysnum, 10)
     });
   }
 

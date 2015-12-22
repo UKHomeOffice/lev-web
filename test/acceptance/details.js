@@ -1,5 +1,7 @@
 'use strict';
 
+var mockProxy = require('./mock-proxy');
+
 describe('Details Page @watch', function() {
 
   var urlShouldContain = function urlShouldContain() {
@@ -10,7 +12,7 @@ describe('Details Page @watch', function() {
 
   var messageDisplayed = function messageDisplayed() {
     it('an appropriate message is displayed', function () {
-      browser.getText('h1').should.equal('Record of John Francis Smith 23/09/1976');
+      browser.getText('h1').should.equal('Record of Joan Narcissus Ouroboros Smith 08/08/2008');
     });
   };
 
@@ -18,37 +20,36 @@ describe('Details Page @watch', function() {
     it('the complete record is displayed in a table', function () {
       browser.getText('table tr')
         .should.deep.equal([
-          'System number 98765',
+          'System number 123456789',
           'Surname Smith',
-          'Forename(s) John Francis',
-          'Date of birth 23/09/1976',
-          'Sex Male',
-          'Place of birth Coltishall',
-          'Mother Janet Smith',
+          'Forename(s) Joan Narcissus Ouroboros',
+          'Date of birth 08/08/2008',
+          'Sex Indeterminate',
+          'Place of birth Kensington',
+          'Mother Joan Narcissus Ouroboros Smith',
           'Maiden name Alice*',
           'Place of birth Manchester*',
-          'Occupation Engineer*',
-          'Father Paul Davis',
+          'Father Joan Narcissus Ouroboros Smith',
           'Place of birth Croydon*',
-          'Occupation Self-employed*',
           'Birth jointly registered No*',
           'Registration district Norfolk*',
           'Sub-district Norwich*',
           'Administrative area Norfolk*',
-          'Date of registration 25/09/1976*'
+          'Date of registration 09/08/2008*'
         ]);
     });
   };
 
   beforeEach(function () {
     browser.url('http://localhost:8001/search');
-    browser.setValue('input[name="surname"]', 'Smith')
+    browser.setValue('input[name="surname"]', 'Smith');
   });
 
   describe('When there is one result', function () {
 
     beforeEach(function () {
-      browser.setValue('input[name="forenames"]', 'John Francis')
+      mockProxy.willReturn(1);
+      browser.setValue('input[name="forenames"]', 'Joan Narcissus Ouroboros');
       browser.submitForm('form');
     });
 
@@ -60,8 +61,9 @@ describe('Details Page @watch', function() {
   describe('When there is more than one result', function () {
 
     beforeEach(function () {
+      mockProxy.willReturn(2);
       browser.submitForm('form');
-      browser.click('a[href="/details/98765"]');
+      browser.click('a[href="/details/123456789"]');
     });
 
     urlShouldContain();
@@ -72,8 +74,8 @@ describe('Details Page @watch', function() {
   describe('When I select the "New search" button', function () {
     beforeEach(function () {
       browser.url('http://localhost:8001/search');
-      browser.setValue('input[name="surname"]', 'Smith')
-      browser.setValue('input[name="forenames"]', 'John Francis')
+      browser.setValue('input[name="surname"]', 'Smith');
+      browser.setValue('input[name="forenames"]', 'John Francis');
       browser.submitForm('form');
       browser.click('#newSearchLink');
     });
@@ -85,8 +87,8 @@ describe('Details Page @watch', function() {
   describe('When I select the "Edit search" link', function () {
     beforeEach(function () {
       browser.url('http://localhost:8001/search');
-      browser.setValue('input[name="surname"]', 'Smith')
-      browser.setValue('input[name="forenames"]', 'John Francis')
+      browser.setValue('input[name="surname"]', 'Smith');
+      browser.setValue('input[name="forenames"]', 'John Francis');
       browser.submitForm('form');
       browser.click('#editSearchLink');
     });

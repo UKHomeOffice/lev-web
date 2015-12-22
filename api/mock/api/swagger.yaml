@@ -1,0 +1,211 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Life Events API"
+  contact:
+    name: "Home Office Digital"
+basePath: "/"
+tags:
+- name: "apiv0events"
+paths:
+  /api/v0/events/birth:
+    get:
+      tags:
+      - "apiv0events"
+      summary: "Get birth events"
+      description: "Get a list of births. Returns an empty list on no results found"
+      operationId: "getEvents"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "lastname"
+        in: "query"
+        description: "The last name of the person being searched for"
+        required: true
+        type: "string"
+      - name: "forenames"
+        in: "query"
+        description: "The first name of the person being searched for"
+        required: false
+        type: "string"
+      - name: "forename1"
+        in: "query"
+        description: "The forenames of the person being searched for"
+        required: false
+        type: "string"
+      - name: "forename2"
+        in: "query"
+        description: "The second name of the person being searched for"
+        required: false
+        type: "string"
+      - name: "forename3"
+        in: "query"
+        description: "The third name of the person being searched for"
+        required: false
+        type: "string"
+      - name: "forename4"
+        in: "query"
+        description: "The fourth name of the person being searched for"
+        required: false
+        type: "string"
+      - name: "dateofbirth"
+        in: "query"
+        description: "The ISO 8601 Date of birth of the person being searched for"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "gender"
+        in: "query"
+        description: "The gender of the person being searched for"
+        required: false
+        type: "string"
+        enum:
+        - "Male"
+        - "Female"
+        - "Indeterminate"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TransitionEventImpl"
+        400:
+          description: "Parameter wrong or missing"
+        500:
+          description: "Problem connecting to ORDs"
+  /api/v0/events/birth/{id}:
+    get:
+      tags:
+      - "apiv0events"
+      summary: "Get birth event"
+      description: "Get a single birth. Returns a 404 response on no results found"
+      operationId: "getEvent"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The ID of the birth"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/TransitionEventImpl"
+        404:
+          description: "Record not found"
+        500:
+          description: "Problem connecting to ORDs"
+definitions:
+  SubjectsImpl:
+    properties:
+      parent1:
+        description: "Parent 1"
+        $ref: "#/definitions/PersonImpl"
+      parent2:
+        description: "Parent 2"
+        $ref: "#/definitions/PersonImpl"
+      child:
+        description: "Child"
+        $ref: "#/definitions/PersonImpl"
+    description: "Subjects involved in this event"
+  TransitionEventImpl:
+    required:
+    - "date"
+    - "id"
+    - "location"
+    - "status"
+    - "subjects"
+    - "type"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: "123456789"
+        description: "Unique ID for this event"
+      date:
+        type: "string"
+        format: "date"
+        example: "2008-08-09"
+        description: "Date of the event"
+      type:
+        type: "string"
+        example: "birth"
+        description: "Type of the event"
+      location:
+        description: "Location that the event happened at"
+        $ref: "#/definitions/LocationImpl"
+      subjects:
+        description: "People involved, may have keys parent1,parent2,child"
+        $ref: "#/definitions/SubjectsImpl"
+      status:
+        description: "Status flags associated with this event"
+        $ref: "#/definitions/StatusImpl"
+    description: "An event that represents a change of state"
+  PersonNameImpl:
+    properties:
+      givenName:
+        type: "string"
+        example: "Joan Narcissus Ouroboros"
+        description: "Given name of the person"
+      surname:
+        type: "string"
+        example: "Smith"
+        description: "Surname of the person"
+      fullName:
+        type: "string"
+        example: "Joan Narcissus Ouroboros Smith"
+        description: "Full name of the person"
+      qualifier:
+        type: "string"
+        example: "generated from prepending forename to surname"
+        description: "Details about how the full name was made"
+    description: "A structure containing the name"
+  PersonImpl:
+    properties:
+      name:
+        description: "Name of the person"
+        $ref: "#/definitions/PersonNameImpl"
+      dateOfBirth:
+        type: "string"
+        format: "date"
+        example: "2008-08-08"
+        description: "Date of birth of the person"
+      gender:
+        type: "string"
+        example: "Indeterminate"
+        description: "Gender of the person"
+        enum:
+        - "Male"
+        - "Female"
+        - "Indeterminate"
+    description: "A subject"
+  LocationImpl:
+    properties:
+      name:
+        type: "string"
+        example: "Kensington"
+        description: "Location name"
+    description: "The location an event occurred"
+  StatusImpl:
+    properties:
+      blockedRegistration:
+        type: "string"
+        example: "???"
+        description: "TBD, what does this mean"
+      fictitiousBirth:
+        type: "string"
+        example: "???"
+        description: "TBD, what does this mean"
+      cautionMark:
+        type: "string"
+        example: "???"
+        description: "TBD, what does this mean"
+      cancelled:
+        type: "string"
+        example: "???"
+        description: "TBD, what does this mean"
+    description: "If this is a fictitious birth, it's blocked or cautioned"
