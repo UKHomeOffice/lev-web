@@ -14,8 +14,16 @@ publish:
     email: $$QUAY_EMAIL
     repo: quay.io/ukhomeofficedigital/lev-web
     storage_driver: overlay
-    when:
-      branch: master
     tag:
       - latest
       - "$$BUILD_NUMBER"
+deploy:
+  kubernetes:
+    image: quay.io/ukhomeofficedigital/drone-kubernetes
+    replicationcontrollers:
+      - kube/controller.yaml
+    services: []
+    token: $$TOKEN
+    apiserver: $$APISERVER
+    namespace:  lev-web
+    tag: "$$BUILD_NUMBER"
