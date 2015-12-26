@@ -28,7 +28,7 @@ describe('controllers/results', function () {
         count: 2,
         records: records,
         query: query,
-        querystring: "name=foo",
+        querystring: 'name=foo'
       });
     });
 

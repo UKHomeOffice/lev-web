@@ -48,7 +48,7 @@ describe('controllers/search', function () {
       });
 
       it('redirects to the details page ', function (done) {
-        return promise.then(function (data) {
+        return promise.then(function () {
           res.redirect.should.have.been.calledWith('/details');
           done();
         });
@@ -59,7 +59,7 @@ describe('controllers/search', function () {
     describe('model returns many records', function () {
 
       beforeEach(function () {
-        Model.prototype.read.returns(Promise.resolve({records: [1,2,3]}));
+        Model.prototype.read.returns(Promise.resolve({records: [1, 2, 3]}));
         promise = searchController.query(req, res);
       });
 
@@ -99,9 +99,9 @@ describe('controllers/search', function () {
       it('handles the error', function (done) {
         return promise.catch(function (error) {
           error.should.be.instanceof(Error);
-          error.message.should.equal(message)
+          error.message.should.equal(message);
           done();
-        })
+        });
       });
     });
 

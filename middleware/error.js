@@ -1,16 +1,13 @@
 'use strict';
-var path = require('path');
 var config = require('../config');
 
-/*eslint no-unused-vars: 0*/
-module.exports = function () {
+module.exports = function errorMiddlewareFactory() {
 
   return function errorHandler(err, req, res, next) {
-    /*eslint no-unused-vars: 1*/
     var content = {};
 
     if (!req.session.model) {
-      err.code === 'SESSION_TIMEOUT'
+      err.code = 'SESSION_TIMEOUT';
       content.title = 'Session expired';
       content.message = 'Session expired';
     }
@@ -27,6 +24,8 @@ module.exports = function () {
       showStack: config.env === 'development',
       startLink: req.path.replace(/^\/([^\/]*).*$/, '')
     });
+
+    next();
   };
 
 };

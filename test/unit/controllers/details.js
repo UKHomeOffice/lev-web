@@ -33,7 +33,7 @@ describe('controllers/details', function () {
 
       it('with the record', function () {
         var records = [{foo: 'foo'}];
-        var query = {bar: 'baz'}
+        var query = {bar: 'baz'};
         Model.prototype.get.withArgs('records').returns(records);
         Model.prototype.get.withArgs('query').returns(query);
 
@@ -47,7 +47,7 @@ describe('controllers/details', function () {
 
       it('with a record containing the system-number', function () {
         var records = [{'system-number': 0}, {'system-number': 12345}];
-        var query = {bar: 'baz'}
+        var query = {bar: 'baz'};
         req.params = {sysnum: '12345'};
         Model.prototype.get.withArgs('records').returns(records);
         Model.prototype.toJSON.returns({records: records});
