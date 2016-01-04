@@ -25,5 +25,5 @@ deploy:
     services: []
     token: $$TOKEN
     apiserver: $$APISERVER
-    namespace:  lev-web
+    namespace:  lev-web-dev
     tag: "$$BUILD_NUMBER"
