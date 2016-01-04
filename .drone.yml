@@ -17,6 +17,9 @@ publish:
     tag:
       - latest
       - "$$BUILD_NUMBER"
+    when:
+      branch: master
+      
 deploy:
   kubernetes:
     image: quay.io/ukhomeofficedigital/drone-kubernetes
@@ -27,3 +30,5 @@ deploy:
     apiserver: $$APISERVER
     namespace:  lev-web-dev
     tag: "$$BUILD_NUMBER"
+    when:
+      branch: master
