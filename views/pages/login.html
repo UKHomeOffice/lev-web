@@ -1,0 +1,46 @@
+{{<layout}}
+
+{{$title}}Birth record check{{/title}}
+
+{{$journeyHeader}}
+  Birth record check
+{{/journeyHeader}}
+
+{{$propositionHeader}}
+  {{> partials-navigation}}
+{{/propositionHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      Log in
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent-left}}
+{{/maincontent}}
+
+{{$content}}
+  {{<partials-form}}
+    {{$form}}
+
+      <div class="form-group">
+        <label for="username" class="form-label-bold">Username</label>
+        <input id="username" name="username" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label-bold">Password</label>
+        <input type="password" id="password" name="password" class="form-control">
+      </div>
+
+      <input type="submit" value="Log in" class="button">
+
+    {{/form}}
+  {{/partials-form}}
+
+{{/content}}
+
+{{/layout}}

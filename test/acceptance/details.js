@@ -3,7 +3,7 @@
 describe('Details Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001');
+    browser.url('http://localhost:8001/search');
     browser.setValue('input[name="surname"]', 'Smith')
     browser.setValue('input[name="forenames"]', 'John Francis')
     browser.submitForm('form');
