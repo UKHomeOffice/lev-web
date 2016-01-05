@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Query Page @watch', function() {
+describe('Search Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001');
+    browser.url('http://localhost:8001/search');
   });
 
   describe('the form', function () {

@@ -3,7 +3,7 @@
 describe('Results page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001');
+    browser.url('http://localhost:8001/search');
   });
 
   describe('When there are no results', function () {
