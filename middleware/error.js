@@ -6,7 +6,7 @@ module.exports = function errorMiddlewareFactory() {
   return function errorHandler(err, req, res, next) {
     var content = {};
 
-    if (!req.session.model) {
+    if (!req.session || !req.session.model) {
       err.code = 'SESSION_TIMEOUT';
       content.title = 'Session expired';
       content.message = 'Session expired';
@@ -18,12 +18,19 @@ module.exports = function errorMiddlewareFactory() {
 
     res.statusCode = err.status || 500;
 
-    res.render('pages/' + err.template, {
-      error: err,
-      content: content,
-      showStack: config.env === 'development',
-      startLink: req.path.replace(/^\/([^\/]*).*$/, '')
-    });
+    if (res.render) {
+      res.render('pages/' + err.template, {
+        error: err,
+        content: content,
+        showStack: config.env === 'development',
+        startLink: req.path ? req.path.replace(/^\/([^\/]*).*$/, '') : ''
+      });
+    } else {
+      // Cannot render so log to the console
+      /*eslint no-console: 0*/
+      console.log('Error: ', err);
+      res.end();
+    }
 
     next();
   };
