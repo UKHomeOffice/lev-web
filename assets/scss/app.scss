@@ -169,3 +169,8 @@ div.search-buttons {
     margin: 0;
   }
 }
+
+/* Override govuk-template.css */
+#global-header #logo:hover, #global-header #logo:focus {
+  border-bottom: none;
+  padding-bottom: 1px; }
