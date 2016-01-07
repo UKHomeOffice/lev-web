@@ -10,8 +10,40 @@ $path: "../img/";
   @include phase-banner(beta);
 }
 
+html {
+  background-color: transparent;
+}
+
+#global-header .header-proposition #proposition-name {
+  font-size: 20px;
+}
+
+#global-header .header-wrapper > div {
+  float: left;
+  padding-top: 0;
+}
+
+#global-header .header-wrapper .header-global .header-logo {
+  margin: 0;
+}
+
+#global-header #logo {
+  float: none;
+  height: auto;
+}
+
+#global-header #logo img {
+  width: 27px;
+  height: 24px;
+}
+
+#content {
+  padding: 0;
+}
+
 h1 {
-  font-size: 24px;
+  font-size: 20px;
+  margin: 15px 0 12px;
   .query {
     font-weight: normal;
   }
@@ -24,10 +56,6 @@ h1 {
 .form-label-bold {
   font-size: 19px;
   font-weight: normal;
-}
-
-#global-header .header-proposition #proposition-name {
-  font-size: 24px;
 }
 
 //autocomplete styling
@@ -90,28 +118,29 @@ table {
   border-top: 1px solid $border-colour;;
   tbody {
     th, td {
-      font-size: 19px;
-      padding: 20px 0;
+      font-size: 16px;
+      padding: 10px 0;
       vertical-align: top;
+      line-height: 1;
     }
     th {
-      width: 27.5%;
+      width: 176px;
     }
     tr.group-item {
       th, td {
-        padding: 8.5px 0;
         border-bottom: none;
+        padding: 5px 0;
       }
     }
     tr.first-group-item {
       th, td {
-        padding-top: 20px;
+        padding-top: 10px;
       }
     }
     tr.last-group-item {
       th, td {
         border-bottom: 1px solid #ccc;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
       }
     }
   }
@@ -119,7 +148,7 @@ table {
 
 #records {
   li {
-    margin: 0 0 30px;
+    margin: 0 0 15px;
     &:last-of-type {
       margin-bottom: 0;
     }
@@ -130,23 +159,28 @@ table {
         border-top: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         text-decoration: none;
-        padding: 17px;
+        padding: 10px;
         h2 {
-          margin-bottom: 0;
+          margin-bottom: 6px;
           margin-top: 0;
           text-decoration: underline;
+          font-size: 16px;
         }
         table {
           border-top: none;
           th, td {
             border-bottom: none;
+            padding: 5px 0;
+            &:last-of-type {
+              padding-bottom: 0;
+            }
           }
           th {
-            width: 25%;
+            width: 115px;
           }
         }
         &:hover {
-          padding: 14px 13px;
+          padding: 7px 6px;
           background-color: #e6f0f9;
           border: 4px solid #005ea5;
           table {
@@ -161,9 +195,16 @@ table {
 }
 
 div.search-buttons {
-  margin-top: 40px;
-  div:nth-child(2) {
-    margin-top: 30px;
+  margin-top: 20px;
+  div  {
+    display: inline-block;
+    vertical-align: middle;
+    a {
+      font-size: 16px;
+    }
+  }
+  div:nth-child(1) {
+    margin-right: 65px;
   }
   .button {
     margin: 0;
