@@ -9,7 +9,8 @@ var config = require('./config');
 
 process.title = 'levweb';
 
-if (config.env === 'development' || config.env === 'acceptance') {
+// FIXME: Remove ' || true' once nginx is in place
+if (config.env === 'development' || config.env === 'acceptance' || true) {
   app.use('/public', express.static(path.resolve(__dirname, './public')));
 }
 
