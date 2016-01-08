@@ -1,5 +1,7 @@
 'use strict';
 
+var mockProxy = require('./mock-proxy');
+
 describe('Search Page @watch', function() {
 
   beforeEach(function () {
@@ -33,9 +35,9 @@ describe('Search Page @watch', function() {
     describe('that returns no records', function () {
 
       beforeEach(function () {
-        browser.setValue('input[name="system-number"]', '123456');
-        browser.setValue('input[name="surname"]', 'Churchil')
-        browser.setValue('input[name="forenames"]', 'Winston')
+        mockProxy.willReturn(0);
+        browser.setValue('input[name="surname"]', 'Churchil');
+        browser.setValue('input[name="forenames"]', 'Winston');
         browser.setValue('input[name="dob"]', '30/11/1874');
         browser.submitForm('form');
       });
@@ -46,30 +48,32 @@ describe('Search Page @watch', function() {
 
     });
 
-    describe('that returns 2 records', function () {
+    describe('that returns 1 record', function () {
 
       beforeEach(function () {
-        browser.setValue('input[name="surname"]', 'Smith')
-        browser.setValue('input[name="forenames"]', 'John')
+        mockProxy.willReturn(1);
+        browser.setValue('input[name="surname"]', 'Smith');
+        browser.setValue('input[name="forenames"]', 'John Francis');
+        browser.submitForm('form');
+      });
+
+      it('the url should contain /details', function () {
+        browser.getUrl().should.contain('/details');
+      });
+
+    });
+
+    describe('that returns more than 1 record', function () {
+
+      beforeEach(function () {
+        mockProxy.willReturn(2);
+        browser.setValue('input[name="surname"]', 'Smith');
+        browser.setValue('input[name="forenames"]', 'John');
         browser.submitForm('form');
       });
 
       it('redirects to the results page', function () {
         browser.getUrl().should.contain('/results');
-      });
-
-    });
-
-    describe('that returns 1 record', function () {
-
-      beforeEach(function () {
-        browser.setValue('input[name="surname"]', 'Smith')
-        browser.setValue('input[name="forenames"]', 'John Francis')
-        browser.submitForm('form');
-      });
-
-      it('the url should contain /results', function () {
-        browser.getUrl().should.contain('/details');
       });
 
     });

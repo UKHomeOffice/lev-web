@@ -2,6 +2,7 @@ build:
   image: node:4.2.2
   commands:
       - npm install --quiet
+      - npm run install:mockapi
       - npm test
 
 publish:

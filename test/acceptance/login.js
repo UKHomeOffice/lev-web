@@ -27,8 +27,8 @@ describe('Login Page @watch', function() {
     describe('Logs the user in', function () {
 
       beforeEach(function () {
-        browser.setValue('input[name="username"]', 'user123')
-        browser.setValue('input[name="password"]', 'pass123')
+        browser.setValue('input[name="username"]', 'user123');
+        browser.setValue('input[name="password"]', 'pass123');
         browser.submitForm('form');
       });
 

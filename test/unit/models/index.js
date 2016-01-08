@@ -6,13 +6,6 @@ var api = {
 };
 
 describe('models/index', function () {
-  var stubs = [{
-    foo: 'bar',
-    bar: 'baz'
-  }, {
-    bar: 'foo',
-    baz: 'baz'
-  }];
   var Model = proxyquire('../../../models', {
     '../api': api
   });

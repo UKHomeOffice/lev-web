@@ -9,7 +9,7 @@ var config = require('./config');
 
 process.title = 'levweb';
 
-if (config.env === 'development') {
+if (config.env === 'development' || config.env === 'acceptance') {
   app.use('/public', express.static(path.resolve(__dirname, './public')));
 }
 

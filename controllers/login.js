@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
-
 module.exports = {
 
   show: function show(req, res) {

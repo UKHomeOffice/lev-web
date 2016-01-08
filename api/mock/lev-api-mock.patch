@@ -1,0 +1,35 @@
+--- .gitignore.orig
++++ .gitignore
+@@ -0,0 +1 @@
++node_modules
+--- index.js.orig
++++ index.js
+@@ -1,5 +1,7 @@
+ 'use strict';
+ 
++process.title = 'levapimock';
++
+ var app = require('connect')();
+ var http = require('http');
+ var swaggerTools = require('swagger-tools');
+--- package.json.orig
++++ package.json
+@@ -3,6 +3,10 @@
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
++  "scripts": {
++    "start": "NODE_ENV=development node .",
++    "stop": "pkill levapimock"
++  },
+   "keywords": [
+     "swagger"
+   ],
+@@ -11,6 +15,6 @@
+   "dependencies": {
+     "connect": "^3.2.0",
+     "js-yaml": "^3.3.0",
+-    "swagger-tools": "0.9.*"
++    "swagger-tools": "farrago/swagger-tools#mockFromExample"
+   }
+ }
