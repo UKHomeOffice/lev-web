@@ -1,6 +1,6 @@
 'use strict';
 
-process.title = 'levapimock';
+process.title = 'levapi';
 
 var app = require('connect')();
 var http = require('http');
