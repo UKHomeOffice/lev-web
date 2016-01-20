@@ -19,6 +19,11 @@ spec:
       - name: lev-web-preprod
         image: quay.io/ukhomeofficedigital/lev-web
         imagePullPolicy: Always
+        env:
+          - name: API_HOST
+            value: lev-api-preprod.lev-api-preprod
+          - name: API_PORT
+            value: "8888"
         resources:
           limits:
             memory: "256Mi"
