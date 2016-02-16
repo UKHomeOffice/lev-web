@@ -20,22 +20,22 @@ describe('Details Page @watch', function() {
     it('the complete record is displayed in a table', function () {
       browser.getText('table tr')
         .should.deep.equal([
-          'System number 123456789',
+          'System number 1',
           'Surname Smith',
           'Forename(s) Joan Narcissus Ouroboros',
           'Date of birth 08/08/2008',
           'Sex Indeterminate',
           'Place of birth Kensington',
           'Mother Joan Narcissus Ouroboros Smith',
-          'Maiden name Alice*',
-          'Place of birth Manchester*',
+          'Maiden name Black',
+          'Place of birth Kensington',
           'Father Joan Narcissus Ouroboros Smith',
-          'Place of birth Croydon*',
+          'Place of birth Kensington',
           'Birth jointly registered No*',
-          'Registration district Norfolk*',
-          'Sub-district Norwich*',
-          'Administrative area Norfolk*',
-          'Date of registration 09/08/2008*'
+          'Registration district Manchester',
+          'Sub-district Manchester',
+          'Administrative area Metropolitan District of Manchester',
+          'Date of registration 09/08/2008'
         ]);
     });
   };
@@ -63,7 +63,7 @@ describe('Details Page @watch', function() {
     beforeEach(function () {
       mockProxy.willReturn(2);
       browser.submitForm('form');
-      browser.click('a[href="/details/123456789"]');
+      browser.click('a[href="/details/1"]');
     });
 
     urlShouldContain();
