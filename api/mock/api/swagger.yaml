@@ -70,7 +70,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/TransitionEventImpl"
+              $ref: "#/definitions/BirthImpl"
         400:
           description: "Parameter wrong or missing"
         500:
@@ -94,57 +94,171 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/TransitionEventImpl"
+            $ref: "#/definitions/BirthImpl"
         404:
           description: "Record not found"
         500:
           description: "Problem connecting to ORDs"
 definitions:
-  SubjectsImpl:
+  ChildImpl:
     properties:
-      parent1:
-        description: "Parent 1"
-        $ref: "#/definitions/PersonImpl"
-      parent2:
-        description: "Parent 2"
-        $ref: "#/definitions/PersonImpl"
-      child:
-        description: "Child"
-        $ref: "#/definitions/PersonImpl"
-    description: "Subjects involved in this event"
-  TransitionEventImpl:
+      name:
+        description: "Name of the person"
+        $ref: "#/definitions/PersonNameImpl"
+      birthplace:
+        type: "string"
+        example: "Kensington"
+        description: "The birthplace of the person"
+      dateOfBirth:
+        type: "string"
+        format: "date"
+        example: "2008-08-08"
+        description: "Date of birth of the person"
+      sex:
+        type: "string"
+        example: "Indeterminate"
+        description: "Sex of the person"
+        enum:
+        - "Male"
+        - "Female"
+        - "Indeterminate"
+      nameAfterRegistration:
+        type: "string"
+        example: "Joan Narcissus Ouroboros Smith"
+        description: "The name given to the person after registration"
+    description: "The subject of the birth record, the newborn child"
+  BirthImpl:
     required:
     - "date"
     - "id"
     - "location"
+    - "registrarSignature"
     - "status"
     - "subjects"
+    - "systemNumber"
     - "type"
     properties:
-      id:
-        type: "integer"
-        format: "int32"
-        example: "123456789"
-        description: "Unique ID for this event"
       date:
         type: "string"
         format: "date"
         example: "2008-08-09"
         description: "Date of the event"
+      location:
+        description: "Location that the event happened at"
+        $ref: "#/definitions/LocationImpl"
+      registrarSignature:
+        type: "string"
+        example: "J. Smith"
+        description: "Signature of registrar"
       type:
         type: "string"
         example: "birth"
         description: "Type of the event"
-      location:
-        description: "Location that the event happened at"
-        $ref: "#/definitions/LocationImpl"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "Unique ID for this event"
       subjects:
         description: "People involved, may have keys parent1,parent2,child"
         $ref: "#/definitions/SubjectsImpl"
+      systemNumber:
+        type: "integer"
+        format: "int32"
+        description: "System number for this event"
       status:
-        description: "Status flags associated with this event"
-        $ref: "#/definitions/StatusImpl"
+        description: "Status flags associated with this birth"
+        $ref: "#/definitions/BirthStatusImpl"
     description: "An event that represents a change of state"
+  SubjectsImpl:
+    properties:
+      child:
+        description: "Child"
+        $ref: "#/definitions/ChildImpl"
+      father:
+        description: "Father"
+        $ref: "#/definitions/FatherImpl"
+      mother:
+        description: "Mother"
+        $ref: "#/definitions/MotherImpl"
+      informant:
+        description: "Informant"
+        $ref: "#/definitions/InformantImpl"
+    description: "Subjects involved in this event"
+  BirthStatusImpl:
+    properties:
+      blockedRegistration:
+        type: "boolean"
+        description: "TBD, what does this mean"
+        default: false
+      cancelled:
+        type: "boolean"
+        description: "TBD, what does this mean"
+        default: false
+      cautionMark:
+        type: "boolean"
+        description: "TBD, what does this mean"
+        default: false
+      courtOrder:
+        type: "string"
+        example: "None"
+        description: "TBD, what does this mean"
+        enum:
+        - "None"
+        - "In place"
+        - "Revoked"
+      fictitiousBirth:
+        type: "boolean"
+        description: "TBD, what does this mean"
+        default: false
+      reRegistered:
+        type: "string"
+        example: "None"
+        description: "TBD, what does this mean"
+        enum:
+        - "None"
+        - "Father modified"
+        - "Subsequently married"
+    description: "If this is a fictitious birth, it's blocked or cautioned"
+  FatherImpl:
+    properties:
+      name:
+        description: "Name of the person"
+        $ref: "#/definitions/PersonNameImpl"
+      birthplace:
+        type: "string"
+        example: "Kensington"
+        description: "The birthplace of the person"
+      occupation:
+        type: "string"
+        example: "Carpenter"
+        description: "The occupation of the parent"
+    description: "The father named on the birth record"
+  MotherImpl:
+    properties:
+      name:
+        description: "Name of the person"
+        $ref: "#/definitions/PersonNameImpl"
+      birthplace:
+        type: "string"
+        example: "Kensington"
+        description: "The birthplace of the person"
+      occupation:
+        type: "string"
+        example: "Carpenter"
+        description: "The occupation of the parent"
+      maidenSurname:
+        type: "string"
+        example: "Black"
+        description: "Maiden surname"
+      marriageSurname:
+        type: "string"
+        example: "White"
+        description: "Surname at marriage if different from maiden surname"
+      usualAddress:
+        type: "string"
+        example: "34 Matriarchs Place, Mumstown, Mumford"
+        description: "Usual address (if different from the place of child's birth)"
+    description: "The mother named on the birth record"
   PersonNameImpl:
     properties:
       givenName:
@@ -164,48 +278,45 @@ definitions:
         example: "generated from prepending forename to surname"
         description: "Details about how the full name was made"
     description: "A structure containing the name"
-  PersonImpl:
-    properties:
-      name:
-        description: "Name of the person"
-        $ref: "#/definitions/PersonNameImpl"
-      dateOfBirth:
-        type: "string"
-        format: "date"
-        example: "2008-08-08"
-        description: "Date of birth of the person"
-      gender:
-        type: "string"
-        example: "Indeterminate"
-        description: "Gender of the person"
-        enum:
-        - "Male"
-        - "Female"
-        - "Indeterminate"
-    description: "A subject"
   LocationImpl:
     properties:
       name:
         type: "string"
-        example: "Kensington"
-        description: "Location name"
+        example: "Manchester, Manchester, Metropolitan District of Manchester"
+        description: "Name"
+      nameQualifier:
+        type: "string"
+        example: "generated by concatenating registrationDistrict, subDistrict and\
+          \ administrativeArea"
+        description: "Name qualifier"
+      registrationDistrict:
+        type: "string"
+        example: "Manchester"
+        description: "Registration district"
+      subDistrict:
+        type: "string"
+        example: "Manchester"
+        description: "Sub-district"
+      administrativeArea:
+        type: "string"
+        example: "Metropolitan District of Manchester"
+        description: "Administrative area"
     description: "The location an event occurred"
-  StatusImpl:
+  InformantImpl:
     properties:
-      blockedRegistration:
+      name:
+        description: "Name of the person"
+        $ref: "#/definitions/PersonNameImpl"
+      usualAddress:
         type: "string"
-        example: "???"
-        description: "TBD, what does this mean"
-      fictitiousBirth:
+        example: "34 Matriarchs Place, Mumstown, Mumford"
+        description: "The usual address of the person, if different from the mother's"
+      qualification:
         type: "string"
-        example: "???"
-        description: "TBD, what does this mean"
-      cautionMark:
+        example: "Mother"
+        description: "The qualification of the informant"
+      signature:
         type: "string"
-        example: "???"
-        description: "TBD, what does this mean"
-      cancelled:
-        type: "string"
-        example: "???"
-        description: "TBD, what does this mean"
-    description: "If this is a fictitious birth, it's blocked or cautioned"
+        example: "J. Smith"
+        description: "The signature of the informant"
+    description: "The informant of the birth record"
