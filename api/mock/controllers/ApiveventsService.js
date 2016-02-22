@@ -16,6 +16,10 @@ exports.getEvents = function(args, res, next) {
 var examples = {};
   
   examples['application/json'] = [ {
+  "previousRegistration" : {
+    "date" : "2008-08-09",
+    "systemNumber" : 123
+  },
   "id" : 123,
   "status" : {
     "fictitiousBirth" : true,
@@ -36,7 +40,7 @@ var examples = {};
         "fullName" : "Joan Narcissus Ouroboros Smith",
         "givenName" : "Joan Narcissus Ouroboros"
       },
-      "nameAfterRegistration" : "Joan Narcissus Ouroboros Smith"
+      "originalName" : ""
     },
     "mother" : {
       "occupation" : "Carpenter",
@@ -92,6 +96,10 @@ exports.getEvent = function(args, res, next) {
 var examples = {};
   
   examples['application/json'] = {
+  "previousRegistration" : {
+    "date" : "2008-08-09",
+    "systemNumber" : 123
+  },
   "id" : 123,
   "status" : {
     "fictitiousBirth" : true,
@@ -112,7 +120,7 @@ var examples = {};
         "fullName" : "Joan Narcissus Ouroboros Smith",
         "givenName" : "Joan Narcissus Ouroboros"
       },
-      "nameAfterRegistration" : "Joan Narcissus Ouroboros Smith"
+      "originalName" : ""
     },
     "mother" : {
       "occupation" : "Carpenter",

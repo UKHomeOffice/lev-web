@@ -122,16 +122,16 @@ definitions:
         - "Male"
         - "Female"
         - "Indeterminate"
-      nameAfterRegistration:
-        type: "string"
-        example: "Joan Narcissus Ouroboros Smith"
-        description: "The name given to the person after registration"
+      originalName:
+        description: "The name originally given to the person"
+        $ref: "#/definitions/PersonNameImpl"
     description: "The subject of the birth record, the newborn child"
   BirthImpl:
     required:
     - "date"
     - "id"
     - "location"
+    - "previousRegistration"
     - "registrarSignature"
     - "status"
     - "subjects"
@@ -168,6 +168,9 @@ definitions:
       status:
         description: "Status flags associated with this birth"
         $ref: "#/definitions/BirthStatusImpl"
+      previousRegistration:
+        description: "Details of the previous record, where one exists"
+        $ref: "#/definitions/PreviousRegistrationImpl"
     description: "An event that represents a change of state"
   SubjectsImpl:
     properties:
@@ -302,6 +305,21 @@ definitions:
         example: "Metropolitan District of Manchester"
         description: "Administrative area"
     description: "The location an event occurred"
+  PreviousRegistrationImpl:
+    required:
+    - "date"
+    - "systemNumber"
+    properties:
+      date:
+        type: "string"
+        format: "date"
+        example: "2008-08-09"
+        description: "Date of the event"
+      systemNumber:
+        type: "integer"
+        format: "int32"
+        description: "System number for this event"
+    description: "Details of the previous record, where one exists"
   InformantImpl:
     properties:
       name:

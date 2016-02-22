@@ -31,7 +31,7 @@ describe('Details Page @watch', function() {
           'Place of birth Kensington',
           'Father Joan Narcissus Ouroboros Smith',
           'Place of birth Kensington',
-          'Birth jointly registered No*',
+          'Birth jointly registered No',
           'Registration district Manchester',
           'Sub-district Manchester',
           'Administrative area Metropolitan District of Manchester',
