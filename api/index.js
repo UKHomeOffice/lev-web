@@ -21,24 +21,54 @@ module.exports = {
         forenames: record.subjects.child.name.givenName,
         dob: formatDate(record.subjects.child.dateOfBirth),
         gender: record.subjects.child.sex,
-        'birth-place': record.subjects.child.birthplace,
-        mother: {
+        'birth-place': record.status.blockedRegistration ? 'UNAVAILABLE' : record.subjects.child.birthplace,
+        mother: record.status.blockedRegistration ? {
+          name: 'UNAVAILABLE',
+          nee: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        } : {
           name: record.subjects.mother.name.fullName,
           nee: record.subjects.mother.maidenSurname,
           'birth-place': record.subjects.mother.birthplace,
           occupation: record.subjects.mother.occupation
         },
-        father: {
+        father: record.status.blockedRegistration ? {
+          name: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        } : {
           name: record.subjects.father.name.fullName,
           'birth-place': record.subjects.father.birthplace,
           occupation: record.subjects.father.occupation
         },
-        registered: {
+        registered: record.status.blockedRegistration ? {
+          jointly: 'UNAVAILABLE',
+          district: 'UNAVAILABLE',
+          'sub-district': 'UNAVAILABLE',
+          'admin-area': 'UNAVAILABLE',
+          date: 'UNAVAILABLE'
+        } : {
           jointly: record.subjects.informant.qualification == 'Father, Mother' ? 'Yes' : 'No',
           district: record.location.registrationDistrict,
           'sub-district': record.location.subDistrict,
           'admin-area': record.location.administrativeArea,
           date: formatDate(record.date)
+        },
+        status: {
+          blockedRegistration: record.status.blockedRegistration,
+          cancelled: record.status.cancelled,
+          cautionMark: record.status.cautionMark,
+          courtOrder: record.status.courtOrder,
+          fictitiousBirth: record.status.fictitiousBirth,
+          reRegistered: record.status.reRegistered
+        },
+        previousRegistration: record.status.blockedRegistration ? {
+          date: null,
+          systemNumber: null
+        } : {
+          date: record.previousRegistration.date,
+          systemNumber: record.previousRegistration.systemNumber
         }
       };
     };
