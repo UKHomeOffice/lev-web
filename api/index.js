@@ -16,30 +16,59 @@ module.exports = {
       };
 
       return {
-        'system-number': record.id,
+        'system-number': record.systemNumber,
         surname: record.subjects.child.name.surname,
         forenames: record.subjects.child.name.givenName,
         dob: formatDate(record.subjects.child.dateOfBirth),
-        gender: record.subjects.child.gender,
-        'birth-place': record.location.name,
-        mother: {
-          name: record.subjects.parent1.name.fullName,
-          nee: 'Alice*',
-          'birth-place': 'Manchester*',
-          occupation: 'Engineer*'
+        gender: record.subjects.child.sex,
+        'birth-place': record.status.blockedRegistration ? 'UNAVAILABLE' : record.subjects.child.birthplace,
+        mother: record.status.blockedRegistration ? {
+          name: 'UNAVAILABLE',
+          nee: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        } : {
+          name: record.subjects.mother.name.fullName,
+          nee: record.subjects.mother.maidenSurname,
+          'birth-place': record.subjects.mother.birthplace,
+          occupation: record.subjects.mother.occupation
         },
-        father: {
-          name: record.subjects.parent2.name.fullName,
-          'birth-place': 'Croydon*',
-          occupation: 'Self-employed*'
+        father: record.status.blockedRegistration ? {
+          name: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        } : {
+          name: record.subjects.father.name.fullName,
+          'birth-place': record.subjects.father.birthplace,
+          occupation: record.subjects.father.occupation
         },
-        registered: {
-          jointly: 'No*',
-          district: 'Norfolk*',
-          'sub-district': 'Norwich*',
-          'admin-area': 'Norfolk*',
-          // Note: The API incorrectly returns the DoB in record.date
-          date: formatDate('2008-08-09') + '*'
+        registered: record.status.blockedRegistration ? {
+          jointly: 'UNAVAILABLE',
+          district: 'UNAVAILABLE',
+          'sub-district': 'UNAVAILABLE',
+          'admin-area': 'UNAVAILABLE',
+          date: 'UNAVAILABLE'
+        } : {
+          jointly: record.subjects.informant.qualification == 'Father, Mother' ? 'Yes' : 'No',
+          district: record.location.registrationDistrict,
+          'sub-district': record.location.subDistrict,
+          'admin-area': record.location.administrativeArea,
+          date: formatDate(record.date)
+        },
+        status: {
+          blockedRegistration: record.status.blockedRegistration,
+          cancelled: record.status.cancelled,
+          cautionMark: record.status.cautionMark,
+          courtOrder: record.status.courtOrder,
+          fictitiousBirth: record.status.fictitiousBirth,
+          reRegistered: record.status.reRegistered
+        },
+        previousRegistration: record.status.blockedRegistration ? {
+          date: null,
+          systemNumber: null
+        } : {
+          date: record.previousRegistration.date,
+          systemNumber: record.previousRegistration.systemNumber
         }
       };
     };

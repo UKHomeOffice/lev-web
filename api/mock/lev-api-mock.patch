@@ -7,7 +7,7 @@
 @@ -1,5 +1,7 @@
  'use strict';
  
-+process.title = 'levapimock';
++process.title = 'levapi';
 +
  var app = require('connect')();
  var http = require('http');
@@ -20,7 +20,7 @@
    "main": "index.js",
 +  "scripts": {
 +    "start": "NODE_ENV=development node .",
-+    "stop": "pkill levapimock"
++    "stop": "pkill levapi"
 +  },
    "keywords": [
      "swagger"
