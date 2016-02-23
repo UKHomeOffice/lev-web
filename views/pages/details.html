@@ -23,6 +23,24 @@
 {{/maincontent}}
 
 {{$content}}
+  {{#record.status.blockedRegistration}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.blockedRegistration}}
+  {{#record.status.cancelled}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.cancelled}}
+  {{#record.status.cautionMark}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.cautionMark}}
+  {{#record.status.courtOrder}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.courtOrder}}
+  {{#record.status.fictitiousBirth}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.fictitiousBirth}}
+  {{#record.status.reRegistered}}
+  <div class="flag alert">Record flagged, consider referral.</div>
+  {{/record.status.reRegistered}}
   <table>
     <tbody>
       <tr>

@@ -59,9 +59,9 @@ module.exports = {
           blockedRegistration: record.status.blockedRegistration,
           cancelled: record.status.cancelled,
           cautionMark: record.status.cautionMark,
-          courtOrder: record.status.courtOrder,
+          courtOrder: (record.status.courtOrder == 'None') ? '' : record.status.courtOrder,
           fictitiousBirth: record.status.fictitiousBirth,
-          reRegistered: record.status.reRegistered
+          reRegistered: (record.status.reRegistered == 'None') ? '' : record.status.reRegistered
         },
         previousRegistration: record.status.blockedRegistration ? {
           date: null,

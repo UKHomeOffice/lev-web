@@ -56,6 +56,24 @@
               </tr>
             </tbody>
           </table>
+          {{#status.blockedRegistration}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.blockedRegistration}}
+          {{#status.cancelled}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.cancelled}}
+          {{#status.cautionMark}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.cautionMark}}
+          {{#status.courtOrder}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.courtOrder}}
+          {{#status.fictitiousBirth}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.fictitiousBirth}}
+          {{#status.reRegistered}}
+          <div class="flag alert">Record flagged, consider referral.</div>
+          {{/status.reRegistered}}
         </a>
       </article>
     </li>
