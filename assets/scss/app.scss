@@ -215,3 +215,28 @@ div.search-buttons {
 #global-header #logo:hover, #global-header #logo:focus {
   border-bottom: none;
   padding-bottom: 1px; }
+
+/* Flags */
+.flag {
+  display: block;
+  background-color: #eee;
+  border-left: 10px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.alert {
+  background-color: #fcc;
+  border-left: 10px solid #c00;
+  color: #c00;
+}
+
+#records .flag {
+  display: block;
+  background-color: transparent;
+  border-left: none;
+  padding: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
