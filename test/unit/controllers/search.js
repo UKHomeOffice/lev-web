@@ -93,15 +93,16 @@ describe('controllers/search', function () {
 
       beforeEach(function () {
         Model.prototype.read.returns(Promise.reject(message));
-        promise = searchController.query(req, res);
       });
 
       it('handles the error', function (done) {
-        return promise.catch(function (error) {
-          error.should.be.instanceof(Error);
-          error.message.should.equal(message);
+        var next = function next(err, res, req, next) {
+          err.should.be.instanceof(Error);
+          err.message.should.equal(message);
           done();
-        });
+        };
+
+        searchController.query(req, res, next);
       });
     });
 

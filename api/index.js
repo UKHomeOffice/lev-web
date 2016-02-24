@@ -49,7 +49,7 @@ module.exports = {
           'admin-area': 'UNAVAILABLE',
           date: 'UNAVAILABLE'
         } : {
-          jointly: record.subjects.informant.qualification == 'Father, Mother' ? 'Yes' : 'No',
+          jointly: record.subjects.informant.qualification === 'Father, Mother' ? 'Yes' : 'No',
           district: record.location.registrationDistrict,
           'sub-district': record.location.subDistrict,
           'admin-area': record.location.administrativeArea,
@@ -59,9 +59,9 @@ module.exports = {
           blockedRegistration: record.status.blockedRegistration,
           cancelled: record.status.cancelled,
           cautionMark: record.status.cautionMark,
-          courtOrder: (record.status.courtOrder == 'None') ? '' : record.status.courtOrder,
+          courtOrder: (record.status.courtOrder === 'None') ? '' : record.status.courtOrder,
           fictitiousBirth: record.status.fictitiousBirth,
-          reRegistered: (record.status.reRegistered == 'None') ? '' : record.status.reRegistered
+          reRegistered: (record.status.reRegistered === 'None') ? '' : record.status.reRegistered
         },
         previousRegistration: record.status.blockedRegistration ? {
           date: null,
