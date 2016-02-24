@@ -3,10 +3,11 @@ var config = require('../config');
 
 module.exports = function errorMiddlewareFactory() {
 
+  /*eslint no-unused-vars: 0*/
   return function errorHandler(err, req, res, next) {
     var content = {};
 
-    if (!req.session || !req.session.model) {
+    if (!req.session) {
       err.code = 'SESSION_TIMEOUT';
       content.title = 'Session expired';
       content.message = 'Session expired';
@@ -14,7 +15,7 @@ module.exports = function errorMiddlewareFactory() {
 
     err.template = 'error';
     content.title = content.title || 'Error';
-    content.message = content.message || 'Error';
+    content.message = content.message || err || 'Error';
 
     res.statusCode = err.status || 500;
 
@@ -31,8 +32,6 @@ module.exports = function errorMiddlewareFactory() {
       console.log('Error: ', err);
       res.end();
     }
-
-    next();
   };
 
 };

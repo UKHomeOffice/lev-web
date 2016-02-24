@@ -8,7 +8,7 @@ module.exports = {
     res.render('pages/search', {values: req.query});
   },
 
-  query: function query(req, res) {
+  query: function query(req, res, next) {
     var model = new Model(req.body);
 
     return model
@@ -34,7 +34,7 @@ module.exports = {
           return res.redirect('/results');
         }
 
-        throw (err instanceof(Error)) ? err : new Error(err);
+        next((err instanceof(Error)) ? err : new Error(err), req, res, next);
       });
   }
 };
