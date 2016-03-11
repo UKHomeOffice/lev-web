@@ -12,7 +12,7 @@ To run the server, follow these simple steps:
 
 ```
 npm install
-node .
+npm start
 ```
 
 To view the Swagger UI interface:
