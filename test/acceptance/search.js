@@ -5,7 +5,7 @@ var mockProxy = require('./mock-proxy');
 describe('Search Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/search');
+    browser.url('http://localhost:8001/');
   });
 
   describe('the form', function () {

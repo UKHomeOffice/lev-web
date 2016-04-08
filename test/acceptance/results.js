@@ -5,7 +5,7 @@ var mockProxy = require('./mock-proxy');
 describe('Results page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/search');
+    browser.url('http://localhost:8001/');
   });
 
   describe('When there are no results', function () {
@@ -70,7 +70,7 @@ describe('Results page @watch', function() {
       browser.click('#newSearchLink');
     });
     it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/search');
+      browser.getUrl().should.contain('/');
     });
   });
 
@@ -82,7 +82,7 @@ describe('Results page @watch', function() {
       browser.click('#editSearchLink');
     });
     it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/search');
+      browser.getUrl().should.contain('/');
     });
     it('has the correct form values', function () {
       browser.getValue('#content form > div:nth-child(2) > input').should.equal('Smith');

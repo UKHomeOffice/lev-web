@@ -7,12 +7,6 @@ module.exports = function errorMiddlewareFactory() {
   return function errorHandler(err, req, res, next) {
     var content = {};
 
-    if (!req.session) {
-      err.code = 'SESSION_TIMEOUT';
-      content.title = 'Session expired';
-      content.message = 'Session expired';
-    }
-
     err.template = 'error';
     content.title = content.title || 'Error';
     content.message = content.message || err || 'Error';

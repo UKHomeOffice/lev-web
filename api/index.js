@@ -89,7 +89,7 @@ module.exports = {
           var data;
 
           if (err) {
-            reject(err);
+            return reject(err);
           } else if (res.statusCode !== 200) {
             statusToName = {
               404: 'NotFoundError'
@@ -101,18 +101,12 @@ module.exports = {
               statusError.name = statusToName[res.statusCode];
             }
 
-            reject(statusError);
+            return reject(statusError);
           } else {
             try {
-              data = JSON.parse(body);
+              return resolve({records: callback(JSON.parse(body))});
             } catch (error) {
-              reject(error);
-            }
-
-            if (!data) {
-              reject(new Error('Empty response from API'));
-            } else {
-              resolve({records: callback(data)});
+              return reject(error);
             }
           }
         });
@@ -137,7 +131,7 @@ module.exports = {
         }
 
         ajaxGet(endpoint + '?' + querystring.stringify(params),
-          function singleRecord(data) {
+          function multipleRecords(data) {
             return _.map(data, processRecord);
           });
       }
