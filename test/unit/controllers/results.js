@@ -16,10 +16,10 @@ describe('controllers/results', sinon.test(function () {
 
   beforeEach(sinon.test(function () {
     apiReadStub = this.stub();
-    apiReadStub.withArgs({'system-number': '1234'}).returns(Promise.resolve({records: [{
+    apiReadStub.withArgs({'system-number': '1234'}).returns(Promise.resolve([{
       'system-number': 1234
-    }]}));
-    apiReadStub.withArgs({'surname': 'smiths'}).returns(Promise.resolve({records: records}));
+    }]));
+    apiReadStub.withArgs({'surname': 'smiths'}).returns(Promise.resolve(records));
     apiReadStub.withArgs({'surname': 'unfoundsurname'}).returns(Promise.reject({
       name: 'NotFoundError'
     }));

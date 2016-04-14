@@ -1,19 +1,19 @@
 'use strict';
 
 describe('controllers/details', function() {
-  var apiReadStub;
+  var apiRequestIDStub;
   var api;
   var detailsController;
 
   beforeEach(sinon.test(function () {
-    apiReadStub = this.stub();
-    apiReadStub.withArgs({'system-number': '1234'}).returns(Promise.resolve({records: []}));
-    apiReadStub.withArgs({'system-number': 'error'}).returns(Promise.reject('error'));
+    apiRequestIDStub = this.stub();
+    apiRequestIDStub.withArgs('1234').returns(Promise.resolve({records: []}));
+    apiRequestIDStub.withArgs('error').returns(Promise.reject('error'));
 
     detailsController = require('../../../controllers/details');
 
     api = require('../../../api');
-    api.read = apiReadStub;
+    api.requestID = apiRequestIDStub;
   }));
 
   describe('when called', function() {
@@ -36,9 +36,7 @@ describe('controllers/details', function() {
     it('calls the api with the request GET params', function() {
       detailsController(req, res);
 
-      api.read.should.have.been.calledWith({
-        'system-number': req.params.sysnum
-      });
+      api.requestID.should.have.been.calledWith(req.params.sysnum);
     });
 
     it('redirects to / with no GET params', function () {

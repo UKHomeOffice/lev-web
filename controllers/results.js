@@ -7,9 +7,8 @@ module.exports = {
 
   query: function query(req, res, next) {
     if (req.query && (req.query.surname || req.query['system-number'])) {
-      return api.read(req.query)
-        .then(function resolved(result) {
-          var records = result.records;
+      api.read(req.query)
+        .then(function resolved(records) {
           if (records.length === 1) {
             res.redirect('/details/' + records[0]['system-number']);
           } else {
