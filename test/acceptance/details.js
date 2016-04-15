@@ -41,7 +41,7 @@ describe('Details Page @watch', function() {
   };
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/search');
+    browser.url('http://localhost:8001/');
     browser.setValue('input[name="surname"]', 'Smith');
   });
 
@@ -73,27 +73,27 @@ describe('Details Page @watch', function() {
 
   describe('When I select the "New search" button', function () {
     beforeEach(function () {
-      browser.url('http://localhost:8001/search');
+      browser.url('http://localhost:8001/');
       browser.setValue('input[name="surname"]', 'Smith');
       browser.setValue('input[name="forenames"]', 'John Francis');
       browser.submitForm('form');
       browser.click('#newSearchLink');
     });
     it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/search');
+      browser.getUrl().should.contain('/');
     });
   });
 
   describe('When I select the "Edit search" link', function () {
     beforeEach(function () {
-      browser.url('http://localhost:8001/search');
+      browser.url('http://localhost:8001/');
       browser.setValue('input[name="surname"]', 'Smith');
       browser.setValue('input[name="forenames"]', 'John Francis');
       browser.submitForm('form');
       browser.click('#editSearchLink');
     });
     it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/search');
+      browser.getUrl().should.contain('/');
     });
     it('has the correct form values', function () {
       browser.getValue('#content form > div:nth-child(2) > input').should.equal('Smith');

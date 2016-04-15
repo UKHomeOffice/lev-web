@@ -1,4 +1,4 @@
-<form action="{{action}}" method="POST" {{$encoding}}{{/encoding}} autocomplete="off" novalidate="true" spellcheck="false">
+<form action="{{action}}" method="GET" {{$encoding}}{{/encoding}} autocomplete="off" novalidate="true" spellcheck="false">
   {{$form}}{{/form}}
   {{#csrf-token}}
     <input type="hidden" name="x-csrf-token" value="{{csrf-token}}" />

@@ -1,63 +1,71 @@
 'use strict';
 
-var proxyquire = require('proxyquire');
+describe('controllers/details', function() {
+  var apiRequestIDStub;
+  var api;
+  var detailsController;
 
-describe('controllers/details', function () {
-  var Model = sinon.stub();
-  Model.prototype.get = sinon.stub();
-  Model.prototype.toJSON = sinon.stub();
-  var detailsController = proxyquire('../../../controllers/details', {
-    '../models': Model
-  });
+  beforeEach(sinon.test(function () {
+    apiRequestIDStub = this.stub();
+    apiRequestIDStub.withArgs('1234').returns(Promise.resolve({records: []}));
+    apiRequestIDStub.withArgs('error').returns(Promise.reject('error'));
 
-  describe('when called', function () {
+    detailsController = require('../../../controllers/details');
 
+    api = require('../../../api');
+    api.requestID = apiRequestIDStub;
+  }));
+
+  describe('when called', function() {
     var req;
     var res;
 
-    beforeEach(function () {
-      req = {session: {model: {}}};
-      res = {render: sinon.spy()};
-    });
+    beforeEach(sinon.test(function() {
+      req = {
+        params: {
+          sysnum: '1234'
+        }
+      };
 
-    it('calls the Model with the session model attributes', function () {
-      var records = [{foo: 'foo'}];
-      Model.prototype.get.withArgs('records').returns(records);
+      res = {
+        render: this.spy(),
+        redirect: this.spy()
+      };
+    }));
 
+    it('calls the api with the request GET params', function() {
       detailsController(req, res);
 
-      Model.should.have.been.calledWithExactly(req.session.model);
+      api.requestID.should.have.been.calledWith(req.params.sysnum);
     });
 
-    describe('renders the details page', function () {
+    it('redirects to / with no GET params', function () {
+      detailsController({}, res);
 
-      it('with the record', function () {
-        var records = [{foo: 'foo'}];
-        var query = {bar: 'baz'};
-        Model.prototype.get.withArgs('records').returns(records);
-        Model.prototype.get.withArgs('query').returns(query);
+      res.redirect.should.have.been.calledWith('/');
+    });
 
+    describe('resolved promise', function() {
+
+      it('renders the details page', function() {
         detailsController(req, res);
 
-        res.render.should.have.been.calledWithExactly('pages/details', {
-          record: records[0],
-          querystring: 'bar=baz'
+        return Promise.resolve().then(function () {
+          res.render.should.have.been.calledWith('pages/details');
         });
       });
 
-      it('with a record containing the system-number', function () {
-        var records = [{'system-number': 0}, {'system-number': 12345}];
-        var query = {bar: 'baz'};
-        req.params = {sysnum: '12345'};
-        Model.prototype.get.withArgs('records').returns(records);
-        Model.prototype.toJSON.returns({records: records});
-        Model.prototype.get.withArgs('query').returns(query);
+    });
+
+    describe('rejected promise', function() {
+
+      it('renders the error page', function() {
+        req.params.sysnum = 'error';
 
         detailsController(req, res);
 
-        res.render.should.have.been.calledWithExactly('pages/details', {
-          record: records[1],
-          querystring: 'bar=baz'
+        return Promise.resolve().then(function () {
+          res.render.should.have.been.calledWith('pages/error');
         });
       });
 
