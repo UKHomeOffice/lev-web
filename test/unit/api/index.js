@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var proxyquire = require('proxyquire');
 var response = {
   'date': '2008-08-09',
@@ -87,29 +88,36 @@ var parsedResponse = {
   dob: '08/08/2008',
   gender: 'Indeterminate',
   'birth-place': 'Kensington',
-  mother:
-   { name: 'Joan Narcissus Ouroboros Smith',
-     nee: 'Black',
-     'birth-place': 'Kensington',
-     occupation: 'Carpenter' },
-  father:
-   { name: 'Joan Narcissus Ouroboros Smith',
-     'birth-place': 'Kensington',
-     occupation: 'Carpenter' },
-  registered:
-   { jointly: 'No',
-     district: 'Manchester',
-     'sub-district': 'Manchester',
-     'admin-area': 'Metropolitan District of Manchester',
-     date: '09/08/2008' },
-  status:
-   { blockedRegistration: false,
-     cancelled: false,
-     cautionMark: false,
-     courtOrder: '',
-     fictitiousBirth: false,
-     reRegistered: '' },
-  previousRegistration: { date: '2008-08-09', systemNumber: 1 }
+  mother: {
+   name: 'Joan Narcissus Ouroboros Smith',
+   nee: 'Black',
+   'birth-place': 'Kensington',
+   occupation: 'Carpenter'
+  },
+  father: {
+    name: 'Joan Narcissus Ouroboros Smith',
+    'birth-place': 'Kensington',
+    occupation: 'Carpenter'
+  },
+  registered: {
+    jointly: 'No',
+    district: 'Manchester',
+    'sub-district': 'Manchester',
+    'admin-area': 'Metropolitan District of Manchester',
+    date: '09/08/2008'
+  },
+  status: {
+    blockedRegistration: false,
+    cancelled: false,
+    cautionMark: false,
+    courtOrder: '',
+    fictitiousBirth: false,
+    reRegistered: ''
+  },
+  previousRegistration: {
+    date: '2008-08-09',
+    systemNumber: 1
+  }
 };
 
 describe('api', function() {
@@ -123,17 +131,20 @@ describe('api', function() {
     request.get = requestGet;
     api = proxyquire('../../../api', {
       request: request,
-      '../config': config
+      '../config': _.extend(config, {
+        api: {
+          host: 'testhost.com',
+          port: 1111
+        }
+      })
     });
   }));
 
   describe('resolved promise', function() {
 
     describe('configuring', function() {
-      it('GETs the configed url for system-number', function() {
-        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-        config.api.host = 'testhost.com';
-        config.api.port = 1111;
+      it('GETs the configured url for system-number', function() {
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
@@ -142,10 +153,8 @@ describe('api', function() {
         });
       });
 
-      it('GETs the configed url for surname', function() {
-        requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-        config.api.host = 'testhost.com';
-        config.api.port = 1111;
+      it('GETs the configured url for surname', function() {
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response]));
 
         return api.read({
           'surname': 'smith'
@@ -157,28 +166,28 @@ describe('api', function() {
 
     describe('GET with system-number', function() {
       it('gives back one record', function() {
-        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
         }).then(function(data) {
-          data.records.length.should.equal(1);
-          data.records[0]['system-number'].should.equal(1);
-          data.records[0].should.eql(parsedResponse);
+          data.length.should.equal(1);
+          data[0]['system-number'].should.equal(1);
+          data[0].should.eql(parsedResponse);
         });
       });
     });
 
     describe('GET with surname', function() {
       it('gives back one record', function() {
-        requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response, response]));
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response, response]));
 
         return api.read({
           'surname': 'smith'
         }).then(function(data) {
-          data.records.length.should.equal(2);
-          data.records[0]['system-number'].should.equal(1);
-          data.records[0].should.eql(parsedResponse);
+          data.length.should.equal(2);
+          data[0]['system-number'].should.equal(1);
+          data[0].should.eql(parsedResponse);
         });
       });
     });
@@ -208,7 +217,7 @@ describe('api', function() {
     });
 
     it('rejects the promise if the JSON cannot be parsed', function() {
-      requestGet.yields(null, { statusCode: 200 }, '<not><json></json></not>');
+      requestGet.yields(null, {statusCode: 200}, '<not><json></json></not>');
 
       return api.read({
         'system-number': '1234'
@@ -216,7 +225,7 @@ describe('api', function() {
     });
 
     it('rejects the promise if the JSON Object does not contain the correct fields', function() {
-      requestGet.yields(null, { statusCode: 200 }, JSON.stringify({not: 'enough data'}));
+      requestGet.yields(null, {statusCode: 200}, JSON.stringify({not: 'enough data'}));
 
       return api.read({
         'system-number': '1234'
