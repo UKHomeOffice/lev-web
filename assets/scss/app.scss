@@ -240,3 +240,11 @@ div.search-buttons {
   font-weight: bold;
 }
 
+#nav {
+  display: block;
+  text-align: right;
+
+  .button {
+    margin: 0;
+  }
+}

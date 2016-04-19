@@ -22,6 +22,12 @@ app.use(function setBaseUrl(req, res, next) {
   next();
 });
 
+app.use(function setAbsoluteBaseUrl(req, res, next) {
+  res.locals.absoluteBaseUrl = req.protocol + '://' + req.get('host') + req.baseUrl;
+  res.locals.absoluteBaseUrlEscaped = encodeURIComponent(res.locals.absoluteBaseUrl);
+  next();
+});
+
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, './views'));
 require('hmpo-govuk-template').setup(app);
