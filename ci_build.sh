@@ -60,7 +60,6 @@ if [ ${ok} -ne 0 ]; then
   echo "Failed build"
   exit 1
 else
-  mkdir -p artefacts
   echo -n "$(git rev-parse HEAD)">artefacts/gitrev
   echo -n "${VERSION}">artefacts/lev-web_version
   echo "Completed build"
