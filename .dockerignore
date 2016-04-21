@@ -6,7 +6,7 @@ public
 *.log
 .DS_Store
 do
-artefacts
 
+artefacts
 Dockerfile
 api/mock/node_modules
