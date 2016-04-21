@@ -10,11 +10,11 @@ RUN mkdir -p /app/mock
 
 WORKDIR /app/api/mock
 COPY ./api/mock/package.json /app/api/mock/
-RUN npm install
+RUN npm install --quiet
 
 WORKDIR /app
 COPY ./package.json /app/
-RUN npm install
+RUN npm install --quiet
 
 COPY . /app
 

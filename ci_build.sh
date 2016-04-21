@@ -19,13 +19,12 @@ PACKAGE_VERSION=$(grep version package.json \
 # This will work even when build number set to empty string...
 VERSION="v${PACKAGE_VERSION}-${BUILD_NUMBER:-local}"
 TAG=${REGISTRY}/${IMAGE}:${VERSION}
-export DOCKER_CMD="docker build -t ${TAG} ."
 
 # Functions
 # ======================================================================
 function build_image {
   echo "Starting docker image build with params:'$@'..."
-  ${DOCKER_CMD} || ${DOCKER_CMD}
+  docker build -t ${TAG} .
   return $?
 }
 
