@@ -17,7 +17,6 @@ What things you need to install the software and how to install them
 
 ## Running the tests
 
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
