@@ -125,17 +125,21 @@ describe('api', function() {
   var request = require('request');
   var config = require('../../../config');
   var requestGet;
+  var requestPost;
 
   beforeEach(sinon.test(function() {
     requestGet = this.stub();
     request.get = requestGet;
+    requestPost = this.stub();
+    request.post = requestPost;
     api = proxyquire('../../../api', {
       request: request,
       '../config': _.extend(config, {
         api: {
           host: 'testhost.com',
           port: 1111
-        }
+        },
+        oauth: {}
       })
     });
   }));
@@ -162,6 +166,65 @@ describe('api', function() {
           request.get.should.have.been.calledWith('http://testhost.com:1111/api/v0/events/birth?lastname=smith');
         });
       });
+
+      it('Uses oAuth2 authorization it oAuth2 environment variables are set', function() {
+        var successfulAuthResponse = {
+          "access_token": "access_token",
+          "expires_in": 300,
+          "refresh_expires_in": 1800,
+          "refresh_token": "xxxx",
+          "token_type": "bearer",
+          "id_token": "yyyy",
+          "not-before-policy": 0,
+          "session_state": "zzzz"
+        };
+
+        api = proxyquire('../../../api', {
+          request: request,
+          '../config': _.extend(config, {
+            api: {
+              host: 'testhost.com',
+              port: 1111
+            },
+            oauth: {
+              oauthUrl: 'http://oauthserver.com',
+              clientId: 'clientId',
+              clientSecret: 'clientSecret',
+              username: 'username',
+              password: 'password'
+            }
+          })
+        });
+
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response]));
+        requestPost.yields(null, {statusCode: 200}, JSON.stringify(successfulAuthResponse));
+
+        var expectedBase64Auth = new Buffer("clientId:clientSecret").toString('base64');
+        var expectedAuthHeader = "Basic " + expectedBase64Auth;
+        var expectedOAuthRequest = {
+          url: "http://oauthserver.com",
+          form: {
+            grant_type: "password",
+            username: "username",
+            password: "password"
+          },
+          headers: {
+            Authorization: expectedAuthHeader
+          }
+        };
+
+        return api.read({
+          'surname': 'smith'
+        }).then(function() {
+          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.get.should.have.been.calledWith({
+            url: 'http://testhost.com:1111/api/v0/events/birth?lastname=smith',
+            headers: {
+              Authorization: "Bearer access_token"
+            }
+          });
+        });
+      })
     });
 
     describe('GET with system-number', function() {

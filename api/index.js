@@ -3,8 +3,22 @@
 var _ = require('underscore');
 var config = require('../config');
 var request = require('request');
+var requestWithOAuth2 = require('../lib/requestWithOAuth2');
 var querystring = require('querystring');
 var moment = require('moment');
+
+var oauthUrl;
+var clientId;
+var clientSecret;
+var oAuthUsername;
+var oAuthPassword;
+if (config.oauth) {
+  oauthUrl = config.oauth.oauthUrl;
+  clientId = config.oauth.clientId;
+  clientSecret = config.oauth.clientSecret;
+  oAuthUsername = config.oauth.username;
+  oAuthPassword = config.oauth.password;
+}
 
 var processRecord = function processRecord(record) {
   var formatDate = function formatDate(date) {
@@ -69,41 +83,42 @@ var processRecord = function processRecord(record) {
   };
 };
 
-var endpoint = 'http://' + config.api.host + ':' + config.api.port +
-               '/api/v0/events/birth';
+var endpoint = 'http://' + config.api.host + ':' + config.api.port + '/api/v0/events/birth';
 
 var requestData = function requestData(url, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
-      return request.get(url, function requestGet(err, res, body) {
-        var statusToName;
-        var statusError;
-        var r;
+    return requestWithOAuth2.get(url, oauthUrl, clientId, clientSecret, oAuthUsername, oAuthPassword,
+      function requestGet(err, res, body) {
+      var statusToName;
+      var statusError;
+      var r;
 
-        if (err) {
-          return reject(err);
-        } else if (res.statusCode !== 200) {
-          statusToName = {
-            404: 'NotFoundError'
-          };
+      if (err) {
+        return reject(err);
+      } else if (res.statusCode !== 200) {
+        statusToName = {
+          404: 'NotFoundError',
+          401: 'NotAuthorized'
+        };
 
-          statusError = new Error('Received status code "' + res.statusCode + '" from API');
+        statusError = new Error('Received status code "' + res.statusCode + '" from API');
 
-          if (statusToName[res.statusCode]) {
-            statusError.name = statusToName[res.statusCode];
-          }
-
-          r = reject(statusError);
-        } else {
-          try {
-            r = resolve(callback(JSON.parse(body)));
-          } catch (error) {
-            r = reject(error);
-          }
+        if (statusToName[res.statusCode]) {
+          statusError.name = statusToName[res.statusCode];
         }
 
-        return r;
-      });
+        r = reject(statusError);
+      } else {
+        try {
+          r = resolve(callback(JSON.parse(body)));
+        } catch (error) {
+          r = reject(error);
+        }
+      }
+
+      return r;
     });
+  });
 };
 
 module.exports = {

@@ -17,9 +17,16 @@ module.exports = {
   api: {
     real: api,
     host: process.env.NODE_ENV === 'acceptance' ? 'localhost' : api.host,
-    port: process.env.NODE_ENV === 'acceptance' ? 8081 : api.port,
+    port: process.env.NODE_ENV === 'acceptance' ? 8081 : api.port
   },
   session: {
-    secret: process.env.SESSION_SECRET || 'secret',
+    secret: process.env.SESSION_SECRET || 'secret'
+  },
+  oauth: {
+    oauthUrl: process.env.OAUTH_URL,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    username: process.env.KEYCLOAK_U,
+    password: process.env.KEYCLOAK_P
   }
 };
