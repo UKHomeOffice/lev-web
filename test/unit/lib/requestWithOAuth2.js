@@ -87,6 +87,18 @@ describe('a get request', function () {
     });
   });
 
+  it('Will return the error from the oAuth request if there is one', function (done) {
+    //First call to oAuth server
+    requestPost.yields(null, {statusCode: 400}, {});
+    //First call to URL
+    requestWithOAuth2.get("http://testhost.com", "http://oauthserver.com", "clientId", "clientSecret", "username", "password", function (err, res, body) {
+      request.post.should.have.been.calledWith(expectedOAuthRequest);
+      sinon.assert.notCalled(request.get);
+      assert(res.statusCode == 400, "Status code not 400 as expected");
+      done();
+    });
+  });
+
   it("Will re-authenticate with the oAuth server if a response comes back with unauthorized", function (done) {
     var expectedTesthostRequestWithNewToken = {
       url: "http://testhost.com",
