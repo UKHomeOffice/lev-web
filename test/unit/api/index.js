@@ -136,6 +136,7 @@ describe('api', function() {
       request: request,
       '../config': _.extend(config, {
         api: {
+          protocol: 'http',
           host: 'testhost.com',
           port: 1111
         },
@@ -167,7 +168,7 @@ describe('api', function() {
         });
       });
 
-      it('Uses oAuth2 authorization it oAuth2 environment variables are set', function() {
+      it('Uses oAuth2 authorization if oAuth2 environment variables are set', function() {
         var successfulAuthResponse = {
           "access_token": "access_token",
           "expires_in": 300,
@@ -183,6 +184,7 @@ describe('api', function() {
           request: request,
           '../config': _.extend(config, {
             api: {
+              protocol: 'http',
               host: 'testhost.com',
               port: 1111
             },

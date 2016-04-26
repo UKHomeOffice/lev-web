@@ -83,7 +83,9 @@ var processRecord = function processRecord(record) {
   };
 };
 
-var endpoint = 'http://' + config.api.host + ':' + config.api.port + '/api/v0/events/birth';
+var endpoint = config.api.protocol + '://' +
+               config.api.host + ':' + config.api.port +
+               '/api/v0/events/birth';
 
 var requestData = function requestData(url, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
