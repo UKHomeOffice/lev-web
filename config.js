@@ -17,7 +17,7 @@ module.exports = {
   listen_host: process.env.LISTEN_HOST || '0.0.0.0',
   api: {
     real: api,
-    protocol: process.env.NODE_ENV === 'acceptance' ? 'http' : api.host,
+    protocol: process.env.NODE_ENV === 'acceptance' ? 'http' : api.protocol,
     host: process.env.NODE_ENV === 'acceptance' ? 'localhost' : api.host,
     port: process.env.NODE_ENV === 'acceptance' ? 8081 : api.port
   },
