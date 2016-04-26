@@ -4,6 +4,7 @@
 /*eslint camelcase: 0*/
 /*eslint no-multi-spaces: 0*/
 var api = {
+  protocol: process.env.API_PROTOCOL || 'http',
   host: process.env.API_PORT_8080_TCP_ADDR || process.env.API_HOST || 'localhost',
   port: process.env.API_PORT_8080_TCP_POST || process.env.API_PORT || 8080
 };
@@ -16,6 +17,7 @@ module.exports = {
   listen_host: process.env.LISTEN_HOST || '0.0.0.0',
   api: {
     real: api,
+    protocol: process.env.NODE_ENV === 'acceptance' ? 'http' : api.host,
     host: process.env.NODE_ENV === 'acceptance' ? 'localhost' : api.host,
     port: process.env.NODE_ENV === 'acceptance' ? 8081 : api.port
   },
