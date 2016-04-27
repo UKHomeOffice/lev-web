@@ -1,5 +1,6 @@
 'use strict';
 var config = require('../config');
+var logger = require('../lib/logger');
 
 module.exports = function errorMiddlewareFactory() {
 
@@ -8,10 +9,12 @@ module.exports = function errorMiddlewareFactory() {
     var content = {};
 
     err.template = 'error';
-    content.title = content.title || 'Error';
-    content.message = content.message || err || 'Error';
+    content.title = content.title || err.error || 'Error';
+    content.message = content.message || err.message || err || 'Error';
 
     res.statusCode = err.status || 500;
+
+    logger.error(err);
 
     if (res.render) {
       res.render('pages/' + err.template, {
@@ -21,9 +24,7 @@ module.exports = function errorMiddlewareFactory() {
         startLink: req.path ? req.path.replace(/^\/([^\/]*).*$/, '') : ''
       });
     } else {
-      // Cannot render so log to the console
-      /*eslint no-console: 0*/
-      console.log('Error: ', err);
+      // Cannot render
       res.end();
     }
   };
