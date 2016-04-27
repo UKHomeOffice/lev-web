@@ -6,7 +6,7 @@ public
 *.log
 .DS_Store
 do
+api/mock/lev-api-docs
 
 artefacts
 Dockerfile
-api/mock/node_modules
