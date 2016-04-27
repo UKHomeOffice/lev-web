@@ -23,8 +23,7 @@ app.use(function hijackRes(req, response, next) {
       res.unhijack();
       return next(err);
     }
-
-    if (/\/json$/.test(res.getHeader('Content-Type'))) {
+    if (/\/json/.test(res.getHeader('Content-Type'))) {
       res.removeHeader('Content-Length');
       res.writeHead(res.statusCode);
 
