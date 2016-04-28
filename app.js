@@ -4,13 +4,16 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var config = require('./config');
+var logger = require('./lib/logger');
+var churchill = require('churchill');
 
 process.title = 'levweb';
 
-// FIXME: Remove ' || true' once nginx is in place
-if (config.env === 'development' || config.env === 'acceptance' || true) {
-  app.use('/public', express.static(path.resolve(__dirname, './public')));
+if (config.env !== 'acceptance') {
+  app.use(churchill(logger));
 }
+
+app.use('/public', express.static(path.resolve(__dirname, './public')));
 
 app.use(function setAssetPath(req, res, next) {
   res.locals.assetPath = '/public';
@@ -39,5 +42,4 @@ require('./routes')(app);
 app.use(require('./middleware/error')());
 
 app.listen(config.port, config.listen_host);
-/*eslint no-console: 0*/
-console.log('App listening on port', config.port);
+logger.info('App listening on port', config.port);
