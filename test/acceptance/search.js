@@ -2,11 +2,12 @@
 
 var mockProxy = require('./mock-proxy');
 var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
 describe('Search Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
   });
 
   describe('the form', function () {

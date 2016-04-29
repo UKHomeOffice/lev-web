@@ -2,17 +2,20 @@
 
 var mockProxy = require('./mock-proxy');
 var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
 describe('Results page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
+    console.log("WHAT IF I GET THE URL HERE?: "+browser.getUrl())
   });
 
   describe('When there are no results', function () {
 
     beforeEach(function () {
       mockProxy.willReturn(0);
+      console.log("WHAT IF I GET THE URL HERE 222222222222?: "+browser.getUrl())
       browser.setValue('input[name="surname"]', 'Churchil');
       browser.setValue('input[name="forenames"]', 'Winston');
       browser.setValue('input[name="dob"]', '30/11/1874');

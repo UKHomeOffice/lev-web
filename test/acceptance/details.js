@@ -2,8 +2,9 @@
 
 var mockProxy = require('./mock-proxy');
 var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
-describe('Details Page @watch', function() {
+describe('Details Page', function() {
 
   var urlShouldContainDetails = function urlShouldContainDetails() {
     it('the url should contain /details', function () {
@@ -21,28 +22,28 @@ describe('Details Page @watch', function() {
     it('the complete record is displayed in a table', function () {
       browser.getText('table tr')
         .should.deep.equal([
-          'System number ' + expectedRecord.systemNumber,
-          'Surname ' + expectedRecord.subjects.child.name.surname,
-          'Forename(s) ' + expectedRecord.subjects.child.name.givenName,
-          'Date of birth ' + expectedRecord.subjects.child.dateOfBirth,
-          'Sex ' + expectedRecord.subjects.child.sex,
-          'Place of birth ' + expectedRecord.subjects.child.birthplace,
-          'Mother ' + expectedRecord.subjects.mother.name.fullName,
-          'Maiden name ' + expectedRecord.subjects.mother.maidenSurname,
-          'Place of birth ' + expectedRecord.subjects.mother.birthplace,
-          'Father ' + expectedRecord.subjects.father.name.fullName,
-          'Place of birth ' + expectedRecord.subjects.father.birthplace,
-          'Birth jointly registered No',
-          'Registration district ' + expectedRecord.location.registrationDistrict,
-          'Sub-district ' + expectedRecord.location.subDistrict,
-          'Administrative area ' + expectedRecord.location.administrativeArea,
-          'Date of registration ' + expectedRecord.date
+          'System number' + expectedRecord.systemNumber,
+          'Surname' + expectedRecord.subjects.child.name.surname,
+          'Forename(s)' + expectedRecord.subjects.child.name.givenName,
+          'Date of birth' + expectedRecord.subjects.child.dateOfBirth,
+          'Sex' + expectedRecord.subjects.child.sex,
+          'Place of birth' + expectedRecord.subjects.child.birthplace,
+          'Mother' + expectedRecord.subjects.mother.name.fullName,
+          'Mothers Maiden name' + expectedRecord.subjects.mother.maidenSurname,
+          'Mothers Place of birth' + expectedRecord.subjects.mother.birthplace,
+          'Father' + expectedRecord.subjects.father.name.fullName,
+          'Fathers Place of birth' + expectedRecord.subjects.father.birthplace,
+          'Birth jointly registeredNo',
+          'Registration district' + expectedRecord.location.registrationDistrict,
+          'Registration Sub-district' + expectedRecord.location.subDistrict,
+          'Registration Administrative area' + expectedRecord.location.administrativeArea,
+          'Date of registration' + expectedRecord.date
         ]);
     });
   };
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
     browser.setValue('input[name="surname"]', expectedRecord.subjects.child.originalName.surname);
   });
 
@@ -74,7 +75,7 @@ describe('Details Page @watch', function() {
 
   describe('When I select the "New search" button', function () {
     beforeEach(function () {
-      browser.url('http://localhost:8001/');
+      browser.url(testConfig.url);
       browser.setValue('input[name="surname"]', expectedRecord.subjects.child.originalName.surname);
       browser.setValue('input[name="forenames"]', expectedRecord.subjects.child.originalName.givenName);
       browser.submitForm('form');
@@ -87,7 +88,7 @@ describe('Details Page @watch', function() {
 
   describe('When I select the "Edit search" link', function () {
     beforeEach(function () {
-      browser.url('http://localhost:8001/');
+      browser.url(testConfig.url);
       browser.setValue('input[name="surname"]', 'NotRealPersonSurname');
       browser.setValue('input[name="forenames"]', 'NotRealPersonForename');
       browser.submitForm('form');
