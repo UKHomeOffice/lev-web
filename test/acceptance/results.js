@@ -1,17 +1,21 @@
 'use strict';
 
 var mockProxy = require('./mock-proxy');
+var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
 describe('Results page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
+    console.log("WHAT IF I GET THE URL HERE?: "+browser.getUrl())
   });
 
   describe('When there are no results', function () {
 
     beforeEach(function () {
       mockProxy.willReturn(0);
+      console.log("WHAT IF I GET THE URL HERE 222222222222?: "+browser.getUrl())
       browser.setValue('input[name="surname"]', 'Churchil');
       browser.setValue('input[name="forenames"]', 'Winston');
       browser.setValue('input[name="dob"]', '30/11/1874');
@@ -32,8 +36,8 @@ describe('Results page @watch', function() {
 
     beforeEach(function () {
       mockProxy.willReturn(3);
-      browser.setValue('input[name="surname"]', 'Smith');
-      browser.setValue('input[name="forenames"]', 'Joan Narcissus Ouroboros');
+      browser.setValue('input[name="surname"]', expectedRecord.subjects.child.originalName.surname);
+      browser.setValue('input[name="forenames"]', expectedRecord.subjects.child.originalName.givenName);
       browser.submitForm('form');
     });
 
@@ -42,21 +46,21 @@ describe('Results page @watch', function() {
     });
 
     it('displays an appropriate message', function () {
-      browser.getText('h1').should.equal('3 records found for Joan Narcissus Ouroboros Smith');
+      browser.getText('h1').should.equal('3 records found for ' + expectedRecord.subjects.child.originalName.fullName);
     });
 
     it('displays a subset of each record in a list', function () {
       browser.getText('#records li tr')
         .should.deep.equal([
-          'Place of birth Kensington',
-          'Father Joan Narcissus Ouroboros Smith',
-          'Mother Joan Narcissus Ouroboros Smith',
-          'Place of birth Kensington',
-          'Father Joan Narcissus Ouroboros Smith',
-          'Mother Joan Narcissus Ouroboros Smith',
-          'Place of birth Kensington',
-          'Father Joan Narcissus Ouroboros Smith',
-          'Mother Joan Narcissus Ouroboros Smith'
+          'Place of birth ' + expectedRecord.subjects.child.birthplace,
+          'Father ' + expectedRecord.subjects.father.name.fullName,
+          'Mother ' + expectedRecord.subjects.mother.name.fullName,
+          'Place of birth ' + expectedRecord.subjects.child.birthplace,
+          'Father ' + expectedRecord.subjects.father.name.fullName,
+          'Mother ' + expectedRecord.subjects.mother.name.fullName,
+          'Place of birth ' + expectedRecord.subjects.child.birthplace,
+          'Father ' + expectedRecord.subjects.father.name.fullName,
+          'Mother ' + expectedRecord.subjects.mother.name.fullName
         ]);
     });
 

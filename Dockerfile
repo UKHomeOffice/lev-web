@@ -2,7 +2,7 @@ FROM quay.io/ukhomeofficedigital/nodejs-base:v4.4.2
 
 RUN yum clean all && \
     yum update -y && \
-    yum install -y git make gcc-c++ psmisc && \
+    yum install -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
     yum clean all && \
     rpm --rebuilddb && \
     mkdir -p /app/mock
@@ -22,7 +22,7 @@ RUN npm run postinstall && \
     npm test && \
     npm prune --production && \
     rm -rf ./api/mock && \
-    yum erase -y git make gcc-c++ psmisc && \
+    yum erase -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
     yum clean all && \
     rpm --rebuilddb && \
 

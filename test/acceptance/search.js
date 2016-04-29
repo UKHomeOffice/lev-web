@@ -1,11 +1,13 @@
 'use strict';
 
 var mockProxy = require('./mock-proxy');
+var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
 describe('Search Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
   });
 
   describe('the form', function () {
@@ -52,8 +54,8 @@ describe('Search Page @watch', function() {
 
       beforeEach(function () {
         mockProxy.willReturn(1);
-        browser.setValue('input[name="surname"]', 'Smith');
-        browser.setValue('input[name="forenames"]', 'John Francis');
+        browser.setValue('input[name="surname"]', expectedRecord.subjects.child.originalName.surname);
+        browser.setValue('input[name="forenames"]', expectedRecord.subjects.child.originalName.givenName);
         browser.submitForm('form');
       });
 
