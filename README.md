@@ -17,6 +17,21 @@ What things you need to install the software and how to install them
 
 ## Running the tests
 
+### Locally
+```bash
+npm test
+```
+
+### Acceptance tests against a server
+```bash
+ENV=dev TEST_URL=http://lev-web-dev.dsp.notprod.homeoffice.gov.uk USERNAME=xxxx PASSWORD=xxxx npm run chimp
+```
+OR
+```
+docker build -f ./E2E_test_Dockerfile -t lev-web-e2e-tests .
+docker run --rm -e ENV=dev -e TEST_URL=http://lev-web-dev.dsp.notprod.homeoffice.gov.uk -e USERNAME=xxxx -e PASSWORD=xxxx lev-web-e2e-tests
+```
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.

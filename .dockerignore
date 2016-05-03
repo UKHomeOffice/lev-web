@@ -10,3 +10,4 @@ api/mock/lev-api-docs
 
 artefacts
 Dockerfile
+E2E_test_Dockerfile
