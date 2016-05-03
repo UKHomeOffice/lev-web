@@ -28,6 +28,7 @@ app.use(function setBaseUrl(req, res, next) {
 app.use(function setAbsoluteBaseUrl(req, res, next) {
   res.locals.absoluteBaseUrl = req.protocol + '://' + req.get('host') + req.baseUrl;
   res.locals.absoluteBaseUrlEscaped = encodeURIComponent(res.locals.absoluteBaseUrl);
+  res.locals.keycloakRealm = config.keycloakRealm;
   next();
 });
 
