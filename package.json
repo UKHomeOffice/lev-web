@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
-    "chimp": "^0.20.2",
+    "chimp": "^0.34.1",
     "churchill": "0.0.5",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
