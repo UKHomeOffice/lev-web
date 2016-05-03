@@ -70,7 +70,7 @@ app.use(function proxy(req, res) {
 var server;
 
 module.exports = {
-  willReturn: function setWillReturn(items) {
+  willReturnForLocalTests: function setWillReturn(items) {
     willReturn = items;
   },
 

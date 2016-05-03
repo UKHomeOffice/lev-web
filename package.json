@@ -14,7 +14,7 @@
     "start:mockapi": "cd api/mock/lev-api-docs && ./node_modules/drakov/drakov -f lev-api.md -p 8080 --discover --stealthmode; echo",
     "stop:mockapi": "fuser -k 8080/tcp",
     "stop:all": "npm stop && npm run stop:mockapi",
-    "chimp": "NODE_ENV=acceptance chimp --mocha --path=./test/acceptance/ --browser=phantomjs",
+    "chimp": "NODE_ENV=acceptance chimp --mocha --browser=htmlunit --path=./test/acceptance/",
     "chimp:dev": "NODE_ENV=acceptance chimp --mocha --path=./test/acceptance/ --watch --browser=firefox",
     "lint": "eslint .",
     "style": "jscs **/*.js --config=./.jscsrc.json",
@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
-    "chimp": "^0.20.2",
     "churchill": "0.0.5",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
@@ -42,6 +41,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.3.0",
+    "chimp": "^0.34.0",
     "eslint": "^0.23.0",
     "eslint-plugin-filenames": "^0.1.1",
     "eslint-plugin-mocha": "^0.2.2",

@@ -1,11 +1,13 @@
 'use strict';
 
 var mockProxy = require('./mock-proxy');
+var expectedRecord = require('./expectedRecord');
+var testConfig = require('./config');
 
 describe('Search Page @watch', function() {
 
   beforeEach(function () {
-    browser.url('http://localhost:8001/');
+    browser.url(testConfig.url);
   });
 
   describe('the form', function () {
@@ -15,17 +17,12 @@ describe('Search Page @watch', function() {
     });
 
     it('has the correct form elements', function () {
-      browser.getText('#content form > div:nth-child(1) > label').should.equal('System number from birth certificate');
       browser.waitForVisible('input[name="system-number"]', 5000);
-
-      browser.getText('#content form > div:nth-child(2) > label').should.equal('Surname');
-      browser.waitForVisible('input[name="surname"]', 5000);
-
-      browser.getText('#content form > div:nth-child(3) > label').should.equal('Forename(s)');
-      browser.waitForVisible('input[name="forenames"]', 5000);
-
-      browser.getText('#content form > div:nth-child(4) > label').should.equal('Date of birth');
-      browser.waitForVisible('input[name="dob"]', 5000);
+      var formLabels = browser.getText('label');
+      formLabels[0].should.equal('System number from birth certificate');
+      formLabels[1].should.equal('Surname');
+      formLabels[2].should.equal('Forename(s)');
+      formLabels[3].should.equal('Date of birth');
     });
 
   });
@@ -35,7 +32,7 @@ describe('Search Page @watch', function() {
     describe('that returns no records', function () {
 
       beforeEach(function () {
-        mockProxy.willReturn(0);
+        mockProxy.willReturnForLocalTests(0);
         browser.setValue('input[name="surname"]', 'Churchil');
         browser.setValue('input[name="forenames"]', 'Winston');
         browser.setValue('input[name="dob"]', '30/11/1874');
@@ -51,9 +48,9 @@ describe('Search Page @watch', function() {
     describe('that returns 1 record', function () {
 
       beforeEach(function () {
-        mockProxy.willReturn(1);
-        browser.setValue('input[name="surname"]', 'Smith');
-        browser.setValue('input[name="forenames"]', 'John Francis');
+        mockProxy.willReturnForLocalTests(1);
+        browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
+        browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
         browser.submitForm('form');
       });
 
@@ -66,7 +63,7 @@ describe('Search Page @watch', function() {
     describe('that returns more than 1 record', function () {
 
       beforeEach(function () {
-        mockProxy.willReturn(2);
+        mockProxy.willReturnForLocalTests(3);
         browser.setValue('input[name="surname"]', 'Smith');
         browser.setValue('input[name="forenames"]', 'John');
         browser.submitForm('form');
