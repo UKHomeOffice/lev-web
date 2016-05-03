@@ -29,7 +29,7 @@
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
     "express-session": "^1.12.1",
-    "hmpo-frontend-toolkit": "^2.0.0",
+    "hmpo-frontend-toolkit": "^3.1.1",
     "hmpo-govuk-template": "0.0.3",
     "hogan-express-strict": "^0.5.4",
     "moment": "^2.10.6",
@@ -50,7 +50,7 @@
     "http-proxy": "^1.12.0",
     "jscs": "^3.0.2",
     "mocha": "^2.3.4",
-    "node-sass": "3.4.2",
+    "node-sass": "^3.6.0",
     "proxyquire": "^1.7.3",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
