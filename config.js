@@ -30,5 +30,6 @@ module.exports = {
     clientSecret: process.env.CLIENT_SECRET,
     username: process.env.KEYCLOAK_U,
     password: process.env.KEYCLOAK_P
-  }
+  },
+  keycloakRealm: process.env.KEYCLOAK_WEB_REALM
 };
