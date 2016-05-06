@@ -105,7 +105,7 @@
 
     {{$main}}
       <main id="content" class="main" role="main">
-        <div id="nav"><a id="logout" class="button" href="https://sso.digital.homeoffice.gov.uk/auth/realms/{{keycloakRealm}}/protocol/openid-connect/logout?redirect_uri={{absoluteBaseUrlEscaped}}/logged-out">Logout</a></div>
+        <div id="nav"><a id="logout" class="button" href="/oauth/logout?redirect=%2Flogged-out">Logout</a></div>
         <div class="grid-row">
           {{$maincontent}}{{/maincontent}}
         </div>
