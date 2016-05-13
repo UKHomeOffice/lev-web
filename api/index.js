@@ -87,9 +87,13 @@ var endpoint = config.api.protocol + '://' +
                config.api.host + ':' + config.api.port +
                '/api/v0/events/birth';
 
-var requestData = function requestData(url, callback) {
+var requestData = function requestData(url, user, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
-    return requestWithOAuth2.get(url, oauthUrl, clientId, clientSecret, oAuthUsername, oAuthPassword,
+    const headers = user ? {'X-Auth-Downstream-Username': user}: {};
+    return requestWithOAuth2.get({
+      'url': url,
+      'headers': headers
+    }, oauthUrl, clientId, clientSecret, oAuthUsername, oAuthPassword,
       function requestGet(err, res, body) {
       var statusToName;
       var statusError;
@@ -124,31 +128,30 @@ var requestData = function requestData(url, callback) {
 };
 
 module.exports = {
-  read: function read(attrs) {
+  read: function read(attrs, user) {
     var r;
 
     attrs = attrs || {};
 
     if (attrs['system-number']) {
-      r = this.requestID(attrs['system-number'])
+      r = this.requestID(attrs['system-number'], user)
         .then(function wrapInArray(data) {
           return [data];
         });
     } else {
-      r = this.query(attrs);
+      r = this.query(attrs, user);
     }
 
     return r;
   },
 
-  requestID: function requestID(id) {
-    return requestData(endpoint + '/' + id,
-      function singleRecord(data) {
+  requestID: function requestID(id, user) {
+    return requestData(endpoint + '/' + id, user, function singleRecord(data) {
         return processRecord(data);
       });
   },
 
-  query: function query(attrs) {
+  query: function query(attrs, user) {
     var params = {};
     var formatDate = function formatDate(date) {
       return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -168,7 +171,7 @@ module.exports = {
       params.dateofbirth = formatDate(attrs.dob);
     }
 
-    return requestData(endpoint + '?' + querystring.stringify(params),
+    return requestData(endpoint + '?' + querystring.stringify(params), user,
       function multipleRecords(data) {
         return _.map(data, processRecord);
       });

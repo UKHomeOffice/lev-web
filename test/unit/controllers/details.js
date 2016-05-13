@@ -24,6 +24,9 @@ describe('controllers/details', function() {
       req = {
         params: {
           sysnum: '1234'
+        },
+        headers: {
+          'X-Auth-Username': 'mrs-caseworker'
         }
       };
 

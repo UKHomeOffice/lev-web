@@ -7,7 +7,8 @@ module.exports = {
 
   query: function query(req, res, next) {
     if (req.query && (req.query.surname || req.query['system-number'])) {
-      api.read(req.query)
+      const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+      api.read(req.query, username)
         .then(function resolved(records) {
           if (records.length === 1) {
             res.redirect('/details/' + records[0]['system-number']);
