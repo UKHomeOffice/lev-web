@@ -89,10 +89,10 @@ var parsedResponse = {
   gender: 'Indeterminate',
   'birth-place': 'Kensington',
   mother: {
-   name: 'Joan Narcissus Ouroboros Smith',
-   nee: 'Black',
-   'birth-place': 'Kensington',
-   occupation: 'Carpenter'
+    name: 'Joan Narcissus Ouroboros Smith',
+    nee: 'Black',
+    'birth-place': 'Kensington',
+    occupation: 'Carpenter'
   },
   father: {
     name: 'Joan Narcissus Ouroboros Smith',
@@ -120,7 +120,11 @@ var parsedResponse = {
   }
 };
 
-describe('api', function() {
+var usernameHeader = {
+  'X-Auth-Downstream-Username': 'mrs-caseworker'
+};
+
+describe('api', function () {
   var api;
   var request = require('request');
   var config = require('../../../config');
@@ -145,30 +149,49 @@ describe('api', function() {
     });
   }));
 
-  describe('resolved promise', function() {
+  describe('resolved promise', function () {
 
-    describe('configuring', function() {
-      it('GETs the configured url for system-number', function() {
+    describe('configuring', function () {
+      it('GETs the configured url for system-number', function () {
         requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
-        }).then(function() {
-          request.get.should.have.been.calledWith('http://testhost.com:1111/api/v0/events/birth/1234');
+        }, 'mrs-caseworker').then(function () {
+          request.get.should.have.been.calledWith({
+            url: 'http://testhost.com:1111/api/v0/events/birth/1234',
+            headers: usernameHeader
+          });
         });
       });
 
-      it('GETs the configured url for surname', function() {
+      it('GETs with a header for the username', function () {
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
+
+        return api.read({
+          'system-number': '1234'
+        }, 'mrs-caseworker').then(function () {
+          request.get.should.have.been.calledWith({
+            'url': 'http://testhost.com:1111/api/v0/events/birth/1234',
+            headers: usernameHeader
+          })
+        })
+      });
+
+      it('GETs the configured url for surname', function () {
         requestGet.yields(null, {statusCode: 200}, JSON.stringify([response]));
 
         return api.read({
           'surname': 'smith'
-        }).then(function() {
-          request.get.should.have.been.calledWith('http://testhost.com:1111/api/v0/events/birth?lastname=smith');
+        }, 'mrs-caseworker').then(function () {
+          request.get.should.have.been.calledWith({
+            url: 'http://testhost.com:1111/api/v0/events/birth?lastname=smith',
+            headers: usernameHeader
+          });
         });
       });
 
-      it('Uses oAuth2 authorization if oAuth2 environment variables are set', function() {
+      it('Uses oAuth2 authorization if oAuth2 environment variables are set', function () {
         var successfulAuthResponse = {
           "access_token": "access_token",
           "expires_in": 300,
@@ -217,25 +240,26 @@ describe('api', function() {
 
         return api.read({
           'surname': 'smith'
-        }).then(function() {
+        }, 'mrs-caseworker').then(function () {
           request.post.should.have.been.calledWith(expectedOAuthRequest);
           request.get.should.have.been.calledWith({
             url: 'http://testhost.com:1111/api/v0/events/birth?lastname=smith',
             headers: {
-              Authorization: "Bearer access_token"
+              Authorization: "Bearer access_token",
+              'X-Auth-Downstream-Username': 'mrs-caseworker'
             }
           });
-        });
-      })
+        })
+      });
     });
 
-    describe('GET with system-number', function() {
-      it('gives back one record', function() {
+    describe('GET with system-number', function () {
+      it('gives back one record', function () {
         requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
-        }).then(function(data) {
+        }, 'mrs-caseworker').then(function (data) {
           data.length.should.equal(1);
           data[0]['system-number'].should.equal(1);
           data[0].should.eql(parsedResponse);
@@ -243,13 +267,13 @@ describe('api', function() {
       });
     });
 
-    describe('GET with surname', function() {
-      it('gives back one record', function() {
+    describe('GET with surname', function () {
+      it('gives back one record', function () {
         requestGet.yields(null, {statusCode: 200}, JSON.stringify([response, response]));
 
         return api.read({
           'surname': 'smith'
-        }).then(function(data) {
+        }, 'mrs-caseworker').then(function (data) {
           data.length.should.equal(2);
           data[0]['system-number'].should.equal(1);
           data[0].should.eql(parsedResponse);
@@ -259,8 +283,8 @@ describe('api', function() {
 
   });
 
-  describe('rejected promise', function() {
-    it('rejects the promise if an error is returned from the api', function() {
+  describe('rejected promise', function () {
+    it('rejects the promise if an error is returned from the api', function () {
       var err = new Error('SERVER DID SOMETHING');
       requestGet.yields(err, {
         statusCode: 500
@@ -268,40 +292,40 @@ describe('api', function() {
 
       return api.read({
         'system-number': '1234'
-      }).should.eventually.be.rejectedWith(err);
+      }, 'mrs-caseworker').should.eventually.be.rejectedWith(err);
     });
 
-   it('rejects the promise if the status code is not 200', function() {
+    it('rejects the promise if the status code is not 200', function () {
       requestGet.yields(null, {
         statusCode: 418
       });
 
       return api.read({
         'system-number': '1234'
-      }).should.eventually.be.rejectedWith(Error, 'Received status code "418" from API');
+      }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Received status code "418" from API');
     });
 
-    it('rejects the promise if the JSON cannot be parsed', function() {
+    it('rejects the promise if the JSON cannot be parsed', function () {
       requestGet.yields(null, {statusCode: 200}, '<not><json></json></not>');
 
       return api.read({
         'system-number': '1234'
-      }).should.eventually.be.rejectedWith(Error, 'Unexpected token <');
+      }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Unexpected token <');
     });
 
-    it('rejects the promise if the JSON Object does not contain the correct fields', function() {
+    it('rejects the promise if the JSON Object does not contain the correct fields', function () {
       requestGet.yields(null, {statusCode: 200}, JSON.stringify({not: 'enough data'}));
 
       return api.read({
         'system-number': '1234'
-      }).should.eventually.be.rejectedWith(Error, 'Cannot read property \'child\' of undefined');
+      }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Cannot read property \'child\' of undefined');
     });
 
   });
 
 
-  describe('.read()', function() {
-    it('returns a Promise', function() {
+  describe('.read()', function () {
+    it('returns a Promise', function () {
       (api.read() instanceof Promise).should.be.true;
     });
   });
