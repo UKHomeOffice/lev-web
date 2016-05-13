@@ -120,7 +120,7 @@ var parsedResponse = {
   }
 };
 
-const usernameHeader = {
+var usernameHeader = {
   'X-Auth-Downstream-Username': 'mrs-caseworker'
 };
 
@@ -131,7 +131,7 @@ describe('api', function () {
   var requestGet;
   var requestPost;
 
-  beforeEach(sinon.test(function () {
+  beforeEach(sinon.test(function() {
     requestGet = this.stub();
     request.get = requestGet;
     requestPost = this.stub();

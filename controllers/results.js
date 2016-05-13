@@ -7,7 +7,7 @@ module.exports = {
 
   query: function query(req, res, next) {
     if (req.query && (req.query.surname || req.query['system-number'])) {
-      const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+      var username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
       api.read(req.query, username)
         .then(function resolved(records) {
           if (records.length === 1) {

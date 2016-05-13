@@ -2,8 +2,7 @@
 
 var _ = require('underscore');
 var config = require('../config');
-var request = require('request');
-var requestWithOAuth2 = require('../lib/requestWithOAuth2');
+var requestWithOAuth2 = require('../lib/request-with-oauth2');
 var querystring = require('querystring');
 var moment = require('moment');
 
@@ -89,7 +88,7 @@ var endpoint = config.api.protocol + '://' +
 
 var requestData = function requestData(url, user, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
-    const headers = user ? {'X-Auth-Downstream-Username': user}: {};
+    var headers = user ? {'X-Auth-Downstream-Username': user} : {};
     return requestWithOAuth2.get({
       'url': url,
       'headers': headers

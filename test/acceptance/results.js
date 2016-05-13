@@ -47,14 +47,17 @@ describe('Results page', function () {
     });
 
     it('displays an appropriate message', function () {
-      browser.getText('h1').should.equal('3 records found for ' + givenNameSearch + ' ' + expectedRecords.child.originalName.surname);
+      browser.getText('h1').should.equal('3 records found for ' + givenNameSearch + ' ' +
+        expectedRecords.child.originalName.surname);
     });
 
     it('displays a subset of each record in a list', function () {
       var browserText = browser.getText('#records li tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
-      var fatherNameRegex = expectedRecords.father.name.givenName.split(' ')[0] + '.*' + expectedRecords.father.name.surname;
-      var motherNameRegex = expectedRecords.mother.name.givenName.split(' ')[0] + '.*' + expectedRecords.mother.name.surname;
+      var fatherNameRegex = expectedRecords.father.name.givenName.split(' ')[0] + '.*' +
+        expectedRecords.father.name.surname;
+      var motherNameRegex = expectedRecords.mother.name.givenName.split(' ')[0] + '.*' +
+        expectedRecords.mother.name.surname;
       browserText[0].should.match(new RegExp('Place of birth ?' + expectedRecords.child.birthplace));
       browserText[1].should.match(new RegExp('Father ?' + fatherNameRegex));
       browserText[2].should.match(new RegExp('Mother ?' + motherNameRegex));
