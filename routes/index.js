@@ -6,6 +6,5 @@ module.exports = function defineRoutes(app) {
   app
     .get('/', controllers.search.show)
     .get('/results', controllers.results.query)
-    .get('/details/:sysnum?', controllers.details)
-    .get('/logged-out', controllers.loggedOut);
+    .get('/details/:sysnum?', controllers.details);
 };

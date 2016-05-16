@@ -3,6 +3,5 @@
 module.exports = {
   search: require('./search'),
   results: require('./results'),
-  details: require('./details'),
-  loggedOut: require('./logged-out')
+  details: require('./details')
 };

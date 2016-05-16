@@ -10,7 +10,8 @@ if (testConfig.env !== 'local') {
     beforeEach(function () {
       browser.url(testConfig.url);
       browser.click('#logout');
-      browser.getText('body').should.have.string('Logged out');
+      body.should.have.string('Username or email');
+      body.should.have.string('Password');
     });
 
     it('then I have to login again before using the application', function () {
