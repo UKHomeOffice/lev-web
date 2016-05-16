@@ -39,6 +39,9 @@ describe('controllers/results', sinon.test(function () {
       req = {
         query: {
           surname: 'smiths'
+        },
+        headers: {
+          'X-Auth-Username': 'mrs-caseworker'
         }
       };
 

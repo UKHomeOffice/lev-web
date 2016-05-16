@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node .",
     "stop": "pkill levweb",
-    "dev": "NODE_ENV=development nodemon .",
+    "dev": "npm run mock-kc-proxy & NODE_ENV=development nodemon .",
+    "mock-kc-proxy": "RUN_KC_PROXY=true node test/acceptance/mock-kc-proxy/index.js",
     "test": "npm run test:unit && npm run test:acceptance",
     "test:unit": "NODE_ENV=test mocha ./test/unit",
     "test:acceptance": "npm run start:mockapi & NODE_ENV=acceptance npm start & npm run chimp && npm run stop:all",

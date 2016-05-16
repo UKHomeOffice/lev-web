@@ -1,7 +1,7 @@
 'use strict';
 
 var testConfig = require('./config');
-var expectedRecord = require('./expectedRecord')
+var expectedRecord = require('./expectedRecord');
 
 var expectedRecords;
 
@@ -11,43 +11,43 @@ if (testConfig.env === 'local') {
   expectedRecords = expectedRecord;
 } else {
   expectedRecords = {
-    "administrativeArea": "Reading",
-    "subDistrict": "Test Subdistrict",
-    "registrationDistrict": "Test District",
-    "child": {
-      "originalName": {
-        "givenName": "Tester One",
-        "surname": "Multiple",
-        "fullName": "Tester One Multiple"
+    'administrativeArea': 'Reading',
+    'subDistrict': 'Test Subdistrict',
+    'registrationDistrict': 'Test District',
+    'child': {
+      'originalName': {
+        'givenName': 'Tester One',
+        'surname': 'Multiple',
+        'fullName': 'Tester One Multiple'
       },
-      "name": {
-        "givenName": "Brandon",
-        "surname": "Multiple",
-        "fullName": "Brandon Multiple"
+      'name': {
+        'givenName': 'Brandon',
+        'surname': 'Multiple',
+        'fullName': 'Brandon Multiple'
       },
-      "dateOfBirth": "01/01/2000",
-      "sex": "Male",
-      "birthplace": "Test Address"
+      'dateOfBirth': '01/01/2000',
+      'sex': 'Male',
+      'birthplace': 'Test Address'
     },
-    "father": {
-      "name": {
-        "givenName": "Dad One",
-        "surname": "Multiple",
-        "fullName": "Dad One Multiple"
+    'father': {
+      'name': {
+        'givenName': 'Dad One',
+        'surname': 'Multiple',
+        'fullName': 'Dad One Multiple'
       },
-      "birthplace": "Test Birthplace"
+      'birthplace': 'Test Birthplace'
     },
-    "mother": {
-      "name": {
-        "givenName": "Mum One",
-        "surname": "Multiple",
-        "fullName": "Mum One Multiple"
+    'mother': {
+      'name': {
+        'givenName': 'Mum One',
+        'surname': 'Multiple',
+        'fullName': 'Mum One Multiple'
       },
-      "birthplace": "Test Birthplace",
-      "maidenSurname": "prev-Multiple"
+      'birthplace': 'Test Birthplace',
+      'maidenSurname': 'prev-Multiple'
     },
-    "systemNumber": 999999901,
-    "date": "10/10/2014"
+    'systemNumber': 999999901,
+    'date': '10/10/2014'
   };
 
 }
