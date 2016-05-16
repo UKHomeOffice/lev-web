@@ -6,7 +6,7 @@ var helpers = require('../lib/helpers');
 module.exports = {
 
   query: function query(req, res, next) {
-    if (req.query && (req.query.surname || req.query['system-number'])) {
+    if (req.query) {
       var username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
       api.read(req.query, username)
         .then(function resolved(records) {
