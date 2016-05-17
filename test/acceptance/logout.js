@@ -10,6 +10,7 @@ if (testConfig.env !== 'local') {
     beforeEach(function () {
       browser.url(testConfig.url);
       browser.click('#logout');
+      var body = browser.getText('body');
       body.should.have.string('Username or email');
       body.should.have.string('Password');
     });

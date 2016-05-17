@@ -16,6 +16,12 @@ require('express-hijackresponse');
 
 var app = express();
 var willReturn = 1;
+var user = 'lev-test-client';
+
+//This simulates the keycloak proxy in front of the API, adding appropriate header
+httpProxy.on('proxyReq', function(proxyReq, req, res, options) {
+  proxyReq.setHeader('X-Auth-Username', user);
+});
 
 app.use(function hijackRes(req, response, next) {
   response.hijack(function (err, res) {
