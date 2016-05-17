@@ -24,6 +24,7 @@ describe('controllers/results', sinon.test(function () {
       name: 'NotFoundError'
     }));
     apiReadStub.withArgs({'surname': 'someerrorgenerated'}).returns(Promise.reject(err));
+    apiReadStub.withArgs({'forenames': 'some forenames'}).returns(Promise.reject(err));
 
     resultsController = require('../../../controllers/results').query;
 
@@ -108,7 +109,7 @@ describe('controllers/results', sinon.test(function () {
         });
       });
 
-      it('calls next with the error if it\'s an unknown Error', sinon.test(function () {
+      it('calls next with the error if it\'s an unknown Error', sinon.test(function() {
         var next = this.spy();
 
         req.query.surname = 'someerrorgenerated';
@@ -119,6 +120,20 @@ describe('controllers/results', sinon.test(function () {
           next.should.have.been.calledWith(err);
         });
       }));
+
+      it('calls next with the error even if there was no surname or system number on the query', sinon.test(function() {
+        var next = this.spy();
+
+        req.query = {
+          forenames: 'some forenames'
+        };
+
+        resultsController(req, res, next);
+
+        return Promise.resolve().then(function () {
+          next.should.have.been.calledWith(err);
+        });
+      }))
 
     });
   });
