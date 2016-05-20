@@ -6,6 +6,11 @@ var path = require('path');
 var config = require('./config');
 var logger = require('./lib/logger');
 var churchill = require('churchill');
+var hof = require('hof');
+var template = hof.template;
+var i18n = hof.i18n;
+var mixins = hof.mixins;
+var fields = require('./fields');
 
 process.title = 'levweb';
 
@@ -27,9 +32,12 @@ app.use(function setBaseUrl(req, res, next) {
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, './views'));
-require('hmpo-govuk-template').setup(app);
+template.setup(app);
 app.use(require('express-partial-templates')(app));
 app.engine('html', require('hogan-express-strict'));
+
+app.use(i18n.middleware());
+app.use(mixins(fields));
 
 require('./routes')(app);
 

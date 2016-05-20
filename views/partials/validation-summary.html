@@ -1,7 +1,14 @@
 {{#errorlist.length}}
   <div class="validation-summary" tabindex="-1">
     {{$errorlist-title}}
-      <h2>{{#t}}errorlist.title{{/t}}</h2>
+
+      {{#errorLength.single}}
+        <h2>{{#t}}errorlist.title.single{{/t}}</h2>
+      {{/errorLength.single}}
+      {{#errorLength.multiple}}
+        <h2>{{#t}}errorlist.title.multiple{{/t}}</h2>
+      {{/errorLength.multiple}}
+
     {{/errorlist-title}}
 
     {{<partials-validation-list}}

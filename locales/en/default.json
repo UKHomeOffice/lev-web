@@ -1,0 +1,34 @@
+{
+  "buttons": {
+    "search": "Search"
+  },
+  "errorlist": {
+    "title": {
+      "multiple": "Fix the following errors",
+      "single": "Fix the following error"
+    }
+  },
+  "fields": {
+    "system-number": {
+      "label": "System number from birth certificate"
+    },
+    "surname": {
+      "label": "Surname"
+    },
+    "forenames": {
+      "label": "Forename(s)"
+    },
+    "dob": {
+      "label": "Date of birth"
+    }
+  },
+  "validation": {
+    "system-number": {
+      "required": "Enter a system number",
+      "numeric": "System number must be an integer"
+    },
+    "surname": {
+      "required": "Enter a surname"
+    }
+  }
+}
