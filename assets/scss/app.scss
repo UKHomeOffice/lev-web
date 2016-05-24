@@ -196,18 +196,9 @@ table {
 
 div.search-buttons {
   margin-top: 20px;
-  div  {
-    display: inline-block;
-    vertical-align: middle;
-    a {
-      font-size: 16px;
-    }
-  }
-  div:nth-child(1) {
-    margin-right: 65px;
-  }
   .button {
-    margin: 0;
+    margin: 0 65px 0 0;
+    font-size: 16px;
   }
 }
 
@@ -247,4 +238,9 @@ div.search-buttons {
   .button {
     margin: 0;
   }
+}
+
+.blue.button {
+  @include button ($link-colour);
+  padding: em(10) em(15) em(5) em(15);
 }
