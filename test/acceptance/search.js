@@ -5,14 +5,12 @@ var expectedRecord = require('./expectedRecord');
 var expectedRecords = require('./expectedRecords');
 var testConfig = require('./config');
 
-describe('Search Page @watch', function() {
-
+describe('Search Page', function() {
   beforeEach(function () {
     browser.url(testConfig.url);
   });
 
   describe('the form', function () {
-
     it('has a title', function () {
       browser.getText('h1').should.equal('Applicant\'s details');
     });
@@ -25,56 +23,45 @@ describe('Search Page @watch', function() {
       formLabels[2].should.equal('Forename(s)');
       formLabels[3].should.equal('Date of birth');
     });
-
   });
 
-  describe('submitting a query', function () {
+  describe('submitting a valid query', function () {
+    beforeEach(function () {
+      browser.setValue('input[name="surname"]', 'Churchill');
+      browser.setValue('input[name="forenames"]', 'Winston');
+      browser.setValue('input[name="dob"]', '30/11/1874');
+    });
 
     describe('that returns no records', function () {
-
       beforeEach(function () {
         mockProxy.willReturnForLocalTests(0);
-        browser.setValue('input[name="surname"]', 'Churchil');
-        browser.setValue('input[name="forenames"]', 'Winston');
-        browser.setValue('input[name="dob"]', '30/11/1874');
         browser.submitForm('form');
       });
 
       it('displays an appropriate message', function () {
-        browser.getText('h1').should.equal('No records found for Winston Churchil 30/11/1874');
+        browser.getText('h1').should.equal('No records found for Winston Churchill 30/11/1874');
       });
-
     });
 
     describe('that returns 1 record', function () {
-
       beforeEach(function () {
         mockProxy.willReturnForLocalTests(1);
-        browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
-        browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
         browser.submitForm('form');
       });
 
       it('the url should contain /details', function () {
         browser.getUrl().should.contain('/details');
       });
-
     });
 
     describe('that returns more than 1 record', function () {
-
-      var givenNameSearch = expectedRecords.child.originalName.givenName.split(' ')[0]
-
       beforeEach(function () {
         mockProxy.willReturnForLocalTests(3);
-        browser.setValue('input[name="surname"]', expectedRecords.child.originalName.surname);
-        browser.setValue('input[name="forenames"]', givenNameSearch);
         browser.submitForm('form');
       });
 
       it('displays an appropriate message', function () {
-        browser.getText('h1').should.equal('3 records found for ' + givenNameSearch + ' ' +
-          expectedRecords.child.originalName.surname);
+        browser.getText('h1').should.equal('3 records found for Winston Churchill 30/11/1874');
       });
 
       it('displays a subset of each record in a list', function () {
@@ -94,9 +81,31 @@ describe('Search Page @watch', function() {
         browserText[7].should.match(new RegExp('Father ?' + fatherNameRegex));
         browserText[8].should.match(new RegExp('Mother ?' + motherNameRegex));
       });
-
     });
-
   });
 
+  describe('submitting an invalid query', function () {
+    describe('with all fields empty', function () {
+      beforeEach(function () {
+        browser.submitForm('form');
+      });
+
+      it('displays an error message', function () {
+        browser.getText('h2').should.contain('Fix the following error');
+        browser.getText('a').should.contain('Enter a system number');
+      });
+    });
+
+    describe('with an invalid sytem number', function () {
+      beforeEach(function () {
+        browser.setValue('input[name="system-number"]', 'invalid');
+        browser.submitForm('form');
+      });
+
+      it('displays an error message', function () {
+        browser.getText('h2').should.contain('Fix the following error');
+        browser.getText('a').should.contain('System number must be an integer');
+      });
+    });
+  });
 });
