@@ -3,7 +3,16 @@
 var Parent = require('../lib/hof-standalone');
 var api = require('../api');
 var helpers = require('../lib/helpers');
+var moment = require('moment');
 var util = require('util');
+var _ = require('underscore');
+
+var validators = Parent.validators;
+validators = _.extend(validators, {
+  'british-date': function britishDate(value) {
+    return value === '' || this.regex(value, /^\d{1,2}\/\d{1,2}\/\d{1,4}$/) && moment(value, 'DD/MM/YYYY').isValid();
+  }.bind(validators)
+});
 
 var SearchController = function SearchController() {
   Parent.apply(this, arguments);
