@@ -5,7 +5,7 @@ var expectedRecord = require('./expectedRecord');
 var expectedRecords = require('./expectedRecords');
 var testConfig = require('./config');
 
-describe('Search Page @watch', function() {
+describe('Search Page', function() {
   beforeEach(function () {
     browser.url(testConfig.url);
   });
