@@ -1,8 +1,6 @@
 'use strict';
 
-var expectedRecord = require('./expectedRecord');
-var expectedRecords = require('./expectedRecords');
-var testConfig = require('./config');
+var testConfig = require('../config');
 
 if (testConfig.env !== 'local') {
   describe('When I logout', function () {

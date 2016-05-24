@@ -1,13 +1,13 @@
 'use strict';
 
-var mockProxy = require('./mock-proxy');
-var mockKcProxy = require('./mock-kc-proxy');
-var testConfig = require('./config');
+var mockProxy = require('../mock-proxy');
+var mockKcProxy = require('../mock-kc-proxy');
+var testConfig = require('../config');
 
 before(function () {
   if (testConfig.env === 'local') {
     mockProxy.listen();
-    mockKcProxy.listen();
+    mockKcProxy('localhost', 8002, 'localhost', 8001);
   }
 });
 
