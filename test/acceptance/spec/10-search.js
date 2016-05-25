@@ -1,9 +1,9 @@
 'use strict';
 
-var mockProxy = require('./mock-proxy');
-var expectedRecord = require('./expectedRecord');
-var expectedRecords = require('./expectedRecords');
-var testConfig = require('./config');
+var mockProxy = require('../mock-proxy');
+var expectedRecord = require('../expectedRecord');
+var expectedRecords = require('../expectedRecords');
+var testConfig = require('../config');
 
 describe('Search Page', function() {
   beforeEach(function () {
