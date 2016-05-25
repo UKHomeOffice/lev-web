@@ -92,7 +92,8 @@ describe('Search Page', function() {
 
       it('displays an error message', function () {
         browser.getText('h2').should.contain('Fix the following error');
-        browser.getText('a').should.contain('Enter a system number');
+        browser.getText('a').should.contain('Please enter a system number');
+        browser.getText('a').should.contain('Please enter a surname');
       });
     });
 
@@ -104,7 +105,20 @@ describe('Search Page', function() {
 
       it('displays an error message', function () {
         browser.getText('h2').should.contain('Fix the following error');
-        browser.getText('a').should.contain('System number must be an integer');
+        browser.getText('a').should.contain('Please enter an integer');
+      });
+    });
+
+    describe('with an invalid date', function () {
+      beforeEach(function () {
+        browser.setValue('input[name="surname"]', 'Churchill');
+        browser.setValue('input[name="dob"]', 'invalid');
+        browser.submitForm('form');
+      });
+
+      it('displays an error message', function () {
+        browser.getText('h2').should.contain('Fix the following error');
+        browser.getText('a').should.contain('Please enter a date of birth in the correct format');
       });
     });
   });

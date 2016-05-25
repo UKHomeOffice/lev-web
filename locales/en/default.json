@@ -24,11 +24,15 @@
   },
   "validation": {
     "system-number": {
-      "required": "Enter a system number",
-      "numeric": "System number must be an integer"
+      "required": "Please enter a system number",
+      "numeric": "Please enter an integer"
     },
     "surname": {
-      "required": "Enter a surname"
+      "required": "Please enter a surname"
+    },
+    "dob": {
+      "required": "Please enter a date of birth",
+      "british-date": "Please enter a date of birth in the correct format"
     }
   }
 }

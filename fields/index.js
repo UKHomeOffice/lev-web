@@ -18,5 +18,10 @@ module.exports = {
   'forenames': {
   },
   'dob': {
+    validate: ['british-date'],
+    dependent: {
+      value: '',
+      field: 'system-number'
+    }
   }
 }
