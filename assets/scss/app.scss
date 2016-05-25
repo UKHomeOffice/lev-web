@@ -14,32 +14,58 @@ html {
   background-color: transparent;
 }
 
-#global-header .header-proposition #proposition-name {
-  font-size: 20px;
+/* ==================================================================
+ * Header
+ * ================================================================== */
+#global-header, #global-header a {
+  color: $white;
 }
 
-#global-header .header-wrapper > div {
-  float: left;
-  padding-top: 0;
+#global-header a:hover {
+  text-decoration: none;
 }
 
-#global-header .header-wrapper .header-global .header-logo {
-  margin: 0;
+#global-header > .header-wrapper {
+  text-align: center;
+  position: relative;
+}
+
+#global-header #nav {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 8px 15px;
+  margin-right: 15px;
 }
 
 #global-header #logo {
-  float: none;
-  height: auto;
+  display: block;
+  margin-left: 15px;
 }
 
-#global-header #logo img {
-  width: 27px;
-  height: 24px;
+#global-header #logo:hover {
+  border: none;
 }
 
-#content {
-  padding: 0;
+#global-header #proposition-name {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 400;
+  text-transform: none;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
 }
+
+#global-header #proposition-name:hover {
+  text-decoration: underline;
+}
+
+/* ==================================================================
+ * /Header
+ * ================================================================== */
 
 h1 {
   font-size: 20px;
@@ -202,11 +228,6 @@ div.search-buttons {
   }
 }
 
-/* Override govuk-template.css */
-#global-header #logo:hover, #global-header #logo:focus {
-  border-bottom: none;
-  padding-bottom: 1px; }
-
 /* Flags */
 .flag {
   display: block;
@@ -229,15 +250,6 @@ div.search-buttons {
   padding: 0;
   margin-bottom: 0;
   font-weight: bold;
-}
-
-#nav {
-  display: block;
-  text-align: right;
-
-  .button {
-    margin: 0;
-  }
 }
 
 .blue.button {

@@ -27,6 +27,7 @@ app.use(function setAssetPath(req, res, next) {
 
 app.use(function setBaseUrl(req, res, next) {
   res.locals.baseUrl = req.baseUrl;
+  res.locals.absBaseUrl = req.baseUrl || '/';
   next();
 });
 

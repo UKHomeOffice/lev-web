@@ -80,15 +80,11 @@
 
     <header role="banner" id="global-header" class="{{$headerClass}}with-proposition{{/headerClass}}">
       <div class="header-wrapper">
-        <div class="header-global">
-          <div class="header-logo">
-            <div id="logo" class="content">
-              <img src="{{govukAssetPath}}images/gov.uk_logotype_crown.png?0.12.0" width="35" height="31" alt="">
-            </div>
-          </div>
-          {{$insideHeader}}{{/insideHeader}}
-        </div>
-        {{$propositionHeader}}{{/propositionHeader}}
+        <img id="logo" src="{{govukAssetPath}}images/gov.uk_logotype_crown.png?0.12.0" alt="Crown" />
+        <a href="{{absBaseUrl}}" id="proposition-name">{{$journeyHeader}}{{/journeyHeader}}</a>
+        <ul id="nav">
+          <li><a id="sign-out" href="/oauth/logout?redirect=%2F">Sign out</a></li>
+        </ul>
       </div>
     </header>
     <!--end header-->
@@ -105,7 +101,6 @@
 
     {{$main}}
       <main id="content" class="main" role="main">
-        <div id="nav"><a id="logout" class="button" href="/oauth/logout?redirect=%2F">Logout</a></div>
         <div class="grid-row">
           {{$maincontent}}{{/maincontent}}
         </div>
