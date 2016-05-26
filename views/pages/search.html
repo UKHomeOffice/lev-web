@@ -30,6 +30,16 @@
   {{<partials-form}}
     {{$form}}
       {{#input-text}}system-number{{/input-text}}
+      <details>
+        <summary><span class="summary">What is the system number?</span></summary>
+        <div class="panel panel-border-narrow">
+          <img
+            src="{{baseUrl}}/public/images/system-number-hint.png"
+            alt="Where to find the system number on a birth certificate"
+            title="Where to find the system number on a birth certificate"
+          />
+        </div>
+      </details>
       {{#input-text}}surname{{/input-text}}
       {{#input-text}}forenames{{/input-text}}
       {{#input-text}}dob{{/input-text}}
