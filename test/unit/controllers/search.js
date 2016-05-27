@@ -82,7 +82,9 @@ describe('controllers/search', function () {
 
         it('renders the results page', function() {
           var query = formSubmission({
-            'surname': 'smiths'
+            'surname': 'smiths',
+            'forenames': 'john',
+            'dob': '01/01/2001'
           });
           var records = [{
             surname: 'smith'
@@ -100,7 +102,7 @@ describe('controllers/search', function () {
               count: 2,
               records: records,
               query: query,
-              querystring: 'surname=smiths'
+              querystring: 'surname=smiths&forenames=john&dob=01%2F01%2F2001'
             });
           });
         });
@@ -110,7 +112,9 @@ describe('controllers/search', function () {
       describe('rejected promise', function() {
         it('renders the error page', function() {
           var query = formSubmission({
-            'surname': 'unfoundsurname'
+            'surname': 'unfoundsurname',
+            'forenames': 'unfoundforenames',
+            'dob': '01/01/2001'
           });
 
           req.query = query;
@@ -125,7 +129,7 @@ describe('controllers/search', function () {
               count: 0,
               records: null,
               query: query,
-              querystring: 'surname=unfoundsurname'
+              querystring: 'surname=unfoundsurname&forenames=unfoundforenames&dob=01%2F01%2F2001'
             });
           });
         });

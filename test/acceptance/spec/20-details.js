@@ -51,6 +51,7 @@ describe('Details Page', function () {
     beforeEach(function () {
       browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
       browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
+      browser.setValue('input[name="dob"]', expectedRecord.child.dateOfBirth);
       mockProxy.willReturnForLocalTests(1);
       browser.submitForm('form');
     });
@@ -64,6 +65,8 @@ describe('Details Page', function () {
 
     beforeEach(function () {
       browser.setValue('input[name="surname"]', expectedRecords.child.originalName.surname);
+      browser.setValue('input[name="forenames"]', expectedRecords.child.originalName.givenName);
+      browser.setValue('input[name="dob"]', expectedRecords.child.dateOfBirth);
       mockProxy.willReturnForLocalTests(3);
       browser.submitForm('form');
       browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
@@ -79,6 +82,7 @@ describe('Details Page', function () {
       browser.url(testConfig.url);
       browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
       browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
+      browser.setValue('input[name="dob"]', expectedRecord.child.dateOfBirth);
       browser.submitForm('form');
       browser.click('#newSearchLink');
     });
@@ -92,6 +96,7 @@ describe('Details Page', function () {
       browser.url(testConfig.url);
       browser.setValue('input[name="surname"]', 'NotRealPersonSurname');
       browser.setValue('input[name="forenames"]', 'NotRealPersonForename');
+      browser.setValue('input[name="dob"]', '01/01/2010');
       browser.submitForm('form');
       browser.click('#editSearchLink');
     });

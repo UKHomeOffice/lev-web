@@ -92,8 +92,9 @@ describe('Search Page', function() {
 
       it('displays an error message', function () {
         browser.getText('h2').should.contain('Fix the following error');
-        browser.getText('a').should.contain('Please enter a system number');
         browser.getText('a').should.contain('Please enter a surname');
+        browser.getText('a').should.contain('Please enter at least one forename');
+        browser.getText('a').should.contain('Please enter a date of birth');
       });
     });
 
