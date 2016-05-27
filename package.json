@@ -22,11 +22,15 @@
     "cover": "istanbul cover _mocha -- ./test/unit",
     "check-coverage": "istanbul check-coverage --statement 90 --branch 70 --function 95 --line 90",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
-    "create:public": "mkdir -p ./public/css",
-    "postinstall": "npm run create:public; npm run sass"
+    "copy:images": "cp -r ./assets/images ./public/",
+    "uglify": "browserify -g uglifyify ./assets/js/index.js > ./public/js/bundle.js",
+    "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
+    "create:public": "mkdir -p ./public/css ./public/images ./public/js",
+    "postinstall": "npm run create:public; npm run sass; npm run copy:images; npm run uglify"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "browserify": "^13.0.1",
     "churchill": "0.0.5",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
@@ -38,6 +42,7 @@
     "node-sass": "~3.4.0",
     "nodemon": "^1.8.1",
     "request": "^2.67.0",
+    "uglifyify": "^3.0.1",
     "underscore": "^1.8.3",
     "winston": "^1.0.1"
   },
