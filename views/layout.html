@@ -80,11 +80,15 @@
 
     <header role="banner" id="global-header" class="{{$headerClass}}with-proposition{{/headerClass}}">
       <div class="header-wrapper">
-        <img id="logo" src="{{govukAssetPath}}images/gov.uk_logotype_crown.png?0.12.0" alt="Crown" />
-        <a href="{{absBaseUrl}}" id="proposition-name">{{$journeyHeader}}{{/journeyHeader}}</a>
-        <ul id="nav">
-          <li><a id="sign-out" href="/oauth/logout?redirect=%2F">Sign out</a></li>
-        </ul>
+        <div class="header-row">
+          <div id="logo"></div>
+          <div id="service-header">
+            <a href="{{absBaseUrl}}" id="proposition-name">{{$journeyHeader}}{{/journeyHeader}}</a>
+          </div>
+          <ul id="nav">
+            <li><a id="sign-out" href="/oauth/logout?redirect=%2F">Sign out</a></li>
+          </ul>
+        </div>
       </div>
     </header>
     <!--end header-->
