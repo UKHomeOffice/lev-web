@@ -49,7 +49,7 @@ describe('Search', () => {
         const name = child.originalName;
 
         mockProxy.willReturnForLocalTests(3);
-        browser.search('', name.surname, name.givenName, child.dateOfBirth);
+        browser.search('', name.surname, name.givenName, '');
       });
 
       it('returns a results page', () => {
@@ -57,7 +57,7 @@ describe('Search', () => {
       });
 
       it('displays an appropriate message', () => {
-        browser.getText('h1').should.equal('3 records found for Tester Solo 29/02/2000');
+        browser.getText('h1').should.equal('3 records found for Tester Solo');
       });
 
       it('displays a subset of each record in a list', () => {
@@ -98,10 +98,6 @@ describe('Search', () => {
 
       it('requests a forename', () => {
         browser.getText('a').should.contain('Please enter at least one forename');
-      });
-
-      it('requests a date of birth', () => {
-        browser.getText('a').should.contain('Please enter a date of birth');
       });
     });
 
