@@ -5,23 +5,22 @@ var expectedRecord = require('../expectedRecord');
 var expectedRecords = require('../expectedRecords');
 var testConfig = require('../config');
 
-describe('Details Page', function () {
-
-  var urlShouldContainDetails = function urlShouldContainDetails() {
-    it('the url should contain /details', function () {
-      browser.getUrl().should.contain('/details');
+describe('Details Page', () => {
+  const urlShouldContainDetails = () => {
+    it('returns a details page', () => {
+      browser.shouldBeOnDetailsPage();
     });
   };
 
-  var messageDisplayed = function messageDisplayed(recordToMatch) {
-    it('an appropriate message is displayed', function () {
+  const messageDisplayed = (recordToMatch) => {
+    it('an appropriate message is displayed', () => {
       browser.getText('h1').should.equal("Record of " + recordToMatch.child.name.fullName + " " + recordToMatch.child.dateOfBirth);
     });
   };
 
-  var recordDisplayed = function recordDisplayed(recordToMatch) {
-    it('the complete record is displayed in a table', function () {
-      var browserText = browser.getText('table tr');
+  const recordDisplayed = (recordToMatch) => {
+    it('the complete record is displayed in a table', () => {
+      const browserText = browser.getText('table tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].should.match(new RegExp('System number *' + recordToMatch.systemNumber));
       browserText[1].should.match(new RegExp('Surname *' + recordToMatch.child.name.surname));
@@ -42,18 +41,13 @@ describe('Details Page', function () {
     });
   };
 
-  beforeEach(function () {
-    browser.url(testConfig.url);
-  });
+  describe('When there is one result', () => {
+    before(() => {
+        const child = expectedRecord.child;
+        const name = child.originalName;
 
-  describe('When there is one result', function () {
-
-    beforeEach(function () {
-      browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
-      browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
-      browser.setValue('input[name="dob"]', expectedRecord.child.dateOfBirth);
-      mockProxy.willReturnForLocalTests(1);
-      browser.submitForm('form');
+        mockProxy.willReturnForLocalTests(1);
+        browser.search('', name.surname, name.givenName, child.dateOfBirth);
     });
 
     urlShouldContainDetails();
@@ -61,14 +55,14 @@ describe('Details Page', function () {
     recordDisplayed(expectedRecord);
   });
 
-  describe('When there is more than one result', function () {
+  describe('When there is more than one result', () => {
 
-    beforeEach(function () {
-      browser.setValue('input[name="surname"]', expectedRecords.child.originalName.surname);
-      browser.setValue('input[name="forenames"]', expectedRecords.child.originalName.givenName);
-      browser.setValue('input[name="dob"]', expectedRecords.child.dateOfBirth);
+    before(() => {
+      const child = expectedRecords.child;
+      const name = child.originalName;
+
       mockProxy.willReturnForLocalTests(3);
-      browser.submitForm('form');
+      browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
     });
 
@@ -77,37 +71,46 @@ describe('Details Page', function () {
     recordDisplayed(expectedRecords);
   });
 
-  describe('When I select the "New search" button', function () {
-    beforeEach(function () {
-      browser.url(testConfig.url);
-      browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
-      browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
-      browser.setValue('input[name="dob"]', expectedRecord.child.dateOfBirth);
-      browser.submitForm('form');
+  describe('When I select the "New search" button', () => {
+    before(() => {
+      const child = expectedRecord.child;
+      const name = child.originalName;
+
+      mockProxy.willReturnForLocalTests(1);
+      browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.click('#newSearchLink');
     });
-    it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/');
+
+    it('returns the search page', () => {
+      browser.shouldBeOnSearchPage();
+    });
+
+    it('has empty form values', () => {
+      browser.waitForVisible('input[name="forenames"]', 5000);
+      browser.getValue('#system-number').should.equal('');
+      browser.getValue('#surname').should.equal('');
+      browser.getValue('#forenames').should.equal('');
+      browser.getValue('#dob').should.equal('');
     });
   });
 
-  describe('When I select the "Edit search" link', function () {
-    beforeEach(function () {
-      browser.url(testConfig.url);
-      browser.setValue('input[name="surname"]', 'NotRealPersonSurname');
-      browser.setValue('input[name="forenames"]', 'NotRealPersonForename');
-      browser.setValue('input[name="dob"]', '01/01/2010');
-      browser.submitForm('form');
+  describe('When I select the "Edit search" link', () => {
+    before(() => {
+      mockProxy.willReturnForLocalTests(0);
+      browser.search('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
       browser.click('#editSearchLink');
     });
-    it('redirects to the search page', function () {
-      browser.getUrl().should.contain('/');
+
+    it('returns the search page', () => {
+      browser.shouldBeOnSearchPage();
     });
-    it('has the correct form values', function () {
+
+    it('has the correct form values', () => {
       browser.waitForVisible('input[name="forenames"]', 5000);
+      browser.getValue('#system-number').should.equal('');
       browser.getValue('#surname').should.equal('NotRealPersonSurname');
       browser.getValue('#forenames').should.equal('NotRealPersonForename');
+      browser.getValue('#dob').should.equal('01/01/2010');
     });
   });
-
 });
