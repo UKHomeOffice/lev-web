@@ -2,7 +2,7 @@
 
 module.exports = {
   'system-number': {
-    validate: ['required', 'numeric'],
+    validate: ['numeric'],
     dependent: {
       value: '',
       field: 'surname'
@@ -16,9 +16,14 @@ module.exports = {
     }
   },
   'forenames': {
+    validate: ['required'],
+    dependent: {
+      value: '',
+      field: 'system-number'
+    }
   },
   'dob': {
-    validate: ['british-date'],
+    validate: ['required', 'british-date'],
     dependent: {
       value: '',
       field: 'system-number'

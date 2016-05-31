@@ -30,6 +30,9 @@
     "surname": {
       "required": "Please enter a surname"
     },
+    "forenames": {
+      "required": "Please enter at least one forename"
+    },
     "dob": {
       "required": "Please enter a date of birth",
       "british-date": "Please enter a date of birth in the correct format"
