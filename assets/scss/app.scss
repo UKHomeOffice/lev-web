@@ -25,27 +25,47 @@ html {
   text-decoration: none;
 }
 
-#global-header > .header-wrapper {
-  text-align: center;
-  position: relative;
-}
-
-#global-header #nav {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 8px 15px;
-  margin-right: 15px;
+#global-header > .header-wrapper > .header-row {
+  @extend %grid-row;
+  padding: 0 30px;
 }
 
 #global-header #logo {
-  display: block;
-  margin-left: 15px;
+  @include grid-column(1 / 4, 370px);
+  padding: 0;
+  background-image: url('../images/gov.uk_logotype_crown.png');
+  background-repeat: no-repeat;
+  min-height: 30px;
+  min-width: 34px;
 }
 
+#global-header #logo,
 #global-header #logo:hover {
   border: none;
+}
+
+
+#global-header #service-header {
+  @include grid-column(1 / 2, 370px);
+  padding: 0;
+  text-align: center;
+  min-height: 1px;
+}
+
+#global-header #service-header #proposition-name {
+  display: none;
+
+  @include media(450px) {
+    display: block;
+  }
+}
+
+#global-header #nav {
+  @include grid-column(1 / 4, 370px);
+  padding: 0;
+  text-align: right;
+  min-height: 1px;
+  min-width: 60px;
 }
 
 #global-header #proposition-name {
@@ -220,14 +240,6 @@ table {
   }
 }
 
-div.search-buttons {
-  margin: 20px 0;
-  .button {
-    margin: 0 65px 0 0;
-    font-size: 16px;
-  }
-}
-
 /* Flags */
 .flag {
   display: block;
@@ -257,8 +269,18 @@ div.search-buttons {
   padding: em(10) em(15) em(5) em(15);
 }
 
+#content {
+  padding-bottom: 0;
+}
+
+// ==========================================================================
+// GovUK Elements
+// ==============
+//
 // FIXME: Remove once hmpo-frontend-toolkit has up-to-date
 // govuk-elements-sass
+// ==========================================================================
+
 //
 // Panels
 // ==========================================================================
@@ -296,6 +318,3 @@ div.search-buttons {
 .form-group .panel-border-narrow {
   padding-bottom: 0;
 }
-
-// /Panels
-// ==========================================================================

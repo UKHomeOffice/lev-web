@@ -29,7 +29,6 @@
 {{/maincontent}}
 
 {{$content}}
-
   <ul id="records">
     {{#records}}
     <li>
@@ -75,9 +74,8 @@
     </li>
     {{/records}}
   </ul>
-
-  {{>partials-buttons}}
-
+  <a id="newSearchLink" href="/" class="button">New search</a>
+  <a id="editSearchLink" href="/?edit&{{querystring}}" class="blue button">Edit search</a>
 {{/content}}
 
 {{/layout}}
