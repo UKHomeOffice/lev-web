@@ -26,25 +26,25 @@ describe('Search Page', function() {
   });
 
   describe('submitting a valid query', function () {
-    beforeEach(function () {
-      browser.setValue('input[name="surname"]', 'Churchill');
-      browser.setValue('input[name="forenames"]', 'Winston');
-      browser.setValue('input[name="dob"]', '30/11/1874');
-    });
-
     describe('that returns no records', function () {
       beforeEach(function () {
+        browser.setValue('input[name="surname"]', 'Churchil');
+        browser.setValue('input[name="forenames"]', 'Winston');
+        browser.setValue('input[name="dob"]', '30/11/1874');
         mockProxy.willReturnForLocalTests(0);
         browser.submitForm('form');
       });
 
       it('displays an appropriate message', function () {
-        browser.getText('h1').should.equal('No records found for Winston Churchill 30/11/1874');
+        browser.getText('h1').should.equal('No records found for Winston Churchil 30/11/1874');
       });
     });
 
     describe('that returns 1 record', function () {
       beforeEach(function () {
+        browser.setValue('input[name="surname"]', expectedRecord.child.originalName.surname);
+        browser.setValue('input[name="forenames"]', expectedRecord.child.originalName.givenName);
+        browser.setValue('input[name="dob"]', expectedRecord.child.dateOfBirth);
         mockProxy.willReturnForLocalTests(1);
         browser.submitForm('form');
       });
@@ -56,12 +56,15 @@ describe('Search Page', function() {
 
     describe('that returns more than 1 record', function () {
       beforeEach(function () {
+        browser.setValue('input[name="surname"]', expectedRecords.child.originalName.surname);
+        browser.setValue('input[name="forenames"]', expectedRecords.child.originalName.givenName);
+        browser.setValue('input[name="dob"]', expectedRecords.child.dateOfBirth);
         mockProxy.willReturnForLocalTests(3);
         browser.submitForm('form');
       });
 
       it('displays an appropriate message', function () {
-        browser.getText('h1').should.equal('3 records found for Winston Churchill 30/11/1874');
+        browser.getText('h1').should.equal('3 records found for Tester Solo 29/02/2000');
       });
 
       it('displays a subset of each record in a list', function () {
