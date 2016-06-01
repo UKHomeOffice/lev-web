@@ -20,7 +20,7 @@ module.exports = (target) => {
     formLabels[0].should.equal('System number from birth certificate');
     formLabels[1].should.equal('Surname');
     formLabels[2].should.equal('Forename(s)');
-    formLabels[3].should.equal('Date of birth');
+    formLabels[3].should.contain('Date of birth');
   };
 
   target.submitSearchPage = function (systemNumber, surname, forenames, dob) {
