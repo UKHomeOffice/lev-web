@@ -44,12 +44,12 @@ describe('Search', () => {
     });
 
     describe('that returns more than 1 record', () => {
-      before(() => {
-        const child = expectedRecords.child;
-        const name = child.originalName;
+      const child = expectedRecords.child;
+      const name = child.originalName;
 
+      before(() => {
         mockProxy.willReturnForLocalTests(3);
-        browser.search('', name.surname, name.givenName, '');
+        browser.search('', name.surname, name.givenName, child.dateOfBirth);
       });
 
       it('returns a results page', () => {
@@ -57,7 +57,7 @@ describe('Search', () => {
       });
 
       it('displays an appropriate message', () => {
-        browser.getText('h1').should.equal('3 records found for Tester Solo');
+        browser.getText('h1').should.equal('3 records found for ' + name.givenName + ' ' + name.surname + ' ' + child.dateOfBirth);
       });
 
       it('displays a subset of each record in a list', () => {
