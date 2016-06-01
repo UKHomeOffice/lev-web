@@ -41,6 +41,7 @@ describe('Search', () => {
       it('redirects to a details page', () => {
         browser.shouldBeOnDetailsPage();
       });
+
     });
 
     describe('that returns more than 1 record', () => {
@@ -79,6 +80,11 @@ describe('Search', () => {
         browserText[7].should.match(new RegExp('Father ?' + fatherNameRegex));
         browserText[8].should.match(new RegExp('Mother ?' + motherNameRegex));
       });
+
+      it('contains a link back to the search screen', () => {
+        browser.getText('body').should.contain('Edit search');
+      });
+
     });
   });
 

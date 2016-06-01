@@ -41,6 +41,24 @@ describe('Details Page', () => {
     });
   };
 
+  const editSearchDisplayed = () => {
+    it('contains a link back to the search screen', () => {
+      browser.getText('body').should.contain('Edit search');
+    });
+  };
+
+  const backToSearchResultsDisplayed = () => {
+    it('contains a link back to the search screen', () => {
+      browser.getText('body').should.contain('Back to search results');
+    });
+  };
+
+  const backToSearchResultsNotDisplayed = () => {
+    it('contains a link back to the search screen', () => {
+      browser.getText('body').should.not.contain('Back to search results');
+    });
+  };
+
   describe('When there is one result', () => {
     before(() => {
         const child = expectedRecord.child;
@@ -53,6 +71,8 @@ describe('Details Page', () => {
     urlShouldContainDetails();
     messageDisplayed(expectedRecord);
     recordDisplayed(expectedRecord);
+    editSearchDisplayed();
+    backToSearchResultsNotDisplayed();
   });
 
   describe('When there is more than one result', () => {
@@ -69,6 +89,8 @@ describe('Details Page', () => {
     urlShouldContainDetails();
     messageDisplayed(expectedRecords);
     recordDisplayed(expectedRecords);
+    editSearchDisplayed();
+    backToSearchResultsDisplayed();
   });
 
   describe('When I select the "New search" button', () => {
@@ -94,7 +116,7 @@ describe('Details Page', () => {
     });
   });
 
-  describe('When I select the "Edit search" link', () => {
+  describe('When I select the "Edit search" link on the results page', () => {
     before(() => {
       mockProxy.willReturnForLocalTests(0);
       browser.search('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
@@ -111,6 +133,45 @@ describe('Details Page', () => {
       browser.getValue('#surname').should.equal('NotRealPersonSurname');
       browser.getValue('#forenames').should.equal('NotRealPersonForename');
       browser.getValue('#dob').should.equal('01/01/2010');
+    });
+  });
+
+  describe('When I select the "Edit search" link on the details page', () => {
+    before(() => {
+      const child = expectedRecords.child;
+      const name = child.originalName;
+
+      mockProxy.willReturnForLocalTests(3);
+      browser.search('', name.surname, name.givenName, '');
+      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      browser.click('#editSearchLink');
+});
+
+    it('returns the search page', () => {
+      browser.shouldBeOnSearchPage();
+    });
+
+    it('has the correct form values', () => {
+      browser.waitForVisible('input[name="forenames"]', 5000);
+      browser.getValue('#system-number').should.equal('');
+      browser.getValue('#surname').should.equal('Multiple');
+      browser.getValue('#forenames').should.equal('Tester');
+      browser.getValue('#dob').should.equal('01/01/2010');
+    });
+  });
+
+  describe('When I select the "Back to search results link on the results page"', () => {
+    it('returned me to the results page', () => {
+      const child = expectedRecords.child;
+      const name = child.originalName;
+
+      mockProxy.willReturnForLocalTests(3);
+      browser.search('', name.surname, name.givenName, '');
+      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      browser.click('#backToSearchResults');
+      browser.getUrl().should.contain('surname=Multiple');
+      browser.getUrl().should.contain('forenames=Tester');
+      browser.getUrl().should.contain('dob=01/01/2010');
     });
   });
 });
