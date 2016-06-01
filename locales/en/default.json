@@ -19,7 +19,8 @@
       "label": "Forename(s)"
     },
     "dob": {
-      "label": "Date of birth"
+      "label": "Date of birth",
+      "hint": "For example, 18/2/2009"
     }
   },
   "validation": {
