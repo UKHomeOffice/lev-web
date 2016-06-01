@@ -62,7 +62,7 @@ describe('Details Page', () => {
       const name = child.originalName;
 
       mockProxy.willReturnForLocalTests(3);
-      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.search('', name.surname, name.givenName, '');
       browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
     });
 

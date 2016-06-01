@@ -23,7 +23,7 @@ module.exports = {
     }
   },
   'dob': {
-    validate: ['required', 'british-date'],
+    validate: ['british-date'],
     dependent: {
       value: '',
       field: 'system-number'
