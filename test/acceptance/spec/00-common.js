@@ -1,31 +1,30 @@
 'use strict';
 
-var mockProxy = require('../mock-proxy');
-var mockKcProxy = require('../mock-kc-proxy');
-var testConfig = require('../config');
+const _ = require('underscore');
 
-before(function () {
-  if (testConfig.env === 'local') {
-    mockProxy.listen();
-    mockKcProxy('localhost', 8002, 'localhost', 8001);
-  }
-});
+// Set up mocks as required
+////////////////////////////////////////////////////////////////////////
+const mockProxy = require('../mock-proxy');
+const mockKcProxy = require('../mock-kc-proxy');
+const testConfig = require('../config');
 
-beforeEach(function () {
-  if (testConfig.env !== 'local') {
-    doLogin();
-  }
-});
-
-afterEach(function () {
-  if (testConfig.env !== 'local' && browser.isExisting('#logout')) {
-    browser.click('#logout');
-  }
-});
-
-function doLogin() {
-  browser.url(testConfig.url);
-  browser.setValue('input[name="username"]', testConfig.username);
-  browser.setValue('input[name="password"]', testConfig.password);
-  browser.submitForm('form');
+if (testConfig.env === 'local') {
+  mockProxy.listen();
+  mockKcProxy('localhost', 8002, 'localhost', 8001);
 }
+
+// Add mixins to browser
+////////////////////////////////////////////////////////////////////////
+const mixins = [
+  require('../mixins/login'),
+  require('../mixins/search'),
+  require('../mixins/results'),
+  require('../mixins/details'),
+  require('../mixins/logout')
+];
+
+before(() => {
+  _.each(mixins, (mixin) => {
+    mixin(browser);
+  });
+});
