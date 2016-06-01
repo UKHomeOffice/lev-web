@@ -16,7 +16,7 @@ if (testConfig.env === 'local') {
     'registrationDistrict': 'Test District',
     'child': {
       'originalName': {
-        'givenName': 'Tester One',
+        'givenName': 'Tester',
         'surname': 'Multiple',
         'fullName': 'Tester One Multiple'
       },
