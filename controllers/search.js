@@ -16,7 +16,7 @@ validators = _.extend(validators, {
 
 var SearchController = function SearchController() {
   Parent.apply(this, arguments);
-}
+};
 
 util.inherits(SearchController, Parent);
 
@@ -49,7 +49,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
       callback((err instanceof(Error)) ? err : new Error(err), req, res, callback);
     });
   this.emit('complete', req, res);
-}
+};
 
 var form = new SearchController({
   fields: require('../fields'),

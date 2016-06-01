@@ -33,7 +33,7 @@
     {{#records}}
     <li>
       <article>
-        <a href="/details/{{system-number}}">
+        <a href="/details/{{system-number}}?{{querystring}}&amp;multipleResults">
           <h2>{{forenames}} {{surname}}</h2>
           <table>
             <tbody>
@@ -75,7 +75,7 @@
     {{/records}}
   </ul>
   <a id="newSearchLink" href="/" class="button">New search</a>
-  <a id="editSearchLink" href="/?edit&{{querystring}}" class="blue button">Edit search</a>
+  <a id="editSearchLink" href="/?edit&amp;{{querystring}}" class="blue button">Edit search</a>
 {{/content}}
 
 {{/layout}}

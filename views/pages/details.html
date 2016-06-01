@@ -106,6 +106,10 @@
     </tbody>
   </table>
   <a id="newSearchLink" href="/" class="button">New search</a>
+  <a id="editSearchLink" href="/?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+  {{#canRedirectToResults}}
+    <a id="backToSearchResults" href="/?{{querystring}}" class="grey button">Back to search results</a>
+  {{/canRedirectToResults}}
 {{/content}}
 
 {{/layout}}

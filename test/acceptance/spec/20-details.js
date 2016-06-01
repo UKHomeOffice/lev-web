@@ -54,7 +54,7 @@ describe('Details Page', () => {
   };
 
   const backToSearchResultsNotDisplayed = () => {
-    it('contains a link back to the search screen', () => {
+    it('does not contain a link back to the search screen', () => {
       browser.getText('body').should.not.contain('Back to search results');
     });
   };
@@ -83,7 +83,9 @@ describe('Details Page', () => {
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
     });
 
     urlShouldContainDetails();
@@ -137,15 +139,17 @@ describe('Details Page', () => {
   });
 
   describe('When I select the "Edit search" link on the details page', () => {
-    before(() => {
-      const child = expectedRecords.child;
-      const name = child.originalName;
+    const child = expectedRecords.child;
+    const name = child.originalName;
 
+    before(() => {
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
       browser.click('#editSearchLink');
-});
+    });
 
     it('returns the search page', () => {
       browser.shouldBeOnSearchPage();
@@ -154,9 +158,9 @@ describe('Details Page', () => {
     it('has the correct form values', () => {
       browser.waitForVisible('input[name="forenames"]', 5000);
       browser.getValue('#system-number').should.equal('');
-      browser.getValue('#surname').should.equal('Multiple');
-      browser.getValue('#forenames').should.equal('Tester');
-      browser.getValue('#dob').should.equal('01/01/2010');
+      browser.getValue('#surname').should.equal(name.surname);
+      browser.getValue('#forenames').should.equal(name.givenName);
+      browser.getValue('#dob').should.equal('');
     });
   });
 
@@ -167,11 +171,13 @@ describe('Details Page', () => {
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
       browser.click('#backToSearchResults');
-      browser.getUrl().should.contain('surname=Multiple');
-      browser.getUrl().should.contain('forenames=Tester');
-      browser.getUrl().should.contain('dob=01/01/2010');
+      browser.getUrl().should.contain("surname=" + name.surname);
+      browser.getUrl().should.contain('forenames=' + name.givenName);
+      browser.shouldBeOnResultsPage();
     });
   });
 });
