@@ -20,28 +20,31 @@
 
 {{$content}}
   {{#record.status.blockedRegistration}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.blockedRegistration}}
   {{#record.status.cancelled}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.cancelled}}
   {{#record.status.cautionMark}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.cautionMark}}
   {{#record.status.courtOrder}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.courtOrder}}
   {{#record.status.fictitiousBirth}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.fictitiousBirth}}
   {{#record.status.reRegistered}}
-  <div class="flag alert">Record flagged, consider referral.</div>
+    <div class="flag alert">Record flagged, consider referral.</div>
   {{/record.status.reRegistered}}
-  <table>
+  <table class="details">
     <tbody>
       <tr>
         <th>System number</th>
         <td>{{record.system-number}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Child</th>
       </tr>
       <tr>
         <th>Surname</th>
@@ -63,39 +66,48 @@
         <th>Place of birth</th>
         <td>{{record.birth-place}}</td>
       </tr>
-      <tr class="group-item first-group-item">
-        <th>Mother</th>
+      <tr class="section-head">
+        <th colspan="2">Mother</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Mother's </span>Name</th>
         <td>{{record.mother.name}}</td>
       </tr>
-      <tr class="group-item">
-        <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Maiden name</th>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Mother's </span>Maiden name</th>
         <td>{{record.mother.nee}}</td>
       </tr>
-      <tr class="group-item last-group-item">
-        <th><span class="visuallyhidden" aria-hidden="true">Mothers </span>Place of birth</th>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Mother's </span>Place of birth</th>
         <td>{{record.mother.birth-place}}</td>
       </tr>
-      <tr class="group-item first-group-item">
-        <th>Father</th>
+      <tr class="section-head">
+        <th colspan="2">Father</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father's </span>Name</th>
         <td>{{record.father.name}}</td>
       </tr>
-      <tr class="group-item last-group-item">
-        <th><span class="visuallyhidden" aria-hidden="true">Fathers </span>Place of birth</th>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father's </span>Place of birth</th>
         <td>{{record.father.birth-place}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Registration</th>
       </tr>
       <tr>
         <th>Birth jointly registered</th>
         <td>{{record.registered.jointly}}</td>
       </tr>
-      <tr class="group-item first-group-item">
+      <tr>
         <th>Registration district</th>
         <td>{{record.registered.district}}</td>
       </tr>
-      <tr class="group-item">
+      <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
         <td>{{record.registered.sub-district}}</td>
       </tr>
-      <tr class="group-item last-group-item">
+      <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Administrative area</th>
         <td>{{record.registered.admin-area}}</td>
       </tr>
@@ -108,7 +120,7 @@
   <a id="newSearchLink" href="/" class="button">New search</a>
   <a id="editSearchLink" href="/?edit&amp;{{querystring}}" class="blue button">Edit search</a>
   {{#canRedirectToResults}}
-    <a id="backToSearchResults" href="/?{{querystring}}" class="grey button">Back to search results</a>
+    <a id="backToSearchResults" href="/?{{querystring}}" class="grey button">Back to results</a>
   {{/canRedirectToResults}}
 {{/content}}
 
