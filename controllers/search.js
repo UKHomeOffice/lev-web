@@ -4,6 +4,7 @@ var Parent = require('../lib/hof-standalone');
 var api = require('../api');
 var helpers = require('../lib/helpers');
 var moment = require('moment');
+var fields = require('../fields');
 var util = require('util');
 var _ = require('underscore');
 
@@ -24,7 +25,8 @@ util.inherits(SearchController, Parent);
 // results page
 SearchController.prototype.successHandler = function successHandler(req, res, callback) {
   const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
-  const querystring = helpers.serialize(req.query);
+  const query = _.pick(req.query, _.keys(fields));
+  const querystring = helpers.serialize(query);
 
   api.read(req.form.values, username)
     .then(function resolved(records) {
@@ -35,7 +37,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
         res.render('pages/results', {
           count: records && records.length,
           records: records,
-          query: req.query,
+          query: query,
           querystring: querystring
         });
       }
@@ -44,7 +46,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
         res.render('pages/results', {
           count: 0,
           records: null,
-          query: req.query,
+          query: query,
           querystring: querystring
         });
       }

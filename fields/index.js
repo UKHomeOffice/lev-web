@@ -29,4 +29,4 @@ module.exports = {
       field: 'system-number'
     }
   }
-}
+};
