@@ -88,7 +88,7 @@ html {
  * ================================================================== */
 
 h1 {
-  font-size: 20px;
+  @include bold-24;
   margin: 15px 0 12px;
   .query {
     font-weight: normal;
@@ -100,7 +100,7 @@ h1 {
 }
 
 .form-label-bold {
-  font-size: 19px;
+  @include core-19;
 }
 
 //autocomplete styling
@@ -147,7 +147,7 @@ h1 {
     padding-left: 0;
 
     label {
-        font-size: 19px;
+        @include core-19();
     }
 
     .form-group {
