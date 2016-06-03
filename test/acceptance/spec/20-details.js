@@ -41,6 +41,24 @@ describe('Details Page', () => {
     });
   };
 
+  const editSearchDisplayed = () => {
+    it('contains a link back to the search screen', () => {
+      browser.getText('body').should.contain('Edit search');
+    });
+  };
+
+  const backToSearchResultsDisplayed = () => {
+    it('contains a link back to the search screen', () => {
+      browser.getText('body').should.contain('Back to search results');
+    });
+  };
+
+  const backToSearchResultsNotDisplayed = () => {
+    it('does not contain a link back to the search screen', () => {
+      browser.getText('body').should.not.contain('Back to search results');
+    });
+  };
+
   describe('When there is one result', () => {
     before(() => {
         const child = expectedRecord.child;
@@ -53,6 +71,8 @@ describe('Details Page', () => {
     urlShouldContainDetails();
     messageDisplayed(expectedRecord);
     recordDisplayed(expectedRecord);
+    editSearchDisplayed();
+    backToSearchResultsNotDisplayed();
   });
 
   describe('When there is more than one result', () => {
@@ -63,12 +83,16 @@ describe('Details Page', () => {
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      browser.click("a[href=\"/details/" + expectedRecords.systemNumber + "\"]");
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
     });
 
     urlShouldContainDetails();
     messageDisplayed(expectedRecords);
     recordDisplayed(expectedRecords);
+    editSearchDisplayed();
+    backToSearchResultsDisplayed();
   });
 
   describe('When I select the "New search" button', () => {
@@ -94,7 +118,7 @@ describe('Details Page', () => {
     });
   });
 
-  describe('When I select the "Edit search" link', () => {
+  describe('When I select the "Edit search" link on the results page', () => {
     before(() => {
       mockProxy.willReturnForLocalTests(0);
       browser.search('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
@@ -111,6 +135,49 @@ describe('Details Page', () => {
       browser.getValue('#surname').should.equal('NotRealPersonSurname');
       browser.getValue('#forenames').should.equal('NotRealPersonForename');
       browser.getValue('#dob').should.equal('01/01/2010');
+    });
+  });
+
+  describe('When I select the "Edit search" link on the details page', () => {
+    const child = expectedRecords.child;
+    const name = child.originalName;
+
+    before(() => {
+      mockProxy.willReturnForLocalTests(3);
+      browser.search('', name.surname, name.givenName, '');
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
+      browser.click('#editSearchLink');
+    });
+
+    it('returns the search page', () => {
+      browser.shouldBeOnSearchPage();
+    });
+
+    it('has the correct form values', () => {
+      browser.waitForVisible('input[name="forenames"]', 5000);
+      browser.getValue('#system-number').should.equal('');
+      browser.getValue('#surname').should.equal(name.surname);
+      browser.getValue('#forenames').should.equal(name.givenName);
+      browser.getValue('#dob').should.equal('');
+    });
+  });
+
+  describe('When I select the "Back to search results link on the results page"', () => {
+    it('returned me to the results page', () => {
+      const child = expectedRecords.child;
+      const name = child.originalName;
+
+      mockProxy.willReturnForLocalTests(3);
+      browser.search('', name.surname, name.givenName, '');
+      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
+        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      browser.click(linkToFirstRecordDetails);
+      browser.click('#backToSearchResults');
+      browser.getUrl().should.contain("surname=" + name.surname);
+      browser.getUrl().should.contain('forenames=' + name.givenName);
+      browser.shouldBeOnResultsPage();
     });
   });
 });
