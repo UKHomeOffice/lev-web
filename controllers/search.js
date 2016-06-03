@@ -23,17 +23,20 @@ util.inherits(SearchController, Parent);
 // Only redirect when a single result is returned, otherwise render
 // results page
 SearchController.prototype.successHandler = function successHandler(req, res, callback) {
-  var username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+  const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+  const querystring = helpers.serialize(req.query);
+
   api.read(req.form.values, username)
     .then(function resolved(records) {
+
       if (records.length === 1) {
-        res.redirect('/details/' + records[0]['system-number']);
+        res.redirect('/details/' + records[0]['system-number'] + '?' + querystring);
       } else {
         res.render('pages/results', {
           count: records && records.length,
           records: records,
           query: req.query,
-          querystring: helpers.serialize(req.query)
+          querystring: querystring
         });
       }
     }, function rejected(err) {
@@ -42,7 +45,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
           count: 0,
           records: null,
           query: req.query,
-          querystring: helpers.serialize(req.query)
+          querystring: querystring
         });
       }
 

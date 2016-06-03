@@ -76,7 +76,7 @@ describe('controllers/search', function () {
           searchController(req, res);
 
           return Promise.resolve().then(function () {
-            res.redirect.should.have.been.calledWith('/details/1234');
+            res.redirect.should.have.been.calledWith('/details/1234?system-number=1234');
           });
         });
 
