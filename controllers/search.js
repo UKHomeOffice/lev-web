@@ -1,12 +1,12 @@
 'use strict';
 
-var Parent = require('../lib/hof-standalone');
-var api = require('../api');
-var helpers = require('../lib/helpers');
-var moment = require('moment');
-var fields = require('../fields');
-var util = require('util');
-var _ = require('underscore');
+const Parent = require('../lib/hof-standalone');
+const api = require('../api');
+const helpers = require('../lib/helpers');
+const moment = require('moment');
+const fields = require('../fields');
+const util = require('util');
+const _ = require('underscore');
 
 var validators = Parent.validators;
 validators = _.extend(validators, {
@@ -15,7 +15,7 @@ validators = _.extend(validators, {
   }.bind(validators)
 });
 
-var SearchController = function SearchController() {
+const SearchController = function SearchController() {
   Parent.apply(this, arguments);
 };
 
@@ -56,7 +56,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
   this.emit('complete', req, res);
 };
 
-var form = new SearchController({
+const form = new SearchController({
   fields: require('../fields'),
   template: 'pages/search'
 });
