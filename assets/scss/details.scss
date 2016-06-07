@@ -1,0 +1,40 @@
+/* Flags */
+.flag {
+  display: block;
+  background-color: #eee;
+  border-left: em(10) solid $border-colour;
+  padding: em(15);
+  margin-bottom: em(20)
+}
+
+.alert {
+  background-color: #fcc;
+  border-color: #c00;
+  color: #c00;
+}
+
+table.details {
+  border-top: 1px solid $border-colour;
+  border-bottom: 1px solid $border-colour;
+
+  tbody {
+    th, td {
+      @include core-19;
+      vertical-align: top;
+      border-bottom: none;
+      padding: 0.4em 0.6em 0.4em 0.6em;
+    }
+    th {
+      width: 10em;
+      color: $secondary-text-colour;
+    }
+    .section-head th,
+    .section-head td {
+      font-weight: bold;
+      color: $text-colour;
+      background-color: $panel-colour;
+      padding-top: 0.4em;
+      padding-bottom: 0.3em;
+    }
+  }
+}

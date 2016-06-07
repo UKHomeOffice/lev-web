@@ -5,6 +5,9 @@ $path: "../img/";
 @import "./alert.scss";
 @import "./icons.scss";
 @import "./validation.scss";
+@import "./header.scss";
+@import "./results.scss";
+@import "./details.scss";
 
 .phase-banner {
   @include phase-banner(beta);
@@ -14,94 +17,21 @@ html {
   background-color: transparent;
 }
 
-/* ==================================================================
- * Header
- * ================================================================== */
-#global-header, #global-header a {
-  color: $white;
+body {
+  @include core-19;
 }
-
-#global-header a:hover {
-  text-decoration: none;
-}
-
-#global-header > .header-wrapper > .header-row {
-  @extend %grid-row;
-  padding: 0 30px;
-}
-
-#global-header #logo {
-  @include grid-column(1 / 4, 370px);
-  padding: 0;
-  background-image: url('../images/gov.uk_logotype_crown.png');
-  background-repeat: no-repeat;
-  min-height: 30px;
-  min-width: 34px;
-}
-
-#global-header #logo,
-#global-header #logo:hover {
-  border: none;
-}
-
-
-#global-header #service-header {
-  @include grid-column(1 / 2, 370px);
-  padding: 0;
-  text-align: center;
-  min-height: 1px;
-}
-
-#global-header #service-header #proposition-name {
-  display: none;
-
-  @include media(450px) {
-    display: block;
-  }
-}
-
-#global-header #nav {
-  @include grid-column(1 / 4, 370px);
-  padding: 0;
-  text-align: right;
-  min-height: 1px;
-  min-width: 60px;
-}
-
-#global-header #proposition-name {
-  font-family: "nta", Arial, sans-serif;
-  font-size: 24px;
-  line-height: 1.25;
-  font-weight: 400;
-  text-transform: none;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-}
-
-#global-header #proposition-name:hover {
-  text-decoration: underline;
-}
-
-/* ==================================================================
- * /Header
- * ================================================================== */
 
 h1 {
-  font-size: 20px;
-  margin: 15px 0 12px;
+  @include bold-24;
+  margin: em(15) 0 em(12);
   .query {
     font-weight: normal;
   }
 }
 
-.button {
-  margin-top: 15px;
-}
-
 .form-label-bold {
-  font-size: 19px;
-  font-weight: normal;
+  /* Note: Elements does not use bold labels */
+  @include bold-19;
 }
 
 //autocomplete styling
@@ -148,130 +78,30 @@ h1 {
     padding-left: 0;
 
     label {
-        font-size: 19px;
+        @include core-19();
     }
 
     .form-group {
         input {
             &[id$="-year"] {
-                width: 70px;
+                width: em(70);
             }
         }
     }
 }
 
-table {
-  border-top: 1px solid $border-colour;;
-  tbody {
-    th, td {
-      font-size: 16px;
-      padding: 10px 0;
-      vertical-align: top;
-      line-height: 1;
-    }
-    th {
-      width: 176px;
-    }
-    tr.group-item {
-      th, td {
-        border-bottom: none;
-        padding: 5px 0;
-      }
-    }
-    tr.first-group-item {
-      th, td {
-        padding-top: 10px;
-      }
-    }
-    tr.last-group-item {
-      th, td {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 10px;
-      }
-    }
+.button {
+  margin: em(15) em(15) em(15) 0;
+
+  &.blue {
+    @include button ($link-colour);
+    padding: em(10) em(15) em(5) em(15);
   }
-}
 
-#records {
-  li {
-    margin: 0 0 15px;
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-    article {
-      a {
-        display: block;
-        background-color: #eee;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        text-decoration: none;
-        padding: 10px;
-        h2 {
-          margin-bottom: 6px;
-          margin-top: 0;
-          text-decoration: underline;
-          font-size: 16px;
-        }
-        table {
-          border-top: none;
-          th, td {
-            border-bottom: none;
-            padding: 5px 0;
-            &:last-of-type {
-              padding-bottom: 0;
-            }
-          }
-          th {
-            width: 115px;
-          }
-        }
-        &:hover {
-          padding: 7px 6px;
-          background-color: #e6f0f9;
-          border: 4px solid #005ea5;
-          table {
-            th, td {
-              color: #005ea5;
-            }
-          }
-        }
-      }
-    }
+  &.grey {
+    @include button ($grey-1);
+    padding: em(10) em(15) em(5) em(15);
   }
-}
-
-/* Flags */
-.flag {
-  display: block;
-  background-color: #eee;
-  border-left: 10px solid #ccc;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-.alert {
-  background-color: #fcc;
-  border-left: 10px solid #c00;
-  color: #c00;
-}
-
-#records .flag {
-  display: block;
-  background-color: transparent;
-  border-left: none;
-  padding: 0;
-  margin-bottom: 0;
-  font-weight: bold;
-}
-
-.blue.button {
-  @include button ($link-colour);
-  padding: em(10) em(15) em(5) em(15);
-}
-
-.grey.button {
-  @include button ($grey-1);
-  padding: em(10) em(15) em(5) em(15);
 }
 
 #content {

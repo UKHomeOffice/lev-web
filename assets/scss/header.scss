@@ -1,0 +1,90 @@
+#global-header {
+  color: $white;
+
+  a {
+    color: $white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .header-wrapper {
+    padding: 8px 0;
+
+    @include media(tablet) {
+      padding: 8px 15px;
+    }
+
+    > .header-row {
+      @extend %grid-row;
+      padding: 0 15px;
+      margin: 0;
+      height: 31px;
+
+      @include media(tablet) {
+        height: 36px;
+      }
+
+      > #logo {
+        @include grid-column(1 / 4, 370px);
+        padding: 0;
+        background-image: url('../images/gov.uk_logotype_crown.png');
+        background-repeat: no-repeat;
+        background-position: left center;
+        min-width: 36px;
+        height: 100%;
+        border: none;
+
+        &:hover {
+          border: none;
+        }
+      }
+
+      > #service-header {
+        @include grid-column(1 / 2, 370px);
+        padding: 0;
+        text-align: center;
+        /*min-height: 1px;*/
+        display: table;
+        height: 100%;
+
+        #proposition-name {
+          display: none;
+          vertical-align: middle;
+          height: 100%;
+          /*margin: 0.25em 0;*/
+
+          @include media(370px) {
+            display: table-cell;
+          }
+
+          a {
+            @include bold-24;
+            color: white;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      > #nav {
+        @include grid-column(1 / 4, 370px);
+        padding: 0;
+        text-align: right;
+        min-height: 1px;
+        min-width: 3.75em;
+        display: table;
+        height: 100%;
+
+        > li {
+          display: table-cell;
+          vertical-align: middle;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

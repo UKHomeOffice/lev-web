@@ -1,0 +1,72 @@
+#records {
+  li {
+    margin: 0 0 15px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    article {
+      a {
+        display: block;
+        background-color: #eee;
+        border-top: 1px solid $border-colour;
+        border-bottom: 1px solid $border-colour;
+        text-decoration: none;
+        padding: 10px;
+
+        h2 {
+          @include bold-19;
+          margin-bottom: 0.4em;
+          margin-top: 0;
+          text-decoration: underline;
+        }
+
+        table {
+          border-top: none;
+          border-bottom: none;
+
+          th, td {
+            border-bottom: none;
+            padding: 0.3em 0;
+
+            &:last-of-type {
+              padding-bottom: 0;
+            }
+          }
+
+          td {
+            @include core-19;
+          }
+
+          th {
+            @include bold-19;
+            width: 7.2em;
+          }
+        }
+
+        .flag {
+          display: block;
+          background-color: transparent;
+          border-left: none;
+          padding: 0;
+          margin-bottom: 0;
+          font-weight: bold;
+          margin-top: 0.4em;
+        }
+
+        &:hover {
+          padding: 7px 6px;
+          background-color: #e6f0f9;
+          border: 4px solid #005ea5;
+          table {
+            th, td {
+              color: #005ea5;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
