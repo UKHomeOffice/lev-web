@@ -99,7 +99,7 @@ h1 {
   }
 
   &.grey {
-    @include button ($grey-1);
+    @include button (#52585A);
     padding: em(10) em(15) em(5) em(15);
   }
 }
