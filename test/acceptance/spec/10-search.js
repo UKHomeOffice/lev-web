@@ -116,8 +116,8 @@ describe('Search', () => {
         browser.getText('h2').should.contain('Fix the following error');
       });
 
-      it('requests an integer', () => {
-        browser.getText('a').should.contain('Please enter an integer');
+      it('requests a number', () => {
+        browser.getText('a').should.contain('Please enter a number');
       });
     });
 
