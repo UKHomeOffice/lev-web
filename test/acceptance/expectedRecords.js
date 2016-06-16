@@ -15,15 +15,10 @@ if (testConfig.env === 'local') {
     'subDistrict': 'Test Subdistrict',
     'registrationDistrict': 'Test District',
     'child': {
-      'originalName': {
+      'name': {
         'givenName': 'Tester',
         'surname': 'Multiple',
         'fullName': 'Tester One Multiple'
-      },
-      'name': {
-        'givenName': 'Brandon',
-        'surname': 'Multiple',
-        'fullName': 'Brandon Multiple'
       },
       'dateOfBirth': '01/01/2000',
       'sex': 'Male',

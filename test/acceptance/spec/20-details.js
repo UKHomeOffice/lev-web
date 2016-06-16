@@ -62,7 +62,7 @@ describe('Details Page', () => {
   describe('When there is one result', () => {
     before(() => {
         const child = expectedRecord.child;
-        const name = child.originalName;
+        const name = child.name;
 
         mockProxy.willReturnForLocalTests(1);
         browser.search('', name.surname, name.givenName, child.dateOfBirth);
@@ -79,7 +79,7 @@ describe('Details Page', () => {
 
     before(() => {
       const child = expectedRecords.child;
-      const name = child.originalName;
+      const name = child.name;
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
@@ -98,7 +98,7 @@ describe('Details Page', () => {
   describe('When I select the "New search" button', () => {
     before(() => {
       const child = expectedRecord.child;
-      const name = child.originalName;
+      const name = child.name;
 
       mockProxy.willReturnForLocalTests(1);
       browser.search('', name.surname, name.givenName, child.dateOfBirth);
@@ -140,7 +140,7 @@ describe('Details Page', () => {
 
   describe('When I select the "Edit search" link on the details page', () => {
     const child = expectedRecords.child;
-    const name = child.originalName;
+    const name = child.name;
 
     before(() => {
       mockProxy.willReturnForLocalTests(3);
@@ -167,7 +167,7 @@ describe('Details Page', () => {
   describe('When I select the "Back to search results link on the results page"', () => {
     it('returned me to the results page', () => {
       const child = expectedRecords.child;
-      const name = child.originalName;
+      const name = child.name;
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');

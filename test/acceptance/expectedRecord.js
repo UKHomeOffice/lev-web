@@ -6,15 +6,10 @@ module.exports = {
   'subDistrict': 'Test Subdistrict',
   'registrationDistrict': 'Test District',
   'child': {
-    'originalName': {
+    'name': {
       'givenName': 'Tester',
       'surname': 'Solo',
       'fullName': 'Tester Solo'
-    },
-    'name': {
-      'givenName': 'Brandon',
-      'surname': 'Solo',
-      'fullName': 'Brandon Solo'
     },
     'dateOfBirth': '29/02/2000',
     'sex': 'Male',
