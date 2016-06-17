@@ -26,7 +26,10 @@ RUN npm run postinstall && \
     yum clean all && \
     rpm --rebuilddb && \
 
-    chown -R nodejs:nodejs .
+    chown -R nodejs:nodejs . \
+
+    ./api/mock/get_latest_api_spec.sh && \
+    npm run install:mockapi
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 8001
