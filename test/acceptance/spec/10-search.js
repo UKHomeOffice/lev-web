@@ -32,7 +32,7 @@ describe('Search', () => {
     describe('that returns 1 record', () => {
       before(() => {
         const child = expectedRecord.child;
-        const name = child.originalName;
+        const name = child.name;
 
         mockProxy.willReturnForLocalTests(1);
         browser.search('', name.surname, name.givenName, child.dateOfBirth);
@@ -46,7 +46,7 @@ describe('Search', () => {
 
     describe('that returns more than 1 record', () => {
       const child = expectedRecords.child;
-      const name = child.originalName;
+      const name = child.name;
 
       before(() => {
         mockProxy.willReturnForLocalTests(3);
