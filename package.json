@@ -39,7 +39,7 @@
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
     "moment": "^2.10.6",
-    "node-sass": "~3.4.0",
+    "node-sass": "~3.8.0",
     "nodemon": "^1.8.1",
     "request": "^2.67.0",
     "uglifyify": "^3.0.1",
