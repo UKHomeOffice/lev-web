@@ -18,7 +18,9 @@ RUN ./api/mock/get_latest_api_spec.sh && \
 COPY . /app
 
 # Run npm install again to build /public dir
-RUN npm run postinstall && \
+RUN ./api/mock/get_latest_api_spec.sh && \
+    npm run install:mockapi && \
+    npm run postinstall && \
     npm test && \
     npm prune --production && \
     rm -rf ./api/mock && \
@@ -26,10 +28,7 @@ RUN npm run postinstall && \
     yum clean all && \
     rpm --rebuilddb && \
 
-    chown -R nodejs:nodejs . \
-
-    ./api/mock/get_latest_api_spec.sh && \
-    npm run install:mockapi
+    chown -R nodejs:nodejs .
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 8001
