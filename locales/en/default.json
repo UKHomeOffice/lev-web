@@ -38,5 +38,15 @@
       "required": "Please enter a date of birth",
       "british-date": "Please enter a date of birth in the correct format"
     }
+  },
+  "flags": {
+    "refer": "Refer to GRO.",
+    "fatherAdded": "Father's details added to record.",
+    "subsequentlyMarried": "Unmarried parents subsequently married.",
+    "fatherModified": "Father's details added / removed from record.",
+    "replaced": "Original registration replaced by new registration.",
+    "corrected": "Registration has been updated to correct an error.",
+    "courtOrderInPlace": "This record has an adoption / court order in place.",
+    "courtOrderRevoked": "This record has an adoption / court order revoked."
   }
 }

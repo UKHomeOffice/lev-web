@@ -38,6 +38,7 @@
     "hof": "~6.2.0",
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
+    "lodash": "^4.13.1",
     "moment": "^2.10.6",
     "node-sass": "~3.4.0",
     "nodemon": "^1.8.1",

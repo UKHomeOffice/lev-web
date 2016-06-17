@@ -24,14 +24,33 @@ var processRecord = function processRecord(record) {
     return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
   };
 
+  var blocked = record.status.blockedRegistration !== false;
+
+  var refer = function refer() {
+    return (
+        record.status.reRegistered !== 'None' &&
+        record.status.reRegistered !== 'Father added' &&
+        record.status.reRegistered !== 'Subsequently married' &&
+        record.status.reRegistered !== 'Father modified' &&
+        record.status.reRegistered !== 'Replacement registration'
+      ) ||
+      record.status.potentiallyFictitiousBirth !== false ||
+      (
+        record.status.marginalNote !== 'None' &&
+        record.status.marginalNote !== 'Court order in place' &&
+        record.status.marginalNote !== 'Court order revoked'
+      ) ||
+      record.status.cancelled !== false;
+  };
+
   return {
     'system-number': record.systemNumber,
-    surname: record.subjects.child.name.surname,
-    forenames: record.subjects.child.name.givenName,
-    dob: formatDate(record.subjects.child.dateOfBirth),
-    gender: record.subjects.child.sex,
-    'birth-place': record.status.blockedRegistration ? 'UNAVAILABLE' : record.subjects.child.birthplace,
-    mother: record.status.blockedRegistration ? {
+    surname: blocked ? 'UNAVAILABLE' : record.subjects.child.name.surname,
+    forenames: blocked ? 'UNAVAILABLE' : record.subjects.child.name.givenName,
+    dob: blocked ? 'UNAVAILABLE' : formatDate(record.subjects.child.dateOfBirth),
+    gender: blocked ? 'UNAVAILABLE' : record.subjects.child.sex,
+    'birth-place': blocked ? 'UNAVAILABLE' : record.subjects.child.birthplace,
+    mother: blocked ? {
       name: 'UNAVAILABLE',
       nee: 'UNAVAILABLE',
       'birth-place': 'UNAVAILABLE',
@@ -42,7 +61,7 @@ var processRecord = function processRecord(record) {
       'birth-place': record.subjects.mother.birthplace,
       occupation: record.subjects.mother.occupation
     },
-    father: record.status.blockedRegistration ? {
+    father: blocked ? {
       name: 'UNAVAILABLE',
       'birth-place': 'UNAVAILABLE',
       occupation: 'UNAVAILABLE'
@@ -51,7 +70,7 @@ var processRecord = function processRecord(record) {
       'birth-place': record.subjects.father.birthplace,
       occupation: record.subjects.father.occupation
     },
-    registered: record.status.blockedRegistration ? {
+    registered: blocked ? {
       jointly: 'UNAVAILABLE',
       district: 'UNAVAILABLE',
       'sub-district': 'UNAVAILABLE',
@@ -64,15 +83,19 @@ var processRecord = function processRecord(record) {
       'admin-area': record.location.administrativeArea,
       date: formatDate(record.date)
     },
-    status: {
-      blockedRegistration: record.status.blockedRegistration,
-      cancelled: record.status.cancelled,
-      cautionMark: record.status.cautionMark,
-      courtOrder: (record.status.courtOrder === 'None') ? '' : record.status.courtOrder,
-      fictitiousBirth: record.status.fictitiousBirth,
-      reRegistered: (record.status.reRegistered === 'None') ? '' : record.status.reRegistered
+    status: blocked ? {
+      refer: true
+    } : {
+      refer: refer(),
+      fatherAdded: record.status.reRegistered === 'Father added',
+      subsequentlyMarried: record.status.reRegistered === 'Subsequently married',
+      fatherModified: record.status.reRegistered === 'Father modified',
+      replaced: record.status.reRegistered === 'Replacement registration',
+      corrected: record.status.correction !== 'None',
+      courtOrderInPlace: record.status.marginalNote === 'Court order in place',
+      courtOrderRevoked: record.status.marginalNote === 'Court order revoked',
     },
-    previousRegistration: record.status.blockedRegistration ? {
+    previousRegistration: blocked ? {
       date: null,
       systemNumber: null
     } : {
