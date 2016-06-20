@@ -51,24 +51,30 @@
               </tr>
             </tbody>
           </table>
-          {{#status.blockedRegistration}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.blockedRegistration}}
-          {{#status.cancelled}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.cancelled}}
-          {{#status.cautionMark}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.cautionMark}}
-          {{#status.courtOrder}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.courtOrder}}
-          {{#status.fictitiousBirth}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.fictitiousBirth}}
-          {{#status.reRegistered}}
-            <div class="flag alert">Record flagged, consider referral.</div>
-          {{/status.reRegistered}}
+          {{#status.refer}}
+            <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+          {{/status.refer}}
+          {{#status.fatherAdded}}
+            <div class="flag warning">{{#t}}flags.fatherAdded{{/t}}</div>
+          {{/status.fatherAdded}}
+          {{#status.subsequentlyMarried}}
+            <div class="flag warning">{{#t}}flags.subsequentlyMarried{{/t}}</div>
+          {{/status.subsequentlyMarried}}
+          {{#status.fatherModified}}
+            <div class="flag warning">{{#t}}flags.fatherModified{{/t}}</div>
+          {{/status.fatherModified}}
+          {{#status.replaced}}
+            <div class="flag warning">{{#t}}flags.replaced{{/t}}</div>
+          {{/status.replaced}}
+          {{#status.corrected}}
+            <div class="flag warning">{{#t}}flags.corrected{{/t}}</div>
+          {{/status.corrected}}
+          {{#status.courtOrderInPlace}}
+            <div class="flag warning">{{#t}}flags.courtOrderInPlace{{/t}}</div>
+          {{/status.courtOrderInPlace}}
+          {{#status.courtOrderRevoked}}
+            <div class="flag">{{#t}}flags.courtOrderRevoked{{/t}}</div>
+          {{/status.courtOrderRevoked}}
         </a>
       </article>
     </li>

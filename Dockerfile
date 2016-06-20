@@ -12,14 +12,12 @@ COPY ./package.json /app/
 RUN npm install --quiet
 
 COPY ./api/mock/get_latest_api_spec.sh /app/api/mock/
-RUN ./api/mock/get_latest_api_spec.sh && \
-    npm run install:mockapi
+RUN npm run install:mockapi
 
 COPY . /app
 
 # Run npm install again to build /public dir
-RUN ./api/mock/get_latest_api_spec.sh && \
-    npm run install:mockapi && \
+RUN npm run install:mockapi && \
     npm run postinstall && \
     npm test && \
     npm prune --production && \

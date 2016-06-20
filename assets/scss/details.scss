@@ -2,15 +2,22 @@
 .flag {
   display: block;
   background-color: #eee;
+  color: #000;
   border-left: em(10) solid $border-colour;
   padding: em(15);
-  margin-bottom: em(20)
+  margin-bottom: em(20);
 }
 
 .alert {
   background-color: #fcc;
-  border-color: #c00;
   color: #c00;
+  border-color: #c00;
+}
+
+.warning {
+  background-color: #fec;
+  color: #c70;
+  border-color: #ca0;
 }
 
 table.details {
