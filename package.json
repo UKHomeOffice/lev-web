@@ -20,7 +20,7 @@
     "lint": "eslint .",
     "style": "jscs **/*.js --config=./.jscsrc.json",
     "cover": "istanbul cover _mocha -- ./test/unit",
-    "check-coverage": "istanbul check-coverage --statement 90 --branch 70 --function 95 --line 90",
+    "check-coverage": "istanbul check-coverage --statement 90 --branch 80 --function 95 --line 90",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
     "copy:images": "cp -r ./assets/images ./public/",
     "uglify": "browserify -g uglifyify ./assets/js/index.js > ./public/js/bundle.js",
