@@ -8,6 +8,8 @@ describe('lib/requestWithOAuth2', function () {
     var requestGet;
     var requestPost;
     var requestWithOAuth2;
+    var fsReadFileSync;
+    var config;
     var accessToken1 = 'my_access_token';
 
     var successfulAuthResponse = {
@@ -42,15 +44,22 @@ describe('lib/requestWithOAuth2', function () {
       }
     };
 
-
     beforeEach(sinon.test(function () {
+      config = {};
+
       requestGet = this.stub();
       request.get = requestGet;
       requestPost = this.stub();
       request.post = requestPost;
 
+      fsReadFileSync = sinon.stub();
+
       requestWithOAuth2 = proxyquire('../../../lib/request-with-oauth2', {
-        request: request
+        request: request,
+        fs: {
+          readFileSync: fsReadFileSync
+        },
+        '../config': config
       });
     }));
 
@@ -175,7 +184,7 @@ describe('lib/requestWithOAuth2', function () {
       });
     });
 
-    it('GETs the configured url with the given headers and the authorization header as wel', function (done) {
+    it('GETs the configured url with the given headers and the authorization header as well', function (done) {
       requestPost.onFirstCall().yields(null, {statusCode: 200}, JSON.stringify(successfulAuthResponse));
       requestGet.onFirstCall().yields(null, {statusCode: 200}, {});
 
@@ -197,5 +206,29 @@ describe('lib/requestWithOAuth2', function () {
       });
     });
 
+    it('Adds config for mutual TLS when available', function (done) {
+      config.lev_tls = {
+        key: 'TLS Key',
+        cert: 'TLS Cert',
+        ca: 'TLS CA'
+      };
+
+      requestGet.onFirstCall().yields(null, {statusCode: 200}, {});
+
+      fsReadFileSync.returnsArg(0);
+
+      requestWithOAuth2.get('http://testhost.com', undefined, undefined, undefined, undefined, undefined,
+        function (err, res, body) {
+          config.lev_tls = undefined;
+
+          request.get.should.have.been.calledWith({
+            url: 'http://testhost.com',
+            key: 'TLS Key',
+            cert: 'TLS Cert',
+            ca: 'TLS CA'
+          });
+          done()
+        });
+    });
   });
 });
