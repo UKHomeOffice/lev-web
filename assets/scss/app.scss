@@ -103,6 +103,16 @@ h1 {
   }
 }
 
+.buttons .button {
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
 #content {
   padding-bottom: 0;
 }
