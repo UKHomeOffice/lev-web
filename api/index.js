@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 var config = require('../config');
 var requestWithOAuth2 = require('../lib/request-with-oauth2');
 var querystring = require('querystring');
