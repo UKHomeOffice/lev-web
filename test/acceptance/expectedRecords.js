@@ -40,7 +40,7 @@ if (testConfig.env === 'local') {
       },
       'birthplace': 'Test Birthplace',
       'maidenSurname': 'prev-Multiple',
-      'maidenSurname': 'prev-M-Multiple'
+      'marriageSurname': 'prev-M-Multiple'
     },
     'systemNumber': 999999901,
     'date': '10/10/2014'
