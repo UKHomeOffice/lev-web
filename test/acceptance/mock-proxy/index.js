@@ -1,7 +1,7 @@
 'use strict';
 
 var config = require('../../../config');
-var _ = require('underscore');
+var _ = require('lodash');
 var express = require('express');
 var httpProxy = require('http-proxy')
   .createServer({

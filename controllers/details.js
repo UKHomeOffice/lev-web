@@ -3,7 +3,7 @@
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const fields = require('../fields');
-const _ = require('underscore');
+const _ = require('lodash');
 
 module.exports = function renderDetails(req, res) {
   if (req.params && req.params.sysnum) {

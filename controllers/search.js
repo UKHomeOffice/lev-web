@@ -6,7 +6,7 @@ const helpers = require('../lib/helpers');
 const moment = require('moment');
 const fields = require('../fields');
 const util = require('util');
-const _ = require('underscore');
+const _ = require('lodash');
 
 var validators = Parent.validators;
 validators = _.extend(validators, {

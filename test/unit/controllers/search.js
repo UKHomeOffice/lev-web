@@ -2,7 +2,7 @@
 
 var proxyquire = require('proxyquire');
 var reqres = require('reqres');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var formSubmission = function formSubmission(extension) {
   return _.extend({

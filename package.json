@@ -44,7 +44,6 @@
     "nodemon": "^1.8.1",
     "request": "^2.67.0",
     "uglifyify": "^3.0.1",
-    "underscore": "^1.8.3",
     "winston": "^1.0.1"
   },
   "devDependencies": {
