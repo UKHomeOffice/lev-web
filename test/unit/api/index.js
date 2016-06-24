@@ -91,6 +91,7 @@ var parsedResponse = {
   mother: {
     name: 'Joan Narcissus Ouroboros Smith',
     nee: 'Black',
+    marriageSurname: 'White',
     'birth-place': 'Kensington',
     occupation: 'Carpenter'
   },
@@ -306,6 +307,7 @@ describe('api', function () {
             mother: {
               name: 'UNAVAILABLE',
               nee: 'UNAVAILABLE',
+              marriageSurname: 'UNAVAILABLE',
               'birth-place': 'UNAVAILABLE',
               occupation: 'UNAVAILABLE'
             },

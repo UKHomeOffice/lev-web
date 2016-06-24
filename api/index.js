@@ -53,11 +53,13 @@ var processRecord = function processRecord(record) {
     mother: blocked ? {
       name: 'UNAVAILABLE',
       nee: 'UNAVAILABLE',
+      marriageSurname: 'UNAVAILABLE',
       'birth-place': 'UNAVAILABLE',
       occupation: 'UNAVAILABLE'
     } : {
       name: record.subjects.mother.name.fullName,
       nee: record.subjects.mother.maidenSurname,
+      marriageSurname: record.subjects.mother.marriageSurname,
       'birth-place': record.subjects.mother.birthplace,
       occupation: record.subjects.mother.occupation
     },

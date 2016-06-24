@@ -30,7 +30,8 @@ module.exports = {
       'fullName': 'Mum Solo'
     },
     'birthplace': 'Test Birthplace',
-    'maidenSurname': 'prev-Solo'
+    'maidenSurname': 'prev-Solo',
+    'marriageSurname': 'prev-M-Solo'
   },
   'systemNumber': 999999910,
   'date': '10/10/2014'

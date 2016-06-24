@@ -30,14 +30,15 @@ describe('Details Page', () => {
       browserText[6].should.match(new RegExp('Place of birth *' + recordToMatch.child.birthplace));
       browserText[8].should.match(new RegExp('Mother\'s Name *' + recordToMatch.mother.name.fullName));
       browserText[9].should.match(new RegExp('Mother\'s Maiden name *' + recordToMatch.mother.maidenSurname));
-      browserText[10].should.match(new RegExp('Mother\'s Place of birth *' + recordToMatch.mother.birthplace));
-      browserText[12].should.match(new RegExp('Father\'s Name *' + recordToMatch.father.name.fullName));
-      browserText[13].should.match(new RegExp('Father\'s Place of birth *' + recordToMatch.father.birthplace));
-      browserText[15].should.match(new RegExp('Birth jointly registered *No'));
-      browserText[16].should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
-      browserText[17].should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
-      browserText[18].should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));
-      browserText[19].should.match(new RegExp('Date of registration *' + recordToMatch.date));
+      browserText[10].should.match(new RegExp('Mother\'s Previous marriage name *' + recordToMatch.mother.marriageSurname));
+      browserText[11].should.match(new RegExp('Mother\'s Place of birth *' + recordToMatch.mother.birthplace));
+      browserText[13].should.match(new RegExp('Father\'s Name *' + recordToMatch.father.name.fullName));
+      browserText[14].should.match(new RegExp('Father\'s Place of birth *' + recordToMatch.father.birthplace));
+      browserText[16].should.match(new RegExp('Birth jointly registered *No'));
+      browserText[17].should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
+      browserText[18].should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
+      browserText[19].should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));
+      browserText[20].should.match(new RegExp('Date of registration *' + recordToMatch.date));
     });
   };
 
