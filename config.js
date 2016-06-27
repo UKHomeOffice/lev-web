@@ -30,5 +30,10 @@ module.exports = {
     clientSecret: process.env.CLIENT_SECRET,
     username: process.env.KEYCLOAK_U,
     password: process.env.KEYCLOAK_P
+  },
+  lev_tls: {
+    key: process.env.LEV_TLS_KEY || null,
+    cert: process.env.LEV_TLS_CERT || null,
+    ca: process.env.LEV_TLS_CA || null
   }
 };

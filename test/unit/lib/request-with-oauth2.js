@@ -42,7 +42,6 @@ describe('lib/requestWithOAuth2', function () {
       }
     };
 
-
     beforeEach(sinon.test(function () {
       requestGet = this.stub();
       request.get = requestGet;
@@ -175,7 +174,7 @@ describe('lib/requestWithOAuth2', function () {
       });
     });
 
-    it('GETs the configured url with the given headers and the authorization header as wel', function (done) {
+    it('GETs the configured url with the given headers and the authorization header as well', function (done) {
       requestPost.onFirstCall().yields(null, {statusCode: 200}, JSON.stringify(successfulAuthResponse));
       requestGet.onFirstCall().yields(null, {statusCode: 200}, {});
 
@@ -196,6 +195,5 @@ describe('lib/requestWithOAuth2', function () {
         done();
       });
     });
-
   });
 });

@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var config = require('../config');
-var requestWithOAuth2 = require('../lib/request-with-oauth2');
+var levRequest = require('../lib/lev-request');
 var querystring = require('querystring');
 var moment = require('moment');
 
@@ -114,7 +114,7 @@ var endpoint = config.api.protocol + '://' +
 var requestData = function requestData(url, user, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
     var headers = user ? {'X-Auth-Downstream-Username': user} : {};
-    return requestWithOAuth2.get({
+    return levRequest.get({
       'url': url,
       'headers': headers
     }, oauthUrl, clientId, clientSecret, oAuthUsername, oAuthPassword,
