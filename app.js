@@ -15,6 +15,7 @@ var fields = require('./fields');
 process.title = 'levweb';
 
 if (config.env !== 'acceptance') {
+  churchill.options.logGetParams = false;
   app.use(churchill(logger));
 }
 
