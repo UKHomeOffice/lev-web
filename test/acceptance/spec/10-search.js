@@ -86,6 +86,25 @@ describe('Search', () => {
       });
 
     });
+
+    describe('using the "fast entry" date format', () => {
+      const child = expectedRecords.child;
+      const name = child.name;
+      const dob = child.dateOfBirth.replace(/\//g, '');
+
+      before(() => {
+        mockProxy.willReturnForLocalTests(3);
+        browser.search('', name.surname, name.givenName, dob);
+      });
+
+      it('returns a results page', () => {
+        browser.shouldBeOnResultsPage();
+      });
+
+      it('displays an appropriate message', () => {
+        browser.getText('h1').should.equal('3 records found for ' + name.givenName + ' ' + name.surname + ' ' + dob);
+      });
+    });
   });
 
   describe('submitting an invalid query', () => {
@@ -124,6 +143,20 @@ describe('Search', () => {
     describe('with an invalid date', () => {
       before(() => {
         browser.search('', 'Churchill', 'Winston', 'invalid');
+      });
+
+      it('displays an error message', () => {
+        browser.getText('h2').should.contain('Fix the following error');
+      });
+
+      it('requests a British formatted date', () => {
+        browser.getText('a').should.contain('Please enter a date of birth in the correct format');
+      });
+    });
+
+    describe('with an invalid short date', () => {
+      before(() => {
+        browser.search('', 'Churchill', 'Winston', '112001');
       });
 
       it('displays an error message', () => {
