@@ -1,10 +1,11 @@
 #ide specific
 .idea/
 
-node_modules
-coverage
-public
+node_modules/
+build/
+coverage/
+public/
 *.log
 .DS_Store
 do
-api/mock/lev-api-docs
+api/mock/lev-api-docs/
