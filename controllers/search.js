@@ -11,7 +11,9 @@ const _ = require('lodash');
 var validators = Parent.validators;
 validators = _.extend(validators, {
   'british-date': function britishDate(value) {
-    return value === '' || this.regex(value, /^\d{1,2}\/\d{1,2}\/\d{1,4}$/) && moment(value, 'DD/MM/YYYY').isValid();
+    return value === ''
+      || (this.regex(value, /^\d{1,2}\/\d{1,2}\/\d{1,4}$/) && moment(value, 'DD/MM/YYYY').isValid())
+      || (this.regex(value, /^\d{8}$/) && moment(value, 'DDMMYYYY').isValid());
   }.bind(validators)
 });
 
