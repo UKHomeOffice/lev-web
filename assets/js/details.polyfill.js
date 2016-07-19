@@ -66,11 +66,20 @@ module.exports = function detailsPolyfill() {
       return;
     }
     started = true;
+    
+    // Remove the temporary style fixes that stop the flicker of 
+    // details elements during page load
+    function removeTemporaryStyles() {
+      var tempStyles = document.getElementById('details-polyfill_style-fix');
+      if (tempStyles) {
+        tempStyles.parentNode.removeChild(tempStyles);
+      }
+    }
 
     // Get the collection of details elements, but if that's empty
     // then we don't need to bother with the rest of the scripting
     if ((list = document.getElementsByTagName('details')).length === 0) {
-      return;
+      return removeTemporaryStyles();
     }
 
     // else iterate through them to apply their initial state
@@ -176,6 +185,8 @@ module.exports = function detailsPolyfill() {
       }
       return statechange(summary);
     });
+
+    removeTemporaryStyles();
   }
 
   // Bind two load events for modern and older browsers
