@@ -2,21 +2,10 @@
 <!--[if lt IE 9]><html class="lte-ie8" lang=""><![endif]-->
 <!--[if gt IE 8]><!--><html lang=""><!--<![endif]-->
   <head>
-    <style>
-      /* fix <details> child <divs> showing when page is slow to load */
-
-      /* hide the details contents by default */
-      details > * { display: none; }
-      /* ensure the summary tag is still visible */
-      details > summary { display: inline-block; }
-
-      /* make sure the details contents are visible once the page loads (.js-enabled), or if the tag is in the "open" state */
-      body details[open] > address, body details[open] > article, body details[open] > aside, body details[open] > blockquote, body details[open] > canvas, body details[open] > dd, body details[open] > div, body details[open] > dl, body details[open] > fieldset, body details[open] > figcaption, body details[open] > figure, body details[open] > figcaption, body details[open] > footer, body details[open] > form, body details[open] > h1, body details[open] > h2, body details[open] > h3, body details[open] > h4, body details[open] > h5, body details[open] > h6, body details[open] > header, body details[open] > hgroup, body details[open] > hr, body details[open] > li, body details[open] > main, body details[open] > nav, body details[open] > noscript, body details[open] > ol, body details[open] > output, body details[open] > p, body details[open] > pre, body details[open] > section, body details[open] > table, body details[open] > tfoot, body details[open] > ul, body details[open] > video, body.js-enabled details > address, body.js-enabled details > article, body.js-enabled details > aside, body.js-enabled details > blockquote, body.js-enabled details > canvas, body.js-enabled details > dd, body.js-enabled details > div, body.js-enabled details > dl, body.js-enabled details > fieldset, body.js-enabled details > figcaption, body.js-enabled details > figure, body.js-enabled details > figcaption, body.js-enabled details > footer, body.js-enabled details > form, body.js-enabled details > h1, body.js-enabled details > h2, body.js-enabled details > h3, body.js-enabled details > h4, body.js-enabled details > h5, body.js-enabled details > h6, body.js-enabled details > header, body.js-enabled details > hgroup, body.js-enabled details > hr, body.js-enabled details > li, body.js-enabled details > main, body.js-enabled details > nav, body.js-enabled details > noscript, body.js-enabled details > ol, body.js-enabled details > output, body.js-enabled details > p, body.js-enabled details > pre, body.js-enabled details > section, body.js-enabled details > table, body.js-enabled details > tfoot, body.js-enabled details > ul, body.js-enabled details > video {
-        display: block; }
-      body details[open] > b, body details[open] > big, body details[open] > i, body details[open] > small, body details[open] > tt, body details[open] > abbr, body details[open] > acronym, body details[open] > cite, body details[open] > code, body details[open] > dfn, body details[open] > em, body details[open] > kbd, body details[open] > strong, body details[open] > samp, body details[open] > time, body details[open] > var, body details[open] > a, body details[open] > bdo, body details[open] > br, body details[open] > img, body details[open] > map, body details[open] > object, body details[open] > q, body details[open] > script, body details[open] > span, body details[open] > sub, body details[open] > sup, body details[open] > button, body details[open] > input, body details[open] > label, body details[open] > select, body details[open] > textarea, body.js-enabled details > b, body.js-enabled details > big, body.js-enabled details > i, body.js-enabled details > small, body.js-enabled details > tt, body.js-enabled details > abbr, body.js-enabled details > acronym, body.js-enabled details > cite, body.js-enabled details > code, body.js-enabled details > dfn, body.js-enabled details > em, body.js-enabled details > kbd, body.js-enabled details > strong, body.js-enabled details > samp, body.js-enabled details > time, body.js-enabled details > var, body.js-enabled details > a, body.js-enabled details > bdo, body.js-enabled details > br, body.js-enabled details > img, body.js-enabled details > map, body.js-enabled details > object, body.js-enabled details > q, body.js-enabled details > script, body.js-enabled details > span, body.js-enabled details > sub, body.js-enabled details > sup, body.js-enabled details > button, body.js-enabled details > input, body.js-enabled details > label, body.js-enabled details > select, body.js-enabled details > textarea {
-        display: inline; }
-      body details[open] > table, body.js-enabled details > table { display: table; }
-      body details[open] > ruby, body.js-enabled details > ruby { display: ruby; }
+    <style id="details-polyfill_style-fix">
+      /* make the default state for details child-elements not displayed when JS is enabled */
+      body details > * { display: none; }
+      body details > summary { display: inline-block; }
     </style>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
@@ -71,8 +60,8 @@
     {{$head}}{{> partials-head}}{{/head}}
   </head>
 
-  <body class="{{$bodyClasses}}{{/bodyClasses}}">
-    <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+  <body class="no-js {{$bodyClasses}}{{/bodyClasses}}">
+    <script type="text/javascript">document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
 
 
 
