@@ -138,6 +138,10 @@ describe('Search', () => {
       it('requests a number', () => {
         browser.getText('a').should.contain('Please enter a number');
       });
+
+      it('shows the system number details hint', () => {
+        browser.isVisible('details > div').should.be.true;
+      });
     });
 
     describe('with an invalid date', () => {
