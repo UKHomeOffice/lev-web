@@ -2,11 +2,7 @@
 
 module.exports = {
   'system-number': {
-    validate: ['numeric'],
-    dependent: {
-      value: '',
-      field: 'surname'
-    }
+    validate: ['numeric']
   },
   'surname': {
     validate: ['required'],
