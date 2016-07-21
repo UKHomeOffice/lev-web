@@ -26,7 +26,7 @@
   {{<partials-form}}
     {{$form}}
       {{#input-text}}system-number{{/input-text}}
-      <details>
+      <details{{#errors.system-number}} open{{/errors.system-number}}>
         <summary><span class="summary">What is the system number?</span></summary>
         <div class="panel panel-border-narrow">
           <img
