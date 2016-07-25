@@ -50,11 +50,11 @@ server.listen(config.port, config.listen_host);
 logger.info('App listening on port', config.port);
 
 
-// gracefuly handle shutdowns -----------------------
+// gracefully handle shutdowns -----------------------
 
 const closeGracefully = (signal) => {
   setTimeout(() => {
-    console.warn('Forcefully shutting down from sig:', signal);
+    logger.warn('Forcefully shutting down from sig:', signal);
     process.exit(0);
   }, 500);
 
