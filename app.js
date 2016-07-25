@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+var server = require('http').createServer(app);
 var path = require('path');
 var config = require('./config');
 var logger = require('./lib/logger');
@@ -45,5 +46,21 @@ require('./routes')(app);
 
 app.use(require('./middleware/error')());
 
-app.listen(config.port, config.listen_host);
+server.listen(config.port, config.listen_host);
 logger.info('App listening on port', config.port);
+
+
+// gracefuly handle shutdowns -----------------------
+
+const closeGracefully = (signal) => {
+  setTimeout(() => {
+    console.warn('Forcefully shutting down from sig:', signal);
+    process.exit(0);
+  }, 500);
+
+  server.close(() => process.exit(0));
+};
+
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
+  process.on(signal, () => closeGracefully(signal))
+);
