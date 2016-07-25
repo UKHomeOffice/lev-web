@@ -11,7 +11,7 @@ var formSubmission = function formSubmission(extension) {
     'forenames': '',
     'dob': ''
   }, extension);
-}
+};
 
 describe('controllers/search', function () {
   var api = {
@@ -64,19 +64,20 @@ describe('controllers/search', function () {
 
       describe('resolved promise', function() {
         it('redirects to the details page on one record returned', function() {
+          var sysnum = 123456789;
           var query = formSubmission({
-            'system-number': '1234'
+            'system-number': `${sysnum}`
           });
 
           req.query = query;
           api.read.withArgs(query).returns(Promise.resolve([{
-            'system-number': 1234
+            'system-number': sysnum
           }]));
 
           searchController(req, res);
 
           return Promise.resolve().then(function () {
-            res.redirect.should.have.been.calledWith('/details/1234?system-number=1234');
+            res.redirect.should.have.been.calledWith(`/details/${sysnum}?system-number=${sysnum}`);
           });
         });
 

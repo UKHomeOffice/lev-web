@@ -126,7 +126,7 @@ describe('Search', () => {
       });
     });
 
-    describe('with an invalid sytem number', () => {
+    describe('with a sytem number containing invalid characters', () => {
       before(() => {
         browser.search('invalid', '', '', '');
       });
@@ -137,6 +137,24 @@ describe('Search', () => {
 
       it('requests a number', () => {
         browser.getText('a').should.contain('Please enter a number');
+      });
+
+      it('shows the system number details hint', () => {
+        browser.isVisible('details > div').should.be.true;
+      });
+    });
+
+    describe('with a system number of an invalid length', () => {
+      before(() => {
+        browser.search('12345678', '', '', '');
+      });
+
+      it('displays an error message', () => {
+        browser.getText('h2').should.contain('Fix the following error');
+      });
+
+      it('requests a number of the valid length', () => {
+        browser.getText('a').should.contain('The system number should be 9 digits');
       });
 
       it('shows the system number details hint', () => {

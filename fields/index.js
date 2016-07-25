@@ -2,7 +2,13 @@
 
 module.exports = {
   'system-number': {
-    validate: ['numeric']
+    validate: [
+      'numeric',
+      {
+        type: 'exactlength',
+        arguments: [9]
+      }
+    ]
   },
   'surname': {
     validate: ['required'],
