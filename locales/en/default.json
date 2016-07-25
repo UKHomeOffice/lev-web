@@ -26,7 +26,8 @@
   "validation": {
     "system-number": {
       "required": "Please enter a system number",
-      "numeric": "Please enter a number"
+      "numeric": "Please enter a number",
+      "exactlength": "The system number should be 9 digits"
     },
     "surname": {
       "required": "Please enter a surname"
