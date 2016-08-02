@@ -20,7 +20,7 @@
     },
     "dob": {
       "label": "Date of birth",
-      "hint": "For example, 18/2/2009"
+      "hint": "For example, 18/11/2009"
     }
   },
   "validation": {
