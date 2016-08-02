@@ -1,8 +1,12 @@
 'use strict';
 
+const moment = require('moment');
 const mockProxy = require('../mock-proxy');
 const expectedRecord = require('../expectedRecord');
 const expectedRecords = require('../expectedRecords');
+
+const conf = require('../../../fields/index');
+const since = conf.dob.validate[2].arguments[0];
 
 describe('Search', () => {
   before(() => {
@@ -17,7 +21,7 @@ describe('Search', () => {
     describe('that returns no records', () => {
       before(() => {
         mockProxy.willReturnForLocalTests(0);
-        browser.search('', 'Churchil', 'Winston', '30/11/1874');
+        browser.search('', 'Churchil', 'Winston', '30/11/2011');
       });
 
       it('returns a results page', () => {
@@ -25,7 +29,7 @@ describe('Search', () => {
       });
 
       it('displays an appropriate message', () => {
-        browser.getText('h1').should.equal('No records found for Winston Churchil 30/11/1874');
+        browser.getText('h1').should.equal('No records found for Winston Churchil 30/11/2011');
       });
     });
 
@@ -84,7 +88,6 @@ describe('Search', () => {
       it('contains a link back to the search screen', () => {
         browser.getText('body').should.contain('Edit search');
       });
-
     });
 
     describe('using the "fast entry" date format', () => {
@@ -126,7 +129,7 @@ describe('Search', () => {
       });
     });
 
-    describe('with a sytem number containing invalid characters', () => {
+    describe('with a system number containing invalid characters', () => {
       before(() => {
         browser.search('invalid', '', '', '');
       });
@@ -162,31 +165,91 @@ describe('Search', () => {
       });
     });
 
-    describe('with an invalid date', () => {
-      before(() => {
-        browser.search('', 'Churchill', 'Winston', 'invalid');
+    describe('with an invalid date of birth that is', () => {
+      describe('not a date', () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', 'invalid');
+        });
+  
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+  
+        it('requests a British formatted date', () => {
+          browser.getText('a').should.contain('Please enter a date of birth in the correct format');
+        });
       });
-
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
+      
+      describe('a date in the future', () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
+        });
+  
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+  
+        it('requests a past date', () => {
+          browser.getText('a').should.contain('Please enter a date of birth in the past');
+        });
       });
-
-      it('requests a British formatted date', () => {
-        browser.getText('a').should.contain('Please enter a date of birth in the correct format');
+      
+      describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DD/MM/YYYY'));
+        });
+  
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+  
+        it('requests a date after records began', () => {
+          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
+        });
       });
     });
 
-    describe('with an invalid short date', () => {
-      before(() => {
-        browser.search('', 'Churchill', 'Winston', '112001');
+    describe('with an invalid short date of birth that is', () => {
+      describe('too short', () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', '112001');
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a British formatted date', () => {
+          browser.getText('a').should.contain('Please enter a date of birth in the correct format');
+        });
       });
 
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
+      describe('a date in the future', () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', moment().add(1, 'day').format('DDMMYYYY'));
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a past date', () => {
+          browser.getText('a').should.contain('Please enter a date of birth in the past');
+        });
       });
 
-      it('requests a British formatted date', () => {
-        browser.getText('a').should.contain('Please enter a date of birth in the correct format');
+      describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
+        before(() => {
+          browser.search('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DDMMYYYY'));
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a date after records began', () => {
+          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
+        });
       });
     });
   });

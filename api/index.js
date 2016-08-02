@@ -95,7 +95,7 @@ var processRecord = function processRecord(record) {
       replaced: record.status.reRegistered === 'Replacement registration',
       corrected: record.status.correction !== 'None',
       courtOrderInPlace: record.status.marginalNote === 'Court order in place',
-      courtOrderRevoked: record.status.marginalNote === 'Court order revoked',
+      courtOrderRevoked: record.status.marginalNote === 'Court order revoked'
     },
     previousRegistration: blocked ? {
       date: null,

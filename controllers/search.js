@@ -4,17 +4,27 @@ const Parent = require('../lib/hof-standalone');
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const moment = require('moment');
+require('moment-round'); // add rounding support to moment
 const fields = require('../fields');
 const util = require('util');
 const _ = require('lodash');
 
 var validators = Parent.validators;
+
+const britishDate = function britishDate(value) {
+  return value === ''
+    || (this.regex(value, /^\d{1,2}\/\d{1,2}\/\d{1,4}$/) && moment(value, 'DD/MM/YYYY').isValid())
+    || (this.regex(value, /^\d{8}$/) && moment(value, 'DDMMYYYY').isValid());
+}.bind(validators);
+const past = value =>
+  value==='' || moment(value, /^\d{8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isBefore(moment().ceil(24, 'hours'));
+const since = (value, epoc) =>
+  value==='' || moment(value, /^\d{8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isSameOrAfter(moment(epoc).floor(24, 'hours'));
+
 validators = _.extend(validators, {
-  'british-date': function britishDate(value) {
-    return value === ''
-      || (this.regex(value, /^\d{1,2}\/\d{1,2}\/\d{1,4}$/) && moment(value, 'DD/MM/YYYY').isValid())
-      || (this.regex(value, /^\d{8}$/) && moment(value, 'DDMMYYYY').isValid());
-  }.bind(validators)
+  'british-date': britishDate,
+  'past': past,
+  'since': since
 });
 
 const SearchController = function SearchController() {

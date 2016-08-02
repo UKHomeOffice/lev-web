@@ -37,7 +37,9 @@
     },
     "dob": {
       "required": "Please enter a date of birth",
-      "british-date": "Please enter a date of birth in the correct format"
+      "british-date": "Please enter a date of birth in the correct format",
+      "past": "Please enter a date of birth in the past",
+      "since": "Please enter a date after our records began (1 July 2009)"
     }
   },
   "flags": {
