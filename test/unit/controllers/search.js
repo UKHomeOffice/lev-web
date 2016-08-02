@@ -20,8 +20,7 @@ describe('controllers/search', function () {
   };
   var hof = require('../../../lib/hof-standalone');
   var searchController = proxyquire('../../../controllers/search', {
-    '../api': api,
-    '../lib/hof-standalone': hof
+    '../api': api
   });
 
   it('is a function', function () {
@@ -161,7 +160,7 @@ describe('controllers/search', function () {
           var query = formSubmission({
             'surname': 'smiths',
             'forenames': 'john',
-            'dob': '01/01/2001'
+            'dob': '01/01/2011'
           });
           var records = [{
             surname: 'smith'
@@ -179,7 +178,7 @@ describe('controllers/search', function () {
               count: 2,
               records: records,
               query: query,
-              querystring: 'surname=smiths&forenames=john&dob=01%2F01%2F2001'
+              querystring: 'surname=smiths&forenames=john&dob=01%2F01%2F2011'
             });
           });
         });
@@ -191,7 +190,7 @@ describe('controllers/search', function () {
           var query = formSubmission({
             'surname': 'unfoundsurname',
             'forenames': 'unfoundforenames',
-            'dob': '01/01/2001'
+            'dob': '01/01/2011'
           });
 
           req.query = query;
@@ -206,7 +205,7 @@ describe('controllers/search', function () {
               count: 0,
               records: null,
               query: query,
-              querystring: 'surname=unfoundsurname&forenames=unfoundforenames&dob=01%2F01%2F2001'
+              querystring: 'surname=unfoundsurname&forenames=unfoundforenames&dob=01%2F01%2F2011'
             });
           });
         });

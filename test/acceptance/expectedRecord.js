@@ -11,7 +11,7 @@ module.exports = {
       'surname': 'Solo',
       'fullName': 'Tester Solo'
     },
-    'dateOfBirth': '29/02/2000',
+    'dateOfBirth': '29/02/2012',
     'sex': 'Male',
     'birthplace': 'Test Address'
   },

@@ -20,7 +20,7 @@ if (testConfig.env === 'local') {
         'surname': 'Multiple',
         'fullName': 'Tester One Multiple'
       },
-      'dateOfBirth': '01/01/2000',
+      'dateOfBirth': '01/01/2010',
       'sex': 'Male',
       'birthplace': 'Test Address'
     },

@@ -88,7 +88,6 @@ describe('Search', () => {
       it('contains a link back to the search screen', () => {
         browser.getText('body').should.contain('Edit search');
       });
-
     });
 
     describe('using the "fast entry" date format', () => {
@@ -191,7 +190,7 @@ describe('Search', () => {
         });
   
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of birth that is not in the future');
+          browser.getText('a').should.contain('Please enter a date of birth in the past');
         });
       });
       
@@ -205,7 +204,7 @@ describe('Search', () => {
         });
   
         it('requests a date after records began', () => {
-          browser.getText('a').should.contain(`Please enter a date after records began (post ${since.format('DD/MM/YYYY')})`);
+          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
         });
       });
     });
@@ -235,7 +234,7 @@ describe('Search', () => {
         });
 
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of birth that is not in the future');
+          browser.getText('a').should.contain('Please enter a date of birth in the past');
         });
       });
 
@@ -249,7 +248,7 @@ describe('Search', () => {
         });
 
         it('requests a date after records began', () => {
-          browser.getText('a').should.contain(`Please enter a date after records began (post ${since.format('DD/MM/YYYY')})`);
+          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
         });
       });
     });

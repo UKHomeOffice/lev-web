@@ -27,7 +27,7 @@ module.exports = {
   'dob': {
     validate: ['british-date', 'past', {
       type: 'since',
-      arguments: [require('moment')('1/1/1990', 'DD/MM/YYYY')]
+      arguments: [require('moment')('1/7/2009', 'DD/MM/YYYY')]
     }],
     dependent: {
       value: '',
