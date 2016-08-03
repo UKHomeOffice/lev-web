@@ -36,18 +36,24 @@ describe('controllers/search', function () {
       it('should accept properly formatted dates', () => {
         hof.validators['british-date']('31/12/1999').should.be.ok;
         hof.validators['british-date']('3/1/1999').should.be.ok;
-        hof.validators['british-date']('3/1/99').should.be.ok; // really!?
-        hof.validators['british-date']('1/1/1').should.be.ok; // really!? really!?
+        hof.validators['british-date']('3/1/99').should.be.ok;
       });
 
       it('should accept short format dates', () => {
         hof.validators['british-date']('31121999').should.be.ok;
         hof.validators['british-date']('03011999').should.be.ok;
       });
+      
+      it('should accept really short format dates', () => {
+        hof.validators['british-date']('311299').should.be.ok;
+        hof.validators['british-date']('030199').should.be.ok;
+      });
 
       it('should not accept improperly formatted dates', () => {
         hof.validators['british-date']('11/22/1999').should.not.be.ok;
         hof.validators['british-date']('3-1-99').should.not.be.ok;
+        hof.validators['british-date']('1/1/111').should.not.be.ok;
+        hof.validators['british-date']('1/1/1').should.not.be.ok;
       });
 
       it('should not accept short format dates without leading zeros', () => {
