@@ -2,14 +2,14 @@
 
 var proxyquire = require('proxyquire');
 
-describe('lib/lev-request', function () {
-  describe('get', function () {
+describe('lib/lev-request', function() {
+  describe('get', function() {
     var requestGet;
     var levRequest;
     var fsReadFileSync;
     var config;
 
-    beforeEach(sinon.test(function () {
+    beforeEach(sinon.test(function() {
       config = {};
 
       requestGet = this.stub();
@@ -28,7 +28,7 @@ describe('lib/lev-request', function () {
     }));
 
     it('Adds config for mutual TLS when available', () => {
-      config.lev_tls = {
+      config.lev_tls = { // eslint-disable-line camelcase
         key: 'TLS Key',
         cert: 'TLS Cert',
         ca: 'TLS CA'
