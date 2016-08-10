@@ -14,7 +14,7 @@ var formSubmission = function formSubmission(extension) {
   }, extension);
 };
 
-describe('controllers/search', function () {
+describe('controllers/search', function() {
   var api = {
     read: sinon.stub()
   };
@@ -23,7 +23,7 @@ describe('controllers/search', function () {
     '../api': api
   });
 
-  it('is a function', function () {
+  it('is a function', function() {
     searchController.should.be.a('function');
   });
 
@@ -43,7 +43,7 @@ describe('controllers/search', function () {
         hof.validators['british-date']('31121999').should.be.ok;
         hof.validators['british-date']('03011999').should.be.ok;
       });
-      
+
       it('should accept really short format dates', () => {
         hof.validators['british-date']('311299').should.be.ok;
         hof.validators['british-date']('030199').should.be.ok;
@@ -92,13 +92,13 @@ describe('controllers/search', function () {
         hof.validators.since(moment().add(1, 'year').format('DD/MM/YYYY'), moment()).should.be.ok;
         hof.validators.since(moment().add(1, 'year').format('DDMMYYYY'), moment()).should.be.ok;
       });
-      
+
       it('should accept the day of the specified date', () => {
         const date = moment().add(-1, 'year');
         hof.validators.since(date.format('DD/MM/YYYY'), date).should.be.ok;
         hof.validators.since(date.format('DDMMYYYY'), date).should.be.ok;
       });
-      
+
       it('should not accept dates before the specified date', () => {
         hof.validators.since(moment().add(-1, 'day').format('DD/MM/YYYY'), moment()).should.not.be.ok;
         hof.validators.since(moment().add(-1, 'day').format('DDMMYYYY'), moment()).should.not.be.ok;
@@ -106,34 +106,34 @@ describe('controllers/search', function () {
     });
   });
 
-  describe('middleware', function () {
+  describe('middleware', function() {
     var res;
 
-    beforeEach(function () {
+    beforeEach(function() {
       res = {
         render: sinon.spy(),
         redirect: sinon.spy()
       };
     });
 
-    describe('when there is no query string', function () {
+    describe('when there is no query string', function() {
       var req;
 
-      beforeEach(function () {
+      beforeEach(function() {
         req = reqres.req();
       });
 
-      it('renders the search page', function () {
+      it('renders the search page', function() {
         searchController(req, res);
 
         res.render.should.have.been.calledWith('pages/search');
       });
     });
 
-    describe('when there is a query string', function () {
+    describe('when there is a query string', function() {
       var req;
 
-      beforeEach(function () {
+      beforeEach(function() {
         req = _.extend(reqres.req(), {
           body: undefined,
           headers: {
@@ -157,7 +157,7 @@ describe('controllers/search', function () {
 
           searchController(req, res);
 
-          return Promise.resolve().then(function () {
+          return Promise.resolve().then(function() {
             res.redirect.should.have.been.calledWith(`/details/${sysnum}?system-number=${sysnum}`);
           });
         });
@@ -175,11 +175,11 @@ describe('controllers/search', function () {
           }];
 
           req.query = query;
-          api.read.withArgs(query).returns(Promise.resolve(records))
+          api.read.withArgs(query).returns(Promise.resolve(records));
 
           searchController(req, res);
 
-          return Promise.resolve().then(function () {
+          return Promise.resolve().then(function() {
             res.render.should.have.been.calledWith('pages/results', {
               count: 2,
               records: records,
@@ -206,7 +206,7 @@ describe('controllers/search', function () {
 
           searchController(req, res);
 
-          return Promise.resolve().then(function () {
+          return Promise.resolve().then(function() {
             res.render.should.have.been.calledWith('pages/results', {
               count: 0,
               records: null,

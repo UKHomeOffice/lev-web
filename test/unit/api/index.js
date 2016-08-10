@@ -337,13 +337,13 @@ describe('api', function() {
       });
     });
 
-    describe('"Birth registered by" property', function () {
+    describe('"Birth registered by" property', function() {
       var resp;
 
-      beforeEach(function () {
+      beforeEach(function() {
         resp = _.cloneDeep(response);
         resp.subjects.informant.qualification = 'Father, Mother';
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
       });
 
       it('should come from the API\'s "qualification" property', () =>

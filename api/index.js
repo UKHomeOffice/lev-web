@@ -63,7 +63,7 @@ var processRecord = function processRecord(record) {
       occupation: block(record.subjects.father.occupation)
     },
     registered: {
-      by: record.subjects.informant.qualification,
+      by: block(record.subjects.informant.qualification),
       district: block(record.location.registrationDistrict),
       'sub-district': block(record.location.subDistrict),
       'admin-area': block(record.location.administrativeArea),

@@ -3,7 +3,6 @@
 var mockProxy = require('../mock-proxy');
 var expectedRecord = require('../expected-record');
 var expectedRecords = require('../expected-records');
-// var testConfig = require('../config');
 
 describe('Details Page', () => {
   const urlShouldContainDetails = () => {
