@@ -5,11 +5,7 @@ var _ = require('lodash');
 var express = require('express');
 var httpProxy = require('http-proxy')
   .createServer({
-    target:
-      'http://' +
-      config.api.real.host +
-      ':' +
-      config.api.real.port
+    target: `http://${config.api.real.host}:${config.api.real.port}`
   });
 
 require('express-hijackresponse');
@@ -18,18 +14,17 @@ var app = express();
 var willReturn = 1;
 var user = 'lev-test-client';
 
-//This simulates the keycloak proxy in front of the API, adding appropriate header
-httpProxy.on('proxyReq', function(proxyReq, req, res, options) {
+// This simulates the keycloak proxy in front of the API, adding appropriate header
+httpProxy.on('proxyReq', function(proxyReq) {
   proxyReq.setHeader('X-Auth-Username', user);
 });
 
 app.use(function hijackRes(req, response, next) {
-  response.hijack(function (err, res) {
+  response.hijack(function hijacked(err, res) {
     if (err) {
       res.unhijack();
-      return next(err);
-    }
-    if (/\/json/.test(res.getHeader('Content-Type'))) {
+      next(err);
+    } else if (/\/json/.test(res.getHeader('Content-Type'))) {
       res.removeHeader('Content-Length');
       res.writeHead(res.statusCode);
 
@@ -47,9 +42,7 @@ app.use(function hijackRes(req, response, next) {
                 events = _.take(events, willReturn);
               } else if (length < willReturn) {
                 var e = _.first(events);
-                events = events.concat(_.times(willReturn - length, function() {
-                  return e;
-                }));
+                events = events.concat(_.times(willReturn - length, () => e));
               }
 
               res.body = JSON.stringify(events);
