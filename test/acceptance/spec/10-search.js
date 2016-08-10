@@ -2,8 +2,8 @@
 
 const moment = require('moment');
 const mockProxy = require('../mock-proxy');
-const expectedRecord = require('../expectedRecord');
-const expectedRecords = require('../expectedRecords');
+const expectedRecord = require('../expected-record');
+const expectedRecords = require('../expected-records');
 
 const conf = require('../../../fields/index');
 const since = conf.dob.validate[2].arguments[0];
@@ -62,7 +62,8 @@ describe('Search', () => {
       });
 
       it('displays an appropriate message', () => {
-        browser.getText('h1').should.equal('3 records found for ' + name.givenName + ' ' + name.surname + ' ' + child.dateOfBirth);
+        const h1 = `3 records found for ${name.givenName} ${name.surname} ${child.dateOfBirth}`;
+        browser.getText('h1').should.equal(h1);
       });
 
       it('displays a subset of each record in a list', () => {
@@ -170,41 +171,42 @@ describe('Search', () => {
         before(() => {
           browser.search('', 'Churchill', 'Winston', 'invalid');
         });
-  
+
         it('displays an error message', () => {
           browser.getText('h2').should.contain('Fix the following error');
         });
-  
+
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the correct format');
         });
       });
-      
+
       describe('a date in the future', () => {
         before(() => {
           browser.search('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
         });
-  
+
         it('displays an error message', () => {
           browser.getText('h2').should.contain('Fix the following error');
         });
-  
+
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the past');
         });
       });
-      
+
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
         before(() => {
           browser.search('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DD/MM/YYYY'));
         });
-  
+
         it('displays an error message', () => {
           browser.getText('h2').should.contain('Fix the following error');
         });
-  
+
         it('requests a date after records began', () => {
-          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
+          const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
+          browser.getText('a').should.contain(link);
         });
       });
     });
@@ -248,7 +250,8 @@ describe('Search', () => {
         });
 
         it('requests a date after records began', () => {
-          browser.getText('a').should.contain(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
+          const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
+          browser.getText('a').should.contain(link);
         });
       });
     });
