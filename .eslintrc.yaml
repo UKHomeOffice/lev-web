@@ -348,14 +348,17 @@ rules:
     # enforce them to be "always" used when possible, or "never" used
     - never
   # require a space after certain keywords
-  keyword-spacing: [2, {before:true, after:true}]
+  keyword-spacing: [2, { "before":true, "after":true }]
   # require or disallow space before blocks
   space-before-blocks:
     - 2
     # enforce them to be "always" used when possible, or "never" used
     - always
   # require or disallow spaces inside brackets
-  space-in-brackets:
+  object-curly-spacing:
+    - 2
+    - always
+  array-bracket-spacing:
     - 2
     # enforce them to be "always" used when possible, or "never" used
     - never
@@ -403,7 +406,7 @@ rules:
   max-params:
     - 2
     # max params
-    - 5
+    - 8
   # specify the maximum number of statement allowed in a function
   max-statements:
     - 2
@@ -423,7 +426,7 @@ rules:
     - 2
     # the pattern a file name must match
     # ('<text>' is to ensure interop with eslint --stdin)
-    - '^(<text>$|[a-z\.-]+$)'
+    - '^(<text>$|[a-z0-9\.-]+$)'
 
   # enforce declaring only one variable per var statement
   one-variable-per-var/one-variable-per-var: 2
