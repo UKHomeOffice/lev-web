@@ -1,7 +1,7 @@
 'use strict';
 
 var testConfig = require('./config');
-var expectedRecord = require('./expectedRecord');
+var expectedRecord = require('./expected-record');
 
 var expectedRecords;
 
