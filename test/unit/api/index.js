@@ -285,56 +285,51 @@ describe('api', function() {
     });
 
     describe('Blocked records', function() {
-      var promise;
       var resp;
+      const blockedResponse = {
+        'system-number': 1,
+        surname: 'UNAVAILABLE',
+        forenames: 'UNAVAILABLE',
+        dob: 'UNAVAILABLE',
+        gender: 'UNAVAILABLE',
+        'birth-place': 'UNAVAILABLE',
+        mother: {
+          name: 'UNAVAILABLE',
+          nee: 'UNAVAILABLE',
+          marriageSurname: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        },
+        father: {
+          name: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        },
+        registered: {
+          by: 'UNAVAILABLE',
+          district: 'UNAVAILABLE',
+          'sub-district': 'UNAVAILABLE',
+          'admin-area': 'UNAVAILABLE',
+          date: 'UNAVAILABLE'
+        },
+        status: {
+          refer: true
+        },
+        previousRegistration: {
+          date: null,
+          systemNumber: null
+        }
+      };
 
       beforeEach(function() {
         resp = _.cloneDeep(response);
         resp.status.blockedRegistration = true;
         requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
-        promise = api.requestID(1, 'mrs-caseworker');
       });
 
-      it('censors the record', function() {
-        return promise.then(function(data) {
-          var blockedResponse = {
-            'system-number': 1,
-            surname: 'UNAVAILABLE',
-            forenames: 'UNAVAILABLE',
-            dob: 'UNAVAILABLE',
-            gender: 'UNAVAILABLE',
-            'birth-place': 'UNAVAILABLE',
-            mother: {
-              name: 'UNAVAILABLE',
-              nee: 'UNAVAILABLE',
-              marriageSurname: 'UNAVAILABLE',
-              'birth-place': 'UNAVAILABLE',
-              occupation: 'UNAVAILABLE'
-            },
-            father: {
-              name: 'UNAVAILABLE',
-              'birth-place': 'UNAVAILABLE',
-              occupation: 'UNAVAILABLE'
-            },
-            registered: {
-              by: 'UNAVAILABLE',
-              district: 'UNAVAILABLE',
-              'sub-district': 'UNAVAILABLE',
-              'admin-area': 'UNAVAILABLE',
-              date: 'UNAVAILABLE'
-            },
-            status: {
-              refer: true
-            },
-            previousRegistration: {
-              date: null,
-              systemNumber: null
-            }
-          };
-
-          data.should.eql(blockedResponse);
-        });
-      });
+      it('censors the record', () =>
+        api.requestID(1, 'mrs-caseworker').should.eventually.deep.equal(blockedResponse)
+      );
     });
 
     describe('"Birth registered by" property', function() {
