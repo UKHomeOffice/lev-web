@@ -73,13 +73,13 @@ var processRecord = function processRecord(record) {
       occupation: record.subjects.father.occupation
     },
     registered: blocked ? {
-      jointly: 'UNAVAILABLE',
+      by: 'UNAVAILABLE',
       district: 'UNAVAILABLE',
       'sub-district': 'UNAVAILABLE',
       'admin-area': 'UNAVAILABLE',
       date: 'UNAVAILABLE'
     } : {
-      jointly: record.subjects.informant.qualification === 'Father, Mother' ? 'Yes' : 'No',
+      by: record.subjects.informant.qualification,
       district: record.location.registrationDistrict,
       'sub-district': record.location.subDistrict,
       'admin-area': record.location.administrativeArea,

@@ -34,7 +34,7 @@ describe('Details Page', () => {
       browserText[11].should.match(new RegExp('Mother\'s Place of birth *' + recordToMatch.mother.birthplace));
       browserText[13].should.match(new RegExp('Father\'s Name *' + recordToMatch.father.name.fullName));
       browserText[14].should.match(new RegExp('Father\'s Place of birth *' + recordToMatch.father.birthplace));
-      browserText[16].should.match(new RegExp('Birth jointly registered *No'));
+      browserText[16].should.match(new RegExp('Birth registered by *Mother'));
       browserText[17].should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
       browserText[18].should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
       browserText[19].should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));

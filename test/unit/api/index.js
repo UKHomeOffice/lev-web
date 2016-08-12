@@ -101,7 +101,7 @@ var parsedResponse = {
     occupation: 'Carpenter'
   },
   registered: {
-    jointly: 'No',
+    by: 'Mother',
     district: 'Manchester',
     'sub-district': 'Manchester',
     'admin-area': 'Metropolitan District of Manchester',
@@ -317,7 +317,7 @@ describe('api', function () {
               occupation: 'UNAVAILABLE'
             },
             registered: {
-              jointly: 'UNAVAILABLE',
+              by: 'UNAVAILABLE',
               district: 'UNAVAILABLE',
               'sub-district': 'UNAVAILABLE',
               'admin-area': 'UNAVAILABLE',
@@ -337,39 +337,19 @@ describe('api', function () {
       });
     });
 
-    describe('Jointly registered property', function () {
-      var promise;
+    describe('"Birth registered by" property', function () {
       var resp;
 
-      describe('when qualification is \'Father, Mother\'', function () {
-        beforeEach(function () {
-          resp = _.cloneDeep(response);
-          resp.subjects.informant.qualification = 'Father, Mother';
-          requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
-          promise = api.requestID(1, 'mrs-caseworker');
-        });
-
-        it('is \'Yes\'', function () {
-          return promise.then(function (data) {
-            data.registered.jointly.should.eql('Yes');
-          });
-        });
+      beforeEach(function () {
+        resp = _.cloneDeep(response);
+        resp.subjects.informant.qualification = 'Father, Mother';
+        requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
       });
 
-      describe('when qualification is NOT \'Father, Mother\'', function () {
-        beforeEach(function () {
-          resp = _.cloneDeep(response);
-          resp.subjects.informant.qualification = '-';
-          requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
-          promise = api.requestID(1, 'mrs-caseworker');
-        });
-
-        it('is \'No\'', function () {
-          return promise.then(function (data) {
-            data.registered.jointly.should.eql('No');
-          });
-        });
-      });
+      it('should come from the API\'s "qualification" property', () =>
+        api.requestID(1, 'mrs-caseworker').should.eventually
+          .have.deep.property('registered.by', resp.subjects.informant.qualification)
+      );
     });
 
     describe('Flags', function () {
