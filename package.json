@@ -19,7 +19,6 @@
     "chimp:dev": "NODE_ENV=acceptance chimp --mocha --path=./test/acceptance/ --watch --browser=firefox",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "style": "jscs **/*.js --config=./.jscsrc.json",
     "cover": "istanbul cover _mocha -- ./test/unit",
     "check-coverage": "istanbul check-coverage --statement 90 --branch 80 --function 95 --line 90",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
