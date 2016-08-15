@@ -41,8 +41,8 @@ var refer = function refer(record) {
 };
 
 var processRecord = function processRecord(record) {
-  let blocked = record.status.blockedRegistration !== false;
-  let block = blocked ? () => 'UNAVAILABLE' : value => value;
+  const blocked = record.status.blockedRegistration !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
   return {
     'system-number': record.systemNumber,
     surname: block(record.subjects.child.name.surname),
