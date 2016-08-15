@@ -14,7 +14,8 @@ var app = express();
 var willReturn = 1;
 var user = 'lev-test-client';
 
-// This simulates the keycloak proxy in front of the API, adding appropriate header
+// This simulates the keycloak proxy in front of the API, adding the
+// appropriate header
 httpProxy.on('proxyReq', function(proxyReq) {
   proxyReq.setHeader('X-Auth-Username', user);
 });
