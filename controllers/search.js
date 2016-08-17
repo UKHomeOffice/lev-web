@@ -4,7 +4,7 @@ const Parent = require('../lib/hof-standalone');
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const moment = require('moment');
-require('moment-round'); // add rounding support to moment
+require('moment-round');
 const fields = require('../fields');
 const util = require('util');
 const _ = require('lodash');
@@ -17,9 +17,11 @@ const britishDate = function britishDate(value) {
     || (this.regex(value, /^(?:\d\d){3,4}$/) && moment(value, 'DDMMYYYY').isValid());
 }.bind(validators);
 const past = value =>
-  value==='' || moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isBefore(moment().ceil(24, 'hours'));
+  value === '' ||
+    moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isBefore(moment().ceil(24, 'hours'));
 const since = (value, epoc) =>
-  value==='' || moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isSameOrAfter(moment(epoc).floor(24, 'hours'));
+  value === '' ||
+    moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isSameOrAfter(moment(epoc).floor(24, 'hours'));
 
 validators = _.extend(validators, {
   'british-date': britishDate,

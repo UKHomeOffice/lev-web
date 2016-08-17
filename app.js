@@ -55,10 +55,10 @@ logger.info('App listening on port', config.port);
 const closeGracefully = (signal) => {
   setTimeout(() => {
     logger.warn('Forcefully shutting down from sig:', signal);
-    process.exit(0);
+    process.exit(0); // eslint-disable-line no-process-exit
   }, 500);
 
-  server.close(() => process.exit(0));
+  server.close(() => process.exit(0)); // eslint-disable-line no-process-exit
 };
 
 ['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>

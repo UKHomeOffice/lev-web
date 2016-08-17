@@ -68,13 +68,13 @@ var response = {
     }
   },
   'systemNumber': 1,
-  "status": {
-    "potentiallyFictitiousBirth": false,
-    "correction": "None",
-    "cancelled": false,
-    "blockedRegistration": false,
-    "marginalNote": "None",
-    "reRegistered": "None"
+  'status': {
+    'potentiallyFictitiousBirth': false,
+    'correction': 'None',
+    'cancelled': false,
+    'blockedRegistration': false,
+    'marginalNote': 'None',
+    'reRegistered': 'None'
   },
   'previousRegistration': {
     'date': '2012-08-09',
@@ -127,7 +127,7 @@ var usernameHeader = {
   'X-Auth-Downstream-Username': 'mrs-caseworker'
 };
 
-describe('api', function () {
+describe('api', function() {
   var api;
   var request = require('request');
   var config = require('../../../config');
@@ -152,15 +152,15 @@ describe('api', function () {
     });
   }));
 
-  describe('resolved promise', function () {
+  describe('resolved promise', function() {
 
-    describe('configuring', function () {
-      it('GETs the configured url for system-number', function () {
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
+    describe('configuring', function() {
+      it('GETs the configured url for system-number', function() {
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
-        }, 'mrs-caseworker').then(function () {
+        }, 'mrs-caseworker').then(function() {
           request.get.should.have.been.calledWith({
             url: 'http://testhost.com:1111/api/v0/events/birth/1234',
             headers: usernameHeader
@@ -168,25 +168,25 @@ describe('api', function () {
         });
       });
 
-      it('GETs with a header for the username', function () {
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
+      it('GETs with a header for the username', function() {
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
-        }, 'mrs-caseworker').then(function () {
+        }, 'mrs-caseworker').then(function() {
           request.get.should.have.been.calledWith({
             'url': 'http://testhost.com:1111/api/v0/events/birth/1234',
             headers: usernameHeader
-          })
-        })
+          });
+        });
       });
 
-      it('GETs the configured url for surname', function () {
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response]));
+      it('GETs the configured url for surname', function() {
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
 
         return api.read({
           'surname': 'smith'
-        }, 'mrs-caseworker').then(function () {
+        }, 'mrs-caseworker').then(function() {
           request.get.should.have.been.calledWith({
             url: 'http://testhost.com:1111/api/v0/events/birth?lastname=smith',
             headers: usernameHeader
@@ -194,16 +194,16 @@ describe('api', function () {
         });
       });
 
-      it('Uses oAuth2 authorization if oAuth2 environment variables are set', function () {
+      it('Uses oAuth2 authorization if oAuth2 environment variables are set', function() {
         var successfulAuthResponse = {
-          "access_token": "access_token",
-          "expires_in": 300,
-          "refresh_expires_in": 1800,
-          "refresh_token": "xxxx",
-          "token_type": "bearer",
-          "id_token": "yyyy",
-          "not-before-policy": 0,
-          "session_state": "zzzz"
+          'access_token': 'access_token',
+          'expires_in': 300,
+          'refresh_expires_in': 1800,
+          'refresh_token': 'xxxx',
+          'token_type': 'bearer',
+          'id_token': 'yyyy',
+          'not-before-policy': 0,
+          'session_state': 'zzzz'
         };
 
         api = proxyquire('../../../api', {
@@ -224,17 +224,17 @@ describe('api', function () {
           })
         });
 
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response]));
-        requestPost.yields(null, {statusCode: 200}, JSON.stringify(successfulAuthResponse));
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
+        requestPost.yields(null, { statusCode: 200 }, JSON.stringify(successfulAuthResponse));
 
-        var expectedBase64Auth = new Buffer("clientId:clientSecret").toString('base64');
-        var expectedAuthHeader = "Basic " + expectedBase64Auth;
+        var expectedBase64Auth = new Buffer('clientId:clientSecret').toString('base64');
+        var expectedAuthHeader = 'Basic ' + expectedBase64Auth;
         var expectedOAuthRequest = {
-          url: "http://oauthserver.com",
+          url: 'http://oauthserver.com',
           form: {
-            grant_type: "password",
-            username: "username",
-            password: "password"
+            grant_type: 'password', // eslint-disable-line camelcase
+            username: 'username',
+            password: 'password'
           },
           headers: {
             Authorization: expectedAuthHeader
@@ -243,26 +243,26 @@ describe('api', function () {
 
         return api.read({
           'surname': 'smith'
-        }, 'mrs-caseworker').then(function () {
+        }, 'mrs-caseworker').then(function() {
           request.post.should.have.been.calledWith(expectedOAuthRequest);
           request.get.should.have.been.calledWith({
             url: 'http://testhost.com:1111/api/v0/events/birth?lastname=smith',
             headers: {
-              Authorization: "Bearer access_token",
+              Authorization: 'Bearer access_token',
               'X-Auth-Downstream-Username': 'mrs-caseworker'
             }
           });
-        })
+        });
       });
     });
 
-    describe('GET with system-number', function () {
-      it('gives back one record', function () {
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
+    describe('GET with system-number', function() {
+      it('gives back one record', function() {
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
 
         return api.read({
           'system-number': '1234'
-        }, 'mrs-caseworker').then(function (data) {
+        }, 'mrs-caseworker').then(function(data) {
           data.length.should.equal(1);
           data[0]['system-number'].should.equal(1);
           data[0].should.eql(parsedResponse);
@@ -270,13 +270,13 @@ describe('api', function () {
       });
     });
 
-    describe('GET with surname', function () {
-      it('gives back one record', function () {
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify([response, response]));
+    describe('GET with surname', function() {
+      it('gives back one record', function() {
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response, response]));
 
         return api.read({
           'surname': 'smith'
-        }, 'mrs-caseworker').then(function (data) {
+        }, 'mrs-caseworker').then(function(data) {
           data.length.should.equal(2);
           data[0]['system-number'].should.equal(1);
           data[0].should.eql(parsedResponse);
@@ -284,66 +284,61 @@ describe('api', function () {
       });
     });
 
-    describe('Blocked records', function () {
-      var promise;
+    describe('Blocked records', function() {
       var resp;
+      const blockedResponse = {
+        'system-number': 1,
+        surname: 'UNAVAILABLE',
+        forenames: 'UNAVAILABLE',
+        dob: 'UNAVAILABLE',
+        gender: 'UNAVAILABLE',
+        'birth-place': 'UNAVAILABLE',
+        mother: {
+          name: 'UNAVAILABLE',
+          nee: 'UNAVAILABLE',
+          marriageSurname: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        },
+        father: {
+          name: 'UNAVAILABLE',
+          'birth-place': 'UNAVAILABLE',
+          occupation: 'UNAVAILABLE'
+        },
+        registered: {
+          by: 'UNAVAILABLE',
+          district: 'UNAVAILABLE',
+          'sub-district': 'UNAVAILABLE',
+          'admin-area': 'UNAVAILABLE',
+          date: 'UNAVAILABLE'
+        },
+        status: {
+          refer: true
+        },
+        previousRegistration: {
+          date: null,
+          systemNumber: null
+        }
+      };
 
-      beforeEach(function () {
+      beforeEach(function() {
         resp = _.cloneDeep(response);
         resp.status.blockedRegistration = true;
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
-        promise = api.requestID(1, 'mrs-caseworker');
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
       });
 
-      it('censors the record', function () {
-        return promise.then(function (data) {
-          var blockedResponse = {
-            'system-number': 1,
-            surname: 'UNAVAILABLE',
-            forenames: 'UNAVAILABLE',
-            dob: 'UNAVAILABLE',
-            gender: 'UNAVAILABLE',
-            'birth-place': 'UNAVAILABLE',
-            mother: {
-              name: 'UNAVAILABLE',
-              nee: 'UNAVAILABLE',
-              marriageSurname: 'UNAVAILABLE',
-              'birth-place': 'UNAVAILABLE',
-              occupation: 'UNAVAILABLE'
-            },
-            father: {
-              name: 'UNAVAILABLE',
-              'birth-place': 'UNAVAILABLE',
-              occupation: 'UNAVAILABLE'
-            },
-            registered: {
-              by: 'UNAVAILABLE',
-              district: 'UNAVAILABLE',
-              'sub-district': 'UNAVAILABLE',
-              'admin-area': 'UNAVAILABLE',
-              date: 'UNAVAILABLE'
-            },
-            status: {
-              refer: true
-            },
-            previousRegistration: {
-              date: null,
-              systemNumber: null
-            }
-          };
-
-          data.should.eql(blockedResponse);
-        });
-      });
+      it('censors the record', () =>
+        api.requestID(1, 'mrs-caseworker').should.eventually.deep.equal(blockedResponse)
+      );
     });
 
-    describe('"Birth registered by" property', function () {
+    describe('"Birth registered by" property', function() {
       var resp;
 
-      beforeEach(function () {
+      beforeEach(function() {
         resp = _.cloneDeep(response);
         resp.subjects.informant.qualification = 'Father, Mother';
-        requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+        requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
       });
 
       it('should come from the API\'s "qualification" property', () =>
@@ -352,303 +347,303 @@ describe('api', function () {
       );
     });
 
-    describe('Flags', function () {
+    describe('Flags', function() {
       var promise;
       var resp;
 
-      describe('\'refer\'', function () {
-        describe('when \'reRegistered\' is not an expected value', function () {
-          beforeEach(function () {
+      describe('\'refer\'', function() {
+        describe('when \'reRegistered\' is not an expected value', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.refer.should.eql(true);
             });
           });
         });
 
-        describe('when \'potentiallyFictitiousBirth\' is not false', function () {
-          beforeEach(function () {
+        describe('when \'potentiallyFictitiousBirth\' is not false', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.potentiallyFictitiousBirth = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.refer.should.eql(true);
             });
           });
         });
 
-        describe('when \'marginalNote\' is not an expected value', function () {
-          beforeEach(function () {
+        describe('when \'marginalNote\' is not an expected value', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.marginalNote = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.refer.should.eql(true);
             });
           });
         });
 
-        describe('when \'cancelled\' is not false', function () {
-          beforeEach(function () {
+        describe('when \'cancelled\' is not false', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.cancelled = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.refer.should.eql(true);
             });
           });
         });
 
-        describe('when the flags are normal', function () {
-          beforeEach(function () {
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(response));
+        describe('when the flags are normal', function() {
+          beforeEach(function() {
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.refer.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'fatherAdded\'', function () {
-        describe('when \'reRegistered\' is \'Father added\'', function () {
-          beforeEach(function () {
+      describe('\'fatherAdded\'', function() {
+        describe('when \'reRegistered\' is \'Father added\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = 'Father added';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.fatherAdded.should.eql(true);
             });
           });
         });
 
-        describe('when \'reRegistered\' is NOT \'Father added\'', function () {
-          beforeEach(function () {
+        describe('when \'reRegistered\' is NOT \'Father added\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.fatherAdded.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'subsequentlyMarried\'', function () {
-        describe('when \'reRegistered\' is \'Subsequently married\'', function () {
-          beforeEach(function () {
+      describe('\'subsequentlyMarried\'', function() {
+        describe('when \'reRegistered\' is \'Subsequently married\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = 'Subsequently married';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.subsequentlyMarried.should.eql(true);
             });
           });
         });
 
-        describe('when \'reRegistered\' is NOT \'Subsequently married\'', function () {
-          beforeEach(function () {
+        describe('when \'reRegistered\' is NOT \'Subsequently married\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.subsequentlyMarried.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'fatherModified\'', function () {
-        describe('when \'reRegistered\' is \'Father modified\'', function () {
-          beforeEach(function () {
+      describe('\'fatherModified\'', function() {
+        describe('when \'reRegistered\' is \'Father modified\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = 'Father modified';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.fatherModified.should.eql(true);
             });
           });
         });
 
-        describe('when \'reRegistered\' is NOT \'Father modified\'', function () {
-          beforeEach(function () {
+        describe('when \'reRegistered\' is NOT \'Father modified\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.fatherModified.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'replaced\'', function () {
-        describe('when \'reRegistered\' is \'Replacement registration\'', function () {
-          beforeEach(function () {
+      describe('\'replaced\'', function() {
+        describe('when \'reRegistered\' is \'Replacement registration\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = 'Replacement registration';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.replaced.should.eql(true);
             });
           });
         });
 
-        describe('when \'reRegistered\' is NOT \'Replacement registration\'', function () {
-          beforeEach(function () {
+        describe('when \'reRegistered\' is NOT \'Replacement registration\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.replaced.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'corrected\'', function () {
-        describe('when \'correction\' is \'None\'', function () {
-          beforeEach(function () {
+      describe('\'corrected\'', function() {
+        describe('when \'correction\' is \'None\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.correction = 'None';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.corrected.should.eql(false);
             });
           });
         });
 
-        describe('when \'correction\' is NOT \'None\'', function () {
-          beforeEach(function () {
+        describe('when \'correction\' is NOT \'None\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.correction = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.corrected.should.eql(true);
             });
           });
         });
       });
 
-      describe('\'courtOrderInPlace\'', function () {
-        describe('when \'marginalNote\' is \'Court order in place\'', function () {
-          beforeEach(function () {
+      describe('\'courtOrderInPlace\'', function() {
+        describe('when \'marginalNote\' is \'Court order in place\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.marginalNote = 'Court order in place';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.courtOrderInPlace.should.eql(true);
             });
           });
         });
 
-        describe('when \'marginalNote\' is NOT \'Court order in place\'', function () {
-          beforeEach(function () {
+        describe('when \'marginalNote\' is NOT \'Court order in place\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.marginalNote = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.courtOrderInPlace.should.eql(false);
             });
           });
         });
       });
 
-      describe('\'courtOrderRevoked\'', function () {
-        describe('when \'marginalNote\' is \'Court order revoked\'', function () {
-          beforeEach(function () {
+      describe('\'courtOrderRevoked\'', function() {
+        describe('when \'marginalNote\' is \'Court order revoked\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.marginalNote = 'Court order revoked';
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is true', function () {
-            return promise.then(function (data) {
+          it('is true', function() {
+            return promise.then(function(data) {
               data.status.courtOrderRevoked.should.eql(true);
             });
           });
         });
 
-        describe('when \'marginalNote\' is NOT \'Court order revoked\'', function () {
-          beforeEach(function () {
+        describe('when \'marginalNote\' is NOT \'Court order revoked\'', function() {
+          beforeEach(function() {
             resp = _.cloneDeep(response);
             resp.status.reRegistered = null;
-            requestGet.yields(null, {statusCode: 200}, JSON.stringify(resp));
+            requestGet.yields(null, { statusCode: 200 }, JSON.stringify(resp));
             promise = api.requestID(1, 'mrs-caseworker');
           });
 
-          it('is false', function () {
-            return promise.then(function (data) {
+          it('is false', function() {
+            return promise.then(function(data) {
               data.status.courtOrderRevoked.should.eql(false);
             });
           });
@@ -657,8 +652,8 @@ describe('api', function () {
     });
   });
 
-  describe('rejected promise', function () {
-    it('rejects the promise if an error is returned from the api', function () {
+  describe('rejected promise', function() {
+    it('rejects the promise if an error is returned from the api', function() {
       var err = new Error('SERVER DID SOMETHING');
       requestGet.yields(err, {
         statusCode: 500
@@ -669,7 +664,7 @@ describe('api', function () {
       }, 'mrs-caseworker').should.eventually.be.rejectedWith(err);
     });
 
-    it('rejects the promise if the status code is not 200', function () {
+    it('rejects the promise if the status code is not 200', function() {
       requestGet.yields(null, {
         statusCode: 418
       });
@@ -679,27 +674,29 @@ describe('api', function () {
       }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Received status code "418" from API');
     });
 
-    it('rejects the promise if the JSON cannot be parsed', function () {
-      requestGet.yields(null, {statusCode: 200}, '<not><json></json></not>');
+    it('rejects the promise if the JSON cannot be parsed', function() {
+      requestGet.yields(null, { statusCode: 200 }, '<not><json></json></not>');
 
       return api.read({
         'system-number': '1234'
       }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Unexpected token <');
     });
 
-    it('rejects the promise if the JSON Object does not contain the correct fields', function () {
-      requestGet.yields(null, {statusCode: 200}, JSON.stringify({not: 'enough data'}));
+    it('rejects the promise if the JSON Object does not contain the correct fields', function() {
+      requestGet.yields(null, { statusCode: 200 }, JSON.stringify({ not: 'enough data' }));
 
       return api.read({
-        'system-number': '1234'
-      }, 'mrs-caseworker').should.eventually.be.rejectedWith(Error, 'Cannot read property \'blockedRegistration\' of undefined');
+          'system-number': '1234'
+        },
+        'mrs-caseworker'
+      ).should.eventually.be.rejectedWith(Error, 'Cannot read property \'blockedRegistration\' of undefined');
     });
 
   });
 
 
-  describe('.read()', function () {
-    it('returns a Promise', function () {
+  describe('.read()', function() {
+    it('returns a Promise', function() {
       (api.read() instanceof Promise).should.be.true;
     });
   });

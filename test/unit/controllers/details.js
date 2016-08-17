@@ -5,9 +5,9 @@ describe('controllers/details', function() {
   var api;
   var detailsController;
 
-  beforeEach(sinon.test(function () {
+  beforeEach(sinon.test(function() {
     apiRequestIDStub = this.stub();
-    apiRequestIDStub.withArgs('1234').returns(Promise.resolve({records: []}));
+    apiRequestIDStub.withArgs('1234').returns(Promise.resolve({ records: [] }));
     apiRequestIDStub.withArgs('error').returns(Promise.reject('error'));
 
     detailsController = require('../../../controllers/details');
@@ -42,7 +42,7 @@ describe('controllers/details', function() {
       api.requestID.should.have.been.calledWith(req.params.sysnum);
     });
 
-    it('redirects to / with no GET params', function () {
+    it('redirects to / with no GET params', function() {
       detailsController({}, res);
 
       res.redirect.should.have.been.calledWith('/');
@@ -53,7 +53,7 @@ describe('controllers/details', function() {
       it('renders the details page', function() {
         detailsController(req, res);
 
-        return Promise.resolve().then(function () {
+        return Promise.resolve().then(function() {
           res.render.should.have.been.calledWith('pages/details');
         });
       });
@@ -67,7 +67,7 @@ describe('controllers/details', function() {
 
         detailsController(req, res);
 
-        return Promise.resolve().then(function () {
+        return Promise.resolve().then(function() {
           res.render.should.have.been.calledWith('pages/error');
         });
       });

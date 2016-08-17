@@ -1,12 +1,14 @@
 'use strict';
 
 var testConfig = require('./config');
-var expectedRecord = require('./expectedRecord');
+var expectedRecord = require('./expected-record');
 
 var expectedRecords;
 
-// If the environment is local the mock proxy is used, returning same record as for single searches.
-// Otherwise use records actually in DB that return multiple hits (record here is first hit which is sufficient for tests)
+// If the environment is local the mock proxy is used,
+// returning same record as for single searches.
+// Otherwise use records actually in DB that return multiple hits
+// (record here is first hit which is sufficient for tests)
 if (testConfig.env === 'local') {
   expectedRecords = expectedRecord;
 } else {

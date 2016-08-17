@@ -19,76 +19,60 @@ if (config.oauth) {
   oAuthPassword = config.oauth.password;
 }
 
+var formatDate = function formatDate(date) {
+  return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+};
+
+var refer = function refer(record) {
+  return (
+      record.status.reRegistered !== 'None' &&
+      record.status.reRegistered !== 'Father added' &&
+      record.status.reRegistered !== 'Subsequently married' &&
+      record.status.reRegistered !== 'Father modified' &&
+      record.status.reRegistered !== 'Replacement registration'
+    ) ||
+    record.status.potentiallyFictitiousBirth !== false ||
+    (
+      record.status.marginalNote !== 'None' &&
+      record.status.marginalNote !== 'Court order in place' &&
+      record.status.marginalNote !== 'Court order revoked'
+    ) ||
+    record.status.cancelled !== false;
+};
+
 var processRecord = function processRecord(record) {
-  var formatDate = function formatDate(date) {
-    return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
-  };
-
-  var blocked = record.status.blockedRegistration !== false;
-
-  var refer = function refer() {
-    return (
-        record.status.reRegistered !== 'None' &&
-        record.status.reRegistered !== 'Father added' &&
-        record.status.reRegistered !== 'Subsequently married' &&
-        record.status.reRegistered !== 'Father modified' &&
-        record.status.reRegistered !== 'Replacement registration'
-      ) ||
-      record.status.potentiallyFictitiousBirth !== false ||
-      (
-        record.status.marginalNote !== 'None' &&
-        record.status.marginalNote !== 'Court order in place' &&
-        record.status.marginalNote !== 'Court order revoked'
-      ) ||
-      record.status.cancelled !== false;
-  };
-
+  const blocked = record.status.blockedRegistration !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
   return {
     'system-number': record.systemNumber,
-    surname: blocked ? 'UNAVAILABLE' : record.subjects.child.name.surname,
-    forenames: blocked ? 'UNAVAILABLE' : record.subjects.child.name.givenName,
-    dob: blocked ? 'UNAVAILABLE' : formatDate(record.subjects.child.dateOfBirth),
-    gender: blocked ? 'UNAVAILABLE' : record.subjects.child.sex,
-    'birth-place': blocked ? 'UNAVAILABLE' : record.subjects.child.birthplace,
-    mother: blocked ? {
-      name: 'UNAVAILABLE',
-      nee: 'UNAVAILABLE',
-      marriageSurname: 'UNAVAILABLE',
-      'birth-place': 'UNAVAILABLE',
-      occupation: 'UNAVAILABLE'
-    } : {
-      name: record.subjects.mother.name.fullName,
-      nee: record.subjects.mother.maidenSurname,
-      marriageSurname: record.subjects.mother.marriageSurname,
-      'birth-place': record.subjects.mother.birthplace,
-      occupation: record.subjects.mother.occupation
+    surname: block(record.subjects.child.name.surname),
+    forenames: block(record.subjects.child.name.givenName),
+    dob: block(formatDate(record.subjects.child.dateOfBirth)),
+    gender: block(record.subjects.child.sex),
+    'birth-place': block(record.subjects.child.birthplace),
+    mother: {
+      name: block(record.subjects.mother.name.fullName),
+      nee: block(record.subjects.mother.maidenSurname),
+      marriageSurname: block(record.subjects.mother.marriageSurname),
+      'birth-place': block(record.subjects.mother.birthplace),
+      occupation: block(record.subjects.mother.occupation)
     },
-    father: blocked ? {
-      name: 'UNAVAILABLE',
-      'birth-place': 'UNAVAILABLE',
-      occupation: 'UNAVAILABLE'
-    } : {
-      name: record.subjects.father.name.fullName,
-      'birth-place': record.subjects.father.birthplace,
-      occupation: record.subjects.father.occupation
+    father: {
+      name: block(record.subjects.father.name.fullName),
+      'birth-place': block(record.subjects.father.birthplace),
+      occupation: block(record.subjects.father.occupation)
     },
-    registered: blocked ? {
-      by: 'UNAVAILABLE',
-      district: 'UNAVAILABLE',
-      'sub-district': 'UNAVAILABLE',
-      'admin-area': 'UNAVAILABLE',
-      date: 'UNAVAILABLE'
-    } : {
-      by: record.subjects.informant.qualification,
-      district: record.location.registrationDistrict,
-      'sub-district': record.location.subDistrict,
-      'admin-area': record.location.administrativeArea,
-      date: formatDate(record.date)
+    registered: {
+      by: block(record.subjects.informant.qualification),
+      district: block(record.location.registrationDistrict),
+      'sub-district': block(record.location.subDistrict),
+      'admin-area': block(record.location.administrativeArea),
+      date: block(formatDate(record.date))
     },
     status: blocked ? {
       refer: true
     } : {
-      refer: refer(),
+      refer: refer(record),
       fatherAdded: record.status.reRegistered === 'Father added',
       subsequentlyMarried: record.status.reRegistered === 'Subsequently married',
       fatherModified: record.status.reRegistered === 'Father modified',
@@ -107,13 +91,11 @@ var processRecord = function processRecord(record) {
   };
 };
 
-var endpoint = config.api.protocol + '://' +
-               config.api.host + ':' + config.api.port +
-               '/api/v0/events/birth';
+var endpoint = `${config.api.protocol}://${config.api.host}:${config.api.port}/api/v0/events/birth`;
 
 var requestData = function requestData(url, user, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {
-    var headers = user ? {'X-Auth-Downstream-Username': user} : {};
+    var headers = user ? { 'X-Auth-Downstream-Username': user } : {};
     return levRequest.get({
       'url': url,
       'headers': headers
@@ -131,7 +113,7 @@ var requestData = function requestData(url, user, callback) {
           401: 'NotAuthorized'
         };
 
-        statusError = new Error('Received status code "' + res.statusCode + '" from API');
+        statusError = new Error(`Received status code "${res.statusCode}" from API`);
 
         if (statusToName[res.statusCode]) {
           statusError.name = statusToName[res.statusCode];
@@ -177,10 +159,6 @@ module.exports = {
 
   query: function query(attrs, user) {
     var params = {};
-    var formatDate = function formatDate(date) {
-      return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    };
-
     attrs = attrs || {};
 
     if (attrs.surname) {
@@ -192,7 +170,7 @@ module.exports = {
     }
 
     if (attrs.dob) {
-      params.dateofbirth = formatDate(attrs.dob);
+      params.dateofbirth = moment(attrs.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
 
     return requestData(endpoint + '?' + querystring.stringify(params), user,

@@ -4,7 +4,7 @@ var logger = require('../lib/logger');
 
 module.exports = function errorMiddlewareFactory() {
 
-  /*eslint no-unused-vars: 0*/
+  /* eslint no-unused-vars: 0*/
   return function errorHandler(err, req, res, next) {
     var content = {};
 
