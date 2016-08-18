@@ -1,9 +1,8 @@
 'use strict';
 
 var mockProxy = require('../mock-proxy');
-var expectedRecord = require('../expectedRecord');
-var expectedRecords = require('../expectedRecords');
-var testConfig = require('../config');
+var expectedRecord = require('../expected-record');
+var expectedRecords = require('../expected-records');
 
 describe('Details Page', () => {
   const urlShouldContainDetails = () => {
@@ -14,7 +13,8 @@ describe('Details Page', () => {
 
   const messageDisplayed = (recordToMatch) => {
     it('an appropriate message is displayed', () => {
-      browser.getText('h1').should.equal("Record of " + recordToMatch.child.name.fullName + " " + recordToMatch.child.dateOfBirth);
+      const h1 = `Record of ${recordToMatch.child.name.fullName} ${recordToMatch.child.dateOfBirth}`;
+      browser.getText('h1').should.equal(h1);
     });
   };
 
@@ -30,11 +30,12 @@ describe('Details Page', () => {
       browserText[6].should.match(new RegExp('Place of birth *' + recordToMatch.child.birthplace));
       browserText[8].should.match(new RegExp('Mother\'s Name *' + recordToMatch.mother.name.fullName));
       browserText[9].should.match(new RegExp('Mother\'s Maiden name *' + recordToMatch.mother.maidenSurname));
-      browserText[10].should.match(new RegExp('Mother\'s Previous marriage name *' + recordToMatch.mother.marriageSurname));
+      browserText[10].should.match(new RegExp(
+        'Mother\'s Previous marriage name *' + recordToMatch.mother.marriageSurname));
       browserText[11].should.match(new RegExp('Mother\'s Place of birth *' + recordToMatch.mother.birthplace));
       browserText[13].should.match(new RegExp('Father\'s Name *' + recordToMatch.father.name.fullName));
       browserText[14].should.match(new RegExp('Father\'s Place of birth *' + recordToMatch.father.birthplace));
-      browserText[16].should.match(new RegExp('Birth jointly registered *No'));
+      browserText[16].should.match(new RegExp('Birth registered by *Mother'));
       browserText[17].should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
       browserText[18].should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
       browserText[19].should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));
@@ -84,8 +85,8 @@ describe('Details Page', () => {
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
-        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
+        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
       browser.click(linkToFirstRecordDetails);
     });
 
@@ -146,8 +147,8 @@ describe('Details Page', () => {
     before(() => {
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
-        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
+        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
       browser.click(linkToFirstRecordDetails);
       browser.click('#editSearchLink');
     });
@@ -172,11 +173,11 @@ describe('Details Page', () => {
 
       mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = "a[href=\"/details/" + expectedRecords.systemNumber + "?surname=" +
-        name.surname + "&forenames=" + name.givenName + "&multipleResults\"]";
+      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
+        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
       browser.click(linkToFirstRecordDetails);
       browser.click('#backToSearchResults');
-      browser.getUrl().should.contain("surname=" + name.surname);
+      browser.getUrl().should.contain('surname=' + name.surname);
       browser.getUrl().should.contain('forenames=' + name.givenName);
       browser.shouldBeOnResultsPage();
     });

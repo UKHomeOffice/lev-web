@@ -17,7 +17,7 @@ PACKAGE_VERSION=$(grep version package.json \
   | sed 's/[",]//g' \
   | tr -d '[[:space:]]')
 # This will work even when build number set to empty string...
-VERSION="v${PACKAGE_VERSION}-${BUILD_NUMBER:-local}"
+VERSION="v${PACKAGE_VERSION}-${BUILD_NUMBER:-local}-${GIT_COMMIT:-$(git rev-parse HEAD)}"
 TAG=${REGISTRY}/${IMAGE}:${VERSION}
 
 # Functions
