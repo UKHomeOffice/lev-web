@@ -28,7 +28,7 @@ module.exports = {
     validate: ['british-date', 'past', {
       type: 'since',
       arguments: [require('moment')('1/7/2009', 'DD/MM/YYYY')]
-    }],
+    }, 'required'],
     dependent: {
       value: '',
       field: 'system-number'

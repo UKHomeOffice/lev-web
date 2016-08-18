@@ -84,10 +84,8 @@ describe('Details Page', () => {
       const name = child.name;
 
       mockProxy.willReturnForLocalTests(3);
-      browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
-        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
-      browser.click(linkToFirstRecordDetails);
+      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.clickFirstRecord();
     });
 
     urlShouldContainDetails();
@@ -146,10 +144,8 @@ describe('Details Page', () => {
 
     before(() => {
       mockProxy.willReturnForLocalTests(3);
-      browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
-        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
-      browser.click(linkToFirstRecordDetails);
+      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.clickFirstRecord();
       browser.click('#editSearchLink');
     });
 
@@ -162,7 +158,7 @@ describe('Details Page', () => {
       browser.getValue('#system-number').should.equal('');
       browser.getValue('#surname').should.equal(name.surname);
       browser.getValue('#forenames').should.equal(name.givenName);
-      browser.getValue('#dob').should.equal('');
+      browser.getValue('#dob').should.equal(child.dateOfBirth);
     });
   });
 
@@ -172,10 +168,8 @@ describe('Details Page', () => {
       const name = child.name;
 
       mockProxy.willReturnForLocalTests(3);
-      browser.search('', name.surname, name.givenName, '');
-      const linkToFirstRecordDetails = 'a[href="/details/' + expectedRecords.systemNumber + '?surname=' +
-        name.surname + '&forenames=' + name.givenName + '&multipleResults"]';
-      browser.click(linkToFirstRecordDetails);
+      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.clickFirstRecord();
       browser.click('#backToSearchResults');
       browser.getUrl().should.contain('surname=' + name.surname);
       browser.getUrl().should.contain('forenames=' + name.givenName);
