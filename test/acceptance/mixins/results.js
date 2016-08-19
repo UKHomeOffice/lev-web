@@ -7,7 +7,6 @@ module.exports = (target) => {
 
   target.clickFirstRecord = function() {
     // browser.element gets just the first matching elements (browser.elements gets all matching ones)
-    const linkToFirstRecordDetails = browser.element('#records a').value.ELEMENT;
-    this.elementIdClick(linkToFirstRecordDetails);
+    const linkToFirstRecordDetails = browser.element('#records a').click();
   };
 };
