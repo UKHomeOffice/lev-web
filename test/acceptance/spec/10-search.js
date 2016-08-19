@@ -128,6 +128,10 @@ describe('Search', () => {
       it('requests a forename', () => {
         browser.getText('a').should.contain('Please enter at least one forename');
       });
+
+      it('requests a date of birth', () => {
+        browser.getText('a').should.contain('Please enter a date of birth');
+      });
     });
 
     describe('with a system number containing invalid characters', () => {
