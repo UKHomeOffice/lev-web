@@ -20,6 +20,8 @@
   border-color: #ca0;
 }
 
+$section-colour: #f2f4f6;
+
 table.details {
   border-top: 1px solid $border-colour;
   border-bottom: 1px solid $border-colour;
@@ -33,15 +35,20 @@ table.details {
     }
     th {
       width: 10em;
-      color: $secondary-text-colour;
     }
-    .section-head th,
-    .section-head td {
+    td {
       font-weight: bold;
-      color: $text-colour;
-      background-color: $panel-colour;
-      padding-top: 0.4em;
-      padding-bottom: 0.3em;
+    }
+    .section-head {
+      border-top: 2px solid $border-colour;
+
+      th, td {
+        font-weight: bold;
+        color: $text-colour;
+        background-color: $section-colour;
+        padding-top: 0.4em;
+        padding-bottom: 0.3em;
+      }
     }
   }
 }

@@ -13,7 +13,7 @@ describe('Details Page', () => {
 
   const messageDisplayed = (recordToMatch) => {
     it('an appropriate message is displayed', () => {
-      const h1 = `Record of ${recordToMatch.child.name.fullName} ${recordToMatch.child.dateOfBirth}`;
+      const h1 = `${recordToMatch.child.name.fullName} ${recordToMatch.child.dateOfBirth}`;
       browser.getText('h1').should.equal(h1);
     });
   };
