@@ -44,6 +44,7 @@ app.use(mixins(fields));
 
 require('./routes')(app);
 
+app.use(require('./middleware/not-found')());
 app.use(require('./middleware/error')());
 
 server.listen(config.port, config.listen_host);
