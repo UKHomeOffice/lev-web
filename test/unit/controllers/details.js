@@ -19,6 +19,7 @@ describe('controllers/details', function() {
   describe('when called', function() {
     var req;
     var res;
+    var next;
 
     beforeEach(sinon.test(function() {
       req = {
@@ -34,6 +35,8 @@ describe('controllers/details', function() {
         render: this.spy(),
         redirect: this.spy()
       };
+
+      next = this.spy();
     }));
 
     it('calls the api with the request GET params', function() {
@@ -65,10 +68,10 @@ describe('controllers/details', function() {
       it('renders the error page', function() {
         req.params.sysnum = 'error';
 
-        detailsController(req, res);
+        detailsController(req, res, next);
 
         return Promise.resolve().then(function() {
-          res.render.should.have.been.calledWith('pages/error');
+          next.should.have.been.calledWith(new Error('error'));
         });
       });
 
