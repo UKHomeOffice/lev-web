@@ -63,9 +63,13 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
           query: query,
           querystring: querystring
         });
-      }
+      } else {
+        const error = (err instanceof(Error))
+          ? err
+          : new Error(err);
 
-      callback((err instanceof(Error)) ? err : new Error(err), req, res, callback);
+        callback(error, req, res, callback);
+      }
     });
   this.emit('complete', req, res);
 };

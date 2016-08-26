@@ -144,7 +144,7 @@ describe('controllers/search', function() {
       });
 
       describe('resolved promise', function() {
-        it('redirects to the details page on one record returned', function() {
+        it('redirects to the details page on one record returned', function(done) {
           var sysnum = 123456789;
           var query = formSubmission({
             'system-number': `${sysnum}`
@@ -155,14 +155,15 @@ describe('controllers/search', function() {
             'system-number': sysnum
           }]));
 
-          searchController(req, res);
+          res.redirect = function(url) {
+            url.should.equal(`/details/${sysnum}?system-number=${sysnum}`);
+            done();
+          };
 
-          return Promise.resolve().then(function() {
-            res.redirect.should.have.been.calledWith(`/details/${sysnum}?system-number=${sysnum}`);
-          });
+          searchController(req, res);
         });
 
-        it('renders the results page', function() {
+        it('renders the results page', function(done) {
           var query = formSubmission({
             'surname': 'smiths',
             'forenames': 'john',
@@ -177,42 +178,75 @@ describe('controllers/search', function() {
           req.query = query;
           api.read.withArgs(query).returns(Promise.resolve(records));
 
-          searchController(req, res);
-
-          return Promise.resolve().then(function() {
-            res.render.should.have.been.calledWith('pages/results', {
+          res.render = function(view, locals) {
+            view.should.equal('pages/results');
+            locals.should.eql({
               count: 2,
               records: records,
               query: query,
               querystring: 'surname=smiths&forenames=john&dob=01%2F01%2F2011'
             });
-          });
+            done();
+          };
+
+          searchController(req, res);
         });
 
       });
 
       describe('rejected promise', function() {
-        it('renders the error page', function() {
-          var query = formSubmission({
+        var query;
+
+        beforeEach(function() {
+          query = formSubmission({
             'surname': 'unfoundsurname',
             'forenames': 'unfoundforenames',
             'dob': '01/01/2011'
           });
 
           req.query = query;
-          api.read.withArgs(query).returns(Promise.reject({
-            name: 'NotFoundError'
-          }));
+        });
 
-          searchController(req, res);
+        describe('due to not being found', function() {
+          beforeEach(function() {
+            api.read.withArgs(query).returns(Promise.reject({
+              name: 'NotFoundError'
+            }));
+          });
 
-          return Promise.resolve().then(function() {
-            res.render.should.have.been.calledWith('pages/results', {
-              count: 0,
-              records: null,
-              query: query,
-              querystring: 'surname=unfoundsurname&forenames=unfoundforenames&dob=01%2F01%2F2011'
+          it('renders the results page', function(done) {
+            res.render = function(view, locals) {
+              view.should.equal('pages/results');
+              locals.should.eql({
+                count: 0,
+                records: null,
+                query: query,
+                querystring: 'surname=unfoundsurname&forenames=unfoundforenames&dob=01%2F01%2F2011'
+              });
+              done();
+            };
+
+            searchController(req, res);
+          });
+        });
+
+        describe('due to any other error', function() {
+          var err;
+
+          beforeEach(function() {
+            err = new Error({
+              name: 'UnexpectedError'
             });
+            api.read.withArgs(query).returns(Promise.reject(err));
+          });
+
+          it('passes on to the error handler', function(done) {
+            var next = function(error) {
+              error.should.equal(err);
+              done();
+            };
+
+            searchController(req, res, next);
           });
         });
       });
