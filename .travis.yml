@@ -17,6 +17,8 @@ cache:
     - api/mock/node_modules
 
 before_install:
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+  - npm cache clean
   - npm run install:mockapi
   - rm -rf node_modules/node-sass
 
