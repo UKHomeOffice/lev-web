@@ -42,35 +42,38 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
   const query = _.pick(req.query, _.keys(fields));
   const querystring = helpers.serialize(query);
 
+  const resolved = (records) => {
+    if (records.length === 1) {
+      res.redirect('/details/' + records[0]['system-number'] + '?' + querystring);
+    } else {
+      res.render('pages/results', {
+        count: records && records.length,
+        records: records,
+        query: query,
+        querystring: querystring
+      });
+    }
+  };
+
+  const rejected = (err) => {
+    if (err.name === 'NotFoundError') {
+      res.render('pages/results', {
+        count: 0,
+        records: null,
+        query: query,
+        querystring: querystring
+      });
+    } else {
+      const error = (err instanceof(Error))
+        ? err
+        : new Error(err);
+
+      callback(error, req, res, callback);
+    }
+  };
+
   api.read(req.form.values, username)
-    .then(function resolved(records) {
-
-      if (records.length === 1) {
-        res.redirect('/details/' + records[0]['system-number'] + '?' + querystring);
-      } else {
-        res.render('pages/results', {
-          count: records && records.length,
-          records: records,
-          query: query,
-          querystring: querystring
-        });
-      }
-    }, function rejected(err) {
-      if (err.name === 'NotFoundError') {
-        res.render('pages/results', {
-          count: 0,
-          records: null,
-          query: query,
-          querystring: querystring
-        });
-      } else {
-        const error = (err instanceof(Error))
-          ? err
-          : new Error(err);
-
-        callback(error, req, res, callback);
-      }
-    });
+    .then(resolved, rejected);
   this.emit('complete', req, res);
 };
 
