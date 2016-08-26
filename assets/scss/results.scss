@@ -1,25 +1,23 @@
 #records {
+  border-bottom: 2px solid $border-colour;
+
   li {
     margin: 0 0 15px;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
 
     article {
       a {
         display: block;
-        background-color: #eee;
-        border-top: 1px solid $border-colour;
-        border-bottom: 1px solid $border-colour;
+        border-top: 2px solid $border-colour;
         text-decoration: none;
         padding: 10px;
+        color: $black;
 
         h2 {
           @include bold-19;
           margin-bottom: 0.4em;
           margin-top: 0;
           text-decoration: underline;
+          color: #005ea5;
         }
 
         table {
@@ -33,15 +31,14 @@
             &:last-of-type {
               padding-bottom: 0;
             }
-          }
-
-          td {
             @include core-19;
           }
 
           th {
-            @include bold-19;
             width: 7.2em;
+          }
+          td {
+            font-weight: bold;
           }
         }
 
@@ -56,9 +53,8 @@
         }
 
         &:hover {
-          padding: 7px 6px;
-          background-color: #e6f0f9;
-          border: 4px solid #005ea5;
+          background-color: #f2f7fa;
+          border-color: #2d7ab4;
           table {
             th, td {
               color: #005ea5;
