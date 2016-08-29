@@ -51,7 +51,7 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.3.0",
     "chimp": "^0.35.0",
-    "eslint": "^2.10.1",
+    "eslint": "^2.13.0",
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
     "eslint-plugin-one-variable-per-var": "0.0.3",
