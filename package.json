@@ -33,7 +33,7 @@
     "browserify": "^13.0.1",
     "churchill": "0.1.0",
     "express": "^4.13.3",
-    "express-partial-templates": "^0.1.0",
+    "express-partial-templates": "^0.2.0",
     "express-session": "^1.12.1",
     "hof": "^8.0.0",
     "hogan-express-strict": "^0.5.4",
