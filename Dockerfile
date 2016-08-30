@@ -5,7 +5,7 @@ RUN yum clean all && \
     yum install -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
     yum clean all && \
     rpm --rebuilddb && \
-    npm install -g npm@3 \
+    npm install -g npm@3 && \
     mkdir -p /app/mock
 
 WORKDIR /app
