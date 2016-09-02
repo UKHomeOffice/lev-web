@@ -2,14 +2,14 @@
   border-bottom: 2px solid $border-colour;
 
   li {
-    margin: 0 0 15px;
+    margin: 0;
 
     article {
       a {
         display: block;
-        border-top: 2px solid $border-colour;
+        border-top: 1px solid $border-colour;
         text-decoration: none;
-        padding: 10px;
+        padding: 10px 0;
         color: $black;
 
         h2 {
