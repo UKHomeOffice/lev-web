@@ -22,13 +22,15 @@ body {
   @include core-19;
 }
 
-//h1 {
-//  @include bold-24;
-//  margin: em(15) 0 em(12);
-//  .query {
-//    font-weight: normal;
-//  }
-//}
+.heading-large, h1 {
+  font-size: 19px;
+  margin-top: 10px;
+
+  @include media(desktop) {
+    font-size: 32px;
+    margin-top: 20px;
+  }
+}
 
 .form-label-bold {
   /* Note: Elements does not use bold labels */
