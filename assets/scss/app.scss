@@ -8,6 +8,8 @@ $path: "../img/";
 @import "./results.scss";
 @import "./details.scss";
 
+$form-spacing: 15px;
+
 .phase-banner {
   @include phase-banner(beta);
 }
@@ -20,17 +22,18 @@ body {
   @include core-19;
 }
 
-h1 {
-  @include bold-24;
-  margin: em(15) 0 em(12);
-  .query {
-    font-weight: normal;
-  }
-}
+//h1 {
+//  @include bold-24;
+//  margin: em(15) 0 em(12);
+//  .query {
+//    font-weight: normal;
+//  }
+//}
 
 .form-label-bold {
   /* Note: Elements does not use bold labels */
   @include bold-19;
+  padding-bottom: 3px;
 }
 
 //autocomplete styling
@@ -61,6 +64,7 @@ h1 {
 //custom form styling
 .form-control {
   padding: 0.5em;
+  border: 2px solid #6f777b; // hopefully this will be surplanted by updated FEKT
 
   @include media(desktop) {
     width: 65%;
@@ -68,7 +72,10 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-top: $form-spacing;
+}
+#system-number-group.form-group {
+  margin-bottom: 10px;
 }
 
 // GOVUK Elements `.form-date` overrides
@@ -114,7 +121,7 @@ h1 {
 }
 
 #content {
-  padding-bottom: 0;
+  padding-bottom: 50px;
 }
 
 // ==========================================================================
@@ -180,7 +187,7 @@ body.no-js details > {
 }
 
 details {
-  margin-bottom: 30px;
+  margin-bottom: $form-spacing;
 }
 
 .form-hint {
