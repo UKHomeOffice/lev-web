@@ -1,6 +1,6 @@
 'use strict';
 var config = require('../config');
-var logger = require('../lib/logger');
+var logger = require('hmpo-logger').get();
 
 module.exports = function errorMiddlewareFactory() {
 

@@ -31,10 +31,10 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "browserify": "^13.0.1",
-    "churchill": "0.1.0",
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
     "express-session": "^1.12.1",
+    "hmpo-logger": "^1.0.0",
     "hof": "^8.0.0",
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
@@ -44,8 +44,7 @@
     "node-sass": "^3.7.0",
     "nodemon": "^1.8.1",
     "request": "^2.67.0",
-    "uglifyify": "^3.0.1",
-    "winston": "^1.0.1"
+    "uglifyify": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
