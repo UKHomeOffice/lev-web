@@ -7,8 +7,8 @@ describe('controllers/details', function() {
 
   beforeEach(sinon.test(function() {
     apiRequestIDStub = this.stub();
-    apiRequestIDStub.withArgs('1234').returns(Promise.resolve({ records: [] }));
-    apiRequestIDStub.withArgs('error').returns(Promise.reject('error'));
+    apiRequestIDStub.withArgs(1234, 'mrs-caseworker').returns(Promise.resolve({ records: [] }));
+    apiRequestIDStub.withArgs(34404, 'mrs-caseworker').returns(Promise.reject('error'));
 
     detailsController = require('../../../controllers/details');
 
@@ -40,21 +40,21 @@ describe('controllers/details', function() {
     }));
 
     it('calls the api with the request GET params', function() {
-      detailsController(req, res);
+      detailsController(req, res, next);
 
-      api.requestID.should.have.been.calledWith(req.params.sysnum);
+      api.requestID.should.have.been.calledWith(1234, 'mrs-caseworker');
     });
 
-    it('redirects to / with no GET params', function() {
-      detailsController({}, res);
+    it('raises an error with no GET params', function() {
+      detailsController({}, res, next);
 
-      res.redirect.should.have.been.calledWith('/');
+      next.should.have.been.calledWith(new ReferenceError());
     });
 
     describe('resolved promise', function() {
 
       it('renders the details page', function() {
-        detailsController(req, res);
+        detailsController(req, res, next);
 
         return Promise.resolve().then(function() {
           res.render.should.have.been.calledWith('pages/details');
