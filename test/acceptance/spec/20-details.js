@@ -1,6 +1,5 @@
 'use strict';
 
-var mockProxy = require('../mock-proxy');
 var expectedRecord = require('../expected-record');
 var expectedRecords = require('../expected-records');
 
@@ -66,7 +65,6 @@ describe('Details Page', () => {
         const child = expectedRecord.child;
         const name = child.name;
 
-        mockProxy.willReturnForLocalTests(1);
         browser.search('', name.surname, name.givenName, child.dateOfBirth);
     });
 
@@ -83,7 +81,6 @@ describe('Details Page', () => {
       const child = expectedRecords.child;
       const name = child.name;
 
-      mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
     });
@@ -100,7 +97,6 @@ describe('Details Page', () => {
       const child = expectedRecord.child;
       const name = child.name;
 
-      mockProxy.willReturnForLocalTests(1);
       browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.click('#newSearchLink');
     });
@@ -120,7 +116,6 @@ describe('Details Page', () => {
 
   describe('When I select the "Edit search" link on the results page', () => {
     before(() => {
-      mockProxy.willReturnForLocalTests(0);
       browser.search('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
       browser.click('#editSearchLink');
     });
@@ -143,7 +138,6 @@ describe('Details Page', () => {
     const name = child.name;
 
     before(() => {
-      mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
       browser.click('#editSearchLink');
@@ -167,7 +161,6 @@ describe('Details Page', () => {
       const child = expectedRecords.child;
       const name = child.name;
 
-      mockProxy.willReturnForLocalTests(3);
       browser.search('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
       browser.click('#backToSearchResults');
