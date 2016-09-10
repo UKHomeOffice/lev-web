@@ -9,5 +9,6 @@ then
     cd "${TARGET_DIR}"
     git pull
 else
-    git clone "${GIT_REPO}" "${TARGET_DIR}" || exit 1
+    # TODO: remove the branch part once merged
+    git clone -b "mock-from-FE-acceptance-tests" "${GIT_REPO}" "${TARGET_DIR}" || exit 1
 fi
