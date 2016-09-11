@@ -9,3 +9,4 @@ public/
 .DS_Store
 do
 api/mock/lev-api-docs/
+api/mock/lev-api-mock/

@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var config = require('../config');
+var logger = require('../lib/logger');
 var levRequest = require('../lib/lev-request');
 var querystring = require('querystring');
 var moment = require('moment');
@@ -92,6 +93,7 @@ var processRecord = function processRecord(record) {
 };
 
 var endpoint = `${config.api.protocol}://${config.api.host}:${config.api.port}/api/v0/events/birth`;
+logger.info('requesting from:', endpoint);
 
 var requestData = function requestData(url, user, callback) {
   return new Promise(function requestDataPromise(resolve, reject) {

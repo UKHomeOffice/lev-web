@@ -2,6 +2,7 @@
 
 const http = require('http');
 const httpProxy = require('http-proxy');
+process.title = 'lev-proxy';
 
 const proxy = (fromHost, fromPort, toHost, toPort, user) => {
   user = user || 'tester';

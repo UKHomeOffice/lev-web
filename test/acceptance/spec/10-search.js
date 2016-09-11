@@ -1,7 +1,6 @@
 'use strict';
 
 const moment = require('moment');
-const mockProxy = require('../mock-proxy');
 const expectedRecord = require('../expected-record');
 const expectedRecords = require('../expected-records');
 
@@ -20,7 +19,6 @@ describe('Search', () => {
   describe('submitting a valid query', () => {
     describe('that returns no records', () => {
       before(() => {
-        mockProxy.willReturnForLocalTests(0);
         browser.search('', 'Churchil', 'Winston', '30/11/2011');
       });
 
@@ -38,14 +36,12 @@ describe('Search', () => {
         const child = expectedRecord.child;
         const name = child.name;
 
-        mockProxy.willReturnForLocalTests(1);
         browser.search('', name.surname, name.givenName, child.dateOfBirth);
       });
 
       it('redirects to a details page', () => {
         browser.shouldBeOnDetailsPage();
       });
-
     });
 
     describe('that returns more than 1 record', () => {
@@ -53,7 +49,6 @@ describe('Search', () => {
       const name = child.name;
 
       before(() => {
-        mockProxy.willReturnForLocalTests(3);
         browser.search('', name.surname, name.givenName, child.dateOfBirth);
       });
 
@@ -97,7 +92,6 @@ describe('Search', () => {
       const dob = child.dateOfBirth.replace(/\//g, '');
 
       before(() => {
-        mockProxy.willReturnForLocalTests(3);
         browser.search('', name.surname, name.givenName, dob);
       });
 
