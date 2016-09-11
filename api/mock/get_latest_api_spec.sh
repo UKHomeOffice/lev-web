@@ -11,4 +11,7 @@ then
 else
     # TODO: remove the branch part once merged
     git clone -b "mock-from-FE-acceptance-tests" "${GIT_REPO}" "${TARGET_DIR}" || exit 1
+    cd "${TARGET_DIR}"
 fi
+
+./check-jar.sh

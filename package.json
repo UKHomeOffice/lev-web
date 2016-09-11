@@ -29,7 +29,7 @@
     "uglify": "browserify -g uglifyify ./assets/js/index.js > ./public/js/bundle.js",
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
-    "postinstall": "npm run create:public && npm run sass && npm run copy:images && npm run uglify"
+    "postinstall": "npm run install:mockapi; npm run create:public && npm run sass && npm run copy:images && npm run uglify"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
