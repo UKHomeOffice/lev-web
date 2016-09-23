@@ -16,7 +16,7 @@ var formSubmission = function formSubmission(extension) {
 
 describe('controllers/search', function() {
   var api = {
-    read: sinon.stub()
+    findBirths: sinon.stub()
   };
   var hof = require('../../../lib/hof-standalone');
   var searchController = proxyquire('../../../controllers/search', {
@@ -151,7 +151,7 @@ describe('controllers/search', function() {
           });
 
           req.query = query;
-          api.read.withArgs(query).returns(Promise.resolve([{
+          api.findBirths.withArgs(query).returns(Promise.resolve([{
             'system-number': sysnum
           }]));
 
@@ -176,7 +176,7 @@ describe('controllers/search', function() {
           }];
 
           req.query = query;
-          api.read.withArgs(query).returns(Promise.resolve(records));
+          api.findBirths.withArgs(query).returns(Promise.resolve(records));
 
           res.render = function(view, locals) {
             view.should.equal('pages/results');
@@ -209,7 +209,7 @@ describe('controllers/search', function() {
 
         describe('due to not being found', function() {
           beforeEach(function() {
-            api.read.withArgs(query).returns(Promise.reject({
+            api.findBirths.withArgs(query).returns(Promise.reject({
               name: 'NotFoundError'
             }));
           });
@@ -237,7 +237,7 @@ describe('controllers/search', function() {
             err = new Error({
               name: 'UnexpectedError'
             });
-            api.read.withArgs(query).returns(Promise.reject(err));
+            api.findBirths.withArgs(query).returns(Promise.reject(err));
           });
 
           it('passes on to the error handler', function(done) {

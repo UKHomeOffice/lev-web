@@ -18,7 +18,7 @@ module.exports = function renderDetails(req, res, next) {
     const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
     const canRedirectToResults = (req.query && req.query.multipleResults) !== undefined;
 
-    const promise = api.requestID(Number(systemNumber), username);
+    const promise = api.findBySystemNumber(Number(systemNumber), username);
 
     promise
       .then((result) => {

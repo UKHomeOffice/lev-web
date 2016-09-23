@@ -25,56 +25,56 @@ const requestData = (url, user) => new Promise((resolve, reject) => levRequest.g
     oAuthPassword,
     helpers.responseHandler(resolve, reject)));
 
-const query = (attrs, user) => {
-  if (attrs === undefined) {
-    throw new ReferenceError('query(): first argument was not defined');
+const findByNameDOB = (searchFields, user) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('query(): first argument, searchFields, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('query(): second argument was not defined');
-  } else if (!(attrs instanceof Object)) {
-    throw new TypeError('query(): first argument must be an object');
+    throw new ReferenceError('query(): second argument, user, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('query(): first argument, searchFields, must be an object');
   } else if (typeof user !== 'string') {
-    throw new TypeError('query(): second argument must be a string');
+    throw new TypeError('query(): second argument, user, must be a string');
   }
 
-  return requestData(helpers.buildQueryUri(endpoint, attrs), user)
+  return requestData(helpers.buildQueryUri(endpoint, searchFields), user)
     .then((data) => data.map(helpers.processRecord));
 };
 
-const requestID = (id, user) => {
-  if (id === undefined) {
-    throw new ReferenceError('requestID(): first argument was not defined');
+const findBySystemNumber = (systemNumber, user) => {
+  if (systemNumber === undefined) {
+    throw new ReferenceError('requestID(): first argument, systemNumber, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('requestID(): second argument was not defined');
-  } else if ((!Number.isInteger(id))) {
-    throw new TypeError('requestID(): first argument must be an integer');
+    throw new ReferenceError('requestID(): second argument, user, was not defined');
+  } else if ((!Number.isInteger(systemNumber))) {
+    throw new TypeError('requestID(): first argument, systemNumber, must be an integer');
   } else if (typeof user !== 'string') {
-    throw new TypeError('requestID(): second argument must be a string');
+    throw new TypeError('requestID(): second argument, user, must be a string');
   }
 
-  return requestData(endpoint + '/' + id, user)
+  return requestData(endpoint + '/' + systemNumber, user)
     .then(helpers.processRecord);
 };
 
-const read = (attrs, user) => {
-  if (attrs === undefined) {
-    throw new ReferenceError('query(): first argument was not defined');
+const findBirths = (searchFields, user) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('query(): first argument, searchFields, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('query(): second argument was not defined');
-  } else if (!(attrs instanceof Object)) {
-    throw new TypeError('query(): first argument must be an object');
+    throw new ReferenceError('query(): second argument, user, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('query(): first argument, searchFields, must be an object');
   } else if (typeof user !== 'string') {
-    throw new TypeError('query(): second argument must be a string');
+    throw new TypeError('query(): second argument, user, must be a string');
   }
 
-  const systemNumber = attrs['system-number'] && Number.parseInt(attrs['system-number'], 10);
+  const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
 
   return systemNumber
-    ? requestID(systemNumber, user).then((data) => [data])
-    : query(attrs, user);
+    ? findBySystemNumber(systemNumber, user).then((data) => [data])
+    : findByNameDOB(searchFields, user);
 };
 
 module.exports = {
-  query: query,
-  read: read,
-  requestID: requestID
+  findBirths: findBirths,
+  findByNameDOB: findByNameDOB,
+  findBySystemNumber: findBySystemNumber
 };

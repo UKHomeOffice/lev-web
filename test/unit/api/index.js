@@ -183,26 +183,26 @@ describe('api/index.js', () => {
     };
   });
 
-  describe('query()', () => {
-    it('is a function', () => (typeof api.query).should.equal('function'));
-    it('takes two arguments', () => api.query.should.have.lengthOf(2));
+  describe('findByNameDOB()', () => {
+    it('is a function', () => (typeof api.findByNameDOB).should.equal('function'));
+    it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.query()).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findByNameDOB()).to.throw(ReferenceError));
     });
 
     describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.query({})).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findByNameDOB({})).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an object', () => {
-        it('throws a TypeError', () => expect(() => api.query(0, '')).to.throw(TypeError));
+        it('throws a TypeError', () => expect(() => api.findByNameDOB(0, '')).to.throw(TypeError));
       });
 
       describe('and the first IS an object', () => {
         describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.query({}, 0)).to.throw(TypeError));
+          it('throws a TypeError', () => expect(() => api.findByNameDOB({}, 0)).to.throw(TypeError));
         });
 
         describe('and the second IS a string', () => {
@@ -216,7 +216,7 @@ describe('api/index.js', () => {
               dob: '01/01/2001'
             };
 
-            result = api.query(query, username);
+            result = api.findByNameDOB(query, username);
           });
 
           it('first requests an OAuth2 token', () => requestPost.should.have.been.calledWith(expectedOAuthRequest));
@@ -231,7 +231,7 @@ describe('api/index.js', () => {
           describe('when the api returns a valid list of records', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-              result = api.query({}, '');
+              result = api.findByNameDOB({}, '');
             });
 
             it('resolves to a processed record', () =>
@@ -241,7 +241,7 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.query({}, '');
+              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
@@ -251,7 +251,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.query({}, '');
+              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
@@ -261,7 +261,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.query({}, '');
+              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
@@ -271,7 +271,7 @@ describe('api/index.js', () => {
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.query({}, '');
+              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
@@ -282,33 +282,33 @@ describe('api/index.js', () => {
     });
   });
 
-  describe('read()', () => {
-    it('is a function', () => (typeof api.read).should.equal('function'));
-    it('takes two arguments', () => api.read.should.have.lengthOf(2));
+  describe('findBirths()', () => {
+    it('is a function', () => (typeof api.findBirths).should.equal('function'));
+    it('takes two arguments', () => api.findBirths.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.read()).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBirths()).to.throw(ReferenceError));
     });
 
     describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.read({})).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBirths({})).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an object', () => {
-        it('throws a TypeError', () => expect(() => api.read(0, '')).to.throw(TypeError));
+        it('throws a TypeError', () => expect(() => api.findBirths(0, '')).to.throw(TypeError));
       });
 
       describe('and the first IS an object', () => {
         describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.read({}, 0)).to.throw(TypeError));
+          it('throws a TypeError', () => expect(() => api.findBirths({}, 0)).to.throw(TypeError));
         });
 
         describe('and the second IS a string', () => {
           let result;
           let query;
           const username = 'mrs-caseworker';
-          const read = () => api.read(query, username);
+          const read = () => api.findBirths(query, username);
 
           describe('and the first DOES NOT contain a \'system-number\' property', () => {
             before(() => {
@@ -456,26 +456,26 @@ describe('api/index.js', () => {
     });
   });
 
-  describe('requestID()', () => {
-    it('is a function', () => (typeof api.requestID).should.equal('function'));
-    it('takes two arguments', () => api.requestID.should.have.lengthOf(2));
+  describe('findBySystemNumber()', () => {
+    it('is a function', () => (typeof api.findBySystemNumber).should.equal('function'));
+    it('takes two arguments', () => api.findBySystemNumber.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.requestID()).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBySystemNumber()).to.throw(ReferenceError));
     });
 
     describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.requestID({})).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBySystemNumber({})).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an integer', () => {
-        it('throws a TypeError', () => expect(() => api.requestID({}, '')).to.throw(TypeError));
+        it('throws a TypeError', () => expect(() => api.findBySystemNumber({}, '')).to.throw(TypeError));
       });
 
       describe('and the first IS an integer', () => {
         describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.requestID(0, 0)).to.throw(TypeError));
+          it('throws a TypeError', () => expect(() => api.findBySystemNumber(0, 0)).to.throw(TypeError));
         });
 
         describe('and the second IS a string', () => {
@@ -485,7 +485,7 @@ describe('api/index.js', () => {
             const username = 'mrs-caseworker';
             const id = 400000001;
 
-            result = api.requestID(id, username);
+            result = api.findBySystemNumber(id, username);
           });
 
           it('makes a request using the correct query string and adds auth headers', () =>
@@ -498,7 +498,7 @@ describe('api/index.js', () => {
           describe('when the api returns a valid record', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-              result = api.requestID(0, '');
+              result = api.findBySystemNumber(0, '');
             });
 
             it('resolves to a processed record', () =>
@@ -508,7 +508,7 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.requestID(0, '');
+              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with an error', () =>
@@ -518,7 +518,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.requestID(0, '');
+              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
@@ -528,7 +528,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.requestID(0, '');
+              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
@@ -538,7 +538,7 @@ describe('api/index.js', () => {
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.requestID(0, '');
+              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with an error', () =>

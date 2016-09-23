@@ -72,7 +72,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
     }
   };
 
-  api.read(req.form.values, username)
+  api.findBirths(req.form.values, username)
     .then(resolved, rejected);
   this.emit('complete', req, res);
 };
