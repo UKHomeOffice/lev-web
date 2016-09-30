@@ -1,0 +1,8 @@
+version: v1.5.0
+ignore: {}
+patch:
+  'npm:ms:20151024':
+    - hof > hmpo-govuk-template > serve-static > send > ms:
+        patched: '2016-09-30T13:42:46.947Z'
+    - hof > hmpo-govuk-template > serve-static > send > debug > ms:
+        patched: '2016-09-30T13:42:46.947Z'
