@@ -37,7 +37,7 @@
     "express": "^4.13.3",
     "express-partial-templates": "^0.1.0",
     "express-session": "^1.12.1",
-    "hof": "^8.0.0",
+    "hof": "^10.0.0",
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
     "lodash": "^4.13.1",
