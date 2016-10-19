@@ -13,3 +13,6 @@ then
 else
     git clone "${GIT_REPO}" || exit 1
 fi
+
+# straight-up force scripts to have exec permissions to fix GIT stupidity!
+find lev-api-docs/ -type f -name '*.sh' -exec chmod +x {} \;
