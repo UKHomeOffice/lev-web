@@ -59,7 +59,7 @@
     "eslint-plugin-mocha": "^4.5.0",
     "eslint-plugin-one-variable-per-var": "0.0.3",
     "express-hijackresponse": "^0.2.1",
-    "http-proxy": "~1.14.0",
+    "http-proxy": "~1.15.2",
     "istanbul": "^0.4.3",
     "jscs": "^3.0.2",
     "mocha": "^3.0.2",
