@@ -65,6 +65,7 @@
     "mocha": "^3.0.2",
     "proxyquire": "^1.7.3",
     "reqres": "^1.2.2",
+    "rewire": "^2.5.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   },
