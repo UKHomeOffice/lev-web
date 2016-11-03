@@ -21,19 +21,22 @@ describe('lib/requestWithOAuth2', function() {
       'session_state': 'zzzz'
     };
 
-    var expectedBase64Auth = new Buffer('clientId:clientSecret').toString('base64');
-    var expectedAuthHeader = 'Basic ' + expectedBase64Auth;
-    var expectedOAuthRequest = {
+    const expectedBase64Auth = new Buffer('clientId:clientSecret').toString('base64');
+    const expectedAuthHeader = 'Basic ' + expectedBase64Auth;
+    const expectedUserOAuthRequest = {
       url: 'http://oauthserver.com',
       form: {
-        grant_type: 'password', // eslint-disable-line camelcase
         username: 'username',
         password: 'password'
-      },
+      }
+    };
+    const expectedClientOAuthRequest = {
+      url: 'http://oauthserver.com',
       headers: {
         Authorization: expectedAuthHeader
       }
     };
+    const expectedFullOAuthRequest = Object.assign({}, expectedClientOAuthRequest, expectedUserOAuthRequest);
 
     var expectedTesthostRequest = {
       url: 'http://testhost.com',
@@ -63,18 +66,46 @@ describe('lib/requestWithOAuth2', function() {
         });
     });
 
-    it('GETs an authorization token from the oAuth2 server and uses returned auth token in GET request to URL',
-      function(done) {
-        requestPost.onFirstCall().yields(null, { statusCode: 200 }, JSON.stringify(successfulAuthResponse));
-        requestGet.onFirstCall().yields(null, { statusCode: 200 }, {});
+    describe('GETs an authorization token from the oAuth2 server', () => {
+      it('and uses returned auth token in GET request to URL',
+        function(done) {
+          requestPost.onFirstCall().yields(null, { statusCode: 200 }, JSON.stringify(successfulAuthResponse));
+          requestGet.onFirstCall().yields(null, { statusCode: 200 }, {});
 
-        requestWithOAuth2.get('http://testhost.com', 'http://oauthserver.com', 'clientId', 'clientSecret', 'username',
-          'password', function() {
-            request.post.should.have.been.calledWith(expectedOAuthRequest);
+          requestWithOAuth2.get('http://testhost.com', 'http://oauthserver.com', 'clientId', 'clientSecret',
+            'username', 'password', function() {
+              request.post.should.have.been.calledWith(expectedFullOAuthRequest);
+              request.get.should.have.been.calledWith(expectedTesthostRequest);
+              done();
+            });
+        });
+
+      it('when only user and password are known, and uses returned auth token in GET request to URL',
+        function(done) {
+          requestPost.onFirstCall().yields(null, { statusCode: 200 }, JSON.stringify(successfulAuthResponse));
+          requestGet.onFirstCall().yields(null, { statusCode: 200 }, {});
+
+          requestWithOAuth2.get('http://testhost.com', 'http://oauthserver.com', undefined, undefined,
+            'username', 'password', function() {
+              request.post.should.have.been.calledWith(expectedUserOAuthRequest);
+              request.get.should.have.been.calledWith(expectedTesthostRequest);
+              done();
+            });
+        });
+
+      it('when only client and secret are known, and uses returned auth token in GET request to URL',
+        function(done) {
+          requestPost.onFirstCall().yields(null, { statusCode: 200 }, JSON.stringify(successfulAuthResponse));
+          requestGet.onFirstCall().yields(null, { statusCode: 200 }, {});
+
+          requestWithOAuth2.get('http://testhost.com', 'http://oauthserver.com', 'clientId', 'clientSecret',
+            undefined, undefined, function() {
+            request.post.should.have.been.calledWith(expectedClientOAuthRequest);
             request.get.should.have.been.calledWith(expectedTesthostRequest);
             done();
           });
-      });
+        });
+    });
 
     it('Uses an existing authorization token if present', function(done) {
       // First call to oAuth server
@@ -89,7 +120,7 @@ describe('lib/requestWithOAuth2', function() {
         'username',
         'password',
         function() {
-          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.post.should.have.been.calledWith(expectedFullOAuthRequest);
           request.get.should.have.been.calledWith(expectedTesthostRequest);
           requestWithOAuth2.get(
             'http://testhost.com',
@@ -118,7 +149,7 @@ describe('lib/requestWithOAuth2', function() {
         'username',
         'password',
         function(e, res) {
-          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.post.should.have.been.calledWith(expectedFullOAuthRequest);
           sinon.assert.notCalled(request.get);
           assert(res.statusCode === 400, 'Status code not 400 as expected');
           done();
@@ -159,9 +190,9 @@ describe('lib/requestWithOAuth2', function() {
         'username',
         'password',
         function() {
-          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.post.should.have.been.calledWith(expectedFullOAuthRequest);
           request.get.should.have.been.calledWith(expectedTesthostRequest);
-          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.post.should.have.been.calledWith(expectedFullOAuthRequest);
           request.get.should.have.been.calledWith(expectedTesthostRequestWithNewToken);
           done();
         });
@@ -179,7 +210,7 @@ describe('lib/requestWithOAuth2', function() {
         'username',
         'password',
         function(e, res) {
-          request.post.should.have.been.calledWith(expectedOAuthRequest);
+          request.post.should.have.been.calledWith(expectedFullOAuthRequest);
           // Check it doesn't try to call the get on the usual URL
           sinon.assert.notCalled(request.get);
           // request.get.should.have.been.notCalled();
@@ -218,7 +249,7 @@ describe('lib/requestWithOAuth2', function() {
           'my-custom-header': 'i.love.headers'
         }
       }, 'http://oauthserver.com', 'clientId', 'clientSecret', 'username', 'password', function() {
-        request.post.should.have.been.calledWith(expectedOAuthRequest);
+        request.post.should.have.been.calledWith(expectedFullOAuthRequest);
         request.get.should.have.been.calledWith({
           url: 'http://testhost.com',
           headers: {
