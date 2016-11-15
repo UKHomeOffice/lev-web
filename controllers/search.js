@@ -64,7 +64,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
         querystring: querystring
       });
     } else {
-      const error = (err instanceof(Error))
+      const error = (err instanceof Error)
         ? err
         : new Error(err);
 

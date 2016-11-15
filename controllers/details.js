@@ -10,7 +10,7 @@ const handleError = (err, next) => {
     return next();
   }
 
-  return next(err instanceof(Error) ? err : new Error(err));
+  return next(err instanceof Error ? err : new Error(err));
 };
 
 module.exports = function renderDetails(req, res, next) {
