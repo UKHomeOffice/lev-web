@@ -10,7 +10,7 @@ then
     cd "${TARGET_DIR}"
     git pull
 else
-    git clone "${GIT_REPO}" || exit 1
+    git clone "${GIT_REPO}" "${TARGET_DIR}" || exit 1
 fi
 
 # straight-up force scripts to have exec permissions to fix GIT stupidity!
