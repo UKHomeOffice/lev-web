@@ -9,7 +9,6 @@
     "dev": "npm run mock-kc-proxy & NODE_ENV=development nodemon .",
     "mock-kc-proxy": "node test/acceptance/mock-kc-proxy/front.js",
     "stop:mock-kc-proxy": "killall lev-keycloak-proxy",
-    "pretest": "npm run install:mockapi",
     "install:mockapi": "./api/mock/get_latest_api_spec.sh",
     "test": "npm run lint && npm run cover && npm run check-coverage && npm run test:acceptance",
     "test:unit": "NODE_ENV=test mocha ./test/unit",
