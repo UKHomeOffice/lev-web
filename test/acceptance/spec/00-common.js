@@ -1,18 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-
-// Set up mocks as required
-// //////////////////////////////////////////////////////////////////////
-const mockProxy = require('../mock-proxy');
-const mockKcProxy = require('../mock-kc-proxy');
-const testConfig = require('../config');
-
-if (testConfig.env === 'local') {
-  mockProxy.listen();
-  mockKcProxy('localhost', 8002, 'localhost', 8001);
-}
-
 // Add mixins to browser
 // //////////////////////////////////////////////////////////////////////
 const mixins = [
@@ -24,7 +11,5 @@ const mixins = [
 ];
 
 before(() => {
-  _.each(mixins, (mixin) => {
-    mixin(browser);
-  });
+  mixins.forEach(mixin => mixin(browser));
 });

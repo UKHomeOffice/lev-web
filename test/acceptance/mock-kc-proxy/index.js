@@ -4,7 +4,6 @@ const http = require('http');
 const httpProxy = require('http-proxy');
 
 const proxy = (fromHost, fromPort, toHost, toPort, user) => {
-  user = user || 'tester';
   // Create a proxy server with custom application logic
   const myProxy = httpProxy.createProxyServer({});
 
@@ -16,7 +15,7 @@ const proxy = (fromHost, fromPort, toHost, toPort, user) => {
   // when you need to modify the proxy request before the proxy
   // connection is made to the target.
   myProxy.on('proxyReq', (proxyReq) => {
-    proxyReq.setHeader('X-Auth-Username', user);
+    proxyReq.setHeader('X-Auth-Username', user || 'tester');
   });
 
   const server = http.createServer((req, res) => {

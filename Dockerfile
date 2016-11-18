@@ -1,32 +1,25 @@
-FROM quay.io/ukhomeofficedigital/nodejs-base:v4.4.7
+FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
 
 RUN yum clean all && \
     yum update -y && \
-    yum install -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
+    yum install -y git && \
     yum clean all && \
-    rpm --rebuilddb && \
-    npm install -g npm@3 && \
-    mkdir -p /app/mock
+    rpm --rebuilddb
 
 WORKDIR /app
 COPY ./package.json /app/
 RUN npm install --quiet
 
-COPY ./api/mock/get_latest_api_spec.sh /app/api/mock/
-RUN npm run install:mockapi
-
 COPY . /app
 
-# Run npm install again to build /public dir
-RUN npm run install:mockapi && \
-    npm run postinstall && \
-    npm test && \
+# Run npm postinstall again to build /public dir
+RUN npm run postinstall && \
+    npm run lint && \
+    npm run test:unit && \
     npm prune --production && \
-    rm -rf ./api/mock && \
-    yum erase -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
+    yum remove -y git && \
     yum clean all && \
     rpm --rebuilddb && \
-
     chown -R nodejs:nodejs .
 
 ENTRYPOINT ["/app/entrypoint.sh"]
