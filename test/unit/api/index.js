@@ -173,6 +173,7 @@ describe('api/index.js', () => {
     expectedOAuthRequest = {
       url: 'http://oauthserver.com',
       form: {
+        grant_type: 'password', // eslint-disable-line camelcase
         username: 'username',
         password: 'password'
       },
