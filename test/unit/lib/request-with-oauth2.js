@@ -26,6 +26,7 @@ describe('lib/requestWithOAuth2', function() {
     const expectedUserOAuthRequest = {
       url: 'http://oauthserver.com',
       form: {
+        grant_type: 'password', // eslint-disable-line camelcase
         username: 'username',
         password: 'password'
       }
