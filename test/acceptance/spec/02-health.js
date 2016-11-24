@@ -15,7 +15,7 @@ describe('Health check', () => {
 
   describe('the "/healthz" endpoint', () => {
     before(done => {
-      makeRequest('healthz', done);
+      makeRequest('/healthz', done);
     });
 
     it('should return a "200 - OK" status', () => {
@@ -25,7 +25,7 @@ describe('Health check', () => {
 
   describe('the "/readiness" endpoint', () => {
     before(done => {
-      makeRequest('readiness', done);
+      makeRequest('/readiness', done);
     });
 
     it('should return a "200 - OK" status', () => {
