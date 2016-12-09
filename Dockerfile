@@ -8,7 +8,7 @@ RUN yum clean all && \
 
 WORKDIR /app
 COPY ./package.json /app/
-RUN npm install --quiet
+RUN npm install --quiet --no-optional
 
 COPY . /app
 

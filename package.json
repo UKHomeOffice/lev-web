@@ -7,7 +7,7 @@
     "start": "node .",
     "stop": "pkill levweb",
     "dev": "npm run mock-kc-proxy & NODE_ENV=development nodemon .",
-    "mock-kc-proxy": "node test/acceptance/mock-kc-proxy/front.js",
+    "mock-kc-proxy": "node test/acceptance/mock-kc-proxy/front.js &",
     "stop:mock-kc-proxy": "killall lev-keycloak-proxy",
     "test": "npm run lint && npm run cover && npm run check-coverage",
     "test:unit": "NODE_ENV=test mocha ./test/unit",
@@ -45,7 +45,6 @@
     "moment": "^2.10.6",
     "moment-round": "^1.0.1",
     "node-sass": "^3.7.0",
-    "nodemon": "^1.8.1",
     "request": "^2.67.0",
     "uglifyify": "^3.0.1",
     "winston": "^1.0.1",
@@ -54,21 +53,23 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.3.0",
-    "chimp": "^0.35.0",
     "eslint": "^3.4.0",
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
     "eslint-plugin-one-variable-per-var": "0.0.3",
-    "express-hijackresponse": "^0.2.1",
-    "http-proxy": "~1.14.0",
     "istanbul": "^0.4.3",
     "jscs": "^3.0.2",
     "mocha": "^3.0.2",
+    "nodemon": "^1.8.1",
     "proxyquire": "^1.7.3",
     "reqres": "^1.2.2",
     "rewire": "^2.5.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
+  },
+  "optionalDependencies": {
+    "chimp": "^0.42.0",
+    "http-proxy": "^1.15.2"
   },
   "snyk": true
 }
