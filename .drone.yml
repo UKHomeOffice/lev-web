@@ -18,6 +18,18 @@ pipeline:
     when:
       event: [push, pull_request]
 
+  test_acceptance:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker pull quay.io/ukhomeofficedigital/lev-api-mock
+      - docker run -d --net host quay.io/ukhomeofficedigital/lev-api-mock
+      - docker run -d --net host lev-web run start:acceptance
+      - docker run --net host lev-web-acc
+    when:
+      event: [push, pull_request]
+
 
 services:
   dind:
