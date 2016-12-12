@@ -1,6 +1,6 @@
 FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
 
-RUN yum install -y git bzip2 psmisc
+RUN yum install -y git bzip2 psmisc java-1.8.0-openjdk
 
 WORKDIR /app
 COPY ./package.json /app/
