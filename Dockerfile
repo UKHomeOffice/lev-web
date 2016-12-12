@@ -8,14 +8,11 @@ RUN yum clean all && \
 
 WORKDIR /app
 COPY ./package.json /app/
-RUN npm install --quiet
+RUN npm install --quiet --no-optional
 
 COPY . /app
 
-# Run npm postinstall again to build /public dir
-RUN npm run postinstall && \
-    npm run lint && \
-    npm run test:unit && \
+RUN npm run test && \
     npm prune --production && \
     yum remove -y git && \
     yum clean all && \

@@ -1,0 +1,52 @@
+pipeline:
+
+  build_lev_web:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t lev-web .
+    when:
+      event: [push, pull_request]
+
+  build_acceptance:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t lev-web-acc -f Dockerfile-acceptance .
+    when:
+      event: [push, pull_request]
+
+  test_acceptance:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker pull quay.io/ukhomeofficedigital/lev-api-mock
+      - docker run -d --net host quay.io/ukhomeofficedigital/lev-api-mock
+      - docker run -d --net host lev-web run start:acceptance
+      - docker run --net host lev-web-acc
+    when:
+      event: [push, pull_request]
+
+  image_to_artifactory:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="regt-build-bot" -p="${DOCKER_ARTIFACTORY_PASSWORD}" docker.digital.homeoffice.gov.uk
+      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${DRONE_COMMIT_SHA}
+      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
+
+services:
+  dind:
+    image: docker:1.11-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"

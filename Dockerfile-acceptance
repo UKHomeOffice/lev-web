@@ -1,0 +1,19 @@
+FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
+
+RUN yum install -y git bzip2 psmisc java-1.8.0-openjdk
+
+WORKDIR /app
+COPY ./package.json /app/
+RUN npm install
+
+COPY . /app
+
+RUN yum remove -y git bzip2 && \
+    yum clean all && \
+    rpm --rebuilddb && \
+    chown -R nodejs:nodejs .
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+USER root
+CMD [ "run", "drone:acceptance" ]
