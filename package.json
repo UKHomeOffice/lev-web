@@ -13,7 +13,7 @@
     "test": "npm run lint && npm run cover && npm run check-coverage && npm run test:acceptance",
     "test:unit": "NODE_ENV=test mocha ./test/unit",
     "test:acceptance": "NODE_ENV=acceptance npm start & npm run start:mocks && npm run chimp; RES=$?; npm run stop:all; exit $RES",
-    "start:mockapi": "docker rm lev-api-mock; docker run -d --name lev-api-mock -p 8080:8080 quay.io/ukhomeofficedigital/lev-api-mock:latest",
+    "start:mockapi": "docker rm lev-api-mock; docker run -d --name lev-api-mock -p 8080:8080 quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa",
     "start:mocks": "npm run mock-kc-proxy & npm run start:mockapi",
     "stop:mockapi": "docker stop lev-api-mock && docker rm lev-api-mock",
     "stop:all": "npm run stop:mockapi & npm stop & npm run stop:mock-kc-proxy",
