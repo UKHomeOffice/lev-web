@@ -12,10 +12,10 @@ RUN npm install --quiet --no-optional
 
 COPY . /app
 
-RUN npm run test && \
-    npm prune --production && \
+RUN npm prune --production && \
     yum remove -y git && \
     yum clean all && \
+    yum update -y && \
     rpm --rebuilddb && \
     chown -R nodejs:nodejs .
 

@@ -1,32 +1,23 @@
 pipeline:
 
-  build_lev_web:
+  build:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker build -t lev-web .
+      - docker build -t lev-web-testing -f Dockerfile-testing .
     when:
       event: [push, pull_request]
 
-  build_acceptance:
+  test:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker build -t lev-web-acc -f Dockerfile-acceptance .
-    when:
-      event: [push, pull_request]
-
-  test_acceptance:
-    image: docker:1.11
-    environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
-    commands:
-      - docker pull quay.io/ukhomeofficedigital/lev-api-mock
-      - docker run -d --net host quay.io/ukhomeofficedigital/lev-api-mock
-      - docker run -d --net host lev-web run start:acceptance
-      - docker run --net host lev-web-acc
+      - docker run -d --net host quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
+      - docker run -d --net host lev-web
+      - docker run --net host lev-web-testing
     when:
       event: [push, pull_request]
 
@@ -35,9 +26,13 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
       - docker login -u="regt-build-bot" -p="${DOCKER_ARTIFACTORY_PASSWORD}" docker.digital.homeoffice.gov.uk
-      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${DRONE_COMMIT_SHA}
-      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${DRONE_COMMIT_SHA}
+      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${TAG}
+      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:latest
+      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${TAG}
+      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:latest
     when:
       branch: master
       event: push

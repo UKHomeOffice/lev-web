@@ -16,4 +16,4 @@ RUN yum remove -y git bzip2 && \
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 USER root
-CMD [ "run", "drone:acceptance" ]
+CMD [ "run", "test:ci" ]
