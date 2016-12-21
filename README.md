@@ -1,6 +1,7 @@
 # LEV Front End
 
 [![Build Status](https://travis-ci.org/UKHomeOffice/lev-web.svg?branch=master)](https://travis-ci.org/UKHomeOffice/lev-web)
+[![Build Status](https://drone.digital.homeoffice.gov.uk/api/badges/UKHomeOffice/lev-web/status.svg)](https://drone.digital.homeoffice.gov.uk/UKHomeOffice/lev-web)
 
 ## Getting Started
 
