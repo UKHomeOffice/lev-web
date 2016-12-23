@@ -15,7 +15,6 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker run -d --net host quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
       - docker run -d --net host lev-web
       - docker run --net host lev-web-testing
     when:
@@ -37,8 +36,9 @@ pipeline:
       branch: master
       event: push
 
-
 services:
+  mock:
+    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
   dind:
     image: docker:1.11-dind
     privileged: true
