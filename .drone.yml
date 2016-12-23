@@ -34,11 +34,16 @@ pipeline:
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - docker login -u="regt-build-bot" -p="${DOCKER_ARTIFACTORY_PASSWORD}" docker.digital.homeoffice.gov.uk
-      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${TAG}
-      - docker tag lev-web docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:latest
-      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:${TAG}
-      - docker push docker.digital.homeoffice.gov.uk/ukhomeofficedigital/lev-web:latest
+      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
+      - BASE="/"
+      - NAME="lev-web"
+      - FULL_NAME="${REPO}${BASE}${NAME}"
+      - DOCKER_USERNAME="lev-web-robot"
+      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${REPO}"
+      - docker tag lev-web "${FULL_NAME}:${TAG}"
+      - docker tag lev-web "${FULL_NAME}:latest"
+      - docker push "${FULL_NAME}:${TAG}"
+      - docker push "${FULL_NAME}:latest"
     when:
       branch: master
       event: push
