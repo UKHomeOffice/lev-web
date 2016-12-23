@@ -16,6 +16,7 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker run -d --net host lev-web
+      - sleep 5
       - docker run --net host lev-web-testing
     when:
       event: [push, pull_request]
