@@ -1,0 +1,59 @@
+pipeline:
+
+  build_pr:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t lev-web .
+      - docker build -t lev-web-testing -f Dockerfile-testing .
+      - docker run -d --net host lev-web
+      - sleep 5
+      - docker run --net host lev-web-testing
+    when:
+      event: pull_request
+
+  build_master:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t lev-web .
+      - docker build -t lev-web-testing -f Dockerfile-testing .
+      - docker run -d --net host lev-web
+      - sleep 5
+      - docker run --net host lev-web-testing
+    when:
+      branch: master
+      event: push
+
+  push_image:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
+      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
+      - BASE="/"
+      - NAME="lev-web"
+      - FULL_NAME="${REPO}${BASE}${NAME}"
+      - DOCKER_USERNAME="lev-web-robot"
+      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${REPO}"
+      - docker tag lev-web "${FULL_NAME}:${TAG}"
+      - docker tag lev-web "${FULL_NAME}:latest"
+      - docker push "${FULL_NAME}:${TAG}"
+      - docker push "${FULL_NAME}:latest"
+    when:
+      branch: master
+      event: push
+
+services:
+  mock:
+    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
+  dind:
+    image: docker:1.11-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"

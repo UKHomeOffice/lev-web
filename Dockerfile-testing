@@ -1,0 +1,10 @@
+FROM lev-web
+
+USER root
+ENV NODE_ENV ci
+RUN yum install -y -q bzip2 fontconfig git && \
+    ( npm install > ./.npm-install.log 2>&1 && rm .npm-install.log || ( EC=$?; cat ./.npm-install.log; exit $EC ) ) && \
+    chown -R nodejs:nodejs .
+
+USER nodejs
+CMD [ "run", "test:ci" ]

@@ -1,19 +1,21 @@
 # LEV Front End
 
 [![Build Status](https://travis-ci.org/UKHomeOffice/lev-web.svg?branch=master)](https://travis-ci.org/UKHomeOffice/lev-web)
+[![Build Status](https://drone.digital.homeoffice.gov.uk/api/badges/UKHomeOffice/lev-web/status.svg)](https://drone.digital.homeoffice.gov.uk/UKHomeOffice/lev-web)
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisities
+### Prerequisites
 
-What things you need to install the software and how to install them
-- NodeJS
+The following tools are needed to install the software
+- NodeJS / NPM
 
 ### Installing
-
-`npm install`
+```bash
+npm install
+```
 
 ## Running the tests
 
@@ -43,5 +45,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## License
 
 This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.md) file for details
-
-
