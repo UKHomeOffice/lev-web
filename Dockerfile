@@ -13,8 +13,7 @@ RUN npm install --only production > .npm-install.log 2>&1 && rm .npm-install.log
 
 COPY . /app
 
-RUN ( npm install --only production > .npm-install.log 2>&1 && rm .npm-install.log || ( EC=$?; cat .npm-install.log; exit $EC ) ) && \
-    ( npm prune --production > .npm-prune.log 2>&1 && rm .npm-prune.log || ( EC=$?; cat .npm-prune.log; exit $EC ) ) && \
+RUN npm run postinstall && \
     yum clean -q all && \
     yum remove -y -q git && \
     yum update -y -q && \
