@@ -2,7 +2,7 @@ FROM quay.io/ukhomeofficedigital/nodejs-base:v4.4.2
 
 RUN yum clean all && \
     yum update -y && \
-    yum install -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel && \
+    yum install -y git make gcc-c++ psmisc java-1.8.0-openjdk-devel bzip2 fontconfig && \
     yum clean all && \
     rpm --rebuilddb && \
     npm install -g npm@3
