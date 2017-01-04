@@ -60,10 +60,12 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.3.0",
+    "chimp": "^0.42.0",
     "eslint": "^3.4.0",
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
     "eslint-plugin-one-variable-per-var": "0.0.3",
+    "http-proxy": "^1.15.2",
     "istanbul": "^0.4.3",
     "jscs": "^3.0.2",
     "mocha": "^3.0.2",
@@ -73,10 +75,6 @@
     "rewire": "^2.5.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
-  },
-  "optionalDependencies": {
-    "chimp": "^0.42.0",
-    "http-proxy": "^1.15.2"
   },
   "snyk": true
 }
