@@ -1,19 +1,6 @@
 pipeline:
 
-  build_pr:
-    image: docker:1.11
-    environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
-    commands:
-      - docker build -t lev-web .
-      - docker build -t lev-web-testing -f Dockerfile-testing .
-      - docker run -d --net host lev-web
-      - sleep 5
-      - docker run --net host lev-web-testing
-    when:
-      event: pull_request
-
-  build_master:
+  build:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -25,7 +12,7 @@ pipeline:
       - docker run --net host lev-web-testing
     when:
       branch: master
-      event: push
+      event: [pull_request, push]
 
   push_image:
     image: docker:1.11
