@@ -35,6 +35,22 @@ pipeline:
       branch: master
       event: push
 
+  deploy_image:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
+      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
+      - BASE="/"
+      - NAME="lev-web"
+      - FULL_NAME="${REPO}${BASE}${NAME}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
+      - ${kubectl} set image deployment/${KUBE_DEPLOYMENT} "${KUBE_CONTAINER}=${FULL_NAME}:${TAG}"
+      - ${kubectl} rollout status deployment/${KUBE_DEPLOYMENT}
+    when:
+      branch: master
+      event: push
+
 services:
   mock:
     image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
