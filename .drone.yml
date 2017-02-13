@@ -4,12 +4,13 @@ pipeline:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_IMAGE=lev-web
     commands:
-      - docker build -t lev-web .
-      - docker build -t lev-web-testing -f Dockerfile-testing .
-      - docker run -d --net host lev-web
+      - docker build -t "${DOCKER_IMAGE}" .
+      - docker build -t "${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+      - docker run -d --net host "${DOCKER_IMAGE}"
       - sleep 5
-      - docker run --net host lev-web-testing
+      - docker run --net host "${DOCKER_IMAGE}-testing"
     when:
       branch: master
       event: [pull_request, push]
@@ -18,23 +19,23 @@ pipeline:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
+      - DOCKER_BASEDIR=/
+      - DOCKER_USERNAME=lev-web-robot
+      - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
-      - BASE="/"
-      - NAME="lev-web"
-      - FULL_NAME="${REPO}${BASE}${NAME}"
-      - DOCKER_USERNAME="lev-web-robot"
-      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${REPO}"
-      - docker tag lev-web "${FULL_NAME}:${TAG}"
-      - docker tag lev-web "${FULL_NAME}:latest"
-      - docker push "${FULL_NAME}:${TAG}"
-      - docker push "${FULL_NAME}:latest"
-      - E2E_NAME="${FULL_NAME}-e2e"
-      - docker build -t lev-web-e2e -f Dockerfile-e2e .
-      - docker tag lev-web-e2e "${E2E_NAME}:${TAG}"
-      - docker tag lev-web-e2e "${E2E_NAME}:latest"
+      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
+      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
+      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:${TAG}"
+      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:latest"
+      - docker push "${IMAGE}:${TAG}"
+      - docker push "${IMAGE}:latest"
+      - E2E_IMAGE="${IMAGE}-e2e"
+      - docker build -t "${E2E_IMAGE}" -f Dockerfile-e2e .
+      - docker tag "${E2E_IMAGE}" "${E2E_NAME}:${TAG}"
+      - docker tag "${E2E_IMAGE}" "${E2E_NAME}:latest"
       - docker push "${E2E_NAME}:${TAG}"
       - docker push "${E2E_NAME}:latest"
     when:
@@ -43,15 +44,16 @@ pipeline:
 
   deploy_image:
     image: quay.io/ukhomeofficedigital/kd:latest
+    environment:
+      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
+      - DOCKER_BASEDIR=/
+      - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
-      - BASE="/"
-      - NAME="lev-web"
-      - FULL_NAME="${REPO}${BASE}${NAME}"
+      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
       - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
-      - ${kubectl} set image deployment/${KUBE_DEPLOYMENT} "${KUBE_CONTAINER}=${FULL_NAME}:${TAG}"
+      - ${kubectl} set image deployment/${KUBE_DEPLOYMENT} "${KUBE_CONTAINER}=${IMAGE}:${TAG}"
       - ${kubectl} rollout status deployment/${KUBE_DEPLOYMENT}
     when:
       branch: master
@@ -61,15 +63,16 @@ pipeline:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
+      - DOCKER_BASEDIR=/
+      - DOCKER_USERNAME=lev-web-robot
+      - DOCKER_IMAGE=lev-web-e2e
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - REPO="artifactory-internal.digital.homeoffice.gov.uk"
-      - BASE="/"
-      - NAME="lev-web"
-      - FULL_NAME="${REPO}${BASE}${NAME}-e2e"
-      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${REPO}"
-      - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${E2E_NAME}:${TAG}"
+      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
+      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
+      - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${IMAGE}:${TAG}"
     when:
       branch: master
       event: push
