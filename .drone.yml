@@ -76,7 +76,7 @@ pipeline:
 
 services:
   mock:
-    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-309-f083cc348f6d60b7c5911739d7bcf299a93eb6fa
+    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.0-327-246830c0d3e05b5f7f405803e044974848268bdc
   dind:
     image: docker:1.11-dind
     privileged: true
