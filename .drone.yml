@@ -34,10 +34,10 @@ pipeline:
       - docker push "${IMAGE}:latest"
       - E2E_IMAGE="${IMAGE}-e2e"
       - docker build -t "${E2E_IMAGE}" -f Dockerfile-e2e .
-      - docker tag "${E2E_IMAGE}" "${E2E_NAME}:${TAG}"
-      - docker tag "${E2E_IMAGE}" "${E2E_NAME}:latest"
-      - docker push "${E2E_NAME}:${TAG}"
-      - docker push "${E2E_NAME}:latest"
+      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:${TAG}"
+      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:latest"
+      - docker push "${E2E_IMAGE}:${TAG}"
+      - docker push "${E2E_IMAGE}:latest"
     when:
       branch: master
       event: push
