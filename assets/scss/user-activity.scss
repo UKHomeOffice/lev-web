@@ -1,0 +1,20 @@
+h2 {
+  font-size: 19px;
+}
+
+table.audit tr {
+  th:first-child {
+    white-space: nowrap;
+  }
+  td {
+    text-align: right;
+  }
+  .weekend {
+    display: none;
+    background-color: lightblue;
+  }
+}
+
+input#weekends:checked + table.audit tr .weekend {
+  display: table-cell;
+}
