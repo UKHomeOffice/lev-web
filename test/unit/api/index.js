@@ -547,7 +547,7 @@ describe('api/index.js', () => {
     });
   });
 
-  describe('userActivityReport', () => {
+  describe('userActivityReport()', () => {
     it('is a function', () => (typeof api.userActivityReport).should.equal('function'));
     it('should throw a ReferenceError when no parameters are provided', () => {
       expect(api.userActivityReport).to.throw(ReferenceError);
