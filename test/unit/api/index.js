@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const moment = require('moment');
 const proxyquire = require('proxyquire');
 const config = require('../../../config');
 
@@ -398,8 +399,7 @@ describe('api/index.js', () => {
                 headers: expectedHeaders,
                 url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
               }));
-            it('returns a promise', () =>
-              result.should.be.instanceOf(Promise));
+            it('returns a promise', () => result.should.be.instanceOf(Promise));
 
             describe('when the api returns a valid record', () => {
               before(() => {
@@ -417,8 +417,7 @@ describe('api/index.js', () => {
                 result = read();
               });
 
-              it('rejects with an error', () =>
-                result.should.be.rejectedWith(Error));
+              it('rejects with an error', () => result.should.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
@@ -447,8 +446,7 @@ describe('api/index.js', () => {
                 result = read();
               });
 
-              it('rejects with an error', () =>
-                result.should.be.rejectedWith(Error, 'Something else happened'));
+              it('rejects with an error', () => result.should.be.rejectedWith(Error, 'Something else happened'));
             });
           });
         });
@@ -545,6 +543,52 @@ describe('api/index.js', () => {
               result.should.be.rejectedWith(Error, 'Something else happened'));
           });
         });
+      });
+    });
+  });
+
+  describe('userActivityReport', () => {
+    it('is a function', () => (typeof api.userActivityReport).should.equal('function'));
+    it('should throw a ReferenceError when no parameters are provided', () => {
+      expect(api.userActivityReport).to.throw(ReferenceError);
+    });
+
+    describe('when called without the required `from` or `to` dates', () => {
+      it('should throw a ReferenceError if either parameter is omitted', () => {
+        expect(from => api.userActivityReport(from, moment())).to.throw(ReferenceError);
+        expect(() => api.userActivityReport(moment())).to.throw(ReferenceError);
+      });
+      it('should throw a ReferenceError if either parameter is not a `moment` date object', () => {
+        expect(() => api.userActivityReport('from', moment())).to.throw(TypeError);
+        expect(() => api.userActivityReport(moment(), 'to')).to.throw(TypeError);
+      });
+      it('should throw a ReferenceError if either parameter is not a valid date object', () => {
+        expect(() => api.userActivityReport(moment('from'), moment())).to.throw(RangeError);
+        expect(() => api.userActivityReport(moment(), moment('2017-02-29'))).to.throw(RangeError);
+      });
+    });
+
+    describe('when called with valid dates', () => {
+      it('should throw a RangeError if the `to` date is before `from`', () =>
+        expect(() => api.userActivityReport(moment().add(1, 'days'), moment())).to.throw(RangeError)
+      );
+
+      describe('as a proper range', () => {
+        let result;
+        const from = '2001-01-01';
+        const to = '2001-02-01';
+
+        before('try to get the user activity data', () => {
+          result = api.userActivityReport(moment(from), moment(to));
+        });
+
+        it('should make a request to the API', () =>
+        requestGet.lastCall.should.have.been.calledWith({
+          headers: { Authorization: 'Bearer access_token' },
+          url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
+        }));
+
+        it('returns a promise', () => result.should.be.instanceOf(Promise));
       });
     });
   });

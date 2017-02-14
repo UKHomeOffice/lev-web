@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const helpers = require('./helpers.js');
 const levRequest = require('../lib/lev-request');
 const config = require('../config');
@@ -10,9 +11,13 @@ const clientSecret = config.oauth && config.oauth.clientSecret;
 const oAuthUsername = config.oauth && config.oauth.username;
 const oAuthPassword = config.oauth && config.oauth.password;
 
-const endpoint = `${config.api.protocol}://${config.api.host}:${config.api.port}/api/v0/events/birth`;
+const baseURL = `${config.api.protocol}://${config.api.host}:${config.api.port}/api/v0`;
+const birthSearch = `${baseURL}/events/birth`;
+const userActivity = `${baseURL}/audit/user-activity`;
 
-const requestData = (url, user) => new Promise((resolve, reject) => levRequest.get({
+const requestData = (url, user) =>
+  new Promise((resolve, reject) =>
+    levRequest.get({
       'url': url,
       'headers': user
         ? { 'X-Auth-Downstream-Username': user }
@@ -23,7 +28,8 @@ const requestData = (url, user) => new Promise((resolve, reject) => levRequest.g
     clientSecret,
     oAuthUsername,
     oAuthPassword,
-    helpers.responseHandler(resolve, reject)));
+    helpers.responseHandler(resolve, reject)
+  ));
 
 const findByNameDOB = (searchFields, user) => {
   if (searchFields === undefined) {
@@ -36,7 +42,7 @@ const findByNameDOB = (searchFields, user) => {
     throw new TypeError('query(): second argument, user, must be a string');
   }
 
-  return requestData(helpers.buildQueryUri(endpoint, searchFields), user)
+  return requestData(helpers.buildQueryUri(birthSearch, searchFields), user)
     .then((data) => data.map(helpers.processRecord));
 };
 
@@ -51,7 +57,7 @@ const findBySystemNumber = (systemNumber, user) => {
     throw new TypeError('requestID(): second argument, user, must be a string');
   }
 
-  return requestData(endpoint + '/' + systemNumber, user)
+  return requestData(birthSearch + '/' + systemNumber, user)
     .then(helpers.processRecord);
 };
 
@@ -73,8 +79,26 @@ const findBirths = (searchFields, user) => {
     : findByNameDOB(searchFields, user);
 };
 
+const userActivityReport = (from, to) => {
+  if (!from || !to) {
+    throw new ReferenceError('"from" and "to" dates must be provided for the User Activity report');
+  }
+  if (!(from instanceof moment) || !(to instanceof moment)) {
+    throw new TypeError('"from" and "to" dates for the User Activity report must be Moment objects');
+  }
+  if (!from.isValid() || !to.isValid()) {
+    throw new RangeError('"from" and "to" dates for the User Activity report must be Moment objects');
+  }
+  if (from.isAfter(to)) {
+    throw new RangeError('"from" date must be before "to" date for the User Activity report');
+  }
+
+  return requestData(helpers.buildQueryUri(userActivity, { from: from, to: to }));
+};
+
 module.exports = {
   findBirths: findBirths,
   findByNameDOB: findByNameDOB,
-  findBySystemNumber: findBySystemNumber
+  findBySystemNumber: findBySystemNumber,
+  userActivityReport: userActivityReport
 };

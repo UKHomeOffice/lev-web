@@ -11,16 +11,21 @@ const statusToName = {
   401: 'NotAuthorized'
 };
 
-const reformatDate = (date, oldFormat, newFormat) => moment(date, oldFormat).format(newFormat);
+const reformatDate = (date, oldFormat, newFormat) =>
+  (date instanceof moment ? date : moment(date, oldFormat)).format(newFormat);
 
 const toBritishDateFormat = (date) => reformatDate(date, formatInternational, formatBritish);
 const toInternationalDateFormat = (date) => reformatDate(date, formatBritish, formatInternational);
 
-const buildQueryParams = (attrs) => _.pickBy({
-  lastname: attrs && attrs.surname,
-  forenames: attrs && attrs.forenames,
-  dateofbirth: attrs && attrs.dob && toInternationalDateFormat(attrs.dob)
-});
+const buildQueryParams = (attrs) => _.pickBy(
+  attrs.from && attrs.to ? {
+    from: toInternationalDateFormat(attrs.from),
+    to: toInternationalDateFormat(attrs.to)
+  } : {
+    lastname: attrs && attrs.surname,
+    forenames: attrs && attrs.forenames,
+    dateofbirth: attrs && attrs.dob && toInternationalDateFormat(attrs.dob)
+  });
 
 const buildQueryUri = (endpoint, attrs) => endpoint + '?' + querystring.stringify(buildQueryParams(attrs));
 
