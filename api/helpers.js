@@ -17,17 +17,24 @@ const reformatDate = (date, oldFormat, newFormat) =>
 const toBritishDateFormat = (date) => reformatDate(date, formatInternational, formatBritish);
 const toInternationalDateFormat = (date) => reformatDate(date, formatBritish, formatInternational);
 
-const buildQueryParams = (attrs) => _.pickBy(
-  attrs.from && attrs.to ? {
-    from: toInternationalDateFormat(attrs.from),
-    to: toInternationalDateFormat(attrs.to)
-  } : {
-    lastname: attrs && attrs.surname,
-    forenames: attrs && attrs.forenames,
-    dateofbirth: attrs && attrs.dob && toInternationalDateFormat(attrs.dob)
-  });
-
-const buildQueryUri = (endpoint, attrs) => endpoint + '?' + querystring.stringify(buildQueryParams(attrs));
+const buildBirthParams = (attrs) => _.pickBy({
+  lastname: attrs.surname,
+  forenames: attrs.forenames,
+  dateofbirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+});
+const buildAuditParams = (attrs) => ({
+  from: toInternationalDateFormat(attrs.from),
+  to: toInternationalDateFormat(attrs.to)
+});
+const buildQueryUri = (endpoint, attrs) => {
+  if (!attrs) {
+    return endpoint;
+  }
+  if (attrs.from && attrs.to) {
+    return endpoint + '?' + querystring.stringify(buildAuditParams(attrs));
+  }
+  return endpoint + '?' + querystring.stringify(buildBirthParams(attrs));
+};
 
 const refer = (record) => (
     record.status.reRegistered !== 'None' &&
@@ -116,7 +123,6 @@ const responseHandler = (resolve, reject) => (err, res, body) => {
 };
 
 module.exports = {
-  buildQueryParams: buildQueryParams,
   buildQueryUri: buildQueryUri,
   processRecord: processRecord,
   refer: refer,
