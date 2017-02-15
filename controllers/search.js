@@ -3,31 +3,12 @@
 const Parent = require('../lib/hof-standalone');
 const api = require('../api');
 const helpers = require('../lib/helpers');
-const moment = require('moment');
-require('moment-round');
+const validators = require('../lib/custom-validators');
 const fields = require('../fields');
 const util = require('util');
 const _ = require('lodash');
 
-var validators = Parent.validators;
-
-const britishDate = function britishDate(value) {
-  return value === ''
-    || (this.regex(value, /^\d{1,2}\/\d{1,2}\/(?:\d\d){1,2}$/) && moment(value, 'DD/MM/YYYY').isValid())
-    || (this.regex(value, /^(?:\d\d){3,4}$/) && moment(value, 'DDMMYYYY').isValid());
-}.bind(validators);
-const past = value =>
-  value === '' ||
-    moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isBefore(moment().ceil(24, 'hours'));
-const since = (value, epoc) =>
-  value === '' ||
-    moment(value, /^\d{6,8}$/.test(value) ? 'DDMMYYYY' : 'DD/MM/YYYY').isSameOrAfter(moment(epoc).floor(24, 'hours'));
-
-validators = _.extend(validators, {
-  'british-date': britishDate,
-  'past': past,
-  'since': since
-});
+validators.addValidators(Parent.validators);
 
 const SearchController = function SearchController() {
   Parent.apply(this, arguments);
@@ -78,7 +59,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
 };
 
 const form = new SearchController({
-  fields: require('../fields'),
+  fields: fields,
   template: 'pages/search'
 });
 

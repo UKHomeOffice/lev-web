@@ -1,7 +1,9 @@
 'use strict';
 
-const helpers = require('../../../api/helpers');
 const _ = require('lodash');
+const moment = require('moment');
+const rewire = require('rewire');
+const helpers = rewire('../../../api/helpers');
 
 const record = {
   'date': '2012-08-09',
@@ -158,7 +160,68 @@ const blocked = {
   }
 };
 
+/* eslint-disable no-underscore-dangle */
+const buildBirthParams = helpers.__get__('buildBirthParams');
+const buildAuditParams = helpers.__get__('buildAuditParams');
+const buildQueryUri = helpers.__get__('buildQueryUri');
+/* eslint-enable no-underscore-dangle */
+
 describe('api/helpers.js', () => {
+  describe('buildBirthParams', () => {
+    it('should copy attributes from the input object to the output', () => {
+      expect(buildBirthParams({
+        surname: 'billson',
+        forenames: 'bill',
+        dob: '01/01/2011'
+      })).to.deep.equal({
+        lastname: 'billson',
+        forenames: 'bill',
+        dateofbirth: '2011-01-01'
+      });
+    });
+    it('should only copy attributes with a value', () => {
+      expect(buildBirthParams({
+        surname: '',
+        forenames: undefined,
+        dob: null
+      })).to.deep.equal({});
+      expect(buildBirthParams({})).to.deep.equal({});
+    });
+    it('should change the date format to ISO', () => {
+      expect(buildBirthParams({ dob: '30/01/2001' })).to.deep.equal({ dateofbirth: '2001-01-30' });
+    });
+  });
+
+  describe('buildAuditParams', () => {
+    it('should change the dates to ISO format', () => {
+      expect(buildAuditParams({
+        from: moment('31/01/2010', 'DD/MM/YYYY'),
+        to: moment('13/01/2010', 'DD/MM/YYYY')
+      })).to.deep.equal({
+        from: '2010-01-31',
+        to: '2010-01-13'
+      });
+    });
+  });
+
+  describe('buildQueryUri', () => {
+    it('should return the endpoint if the "attrs" object is missing', () => {
+      expect(buildQueryUri('uri')).to.equal('uri');
+      expect(buildQueryUri('uri', null)).to.equal('uri');
+      expect(buildQueryUri('uri', undefined)).to.equal('uri');
+      expect(buildQueryUri('uri', false)).to.equal('uri');
+    });
+    it('should return the audit URI if required "from" and "to" attributes are present', () => {
+      expect(buildQueryUri('audit/user-activity', {
+        from: moment('31/01/2010', 'DD/MM/YYYY'),
+        to: moment('13/01/2010', 'DD/MM/YYYY')
+      })).to.deep.equal('audit/user-activity?from=2010-01-31&to=2010-01-13');
+    });
+    it('should otherwise return a standard birth URI', () => {
+      expect(buildQueryUri('events/births', { surname: 'Craig' })).to.equal('events/births?lastname=Craig');
+    });
+  });
+
   describe('processRecord()', () => {
     it('is a function', () => (typeof helpers.processRecord).should.equal('function'));
     it('takes one argument', () => helpers.processRecord.should.have.lengthOf(1));

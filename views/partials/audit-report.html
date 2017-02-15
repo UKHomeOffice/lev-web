@@ -1,0 +1,25 @@
+<h2>Showing audit data from {{from}}, to {{to}}</h2>
+<label for="weekends">Show weekends?</label>
+<input id="weekends" name="weekends" type="checkbox" />
+<table class="audit">
+  <thead>
+  <tr>
+    <th></th>
+    {{#dates}}
+    <th{{#classes}} class="{{classes}}"{{/classes}}><span>{{day}}</span><span> {{month}}</span><span> {{year}}</span></th>
+    {{/dates}}
+    <th>Period total</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#usage}}
+  <tr>
+    <th>{{user}}</th>
+    {{#searches}}
+    <td{{#classes}} class="{{classes}}"{{/classes}}>{{count}}</td>
+    {{/searches}}
+    <td>{{total}}</td>
+  </tr>
+  {{/usage}}
+  </tbody>
+</table>
