@@ -1,8 +1,21 @@
-version: v1.5.0
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.0
 ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20151024':
     - hof > hmpo-govuk-template > serve-static > send > ms:
         patched: '2016-09-30T13:42:46.947Z'
     - hof > hmpo-govuk-template > serve-static > send > debug > ms:
         patched: '2016-09-30T13:42:46.947Z'
+  'npm:moment:20161019':
+    - hof > hof-controllers > moment-business > moment:
+        patched: '2017-03-06T15:40:46.875Z'
+    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > moment:
+        patched: '2017-03-06T15:40:46.875Z'
+    - hof > hmpo-form-wizard > hmpo-form-controller > moment:
+        patched: '2017-03-06T15:40:46.875Z'
+    - hof > hmpo-template-mixins > moment:
+        patched: '2017-03-06T15:40:46.875Z'
+    - hof > hof-controllers > moment:
+        patched: '2017-03-06T15:40:46.875Z'
