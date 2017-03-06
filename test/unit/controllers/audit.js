@@ -30,6 +30,10 @@ describe('Audit Controller', () => {
     controller.should.be.a('function');
   });
 
+  beforeEach(() => {
+    api.userActivityReport.reset();
+  });
+
   describe('middleware', () => {
     let res;
 

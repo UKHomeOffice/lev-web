@@ -136,6 +136,7 @@ describe('api/index.js', () => {
   let expectedOAuthRequest;
   const requestGet = sinon.stub();
   const requestPost = sinon.stub();
+  this.resetStubs = true;
 
   before(() => {
     const request = require('request');
@@ -184,6 +185,13 @@ describe('api/index.js', () => {
     };
   });
 
+  beforeEach(() => {
+    if (this.resetStubs) {
+      requestGet.reset();
+      requestPost.reset();
+    }
+  });
+
   describe('findByNameDOB()', () => {
     it('is a function', () => (typeof api.findByNameDOB).should.equal('function'));
     it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
@@ -209,25 +217,32 @@ describe('api/index.js', () => {
         describe('and the second IS a string', () => {
           let result;
 
-          before(() => {
-            const username = 'mrs-caseworker';
-            const query = {
-              surname: 'SURNAME',
-              'forenames': 'FIRST SECOND',
-              dob: '01/01/2001'
-            };
+          describe('should', () => {
+            before(() => {
+              this.resetStubs = false;
+              const username = 'mrs-caseworker';
+              const query = {
+                surname: 'SURNAME',
+                'forenames': 'FIRST SECOND',
+                dob: '01/01/2001'
+              };
 
-            result = api.findByNameDOB(query, username);
+              result = api.findByNameDOB(query, username);
+            });
+
+            it('first requests an OAuth2 token', () => requestPost.should.have.been.calledWith(expectedOAuthRequest));
+            it('then makes a request using the correct query string and adds auth headers', () =>
+              requestGet.should.have.been.calledWith({
+                headers: expectedHeaders,
+                url: 'http://testhost.com:1111/api/v0/events/birth'
+                   + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
+              }));
+            it('then returns a promise', () => result.should.be.instanceOf(Promise));
+
+            after(() => {
+              this.resetStubs = true;
+            });
           });
-
-          it('first requests an OAuth2 token', () => requestPost.should.have.been.calledWith(expectedOAuthRequest));
-          it('then makes a request using the correct query string and adds auth headers', () =>
-            requestGet.should.have.been.calledWith({
-              headers: expectedHeaders,
-              url: 'http://testhost.com:1111/api/v0/events/birth'
-                 + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
-            }));
-          it('then returns a promise', () => result.should.be.instanceOf(Promise));
 
           describe('when the api returns a valid list of records', () => {
             before(() => {
@@ -312,24 +327,30 @@ describe('api/index.js', () => {
           const read = () => api.findBirths(query, username);
 
           describe('and the first DOES NOT contain a \'system-number\' property', () => {
-            before(() => {
-              query = {
-                surname: 'SURNAME',
-                forenames: 'FIRST SECOND',
-                dob: '01/01/2001'
-              };
 
-              result = read();
+            describe('should', () => {
+              before(() => {
+                this.resetStubs = false;
+                query = {
+                  surname: 'SURNAME',
+                  forenames: 'FIRST SECOND',
+                  dob: '01/01/2001'
+                };
+                result = read();
+              });
+
+              it('make a request using the correct query string and adds auth headers', () =>
+                requestGet.should.have.been.calledWith({
+                  headers: expectedHeaders,
+                  url: 'http://testhost.com:1111/api/v0/events/birth'
+                  + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
+                }));
+              it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+              after(() => {
+                this.resetStubs = true;
+              });
             });
-
-            it('makes a request using the correct query string and adds auth headers', () =>
-              requestGet.should.have.been.calledWith({
-                headers: expectedHeaders,
-                url: 'http://testhost.com:1111/api/v0/events/birth'
-                   + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
-              }));
-            it('returns a promise', () =>
-              result.should.be.instanceOf(Promise));
 
             describe('when the api returns a valid list of records', () => {
               before(() => {
@@ -337,8 +358,7 @@ describe('api/index.js', () => {
                 result = read();
               });
 
-              it('resolves to a processed record', () =>
-                result.should.eventually.eql([parsedResponse]));
+              it('resolves to a processed record', () => result.should.eventually.eql([parsedResponse]));
             });
 
             describe('when the api returns invalid JSON', () => {
@@ -347,8 +367,7 @@ describe('api/index.js', () => {
                 result = read();
               });
 
-              it('rejects with an error', () =>
-                result.should.be.rejectedWith(Error));
+              it('rejects with an error', () => result.should.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
@@ -383,23 +402,30 @@ describe('api/index.js', () => {
           });
 
           describe('and the first DOES contain a \'system-number\' property', () => {
-            before(() => {
-              query = {
-                'system-number': '400000001',
-                surname: 'SURNAME',
-                forenames: 'FIRST SECOND',
-                dob: '01/01/2001'
-              };
 
-              result = read();
+            describe('should', () => {
+              before(() => {
+                this.resetStubs = false;
+                query = {
+                  'system-number': '400000001',
+                  surname: 'SURNAME',
+                  forenames: 'FIRST SECOND',
+                  dob: '01/01/2001'
+                };
+                result = read();
+              });
+
+              it('make a request using the correct query string and adds auth headers', () =>
+                requestGet.should.have.been.calledWith({
+                  headers: expectedHeaders,
+                  url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
+                }));
+              it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+              after(() => {
+                this.resetStubs = true;
+              });
             });
-
-            it('makes a request using the correct query string and adds auth headers', () =>
-              requestGet.should.have.been.calledWith({
-                headers: expectedHeaders,
-                url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
-              }));
-            it('returns a promise', () => result.should.be.instanceOf(Promise));
 
             describe('when the api returns a valid record', () => {
               before(() => {
@@ -479,19 +505,26 @@ describe('api/index.js', () => {
         describe('and the second IS a string', () => {
           let result;
 
-          before(() => {
-            const username = 'mrs-caseworker';
-            const id = 400000001;
+          describe('should', () => {
+            before(() => {
+              this.resetStubs = false;
+              const username = 'mrs-caseworker';
+              const id = 400000001;
 
-            result = api.findBySystemNumber(id, username);
+              result = api.findBySystemNumber(id, username);
+            });
+
+            it('makes a request using the correct query string and adds auth headers', () =>
+              requestGet.should.have.been.calledWith({
+                headers: expectedHeaders,
+                url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
+              }));
+            it('returns a promise', () => result.should.be.instanceOf(Promise));
+
+            after(() => {
+              this.resetStubs = true;
+            });
           });
-
-          it('makes a request using the correct query string and adds auth headers', () =>
-            requestGet.should.have.been.calledWith({
-              headers: expectedHeaders,
-              url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
-            }));
-          it('returns a promise', () => result.should.be.instanceOf(Promise));
 
           describe('when the api returns a valid record', () => {
             before(() => {
@@ -499,8 +532,7 @@ describe('api/index.js', () => {
               result = api.findBySystemNumber(0, '');
             });
 
-            it('resolves to a processed record', () =>
-              result.should.eventually.eql(parsedResponse));
+            it('resolves to a processed record', () => result.should.eventually.eql(parsedResponse));
           });
 
           describe('when the api returns invalid JSON', () => {
@@ -509,8 +541,7 @@ describe('api/index.js', () => {
               result = api.findBySystemNumber(0, '');
             });
 
-            it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error));
+            it('rejects with an error', () => result.should.be.rejectedWith(Error));
           });
 
           describe('when the api gives a 404', () => {
@@ -583,10 +614,10 @@ describe('api/index.js', () => {
         });
 
         it('should make a request to the API', () =>
-        requestGet.lastCall.should.have.been.calledWith({
+          requestGet.lastCall.should.have.been.calledWith({
           headers: { Authorization: 'Bearer access_token' },
-          url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
-        }));
+            url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
+          }));
 
         it('returns a promise', () => result.should.be.instanceOf(Promise));
       });
