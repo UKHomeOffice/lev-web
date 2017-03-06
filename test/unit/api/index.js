@@ -603,23 +603,39 @@ describe('api/index.js', () => {
       it('should throw a RangeError if the `to` date is before `from`', () =>
         expect(() => api.userActivityReport(moment().add(1, 'days'), moment())).to.throw(RangeError)
       );
+      it('should throw a TypeError if the `user` parameter is not specified', () =>
+        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment())).to.throw(TypeError)
+      );
+      it('should throw a TypeError if the `user` parameter is not a proper string', () => {
+        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment(), null)).to.throw(TypeError);
+        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment(), '')).to.throw(TypeError);
+      });
 
       describe('as a proper range', () => {
         let result;
         const from = '2001-01-01';
         const to = '2001-02-01';
+        const user = 'an-auditor';
 
         before('try to get the user activity data', () => {
-          result = api.userActivityReport(moment(from), moment(to));
+          this.resetStubs = false;
+          result = api.userActivityReport(moment(from), moment(to), user);
         });
 
         it('should make a request to the API', () =>
           requestGet.lastCall.should.have.been.calledWith({
-          headers: { Authorization: 'Bearer access_token' },
+            headers: {
+              Authorization: 'Bearer access_token',
+              'X-Auth-Downstream-Username': user
+            },
             url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
           }));
 
-        it('returns a promise', () => result.should.be.instanceOf(Promise));
+        it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+        after(() => {
+          this.resetStubs = true;
+        });
       });
     });
   });

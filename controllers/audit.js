@@ -67,6 +67,7 @@ const expandUsers = (records, days) => {
 };
 
 AuditController.prototype.successHandler = function successHandler(req, res, callback) {
+  const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
   const from = validators.parseDate(req.form.values.from).floor(24, 'hours');
   const to = validators.parseDate(req.form.values.to).floor(24, 'hours');
   const toInclusive = moment(to).add(1, 'day');
@@ -96,7 +97,7 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
     callback(error, req, res);
   };
 
-  api.userActivityReport(from, toInclusive).then(resolved, rejected);
+  api.userActivityReport(from, toInclusive, username).then(resolved, rejected);
 };
 
 const form = new AuditController({
