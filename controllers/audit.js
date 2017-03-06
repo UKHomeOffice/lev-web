@@ -24,7 +24,7 @@ const dayGenerator = function* dayGenerator(from, to) { // eslint-disable-line g
       classes: [
         from.format('dd')[0] === 'S' && 'weekend',
         day === '1' && 'first'
-      ].filter(l => l).join(),
+      ].filter(l => l).join(' '),
       date: from.format('YYYY-MM-DD')
     };
     from.add(1, 'days');
