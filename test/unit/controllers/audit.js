@@ -30,6 +30,10 @@ describe('Audit Controller', () => {
     controller.should.be.a('function');
   });
 
+  beforeEach(() => {
+    api.userActivityReport.reset();
+  });
+
   describe('middleware', () => {
     let res;
 
@@ -267,7 +271,7 @@ describe('Audit Controller', () => {
           month: 'Jan',
           year: '2017',
           date: '2017-01-01',
-          classes: 'weekend,first'
+          classes: 'weekend first'
         }]);
       });
 

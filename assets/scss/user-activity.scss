@@ -1,8 +1,35 @@
+html > body > main#content.main {
+  max-width: 100%;
+
+  div.grid-row {
+    margin: 0 10px;
+
+    div.column-full {
+      padding: 0;
+
+      div#controls {
+        display: inline-block;
+      }
+      .form-group {
+        width: 20em;
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .form-control {
+        width: 100%;
+      }
+    }
+  }
+}
+
 h2 {
   font-size: 19px;
 }
 
 table.audit tr {
+  th, td {
+    padding: 5px 3px;
+  }
   th:first-child {
     white-space: nowrap;
   }
@@ -12,6 +39,10 @@ table.audit tr {
   .weekend {
     display: none;
     background-color: $highlight-colour;
+
+    + .weekend + * {
+      border-left: 3px solid $border-colour;
+    }
   }
 }
 

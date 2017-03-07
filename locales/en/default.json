@@ -51,12 +51,12 @@
     },
     "from": {
       "required": "Please enter a date to search from",
-      "british-date": "Please enter the date in the correct format",
+      "british-date": "Please enter the \"from\" date in the correct format",
       "past": "Please enter a date in the past"
     },
     "to": {
       "required": "Please enter a date to search up to",
-      "british-date": "Please enter the date in the correct format"
+      "british-date": "Please enter the \"to\" date in the correct format"
     }
   },
   "flags": {

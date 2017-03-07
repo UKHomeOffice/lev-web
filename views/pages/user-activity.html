@@ -26,8 +26,10 @@ Audit information
 
 {{<partials-form}}
 {{$form}}
-{{#input-text}}from{{/input-text}}
-{{#input-text}}to{{/input-text}}
+<div id="controls">
+  {{#input-text}}from{{/input-text}}
+  {{#input-text}}to{{/input-text}}
+</div>
 <div class="buttons">
   {{#input-submit}}search{{/input-submit}}
 </div>
@@ -37,7 +39,9 @@ Audit information
 {{#audit}}
 {{> partials-audit-report}}
 {{/audit}}
-{{#naudit}}No usage data found between {{from}} and {{to}}.{{/naudit}}
+{{#naudit}}
+<h2>No usage data found between {{from}} and {{to}}</h2>
+{{/naudit}}
 
 {{/content}}
 
