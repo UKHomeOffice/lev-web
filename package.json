@@ -20,7 +20,7 @@
     "stop:mockapi": "npm-run-all -c --silent stop:mockapi:kill stop:mockapi:rm",
     "stop:mockapi:kill": "docker kill lev-api-mock || true",
     "stop:mockapi:rm": "docker rm lev-api-mock || true",
-    "stop:mock-kc-proxy": "killall lev-keycloak-proxy",
+    "stop:mock-kc-proxy": "killall lev-keycloak-proxy || true",
     "stop:all": "npm-run-all -c stop:mockapi stop:mock-kc-proxy stop",
     "chimp": "NODE_ENV=acceptance chimp --mocha --browser=phantomjs --path=./test/acceptance/spec/",
     "chimp:ff": "NODE_ENV=acceptance chimp --mocha --browser=firefox --path=./test/acceptance/spec/ --watch",
