@@ -31,6 +31,7 @@
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
     "copy:images": "cp -r ./assets/images ./public/",
     "uglify": "browserify -g uglifyify ./assets/js/index.js > ./public/js/bundle.js",
+    "watch:js": "nodemon -w assets/js -x 'npm-run-all -s lint:client uglify'",
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
     "postinstall": "npm-run-all create:public sass copy:images uglify",
