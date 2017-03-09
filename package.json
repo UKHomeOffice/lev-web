@@ -8,7 +8,7 @@
     "stop": "pkill levweb || true",
     "dev": "npm-run-all -s stop:all dev:up",
     "dev:up": "npm-run-all -p dev:frontend dev:backend",
-    "dev:frontend": "npm-run-all -p watch:sass watch:js",
+    "dev:frontend": "npm-run-all -p watch:sass watch:js watch:chimp",
     "dev:backend": "npm-run-all -p start:mock-kc-proxy start:dev start:mockapi watch:unit",
     "test": "npm-run-all lint cover check-coverage test:acceptance",
     "test:unit": "NODE_ENV=test mocha ./test/unit",
