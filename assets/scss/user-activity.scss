@@ -1,51 +1,70 @@
-html > body > main#content.main {
-  max-width: 100%;
+body {
+  &.audit {
+    #content {
+      max-width: 100%;
+      margin: 0;
+    }
 
-  div.grid-row {
-    margin: 0 10px;
+    .grid-row {
+      margin: 0 10px;
+    }
 
-    div.column-full {
+    .column-full {
       padding: 0;
+    }
 
-      div#controls {
-        display: inline-block;
-      }
-      .form-group {
-        width: 20em;
-        display: inline-block;
-        margin-right: 10px;
-      }
-      .form-control {
-        width: 100%;
-      }
+    .form-group {
+      display: inline-block;
+      margin-right: 10px;
+      width: 20em;
+    }
+
+    .form-control {
+      width: 100%;
+    }
+
+    #controls {
+      display: inline-block;
+    }
+
+    h2 {
+      font-size: 19px;
     }
   }
 }
 
-h2 {
-  font-size: 19px;
-}
-
-table.audit tr {
-  th, td {
+.audit {
+  th,
+  td {
     padding: 5px 3px;
+
+    :first-child {
+      white-space: nowrap;
+    }
   }
-  th:first-child {
-    white-space: nowrap;
-  }
+
   td {
     text-align: right;
   }
-  .weekend {
-    display: none;
-    background-color: $highlight-colour;
 
-    + .weekend + * {
-      border-left: 3px solid $border-colour;
+  .weekend {
+    background-color: $highlight-colour;
+    display: none;
+
+    + .weekend {
+      + * {
+        border-left: 3px solid $border-colour;
+      }
     }
   }
 }
 
-input#weekends:checked + table.audit tr .weekend {
-  display: table-cell;
+[name='weekends'] {
+  &:checked {
+    + .audit {
+      .weekend {
+        display: table-cell;
+      }
+    }
+  }
 }
