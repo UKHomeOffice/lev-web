@@ -97,7 +97,7 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
     callback(error, req, res);
   };
 
-  api.userActivityReport(from, toInclusive, username).then(resolved, rejected);
+  api.userActivityReport(username, from, toInclusive).then(resolved, rejected);
 };
 
 const form = new AuditController({

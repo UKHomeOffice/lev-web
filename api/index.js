@@ -79,7 +79,13 @@ const findBirths = (searchFields, user) => {
     : findByNameDOB(searchFields, user);
 };
 
-const userActivityReport = (from, to, user) => {
+const userActivityReport = (user, from, to) => {
+  if (!user) {
+    throw new ReferenceError('The "user" parameter was not provided');
+  }
+  if (typeof user !== 'string') {
+    throw new TypeError('The "user" parameter must be a string');
+  }
   if (!from || !to) {
     throw new ReferenceError('"from" and "to" dates must be provided for the User Activity report');
   }
@@ -87,13 +93,10 @@ const userActivityReport = (from, to, user) => {
     throw new TypeError('"from" and "to" dates for the User Activity report must be Moment objects');
   }
   if (!from.isValid() || !to.isValid()) {
-    throw new RangeError('"from" and "to" dates for the User Activity report must be Moment objects');
+    throw new RangeError('"from" and "to" dates for the User Activity report must be valid dates');
   }
   if (from.isAfter(to)) {
     throw new RangeError('"from" date must be before "to" date for the User Activity report');
-  }
-  if (!user || typeof user !== 'string') {
-    throw new TypeError('The "user" parameter was not provided');
   }
 
   return requestData(helpers.buildQueryUri(userActivity, { from: from, to: to }), user);

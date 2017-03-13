@@ -584,32 +584,35 @@ describe('api/index.js', () => {
       expect(api.userActivityReport).to.throw(ReferenceError);
     });
 
+    describe('when called with an invalid system user', () => {
+      it('should throw a ReferenceError if the `user` parameter is not specified', () =>
+        expect(() => api.userActivityReport(undefined, moment().add(-1, 'days'), moment())).to.throw(ReferenceError)
+      );
+      it('should throw a TypeError if the `user` parameter is not a proper string', () => {
+        expect(() => api.userActivityReport(null, moment().add(-1, 'days'), moment())).to.throw(ReferenceError);
+        expect(() => api.userActivityReport(42, moment().add(-1, 'days'), moment())).to.throw(TypeError);
+      });
+    });
+
     describe('when called without the required `from` or `to` dates', () => {
       it('should throw a ReferenceError if either parameter is omitted', () => {
-        expect(from => api.userActivityReport(from, moment())).to.throw(ReferenceError);
-        expect(() => api.userActivityReport(moment())).to.throw(ReferenceError);
+        expect(from => api.userActivityReport('user', from, moment())).to.throw(ReferenceError);
+        expect(() => api.userActivityReport('user', moment())).to.throw(ReferenceError);
       });
       it('should throw a ReferenceError if either parameter is not a `moment` date object', () => {
-        expect(() => api.userActivityReport('from', moment())).to.throw(TypeError);
-        expect(() => api.userActivityReport(moment(), 'to')).to.throw(TypeError);
+        expect(() => api.userActivityReport('user', 'from', moment())).to.throw(TypeError);
+        expect(() => api.userActivityReport('user', moment(), 'to')).to.throw(TypeError);
       });
       it('should throw a ReferenceError if either parameter is not a valid date object', () => {
-        expect(() => api.userActivityReport(moment('from'), moment())).to.throw(RangeError);
-        expect(() => api.userActivityReport(moment(), moment('2017-02-29'))).to.throw(RangeError);
+        expect(() => api.userActivityReport('user', moment('from'), moment())).to.throw(RangeError);
+        expect(() => api.userActivityReport('user', moment(), moment('2017-02-29'))).to.throw(RangeError);
       });
     });
 
     describe('when called with valid dates', () => {
       it('should throw a RangeError if the `to` date is before `from`', () =>
-        expect(() => api.userActivityReport(moment().add(1, 'days'), moment())).to.throw(RangeError)
+        expect(() => api.userActivityReport('user', moment().add(1, 'days'), moment())).to.throw(RangeError)
       );
-      it('should throw a TypeError if the `user` parameter is not specified', () =>
-        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment())).to.throw(TypeError)
-      );
-      it('should throw a TypeError if the `user` parameter is not a proper string', () => {
-        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment(), null)).to.throw(TypeError);
-        expect(() => api.userActivityReport(moment().add(-1, 'days'), moment(), '')).to.throw(TypeError);
-      });
 
       describe('as a proper range', () => {
         let result;
@@ -619,7 +622,7 @@ describe('api/index.js', () => {
 
         before('try to get the user activity data', () => {
           this.resetStubs = false;
-          result = api.userActivityReport(moment(from), moment(to), user);
+          result = api.userActivityReport(user, moment(from), moment(to));
         });
 
         it('should make a request to the API', () =>
