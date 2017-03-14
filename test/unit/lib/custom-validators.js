@@ -26,8 +26,8 @@ describe('helper function', () => {
   describe('#addValidators', () => {
     it('should add the custom validators to an existing set of validators', () => {
       const v8s = {};
-      validators.addValidators(v8s).should.have.keys(['british-date', 'past', 'since']);
-      v8s.should.have.keys(['british-date', 'past', 'since']);
+      validators.addValidators(v8s).should.have.keys(['british-date', 'past', 'since', 'email-chars']);
+      v8s.should.have.keys(['british-date', 'past', 'since', 'email-chars']);
     });
   });
 
@@ -108,6 +108,30 @@ describe('custom validators', () => {
     it('should not accept dates before the specified date', () => {
       hof.validators.since(moment().add(-1, 'day').format('DD/MM/YYYY'), moment()).should.be.false;
       hof.validators.since(moment().add(-1, 'day').format('DDMMYYYY'), moment()).should.be.false;
+    });
+  });
+
+  describe('email-chars', () => {
+    it('should exist as a function', () => {
+      hof.validators.should.have.property('email-chars').that.is.a('function');
+    });
+
+    it('should accept an empty string', () => {
+      hof.validators['email-chars']('').should.be.true;
+    });
+
+    it('should accept all the standard email characters', () => {
+      hof.validators['email-chars']('my_E-mail+%20@here.com').should.be.true;
+    });
+
+    it('should accept parts of email addresses', () => {
+      hof.validators['email-chars']('@bingo.cz').should.be.true;
+    });
+
+    it('should not accept characters not suitable for email addresses', () => {
+      hof.validators['email-chars']('this won\'t work').should.be.false;
+      hof.validators['email-chars']('no*work').should.be.false;
+      hof.validators['email-chars']('also\tbad').should.be.false;
     });
   });
 });
