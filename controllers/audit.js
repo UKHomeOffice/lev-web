@@ -72,8 +72,6 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
   const to = validators.parseDate(req.form.values.to).floor(24, 'hours');
   const toInclusive = moment(to).add(1, 'day');
   const userFilter = req.form.values.user;
-  // eslint-disable-next-line no-warning-comments
-  // const roles = req.headers['X-Auth-Roles'] || req.headers['x-auth-roles']; // TODO: check for auditor role???
 
   const resolved = (records) => {
     const data = {
