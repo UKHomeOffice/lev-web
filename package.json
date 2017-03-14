@@ -28,7 +28,7 @@
     "stop:all": "npm-run-all -c stop:mockapi stop:mock-kc-proxy stop",
     "chimp": "NODE_ENV=acceptance chimp --mocha --browser=phantomjs --path=./test/acceptance/spec/",
     "chimp:ff": "NODE_ENV=acceptance chimp --mocha --browser=firefox --path=./test/acceptance/spec/ --watch",
-    "watch:chimp": "nodemon -w ./test/acceptance -x 'npm run chimp'",
+    "watch:chimp": "nodemon -w ./test/acceptance -w ./views -w ./locales -e js,json,html -x 'npm run chimp'",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:client": "eslint ./assets/js",
