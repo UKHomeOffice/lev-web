@@ -22,9 +22,10 @@ const buildBirthParams = (attrs) => _.pickBy({
   forenames: attrs.forenames,
   dateofbirth: attrs.dob && toInternationalDateFormat(attrs.dob)
 });
-const buildAuditParams = (attrs) => ({
+const buildAuditParams = (attrs) => _.pickBy({
   from: toInternationalDateFormat(attrs.from),
-  to: toInternationalDateFormat(attrs.to)
+  to: toInternationalDateFormat(attrs.to),
+  user: attrs.user
 });
 const buildQueryUri = (endpoint, attrs) => {
   if (!attrs) {
