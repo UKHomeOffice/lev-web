@@ -641,5 +641,32 @@ describe('api/index.js', () => {
         });
       });
     });
+
+    describe('when called with a user filter', () => {
+      let result;
+      const from = '2001-03-01';
+      const to = '2001-04-01';
+      const user = 'an-auditor';
+
+      before('try to get the user activity data', () => {
+        this.resetStubs = false;
+        result = api.userActivityReport(user, moment(from), moment(to), 'fred');
+      });
+
+      it('should make a request to the API', () =>
+        requestGet.lastCall.should.have.been.calledWith({
+          headers: {
+            Authorization: 'Bearer access_token',
+            'X-Auth-Downstream-Username': user
+          },
+          url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}&user=fred`
+        }));
+
+      it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+      after(() => {
+        this.resetStubs = true;
+      });
+    });
   });
 });

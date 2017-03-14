@@ -79,7 +79,7 @@ const findBirths = (searchFields, user) => {
     : findByNameDOB(searchFields, user);
 };
 
-const userActivityReport = (user, from, to) => {
+const userActivityReport = (user, from, to, userFilter) => {
   if (!user) {
     throw new ReferenceError('The "user" parameter was not provided');
   }
@@ -99,7 +99,13 @@ const userActivityReport = (user, from, to) => {
     throw new RangeError('"from" date must be before "to" date for the User Activity report');
   }
 
-  return requestData(helpers.buildQueryUri(userActivity, { from: from, to: to }), user);
+  const data = {
+    from: from,
+    to: to,
+    user: userFilter
+  };
+
+  return requestData(helpers.buildQueryUri(userActivity, data), user);
 };
 
 module.exports = {
