@@ -6,5 +6,8 @@ module.exports = {
   },
   'to': {
     validate: ['british-date', 'required']
+  },
+  user: {
+    validate: ['email-chars']
   }
 };
