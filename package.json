@@ -29,7 +29,7 @@
     "acceptance:pause": "touch ./.acceptance.lock",
     "acceptance:play": "rm ./.acceptance.lock ; npm run create:trigger",
     "watch:chimp": "nodemon -d 1 -w test/acceptance -w views -w locales -w .acceptance.trgr -e js,json,html,trgr -x 'npm run chimp:check'",
-    "chimp:check": "ls ./.acceptance.lock 2> /dev/null && printf '\n==> NOTE: Waiting for linting and unit tests to complete before running E2E tests\n\n' || npm run chimp",
+    "chimp:check": "[ -e ./.acceptance.lock ] && printf '\n==> NOTE: Waiting for linting and unit tests to complete before running E2E tests\n\n' || npm run chimp",
     "chimp": "NODE_ENV=acceptance chimp --mocha --browser=phantomjs --path=./test/acceptance/spec/",
     "chimp:ff": "NODE_ENV=acceptance chimp --mocha --browser=firefox --path=./test/acceptance/spec/ --watch",
     "create:trigger": "touch ./.acceptance.trgr 2>/dev/null",
