@@ -41,7 +41,8 @@
     "cover": "istanbul cover _mocha -- ./test/unit",
     "check-coverage": "istanbul check-coverage --statement 95 --branch 85 --function 100 --line 95",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
-    "watch:sass": "nodemon -w assets/scss -e scss -x 'npm run sass'",
+    "sass:lint": "sass-lint 'assets/scss/**/*.scss' -v -q",
+    "watch:sass": "nodemon -w assets/scss -e scss -x 'npm-run-all -s sass:lint sass'",
     "copy:images": "cp -r ./assets/images ./public/",
     "uglify": "browserify -g uglifyify ./assets/js/index.js > ./public/js/bundle.js",
     "watch:js": "nodemon -w assets/js -x 'npm-run-all -s lint:client uglify'",
@@ -87,6 +88,7 @@
     "proxyquire": "^1.7.3",
     "reqres": "^1.2.2",
     "rewire": "^2.5.2",
+    "sass-lint": "^1.10.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   },
