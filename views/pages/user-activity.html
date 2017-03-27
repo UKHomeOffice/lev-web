@@ -30,6 +30,7 @@ Audit information
 <div id="controls">
   {{#input-text}}from{{/input-text}}
   {{#input-text}}to{{/input-text}}
+  {{#input-text}}user{{/input-text}}
 </div>
 <div class="buttons">
   {{#input-submit}}search{{/input-submit}}
@@ -41,7 +42,7 @@ Audit information
 {{> partials-audit-report}}
 {{/audit}}
 {{#naudit}}
-<h2>No usage data found between {{from}} and {{to}}</h2>
+<h2>No usage data{{#user}} for '{{user}}'{{/user}} found between {{from}} and {{to}}</h2>
 {{/naudit}}
 
 {{/content}}

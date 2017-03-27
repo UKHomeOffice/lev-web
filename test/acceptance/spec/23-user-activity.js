@@ -136,10 +136,83 @@ describe('User Activity', () => {
     });
   });
 
+  describe('adding a user filter', () => {
+    describe('returning no audit data', () => {
+      const from = '01/01/1800';
+      const to = '01/01/1900';
+      const user = 'some-chap';
+
+      before(() => {
+        browser.generateReport(from, to, user);
+      });
+
+      it('shows the User Activity page', () => {
+        browser.shouldBeOnUserActivityReport();
+      });
+
+      it('displays an appropriate message advising no data could be found', () => {
+        browser.getText('h2').should.equal(`No usage data for '${user}' found between ${from} and ${to}`);
+      });
+    });
+
+    describe('returning audit data', () => {
+      const from = '23/12/2016';
+      const to = '26/12/2016';
+      const user = 'lev-e2e-tests';
+      let rowHeaders;
+
+      before(() => {
+        browser.generateReport(from, to, user);
+      });
+
+      it('shows the User Activity report page', () => {
+        browser.shouldBeOnUserActivityReport();
+      });
+
+      it('displays an appropriate message including the user filter value', () => {
+        const h2 = `Showing audit data for '${user}' from ${from}, to ${to}`;
+        browser.getText('h2').should.equal(h2);
+        rowHeaders = browser.getText('table.audit > tbody > tr > th');
+      });
+
+      describe('displays the search count table', () => {
+        it('with two rows only', () => {
+          rowHeaders.length.should.equal(2);
+        });
+
+        it('with a row for the user', () => {
+          rowHeaders[0].should.equal('lev-e2e-tests');
+        });
+
+        it('with a row for the totals', () => {
+          rowHeaders[1].should.equal('Day totals');
+        });
+      });
+    });
+  });
+
   describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
         browser.generateReport('', '');
+      });
+
+      it('displays an error message', () => {
+        browser.getText('h2').should.contain('Fix the following error');
+      });
+
+      it('requests a "from" date', () => {
+        browser.getText('a').should.contain('Please enter a date to search from');
+      });
+
+      it('requests a "to" date', () => {
+        browser.getText('a').should.contain('Please enter a date to search up to');
+      });
+    });
+
+    describe('with the date range fields empty', () => {
+      before(() => {
+        browser.generateReport('', '', 'some-dude');
       });
 
       it('displays an error message', () => {
@@ -223,6 +296,25 @@ describe('User Activity', () => {
 
       it('requests a past date', () => {
         browser.getText('a').should.contain('Please enter a proper date range');
+      });
+    });
+
+    describe('with invalid characters in the user search filter', () => {
+      before(() => {
+        browser.generateReport(
+          moment().add(-10, 'days').format('DD/MM/YYYY'),
+          moment().add(-3, 'day').format('DD/MM/YYYY'),
+          'this won\'t work!'
+        );
+      });
+
+      it('displays an error message', () => {
+        browser.getText('h2').should.contain('Fix the following error');
+      });
+
+      it('requests a past date', () => {
+        browser.getText('a').should.contain(
+          'Please only use characters that can be used for an email address: a-z, A-Z, 0-9, or \'_%-@.\'');
       });
     });
 
