@@ -32,7 +32,7 @@
     },
     "user": {
       "label": "User filter",
-      "hint": "For example 'bob@hmpo.gov.uk' for a use, or 'hmrc' for a group of users"
+      "hint": "For example 'bob@hmpo.gov.uk' for a single user, or '@hmrc.gov.uk' for a group of users"
     }
   },
   "validation": {
