@@ -634,7 +634,7 @@ describe('api/index.js', () => {
             url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
           }));
 
-        it('then return a promise', () => result.should.be.instanceOf(Promise));
+        it('returns a promise', () => result.should.be.instanceOf(Promise));
 
         after(() => {
           this.resetStubs = true;
@@ -662,7 +662,7 @@ describe('api/index.js', () => {
           url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}&user=fred`
         }));
 
-      it('then return a promise', () => result.should.be.instanceOf(Promise));
+      it('returns a promise', () => result.should.be.instanceOf(Promise));
 
       after(() => {
         this.resetStubs = true;

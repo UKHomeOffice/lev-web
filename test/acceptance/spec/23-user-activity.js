@@ -159,7 +159,6 @@ describe('User Activity', () => {
       const from = '23/12/2016';
       const to = '26/12/2016';
       const user = 'lev-e2e-tests';
-      let rowHeaders;
 
       before(() => {
         browser.generateReport(from, to, user);
@@ -172,10 +171,15 @@ describe('User Activity', () => {
       it('displays an appropriate message including the user filter value', () => {
         const h2 = `Showing audit data for '${user}' from ${from}, to ${to}`;
         browser.getText('h2').should.equal(h2);
-        rowHeaders = browser.getText('table.audit > tbody > tr > th');
       });
 
       describe('displays the search count table', () => {
+        let rowHeaders;
+
+        before('get the row headers', () => {
+          rowHeaders = browser.getText('table.audit > tbody > tr > th');
+        });
+
         it('with two rows only', () => {
           rowHeaders.length.should.equal(2);
         });
