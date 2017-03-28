@@ -89,7 +89,8 @@ describe('Audit Controller', () => {
                 data.should.deep.equal({
                   from: req.query.from,
                   to: req.query.to,
-                  naudit: true
+                  naudit: true,
+                  user: ''
                 });
                 done();
               } catch (err) {
@@ -152,6 +153,7 @@ describe('Audit Controller', () => {
                 data.should.deep.equal({
                   from: req.query.from,
                   to: req.query.to,
+                  user: '',
                   audit: {
                     dates: [
                       { classes: '', date: '2017-02-02', day: '2', month: 'Feb', year: '2017' },

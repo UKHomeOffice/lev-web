@@ -76,11 +76,9 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
   const resolved = (records) => {
     const data = {
       from: from.format('DD/MM/YYYY'),
-      to: to.format('DD/MM/YYYY')
+      to: to.format('DD/MM/YYYY'),
+      user: userFilter
     };
-    if (userFilter) {
-      data.user = userFilter;
-    }
     if (records && Object.keys(records).length) {
       const days = daysInDateRange(from, toInclusive);
       const usage = expandUsers(records, days);
