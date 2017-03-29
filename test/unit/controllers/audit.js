@@ -12,6 +12,7 @@ const dayGenerator = auditController.__get__('dayGenerator');
 const daysInDateRange = auditController.__get__('daysInDateRange');
 const addClasses = auditController.__get__('addClasses');
 const initDayTotals = auditController.__get__('initDayTotals');
+const numberWang = auditController.__get__('numberWang');
 const expandUsers = auditController.__get__('expandUsers');
 /* eslint-enable no-underscore-dangle */
 
@@ -160,9 +161,9 @@ describe('Audit Controller', () => {
                       { classes: '', date: '2017-02-03', day: '3', month: 'Feb', year: '2017' }
                     ],
                     usage: [ /* eslint-disable no-multi-spaces */
-                      { user: 'amanda',     searches: [{ count: 3    }, { count: null }, { count: 3  }] },
-                      { user: 'colin',      searches: [{ count: null }, { count: 7    }, { count: 7  }] },
-                      { user: 'Day totals', searches: [{ count: 3    }, { count: 7    }, { count: 10 }] }
+                      { user: 'amanda',     searches: [{ count: 2    }, { count: null }, { count: 2 }] },
+                      { user: 'colin',      searches: [{ count: null }, { count: 4    }, { count: 4 }] },
+                      { user: 'Day totals', searches: [{ count: 2    }, { count: 4    }, { count: 6 }] }
                     ] /* eslint-enable no-multi-spaces */
                   }
                 });
@@ -401,6 +402,28 @@ describe('Audit Controller', () => {
       });
     });
 
+    describe('#numberWang is a temporary fix to give a more accurate usage count for Nigel', () => {
+      it('should be a function', () => {
+        numberWang.should.be.a('function');
+      });
+
+      it('should half the raw count', () => {
+        const rawCount = 4;
+        numberWang(rawCount).should.equal(2);
+      });
+
+      it('should round fractions up', () => {
+        const rawCount = 9;
+        numberWang(rawCount).should.equal(5);
+      });
+
+      it('should correctly handle nulls', () => {
+        numberWang(null).should.eql(0);
+        numberWang(undefined).should.eql(0);
+        numberWang().should.eql(0);
+      });
+    });
+
     describe('#expandDays creates "day total" wrapper objects based on a specified set of "day" objects', () => {
       const days = [
         { },
@@ -443,7 +466,7 @@ describe('Audit Controller', () => {
         const records = { 'bob': { Tuesday: 23, Thursday: 14 } };
         expect(expandUsers(records, days)[0]).to.deep.equal({
           user: 'bob',
-          searches: [null, 23, null, 14, null, 37].map(wrapCount)
+          searches: [null, 12, null, 7, null, 19].map(wrapCount)
         });
       });
       it('should work for multiple users', () => {
@@ -454,18 +477,18 @@ describe('Audit Controller', () => {
           'dil': { Tuesday: 3, Thursday: 14 }
         };
         expect(expandUsers(records, days).slice(0, -1)).to.deep.equal([
-          { user: 'bob', searches: [null, 12, null, null, null, 12].map(wrapCount) },
-          { user: 'ian', searches: [null, 2, null, 3, 9, 14].map(wrapCount) },
-          { user: 'ann', searches: [23, null, null, null, 5, 28].map(wrapCount) },
-          { user: 'dil', searches: [null, 3, null, 14, null, 17].map(wrapCount) }
+          { user: 'bob', searches: [null, 6, null, null, null, 6].map(wrapCount) },
+          { user: 'ian', searches: [null, 1, null, 2, 5, 8].map(wrapCount) },
+          { user: 'ann', searches: [12, null, null, null, 3, 15].map(wrapCount) },
+          { user: 'dil', searches: [null, 2, null, 7, null, 9].map(wrapCount) }
         ]);
       });
 
       it('should add day totals', () => {
         const records = { 'bob': { Tuesday: 23, Thursday: 14 } };
         expect(expandUsers(records, days)).to.deep.equal([
-          { user: 'bob', searches: [null, 23, null, 14, null, 37].map(wrapCount) },
-          { user: 'Day totals', searches: [0, 23, 0, 14, 0, 37].map(wrapCount) }
+          { user: 'bob', searches: [null, 12, null, 7, null, 19].map(wrapCount) },
+          { user: 'Day totals', searches: [0, 12, 0, 7, 0, 19].map(wrapCount) }
         ]);
       });
       it('should work for multiple users', () => {
@@ -476,11 +499,11 @@ describe('Audit Controller', () => {
           'dil': { Tuesday: 3, Thursday: 14 }
         };
         expect(expandUsers(records, days)).to.deep.equal([
-          { user: 'bob', searches: [null, 12, null, null, null, 12].map(wrapCount) },
-          { user: 'ian', searches: [null, 2, null, 3, 9, 14].map(wrapCount) },
-          { user: 'ann', searches: [23, null, null, null, 5, 28].map(wrapCount) },
-          { user: 'dil', searches: [null, 3, null, 14, null, 17].map(wrapCount) },
-          { user: 'Day totals', searches: [23, 17, 0, 17, 14, 71].map(wrapCount) }
+          { user: 'bob', searches: [null, 6, null, null, null, 6].map(wrapCount) },
+          { user: 'ian', searches: [null, 1, null, 2, 5, 8].map(wrapCount) },
+          { user: 'ann', searches: [12, null, null, null, 3, 15].map(wrapCount) },
+          { user: 'dil', searches: [null, 2, null, 7, null, 9].map(wrapCount) },
+          { user: 'Day totals', searches: [12, 9, 0, 9, 8, 38].map(wrapCount) }
         ]);
       });
       it('should work for "real" data', () => {
@@ -495,12 +518,12 @@ describe('Audit Controller', () => {
             '2017-01-25': 56, '2017-01-26': 62, '2017-01-27': 16 },
           norma: { '2017-01-25': 5 } };
         expect(expandUsers(records, dates)).to.deep.equal([
-          { user: 'adam', searches: [null, null, 21, 23, 35, 12, 9, null, 100].map(wrapCount) },
-          { user: 'amanda', searches: [null, null, null, 3, 5, 10, 13, null, 31].map(wrapCount) },
-          { user: 'colin', searches: [null, null, 7, null, 5, 11, 13, 13, 49].map(wrapCount) },
-          { user: 'lev-e2e-tests', searches: [3, 45, 12, 6, 30, 56, 62, 16, 230].map(wrapCount) },
-          { user: 'norma', searches: [null, null, null, null, null, 5, null, null, 5].map(wrapCount) },
-          { user: 'Day totals', searches: [3, 45, 40, 32, 75, 94, 97, 29, 415].map(wrapCount) }
+          { user: 'adam', searches: [null, null, 11, 12, 18, 6, 5, null, 52].map(wrapCount) },
+          { user: 'amanda', searches: [null, null, null, 2, 3, 5, 7, null, 17].map(wrapCount) },
+          { user: 'colin', searches: [null, null, 4, null, 3, 6, 7, 7, 27].map(wrapCount) },
+          { user: 'lev-e2e-tests', searches: [2, 23, 6, 3, 15, 28, 31, 8, 116].map(wrapCount) },
+          { user: 'norma', searches: [null, null, null, null, null, 3, null, null, 3].map(wrapCount) },
+          { user: 'Day totals', searches: [2, 23, 21, 17, 39, 48, 50, 15, 215].map(wrapCount) }
         ]);
       });
     });

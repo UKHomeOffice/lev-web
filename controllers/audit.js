@@ -39,6 +39,7 @@ const addClasses = (src, trgt) => {
   return trgt;
 };
 const initDayTotals = days => days.map(day => addClasses(day, { count: 0 })).concat({ count: 0 });
+const numberWang = rawCount => Math.ceil((rawCount || 0) / 2);
 
 const expandUsers = (records, days) => {
   const dayTotals = initDayTotals(days);
@@ -47,7 +48,7 @@ const expandUsers = (records, days) => {
     let total = 0;
     const searches = days.map((day, i) => {
       const date = day.date;
-      const count = searchCounts[date] || 0;
+      const count = numberWang(searchCounts[date]) || 0;
       const usage = addClasses(day, { count: count || null });
       total += count;
       dayTotals[i].count += count;
