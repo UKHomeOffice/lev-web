@@ -4,9 +4,9 @@ const url = require('../config').url;
 const userActivity = `${url}/audit/user-activity`;
 
 module.exports = (target) => {
-  target.generateReport = function(from, to) {
+  target.generateReport = function(from, to, user) {
     this.goToUserActivityReport();
-    this.submitUserActivityReport(from, to);
+    this.submitUserActivityReport(from, to, user);
   };
 
   target.goToUserActivityReport = function() {
@@ -22,9 +22,12 @@ module.exports = (target) => {
     formLabels[1].should.match(/^Search to/);
   };
 
-  target.submitUserActivityReport = function(from, to) {
+  target.submitUserActivityReport = function(from, to, user) {
     this.setValue('input[name="from"]', from);
     this.setValue('input[name="to"]', to);
+    if (user) {
+      this.setValue('input[name="user"]', user);
+    }
     this.submitForm('form');
   };
 };

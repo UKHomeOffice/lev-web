@@ -71,13 +71,13 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
   const from = validators.parseDate(req.form.values.from).floor(24, 'hours');
   const to = validators.parseDate(req.form.values.to).floor(24, 'hours');
   const toInclusive = moment(to).add(1, 'day');
-  // eslint-disable-next-line no-warning-comments
-  // const roles = req.headers['X-Auth-Roles'] || req.headers['x-auth-roles']; // TODO: check for auditor role???
+  const userFilter = req.form.values.user;
 
   const resolved = (records) => {
     const data = {
       from: from.format('DD/MM/YYYY'),
-      to: to.format('DD/MM/YYYY')
+      to: to.format('DD/MM/YYYY'),
+      user: userFilter
     };
     if (records && Object.keys(records).length) {
       const days = daysInDateRange(from, toInclusive);
@@ -97,7 +97,7 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
     callback(error, req, res);
   };
 
-  api.userActivityReport(from, toInclusive, username).then(resolved, rejected);
+  api.userActivityReport(username, from, toInclusive, userFilter).then(resolved, rejected);
 };
 
 const form = new AuditController({

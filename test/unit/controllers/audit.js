@@ -59,84 +59,150 @@ describe('Audit Controller', () => {
 
     describe('when there is a query string', () => {
       let req;
+      const loggedOnUser = 'mrs-caseworker';
 
       beforeEach(() => {
         req = _.extend(reqres.req(), {
           body: undefined,
           headers: {
-            'X-Auth-Username': 'mrs-caseworker'
+            'X-Auth-Username': loggedOnUser
           },
           method: 'GET'
         });
       });
 
       describe('the resolved promise', () => {
-        it('shows a special message if there is no data available', (done) => {
-          req.query = {
-            from: '01/01/1800',
-            to: '01/01/1900'
-          };
-          const toAdjusted = '02/01/1900';
-          const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
-          const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(matchFrom, matchTo).returns(Promise.resolve({}));
+        describe('renders a special page when no data is found', () => {
+          it('with the search dates displayed', (done) => {
+            req.query = {
+              from: '01/01/1800',
+              to: '01/01/1900'
+            };
+            const toAdjusted = '02/01/1900';
+            const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
+            const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
+            api.userActivityReport.withArgs(loggedOnUser, matchFrom, matchTo).returns(Promise.resolve({}));
 
-          res.render = (view, data) => {
-            try {
-              view.should.equal('pages/user-activity');
-              data.should.deep.equal({
-                from: req.query.from,
-                to: req.query.to,
-                naudit: true
-              });
-              done();
-            } catch (err) {
-              done(err);
-            }
-          };
+            res.render = (view, data) => {
+              try {
+                view.should.equal('pages/user-activity');
+                data.should.deep.equal({
+                  from: req.query.from,
+                  to: req.query.to,
+                  naudit: true,
+                  user: ''
+                });
+                done();
+              } catch (err) {
+                done(err);
+              }
+            };
 
-          controller(req, res);
+            controller(req, res);
+          });
+
+          it('and displays the user search value', (done) => {
+            req.query = {
+              from: '02/03/1800',
+              to: '02/03/1900',
+              user: 'mr_user'
+            };
+            const toAdjusted = '03/03/1900';
+            const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
+            const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
+            api.userActivityReport.withArgs(loggedOnUser, matchFrom, matchTo, req.query.user)
+              .returns(Promise.resolve({}));
+
+            res.render = (view, data) => {
+              try {
+                view.should.equal('pages/user-activity');
+                data.should.deep.equal({
+                  from: req.query.from,
+                  to: req.query.to,
+                  user: req.query.user,
+                  naudit: true
+                });
+                done();
+              } catch (err) {
+                done(err);
+              }
+            };
+
+            controller(req, res);
+          });
         });
 
-        it('renders the report table', (done) => {
-          const records = {
-            amanda: { '2017-02-02': 3 },
-            colin: { '2017-02-03': 7 }
-          };
-          req.query = {
-            from: '02/02/2017',
-            to: '03/02/2017'
-          };
-          const toAdjusted = '04/02/2017';
-          const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
-          const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(matchFrom, matchTo).returns(Promise.resolve(records));
+        describe('otherwise renders the report table', () => {
+          it('including a message with the dates', (done) => {
+            const records = {
+              amanda: { '2017-02-02': 3 },
+              colin: { '2017-02-03': 7 }
+            };
+            req.query = {
+              from: '02/02/2017',
+              to: '03/02/2017'
+            };
+            const toAdjusted = '04/02/2017';
+            const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
+            const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
+            api.userActivityReport.withArgs('mrs-caseworker', matchFrom, matchTo).returns(Promise.resolve(records));
 
-          res.render = (view, data) => {
-            try {
-              view.should.equal('pages/user-activity');
-              data.should.deep.equal({
-                from: req.query.from,
-                to: req.query.to,
-                audit: {
-                  dates: [
-                    { classes: '', date: '2017-02-02', day: '2', month: 'Feb', year: '2017' },
-                    { classes: '', date: '2017-02-03', day: '3', month: 'Feb', year: '2017' }
-                  ],
-                  usage: [ /* eslint-disable no-multi-spaces */
-                    { user: 'amanda',     searches: [{ count: 3    }, { count: null }, { count: 3  }] },
-                    { user: 'colin',      searches: [{ count: null }, { count: 7    }, { count: 7  }] },
-                    { user: 'Day totals', searches: [{ count: 3    }, { count: 7    }, { count: 10 }] }
-                  ] /* eslint-enable no-multi-spaces */
-                }
-              });
-              done();
-            } catch (err) {
-              done(err);
-            }
-          };
+            res.render = (view, data) => {
+              try {
+                view.should.equal('pages/user-activity');
+                data.should.deep.equal({
+                  from: req.query.from,
+                  to: req.query.to,
+                  user: '',
+                  audit: {
+                    dates: [
+                      { classes: '', date: '2017-02-02', day: '2', month: 'Feb', year: '2017' },
+                      { classes: '', date: '2017-02-03', day: '3', month: 'Feb', year: '2017' }
+                    ],
+                    usage: [ /* eslint-disable no-multi-spaces */
+                      { user: 'amanda',     searches: [{ count: 3    }, { count: null }, { count: 3  }] },
+                      { user: 'colin',      searches: [{ count: null }, { count: 7    }, { count: 7  }] },
+                      { user: 'Day totals', searches: [{ count: 3    }, { count: 7    }, { count: 10 }] }
+                    ] /* eslint-enable no-multi-spaces */
+                  }
+                });
+                done();
+              } catch (err) {
+                done(err);
+              }
+            };
 
-          controller(req, res);
+            controller(req, res);
+          });
+
+          it('and displays the user search value', (done) => {
+            const records = {
+              amanda: { '2017-02-02': 3 },
+              colin: { '2017-02-03': 7 }
+            };
+            req.query = {
+              from: '02/02/2017',
+              to: '03/02/2017',
+              user: 'mr_user'
+            };
+            const toAdjusted = '04/02/2017';
+            const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
+            const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
+            api.userActivityReport.withArgs('mrs-caseworker', matchFrom, matchTo, req.query.user)
+              .returns(Promise.resolve(records));
+
+            res.render = (view, data) => {
+              try {
+                view.should.equal('pages/user-activity');
+                data.should.have.property('user', req.query.user);
+                done();
+              } catch (err) {
+                done(err);
+              }
+            };
+
+            controller(req, res);
+          });
         });
       });
 
@@ -152,7 +218,7 @@ describe('Audit Controller', () => {
           const toAdjusted = '16/01/2016';
           const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
           const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(matchFrom, matchTo).returns(Promise.reject(err));
+          api.userActivityReport.withArgs('mrs-caseworker', matchFrom, matchTo).returns(Promise.reject(err));
 
           const next = (error) => {
             try {
@@ -175,7 +241,7 @@ describe('Audit Controller', () => {
           const toAdjusted = '21/01/2009';
           const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
           const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(matchFrom, matchTo).returns(Promise.reject(err.message));
+          api.userActivityReport.withArgs('mrs-caseworker', matchFrom, matchTo).returns(Promise.reject(err.message));
 
           const next = (error) => {
             try {

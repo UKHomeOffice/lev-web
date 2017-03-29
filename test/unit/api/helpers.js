@@ -202,6 +202,27 @@ describe('api/helpers.js', () => {
         to: '2010-01-13'
       });
     });
+    it('should not add an empty user filter value', () => {
+      expect(buildAuditParams({
+        from: moment('31/01/2010', 'DD/MM/YYYY'),
+        to: moment('13/01/2010', 'DD/MM/YYYY'),
+        user: ''
+      })).to.deep.equal({
+        from: '2010-01-31',
+        to: '2010-01-13'
+      });
+    });
+    it('should add a non empty user filter value', () => {
+      expect(buildAuditParams({
+        from: moment('31/01/2010', 'DD/MM/YYYY'),
+        to: moment('13/01/2010', 'DD/MM/YYYY'),
+        user: 'chuck'
+      })).to.deep.equal({
+        from: '2010-01-31',
+        to: '2010-01-13',
+        user: 'chuck'
+      });
+    });
   });
 
   describe('buildQueryUri', () => {

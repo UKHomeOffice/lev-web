@@ -29,6 +29,10 @@
     "to": {
       "label": "Search to",
       "hint": "For example 15/1/2017"
+    },
+    "user": {
+      "label": "User filter",
+      "hint": "For example 'bob@hmpo.gov.uk' for a single user, or '@hmrc.gov.uk' for a group of users"
     }
   },
   "validation": {
@@ -57,6 +61,9 @@
     "to": {
       "required": "Please enter a date to search up to",
       "british-date": "Please enter the \"to\" date in the correct format"
+    },
+    "user": {
+      "email-chars": "Please only use characters that can be used for an email address: a-z, A-Z, 0-9, or '_%-@.'"
     }
   },
   "flags": {
