@@ -3,8 +3,9 @@
 
   li {
     margin: 0;
+  }
 
-    article {
+  article {
       a {
         display: block;
         border-top: 1px solid $border-colour;
@@ -64,6 +65,5 @@
         }
       }
     }
-  }
 }
 

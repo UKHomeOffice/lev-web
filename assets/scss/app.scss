@@ -1,13 +1,13 @@
-$path: "../img/";
+$path: '../img/';
 
-@import "../../node_modules/hof/node_modules/hmpo-frontend-toolkit/assets/stylesheets/app.scss";
+@import '../../node_modules/hof/node_modules/hmpo-frontend-toolkit/assets/stylesheets/app.scss';
 
-@import "./icons.scss";
-@import "./validation.scss";
-@import "./header.scss";
-@import "./results.scss";
-@import "./details.scss";
-@import "./user-activity.scss";
+@import './icons.scss';
+@import './validation.scss';
+@import './header.scss';
+@import './results.scss';
+@import './details.scss';
+@import './user-activity.scss';
 
 $form-spacing: 15px;
 
@@ -92,7 +92,7 @@ body {
 
     .form-group {
         input {
-            &[id$="-year"] {
+            &[id$=-year] {
                 width: em(70);
             }
         }
