@@ -22,32 +22,34 @@
 
 $section-colour: #f2f3f3;
 
-table.details {
-  border-top: 1px solid $border-colour;
-  border-bottom: 1px solid $border-colour;
+table {
+  &.details {
+    border-top: 1px solid $border-colour;
+    border-bottom: 1px solid $border-colour;
 
-  tbody {
-    th, td {
-      @include core-19;
-      vertical-align: top;
-      border-bottom: none;
-      padding: 0.4em 0.6em 0.4em 0.6em;
-    }
-    th {
-      width: 10em;
-    }
-    td {
-      font-weight: bold;
-    }
-    .section-head {
-      border-top: 1px solid $border-colour;
-
+    tbody {
       th, td {
+        @include core-19;
+        vertical-align: top;
+        border-bottom: none;
+        padding: 0.4em 0.6em 0.4em 0.6em;
+      }
+      th {
+        width: 10em;
+      }
+      td {
         font-weight: bold;
-        color: $text-colour;
-        background-color: $section-colour;
-        padding-top: 0.4em;
-        padding-bottom: 0.3em;
+      }
+      .section-head {
+        border-top: 1px solid $border-colour;
+
+        th, td {
+          font-weight: bold;
+          color: $text-colour;
+          background-color: $section-colour;
+          padding-top: 0.4em;
+          padding-bottom: 0.3em;
+        }
       }
     }
   }

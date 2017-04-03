@@ -77,8 +77,10 @@ body {
 .form-group {
   margin-top: $form-spacing;
 }
-#system-number-group.form-group {
-  margin-bottom: 10px;
+#system-number-group {
+  &.form-group {
+    margin-bottom: 10px;
+  }
 }
 
 // GOVUK Elements `.form-date` overrides
@@ -113,13 +115,15 @@ body {
   }
 }
 
-.buttons .button {
-  &:first-child {
-    margin-left: 0;
-  }
+.buttons {
+  .button {
+    &:first-child {
+      margin-left: 0;
+    }
 
-  &:last-child {
-    margin-right: 0;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 
@@ -169,23 +173,29 @@ body {
 
 // Panels within form groups
 // Remove the bottom padding as .form-group sets a bottom margin
-.form-group .panel-border-narrow {
-  padding-bottom: 0;
+.form-group {
+  .panel-border-narrow {
+    padding-bottom: 0;
+  }
 }
 
 // fix <details> child elements showing when page is slow to load
-body.no-js details > {
-  address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figcaption, figure, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, li, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video {
-    display: block;
-  }
-  b, big, i, small, tt, abbr, acronym, cite, code, dfn, em, kbd, strong, samp, time, var, a, bdo, br, img, map, object, q, script, span, sub, sup, button, input, label, select, textarea {
-    display: inline;
-  }
-  table {
-    display: table;
-  }
-  ruby {
-    display: ruby;
+body {
+  &.no-js {
+    details > {
+      address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figcaption, figure, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, li, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video {
+        display: block;
+      }
+      b, big, i, small, tt, abbr, acronym, cite, code, dfn, em, kbd, strong, samp, time, var, a, bdo, br, img, map, object, q, script, span, sub, sup, button, input, label, select, textarea {
+        display: inline;
+      }
+      table {
+        display: table;
+      }
+      ruby {
+        display: ruby;
+      }
+    }
   }
 }
 
