@@ -89,20 +89,20 @@ h1 {
 
 // GOVUK Elements `.form-date` overrides
 .form-date {
-    border-left: none;
-    padding-left: 0;
+  border-left: none;
+  padding-left: 0;
 
-    label {
-        @include core-19();
-    }
+  label {
+    @include core-19();
+  }
 
-    .form-group {
-        input {
-            &[id$=-year] {
-                width: em(70);
-            }
-        }
+  .form-group {
+    input {
+      &[id$=-year] {
+        width: em(70);
+      }
     }
+  }
 }
 
 .button {

@@ -11,66 +11,65 @@ $hover-text-colour: #005ea5;
   }
 
   article {
-      a {
-        display: block;
-        border-top: 1px solid $border-colour;
-        text-decoration: none;
-        padding: 10px 0;
-        color: $black;
+    a {
+      display: block;
+      border-top: 1px solid $border-colour;
+      text-decoration: none;
+      padding: 10px 0;
+      color: $black;
 
-        h2 {
-          @include bold-19;
-          margin-bottom: 0.4em;
-          margin-top: 0;
-          text-decoration: underline;
-          color: $heading-text-colour;
+      h2 {
+        @include bold-19;
+        margin-bottom: 0.4em;
+        margin-top: 0;
+        text-decoration: underline;
+        color: $heading-text-colour;
+      }
+
+      table {
+        border-top: none;
+        border-bottom: none;
+
+        th,
+        td {
+          border-bottom: none;
+          padding: 0.3em 0;
+
+          &:last-of-type {
+            padding-bottom: 0;
+          }
+          @include core-19;
+          vertical-align: top;
         }
 
-        table {
-          border-top: none;
-          border-bottom: none;
+        th {
+          width: 7.2em;
+        }
+        td {
+          font-weight: bold;
+        }
+      }
 
+      .flag {
+        display: block;
+        background-color: transparent;
+        border-left: none;
+        padding: 0;
+        margin-bottom: 0;
+        font-weight: bold;
+        margin-top: 0.4em;
+      }
+
+      &:hover {
+        background-color: $hover-bg-colour;
+        border-color: $hover-border-colour;
+        table {
           th,
           td {
-            border-bottom: none;
-            padding: 0.3em 0;
-
-            &:last-of-type {
-              padding-bottom: 0;
-            }
-            @include core-19;
-            vertical-align: top;
-          }
-
-          th {
-            width: 7.2em;
-          }
-          td {
-            font-weight: bold;
-          }
-        }
-
-        .flag {
-          display: block;
-          background-color: transparent;
-          border-left: none;
-          padding: 0;
-          margin-bottom: 0;
-          font-weight: bold;
-          margin-top: 0.4em;
-        }
-
-        &:hover {
-          background-color: $hover-bg-colour;
-          border-color: $hover-border-colour;
-          table {
-            th,
-            td {
-              color: $hover-text-colour;
-            }
+            color: $hover-text-colour;
           }
         }
       }
     }
+  }
 }
-
