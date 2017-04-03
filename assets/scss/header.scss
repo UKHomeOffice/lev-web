@@ -60,7 +60,7 @@
 
           a {
             @include bold-24;
-            color: white;
+            color: $white;
             text-decoration: none;
 
             &:hover {

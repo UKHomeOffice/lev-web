@@ -1,3 +1,8 @@
+$heading-text-colour: #005ea5;
+$hover-bg-colour: #f2f7fa;
+$hover-border-colour: #2d7ab4;
+$hover-text-colour: #005ea5;
+
 #records {
   border-bottom: 2px solid $border-colour;
 
@@ -18,7 +23,7 @@
           margin-bottom: 0.4em;
           margin-top: 0;
           text-decoration: underline;
-          color: #005ea5;
+          color: $heading-text-colour;
         }
 
         table {
@@ -56,12 +61,12 @@
         }
 
         &:hover {
-          background-color: #f2f7fa;
-          border-color: #2d7ab4;
+          background-color: $hover-bg-colour;
+          border-color: $hover-border-colour;
           table {
             th,
             td {
-              color: #005ea5;
+              color: $hover-text-colour;
             }
           }
         }

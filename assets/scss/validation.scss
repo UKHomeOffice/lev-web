@@ -1,3 +1,5 @@
+$error-label-colour: #af1324;
+
 .form-group {
   &.validation-error {
 
@@ -30,7 +32,7 @@
         line-height: 1.31579;
         font-weight: 700;
         text-transform: none;
-        color: #af1324;
+        color: $error-label-colour;
       }
     }
   }

@@ -1,23 +1,30 @@
+$flag-border-colour: #eee;
+$alert-bg-colour: #fcc;
+$alert-fg-colour: #c00;
+$warn-bg-colour: #fec;
+$warn-text-colour: #c70;
+$warn-border-colour: #ca0;
+
 /* Flags */
 .flag {
   display: block;
-  background-color: #eee;
-  color: #000;
+  background-color: $flag-border-colour;
+  color: $black;
   border-left: em(10) solid $border-colour;
   padding: em(15);
   margin-bottom: em(20);
 }
 
 .alert {
-  background-color: #fcc;
-  color: #c00;
-  border-color: #c00;
+  background-color: $alert-bg-colour;
+  color: $alert-fg-colour;
+  border-color: $alert-fg-colour;
 }
 
 .warning {
-  background-color: #fec;
-  color: #c70;
-  border-color: #ca0;
+  background-color: $warn-bg-colour;
+  color: $warn-text-colour;
+  border-color: $warn-border-colour;
 }
 
 $section-colour: #f2f3f3;
