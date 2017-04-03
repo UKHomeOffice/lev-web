@@ -23,7 +23,8 @@ body {
   @include core-19;
 }
 
-.heading-large, h1 {
+.heading-large,
+h1 {
   font-size: 19px;
   margin-top: 10px;
 
@@ -183,6 +184,7 @@ body {
 body {
   &.no-js {
     details > {
+      // sass-lint:disable-block single-line-per-selector
       address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figcaption, figure, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, li, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video {
         display: block;
       }

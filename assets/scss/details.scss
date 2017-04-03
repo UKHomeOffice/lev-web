@@ -28,7 +28,8 @@ table {
     border-bottom: 1px solid $border-colour;
 
     tbody {
-      th, td {
+      th,
+      td {
         @include core-19;
         vertical-align: top;
         border-bottom: none;
@@ -43,7 +44,8 @@ table {
       .section-head {
         border-top: 1px solid $border-colour;
 
-        th, td {
+        th,
+        td {
           font-weight: bold;
           color: $text-colour;
           background-color: $section-colour;
