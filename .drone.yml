@@ -79,6 +79,39 @@ pipeline:
       branch: master
       event: push
 
+  notify_slack_success:
+    image: plugins/slack:1.0
+    channel: general
+    username: Drone
+    icon_url: http://readme.drone.io/0.5/logo_dark.svg
+    icon.url: http://readme.drone.io/0.5/logo_dark.svg
+    template: >
+      *Deployed {{repo.name}} to Dev* - <{{build.link}}|#{{build.number}}>
+    when:
+      branch: master
+      event: push
+      status: success
+
+  notify_slack_failure:
+    image: plugins/slack:1.0
+    channel: alerts
+    username: Drone
+    icon_url: http://readme.drone.io/0.5/logo_dark.svg
+    icon.url: http://readme.drone.io/0.5/logo_dark.svg
+    template: >
+      *Failed to deploy {{repo.name}} to Dev*
+
+      Author: {{build.author}}
+
+      Duration: {{since job.started}}
+      Job: <{{build.link}}|#{{build.number}}>
+
+      Commit: {{build.commit}}
+    when:
+      branch: master
+      event: push
+      status: failure
+
 services:
   mock:
     image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-117-0978aa84d33711118362d15a7a5cc2d5b37c908e
