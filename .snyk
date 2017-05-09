@@ -1,6 +1,55 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.7.0
-ignore: {}
+version: v1.7.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:brace-expansion:20170302':
+    - hof > i18n-future > glob > minimatch > brace-expansion:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.135Z'
+    - hof > vow-fs > glob > minimatch > brace-expansion:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.136Z'
+    - hof > prompt > utile > rimraf > glob > minimatch > brace-expansion:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.136Z'
+    - hof > hmpo-frontend-toolkit > browserify > glob > minimatch > brace-expansion:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.137Z'
+  'npm:concat-stream:20160901':
+    - hof > hmpo-model > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.137Z'
+    - hof > cross-spawn > spawn-sync > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.140Z'
+    - hof > hmpo-form-wizard > hmpo-model > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.140Z'
+    - hof > hof-controllers > hmpo-form-wizard > hmpo-model > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.142Z'
+    - hof > hmpo-frontend-toolkit > browserify > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.142Z'
+    - hof > hmpo-frontend-toolkit > browserify > insert-module-globals > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.142Z'
+    - hof > hmpo-frontend-toolkit > browserify > module-deps > concat-stream:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.143Z'
+  'npm:qs:20170213':
+    - hof > hmpo-form-wizard > express > qs:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.143Z'
+    - hof > hmpo-form-wizard > hmpo-form-controller > express > qs:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.143Z'
+    - hof > hof-controllers > hmpo-form-wizard > express > qs:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.144Z'
+    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > qs:
+        reason: HOF
+        expires: '2017-06-08T19:06:46.144Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20151024':
