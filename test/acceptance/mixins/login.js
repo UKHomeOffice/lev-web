@@ -2,9 +2,7 @@
 
 module.exports = (target) => {
   target.shouldBeOnLoginPage = function() {
-    const body = this.getText('body');
-    body.should.have.string('Username or email');
-    body.should.have.string('Password');
+    browser.element('input[value="Log in"]').should.exist;
   };
 
   target.submitLoginPage = function(username, password) {
