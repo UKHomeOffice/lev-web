@@ -1,8 +1,12 @@
 'use strict';
 
 const moment = require('moment');
+const testConfig = require('../config');
+const env = testConfig.env;
 
 describe('User Activity', () => {
+  const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests';
+
   before(() => {
     browser.goToUserActivityReport();
   });
@@ -30,10 +34,12 @@ describe('User Activity', () => {
     });
 
     describe('returning audit data', () => {
-      const from = '23/12/2016';
-      const to = '26/12/2016';
+      const days = 7;
+      const from = env !== 'local' ? moment().add(1 - days, 'days').format('DD/MM/YYYY') : '23/12/2016';
+      const to = env !== 'local' ? moment().format('DD/MM/YYYY') :
+        moment(from, 'DD/MM/YYYY').add(days - 1, 'days').format('DD/MM/YYYY');
       let columns;
-      let userCounts;
+      let userCounts = [];
 
       before(() => {
         browser.generateReport(from, to);
@@ -46,21 +52,84 @@ describe('User Activity', () => {
       it('displays an appropriate message including the search dates', () => {
         const h2 = `Showing audit data from ${from}, to ${to}`;
         browser.getText('h2').should.equal(h2);
-        columns = browser.getText('table.audit > tbody > tr > *');
+      });
+
+      describe('contains a checkbox to toggle weekend visibility', () => {
+        let checkbox;
+        const isWeekend = date => date.format('ddd')[0].toLowerCase() === 's';
+
+        it('weekend days should be hidden by default', () => {
+          checkbox = browser.element('#weekends');
+          browser.isSelected('#weekends').should.be.false;
+          const tableHeaders = browser.getText('table.audit > thead > tr');
+          const cursor = moment(from, 'DD/MM/YYYY');
+          let i = 0;
+          while (i++ < days) {
+            if (isWeekend(cursor)) {
+              tableHeaders.should.not.have.string(cursor.format('D MMM YYYY'));
+            } else {
+              tableHeaders.should.have.string(cursor.format('D MMM YYYY'));
+            }
+            cursor.add(1, 'days');
+          }
+          tableHeaders.should.have.string('Period total');
+        });
+
+        it('clicking the checkbox should show the weekend days', () => {
+          checkbox.click();
+          const tableHeaders = browser.getText('table.audit > thead > tr');
+          const cursor = moment(from, 'DD/MM/YYYY');
+          let i = 0;
+          while (i++ < days) {
+            tableHeaders.should.have.string(cursor.format('D MMM YYYY'));
+            cursor.add(1, 'days');
+          }
+          tableHeaders.should.have.string('Period total');
+        });
+
+        it('clicking the checkbox again should hide the weekend days again', () => {
+          checkbox.click();
+          const tableHeaders = browser.getText('table.audit > thead > tr');
+          const cursor = moment(from, 'DD/MM/YYYY');
+          let i = 0;
+          while (i++ < days) {
+            if (isWeekend(cursor)) {
+              tableHeaders.should.not.have.string(cursor.format('D MMM YYYY'));
+            } else {
+              tableHeaders.should.have.string(cursor.format('D MMM YYYY'));
+            }
+            cursor.add(1, 'days');
+          }
+          tableHeaders.should.have.string('Period total');
+        });
       });
 
       describe('displays a table with search counts for each user', () => {
-        it('each row should display the username', () => {
-          columns.shift().should.equal('lev-e2e-tests');
+        before('make sure the weekend days are showing so the totals are correct', () => {
+          const checkbox = browser.element('#weekends');
+          if (!browser.isSelected('#weekends')) {
+            checkbox.click();
+          }
+          columns = browser.getText('table.audit > tbody > tr > *');
         });
 
-        it('each row should have a column for each day with the search count in', () => {
-          (userCounts = columns.splice(0, Math.floor(columns.length / 2))
-            .map(c => c ? parseInt(c, 10) : 0)).should.not.throwError;
+        it('each row should display the username', () => {
+          columns.should.contain(user);
+        });
+
+        it('each row should have a column for each day with the search count', () => {
+
+          while (columns[0] !== 'Day totals') {
+            columns.shift();
+            let row = columns.splice(0, days + 1);
+            let counts = row.map(c => c ? parseInt(c, 10) : 0);
+            (userCounts = userCounts.concat([counts])).should.not.throwError;
+          }
         });
 
         it('each row should have a search count total for the user as the last column', () => {
-          userCounts.pop().should.equal(userCounts.reduce((t, c) => t + c));
+          userCounts.forEach(uc =>
+            uc.slice(0, days).reduce((t, c) => t + c, 0).should.equal(uc[uc.length - 1]));
         });
       });
 
@@ -75,54 +144,22 @@ describe('User Activity', () => {
           (totals = columns.map(c => c ? parseInt(c, 10) : 0)).should.not.throwError;
         });
 
-        it('the totals should be accurate', () => {
-          totals.pop().should.equal(totals.reduce((t, c) => t + c));
-          userCounts.should.deep.equal(totals);
-        });
-      });
-
-      describe('contains a checkbox to toggle weekend visibility', () => {
-        let checkbox;
-
-        it('weekend days should be hidden by default', () => {
-          checkbox = browser.element('#weekends');
-          browser.isSelected('#weekends').should.be.false;
-          const tableHeaders = browser.getText('table.audit > thead > tr');
-          tableHeaders.should.have.string('23 Dec 2016');
-          tableHeaders.should.not.have.string('24 Dec 2016');
-          tableHeaders.should.not.have.string('25 Dec 2016');
-          tableHeaders.should.have.string('26 Dec 2016');
-          tableHeaders.should.have.string('Period total');
+        it('the day totals should be accurate', () => {
+          totals.forEach((t, i) => t.should.equal(userCounts.reduce((tc, uc) => tc + uc[i], 0)));
         });
 
-        it('clicking the checkbox should show the weekend days', () => {
-          checkbox.click();
-          const tableHeaders = browser.getText('table.audit > thead > tr');
-          tableHeaders.should.have.string('23 Dec 2016');
-          tableHeaders.should.have.string('24 Dec 2016');
-          tableHeaders.should.have.string('25 Dec 2016');
-          tableHeaders.should.have.string('26 Dec 2016');
-          tableHeaders.should.have.string('Period total');
-        });
-
-        it('clicking the checkbox again should hide the weekend days again', () => {
-          checkbox.click();
-          const tableHeaders = browser.getText('table.audit > thead > tr');
-          tableHeaders.should.have.string('23 Dec 2016');
-          tableHeaders.should.not.have.string('24 Dec 2016');
-          tableHeaders.should.not.have.string('25 Dec 2016');
-          tableHeaders.should.have.string('26 Dec 2016');
-          tableHeaders.should.have.string('Period total');
+        it('the grand total should be accurate', () => {
+          totals.slice(0, days).reduce((t, c) => t + c, 0).should.equal(totals[totals.length - 1]);
         });
       });
     });
 
     describe('using the "fast entry" date format', () => {
-      const from = '23122016';
-      const to = '26122016';
+      const from = env !== 'local' ? moment() : moment('231216', 'DDMMYY');
+      const to = moment(from).add(3, 'days');
 
       before(() => {
-        browser.generateReport(from, to);
+        browser.generateReport(from.format('DDMMYY'), to.format('DDMMYY'));
       });
 
       it('shows the User Activity report page', () => {
@@ -130,7 +167,7 @@ describe('User Activity', () => {
       });
 
       it('displays an appropriate message including the search dates', () => {
-        const h2 = 'Showing audit data from 23/12/2016, to 26/12/2016';
+        const h2 = `Showing audit data from ${from.format('DD/MM/YYYY')}, to ${to.format('DD/MM/YYYY')}`;
         browser.getText('h2').should.equal(h2);
       });
     });
@@ -140,7 +177,6 @@ describe('User Activity', () => {
     describe('returning no audit data', () => {
       const from = '01/01/1800';
       const to = '01/01/1900';
-      const user = 'some-chap';
 
       before(() => {
         browser.generateReport(from, to, user);
@@ -156,9 +192,8 @@ describe('User Activity', () => {
     });
 
     describe('returning audit data', () => {
-      const from = '23/12/2016';
-      const to = '26/12/2016';
-      const user = 'lev-e2e-tests';
+      const from = env !== 'local' ? moment().format('DD/MM/YYYY') : '23/12/2016';
+      const to = env !== 'local' ? moment().add(3, 'days').format('DD/MM/YYYY') : '26/12/2016';
 
       before(() => {
         browser.generateReport(from, to, user);
@@ -185,7 +220,7 @@ describe('User Activity', () => {
         });
 
         it('with a row for the user', () => {
-          rowHeaders[0].should.equal('lev-e2e-tests');
+          rowHeaders[0].should.equal(user);
         });
 
         it('with a row for the totals', () => {
