@@ -45,6 +45,7 @@ $hover-text-colour: #005EA5;
         th {
           width: 7.2em;
         }
+
         td {
           font-weight: bold;
         }
@@ -63,6 +64,7 @@ $hover-text-colour: #005EA5;
       &:hover {
         background-color: $hover-bg-colour;
         border-color: $hover-border-colour;
+
         table {
           th,
           td {
