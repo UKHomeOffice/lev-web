@@ -1,9 +1,9 @@
-$flag-border-colour: #eee;
-$alert-bg-colour: #fcc;
-$alert-fg-colour: #c00;
-$warn-bg-colour: #fec;
-$warn-text-colour: #c70;
-$warn-border-colour: #ca0;
+$flag-border-colour: #EEEEEE;
+$alert-bg-colour: #FFCCCC;
+$alert-fg-colour: #CC0000;
+$warn-bg-colour: #FFEECC;
+$warn-text-colour: #CC7700;
+$warn-border-colour: #CCAA00;
 
 /* Flags */
 .flag {
@@ -27,7 +27,7 @@ $warn-border-colour: #ca0;
   border-color: $warn-border-colour;
 }
 
-$section-colour: #f2f3f3;
+$section-colour: #F2F3F3;
 
 table {
   &.details {

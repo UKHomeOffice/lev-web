@@ -10,9 +10,9 @@ $path: '../img/';
 @import './user-activity';
 
 $form-spacing: 15px;
-$menu-border-colour: #ccc;
-$cursor-bg-colour: #0097cf;
-$control-border-colour: #6f777b;
+$menu-border-colour: #CCCCCC;
+$cursor-bg-colour: #0097CF;
+$control-border-colour: #6F777B;
 
 .phase-banner {
   @include phase-banner(beta);
