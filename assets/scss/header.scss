@@ -10,21 +10,21 @@
   }
 
   > .header-wrapper {
-    padding: 8px 0;
-
     @include media(tablet) {
       padding: 8px 15px;
     }
 
+    padding: 8px 0;
+
     > .header-row {
       @extend %grid-row;
-      padding: 0 15px;
-      margin: 0;
-      height: 31px;
-
       @include media(tablet) {
         height: 36px;
       }
+
+      padding: 0 15px;
+      margin: 0;
+      height: 31px;
 
       > #logo {
         @include grid-column(1 / 4, 370px);
@@ -50,14 +50,14 @@
         height: 100%;
 
         #proposition-name {
+          @include media(370px) {
+            display: table-cell;
+          }
+
           display: none;
           vertical-align: middle;
           height: 100%;
           /*margin: 0.25em 0;*/
-
-          @include media(370px) {
-            display: table-cell;
-          }
 
           a {
             @include bold-24;

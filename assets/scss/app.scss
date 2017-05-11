@@ -28,13 +28,13 @@ body {
 
 .heading-large,
 h1 {
-  font-size: 19px;
-  margin-top: 10px;
-
   @include media(desktop) {
     font-size: 32px;
     margin-top: 20px;
   }
+
+  font-size: 19px;
+  margin-top: 10px;
 }
 
 .form-label-bold {
@@ -70,12 +70,12 @@ h1 {
 
 //custom form styling
 .form-control {
-  padding: 0.5em;
-  border: 2px solid $control-border-colour; // hopefully this will be surplanted by updated FEKT
-
   @include media(desktop) {
     width: 65%;
   }
+
+  padding: 0.5em;
+  border: 2px solid $control-border-colour; // hopefully this will be surplanted by updated FEKT
 }
 
 .form-group {
