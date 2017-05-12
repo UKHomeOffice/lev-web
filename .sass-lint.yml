@@ -118,7 +118,7 @@ rules:
     -
       max-depth: 4
   # Disallow no attribute selectors
-  no-attribute-selectors: 2
+  no-attribute-selectors: 0
   # Disallow color keywords (eg: red, blue, etc…)
   no-color-keywords: 2
   # Disallow color literals (eg: no rgb, rgba, hsl, hsla — MUST use variables)
@@ -129,7 +129,7 @@ rules:
       allow-rgba: false
       allow-variable-identifiers: true
   # Disallow combinators (eg: > ~ + [ESPACE])
-  no-combinators: 2
+  no-combinators: 0
   # Don't disable CSS comments
   no-css-comments: 0
   # Disallow debug
