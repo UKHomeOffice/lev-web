@@ -1,15 +1,18 @@
-$path: "../img/";
+$path: '../img/';
 
-@import "../../node_modules/hof/node_modules/hmpo-frontend-toolkit/assets/stylesheets/app.scss";
+@import '../../node_modules/hof/node_modules/hmpo-frontend-toolkit/assets/stylesheets/app';
 
-@import "./icons.scss";
-@import "./validation.scss";
-@import "./header.scss";
-@import "./results.scss";
-@import "./details.scss";
-@import "./user-activity.scss";
+@import './icons';
+@import './validation';
+@import './header';
+@import './results';
+@import './details';
+@import './user-activity';
 
 $form-spacing: 15px;
+$menu-border-colour: #CCCCCC;
+$cursor-bg-colour: #0097CF;
+$control-border-colour: #6F777B;
 
 .phase-banner {
   @include phase-banner(beta);
@@ -21,16 +24,39 @@ html {
 
 body {
   @include core-19;
+
+  // fix <details> child elements showing when page is slow to load
+  &.no-js {
+    details > {
+      // sass-lint:disable-block single-line-per-selector
+      address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figcaption, figure, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, li, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video {
+        display: block;
+      }
+
+      b, big, i, small, tt, abbr, acronym, cite, code, dfn, em, kbd, strong, samp, time, var, a, bdo, br, img, map, object, q, script, span, sub, sup, button, input, label, select, textarea {
+        display: inline;
+      }
+
+      table {
+        display: table;
+      }
+
+      ruby {
+        display: ruby;
+      }
+    }
+  }
 }
 
-.heading-large, h1 {
-  font-size: 19px;
-  margin-top: 10px;
-
+.heading-large,
+h1 {
   @include media(desktop) {
     font-size: 32px;
     margin-top: 20px;
   }
+
+  font-size: 19px;
+  margin-top: 10px;
 }
 
 .form-label-bold {
@@ -41,8 +67,8 @@ body {
 
 //autocomplete styling
 .tt-menu {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: $white;
+  border: 1px solid $menu-border-colour;
   width: 65%;
 }
 
@@ -51,8 +77,8 @@ body {
 
   &:hover,
   &.tt-cursor {
-    color: #fff;
-    background-color: #0097cf;
+    color: $white;
+    background-color: $cursor-bg-colour;
   }
 
   &:hover {
@@ -66,37 +92,46 @@ body {
 
 //custom form styling
 .form-control {
-  padding: 0.5em;
-  border: 2px solid #6f777b; // hopefully this will be surplanted by updated FEKT
-
   @include media(desktop) {
     width: 65%;
   }
+
+  padding: 0.5em;
+  border: 2px solid $control-border-colour; // hopefully this will be surplanted by updated FEKT
 }
 
 .form-group {
   margin-top: $form-spacing;
+
+  // Panels within form groups
+  // Remove the bottom padding as .form-group sets a bottom margin
+  .panel-border-narrow {
+    padding-bottom: 0;
+  }
 }
-#system-number-group.form-group {
-  margin-bottom: 10px;
+
+#system-number-group {
+  &.form-group {
+    margin-bottom: 10px;
+  }
 }
 
 // GOVUK Elements `.form-date` overrides
 .form-date {
-    border-left: none;
-    padding-left: 0;
+  border-left: none;
+  padding-left: 0;
 
-    label {
-        @include core-19();
-    }
+  label {
+    @include core-19;
+  }
 
-    .form-group {
-        input {
-            &[id$="-year"] {
-                width: em(70);
-            }
-        }
+  .form-group {
+    input {
+      &[id$=-year] {
+        width: em(70);
+      }
     }
+  }
 }
 
 .button {
@@ -113,13 +148,15 @@ body {
   }
 }
 
-.buttons .button {
-  &:first-child {
-    margin-left: 0;
-  }
+.buttons {
+  .button {
+    &:first-child {
+      margin-left: 0;
+    }
 
-  &:last-child {
-    margin-right: 0;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 
@@ -167,32 +204,10 @@ body {
   border-left-width: 5px;
 }
 
-// Panels within form groups
-// Remove the bottom padding as .form-group sets a bottom margin
-.form-group .panel-border-narrow {
-  padding-bottom: 0;
-}
-
-// fix <details> child elements showing when page is slow to load
-body.no-js details > {
-  address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figcaption, figure, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, li, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video {
-    display: block;
-  }
-  b, big, i, small, tt, abbr, acronym, cite, code, dfn, em, kbd, strong, samp, time, var, a, bdo, br, img, map, object, q, script, span, sub, sup, button, input, label, select, textarea {
-    display: inline;
-  }
-  table {
-    display: table;
-  }
-  ruby {
-    display: ruby;
-  }
-}
-
 details {
   margin-bottom: $form-spacing;
 }
 
 .form-hint {
-  color: #000000;
+  color: $black;
 }

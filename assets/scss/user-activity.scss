@@ -59,7 +59,7 @@ body {
   }
 }
 
-[name='weekends'] {
+[name=weekends] {
   &:checked {
     + .audit {
       .weekend {

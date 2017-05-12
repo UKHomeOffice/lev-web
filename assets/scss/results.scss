@@ -1,69 +1,77 @@
+$heading-text-colour: #005EA5;
+$hover-bg-colour: #F2F7FA;
+$hover-border-colour: #2D7BA4;
+$hover-text-colour: #005EA5;
+
 #records {
   border-bottom: 2px solid $border-colour;
 
   li {
     margin: 0;
+  }
 
-    article {
-      a {
-        display: block;
-        border-top: 1px solid $border-colour;
-        text-decoration: none;
-        padding: 10px 0;
-        color: $black;
+  article {
+    a {
+      display: block;
+      border-top: 1px solid $border-colour;
+      text-decoration: none;
+      padding: 10px 0;
+      color: $black;
 
-        h2 {
-          @include bold-19;
-          margin-bottom: 0.4em;
-          margin-top: 0;
-          text-decoration: underline;
-          color: #005ea5;
+      h2 {
+        @include bold-19;
+        margin-bottom: 0.4em;
+        margin-top: 0;
+        text-decoration: underline;
+        color: $heading-text-colour;
+      }
+
+      table {
+        border-top: none;
+        border-bottom: none;
+
+        th,
+        td {
+          border-bottom: none;
+          padding: 0.3em 0;
+
+          &:last-of-type {
+            padding-bottom: 0;
+          }
+          @include core-19;
+          vertical-align: top;
         }
+
+        th {
+          width: 7.2em;
+        }
+
+        td {
+          font-weight: bold;
+        }
+      }
+
+      .flag {
+        display: block;
+        background-color: transparent;
+        border-left: none;
+        padding: 0;
+        margin-bottom: 0;
+        font-weight: bold;
+        margin-top: 0.4em;
+      }
+
+      &:hover {
+        background-color: $hover-bg-colour;
+        border-color: $hover-border-colour;
 
         table {
-          border-top: none;
-          border-bottom: none;
-
-          th, td {
-            border-bottom: none;
-            padding: 0.3em 0;
-
-            &:last-of-type {
-              padding-bottom: 0;
-            }
-            @include core-19;
-            vertical-align: top;
-          }
-
-          th {
-            width: 7.2em;
-          }
+          th,
           td {
-            font-weight: bold;
-          }
-        }
-
-        .flag {
-          display: block;
-          background-color: transparent;
-          border-left: none;
-          padding: 0;
-          margin-bottom: 0;
-          font-weight: bold;
-          margin-top: 0.4em;
-        }
-
-        &:hover {
-          background-color: #f2f7fa;
-          border-color: #2d7ab4;
-          table {
-            th, td {
-              color: #005ea5;
-            }
+            color: $hover-text-colour;
           }
         }
       }
     }
   }
 }
-

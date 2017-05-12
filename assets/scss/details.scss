@@ -1,53 +1,67 @@
+$flag-border-colour: #EEEEEE;
+$alert-bg-colour: #FFCCCC;
+$alert-fg-colour: #CC0000;
+$warn-bg-colour: #FFEECC;
+$warn-text-colour: #CC7700;
+$warn-border-colour: #CCAA00;
+
 /* Flags */
 .flag {
   display: block;
-  background-color: #eee;
-  color: #000;
+  background-color: $flag-border-colour;
+  color: $black;
   border-left: em(10) solid $border-colour;
   padding: em(15);
   margin-bottom: em(20);
 }
 
 .alert {
-  background-color: #fcc;
-  color: #c00;
-  border-color: #c00;
+  background-color: $alert-bg-colour;
+  color: $alert-fg-colour;
+  border-color: $alert-fg-colour;
 }
 
 .warning {
-  background-color: #fec;
-  color: #c70;
-  border-color: #ca0;
+  background-color: $warn-bg-colour;
+  color: $warn-text-colour;
+  border-color: $warn-border-colour;
 }
 
-$section-colour: #f2f3f3;
+$section-colour: #F2F3F3;
 
-table.details {
-  border-top: 1px solid $border-colour;
-  border-bottom: 1px solid $border-colour;
+table {
+  &.details {
+    border-top: 1px solid $border-colour;
+    border-bottom: 1px solid $border-colour;
 
-  tbody {
-    th, td {
-      @include core-19;
-      vertical-align: top;
-      border-bottom: none;
-      padding: 0.4em 0.6em 0.4em 0.6em;
-    }
-    th {
-      width: 10em;
-    }
-    td {
-      font-weight: bold;
-    }
-    .section-head {
-      border-top: 1px solid $border-colour;
+    tbody {
+      th,
+      td {
+        @include core-19;
+        vertical-align: top;
+        border-bottom: none;
+        padding: 0.4em 0.6em 0.4em 0.6em;
+      }
 
-      th, td {
+      th {
+        width: 10em;
+      }
+
+      td {
         font-weight: bold;
-        color: $text-colour;
-        background-color: $section-colour;
-        padding-top: 0.4em;
-        padding-bottom: 0.3em;
+      }
+
+      .section-head {
+        border-top: 1px solid $border-colour;
+
+        th,
+        td {
+          font-weight: bold;
+          color: $text-colour;
+          background-color: $section-colour;
+          padding-top: 0.4em;
+          padding-bottom: 0.3em;
+        }
       }
     }
   }
