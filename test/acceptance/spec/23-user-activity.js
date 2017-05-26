@@ -152,6 +152,22 @@ describe('User Activity', () => {
           totals.slice(0, days).reduce((t, c) => t + c, 0).should.equal(totals[totals.length - 1]);
         });
       });
+
+      describe('displays a download link', function() {
+        before(() => {
+          this.link = browser.element('a#save');
+        });
+
+        it('on the page', () => {
+          this.link.should.exist;
+        });
+
+        it('with a "download" attribute containing the filename', () => {
+          const fromDshd = moment(from, 'DD/MM/YYYY').format('DD-MM-YY');
+          const toDshd = moment(to, 'DD/MM/YYYY').format('DD-MM-YY');
+          this.link.getAttribute('download').should.equal(`audit_report_${fromDshd}_to_${toDshd}.csv`);
+        });
+      });
     });
 
     describe('using the "fast entry" date format', () => {
@@ -225,6 +241,22 @@ describe('User Activity', () => {
 
         it('with a row for the totals', () => {
           rowHeaders[1].should.equal('Day totals');
+        });
+      });
+
+      describe('displays a download link', function() {
+        before(() => {
+          this.link = browser.element('a#save');
+        });
+
+        it('on the page', () => {
+          this.link.should.exist;
+        });
+
+        it('with a "download" attribute containing the filename', () => {
+          const fromDshd = moment(from, 'DD/MM/YYYY').format('DD-MM-YY');
+          const toDshd = moment(to, 'DD/MM/YYYY').format('DD-MM-YY');
+          this.link.getAttribute('download').should.equal(`audit_report_for_${user}_${fromDshd}_to_${toDshd}.csv`);
         });
       });
     });

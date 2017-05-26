@@ -78,6 +78,8 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
     const data = {
       from: from.format('DD/MM/YYYY'),
       to: to.format('DD/MM/YYYY'),
+      fromDshd: from.format('DD-MM-YY'),
+      toDshd: to.format('DD-MM-YY'),
       user: userFilter
     };
     if (records && Object.keys(records).length) {
