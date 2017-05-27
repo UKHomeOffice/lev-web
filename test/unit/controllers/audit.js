@@ -90,6 +90,8 @@ describe('Audit Controller', () => {
                 data.should.deep.equal({
                   from: req.query.from,
                   to: req.query.to,
+                  fromDshd: moment(req.query.from, 'DD/MM/YYYY').format('DD-MM-YY'),
+                  toDshd: moment(req.query.to, 'DD/MM/YYYY').format('DD-MM-YY'),
                   naudit: true,
                   user: ''
                 });
@@ -120,6 +122,8 @@ describe('Audit Controller', () => {
                 data.should.deep.equal({
                   from: req.query.from,
                   to: req.query.to,
+                  fromDshd: moment(req.query.from, 'DD/MM/YYYY').format('DD-MM-YY'),
+                  toDshd: moment(req.query.to, 'DD/MM/YYYY').format('DD-MM-YY'),
                   user: req.query.user,
                   naudit: true
                 });
@@ -154,6 +158,8 @@ describe('Audit Controller', () => {
                 data.should.deep.equal({
                   from: req.query.from,
                   to: req.query.to,
+                  fromDshd: moment(req.query.from, 'DD/MM/YYYY').format('DD-MM-YY'),
+                  toDshd: moment(req.query.to, 'DD/MM/YYYY').format('DD-MM-YY'),
                   user: '',
                   audit: {
                     dates: [

@@ -1,0 +1,184 @@
+<body class="js-enabled audit">
+
+<header role="banner" id="global-header" class="with-proposition">
+  <div class="header-wrapper">
+    <div class="header-row">
+      <div id="logo"></div>
+      <div id="service-header">
+        <div id="proposition-name"><a href="/">User Activity report
+        </a></div>
+      </div>
+      <ul id="nav">
+        <li><a id="sign-out" href="/oauth/logout?redirect=%2F">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main id="content" class="main" role="main">
+  <div class="grid-row">
+    <div class="column-full">
+      <header>
+        <h1>
+          Audit information
+        </h1>
+      </header>
+
+      <form action="" method="GET" autocomplete="off" novalidate="true" spellcheck="false">
+        <div id="controls">
+          <div id="from-group" class="form-group">
+            <label for="from" class="form-label-bold">
+              Search from
+              <span id="from-hint" class="form-hint">For example 15/1/2017</span>
+
+            </label>
+            <input type="text" name="from" id="from" class="form-control" aria-required="false" aria-describedby="from-hint">
+          </div>
+
+          <div id="to-group" class="form-group">
+            <label for="to" class="form-label-bold">
+              Search to
+              <span id="to-hint" class="form-hint">For example 15/1/2017</span>
+
+            </label>
+            <input type="text" name="to" id="to" class="form-control" aria-required="false" aria-describedby="to-hint">
+          </div>
+
+          <div id="user-group" class="form-group">
+            <label for="user" class="form-label-bold">
+              User filter
+              <span id="user-hint" class="form-hint">For example 'bob@hmpo.gov.uk' for a single user, or '@hmrc.gov.uk' for a group of users</span>
+
+            </label>
+            <input type="text" name="user" id="user" class="form-control" aria-required="false" aria-describedby="user-hint">
+          </div>
+
+        </div>
+        <div class="buttons">
+          <input type="submit" value="Search" class="button">
+
+        </div>
+      </form>
+
+      <h2>Showing audit data from 19/01/2017, to 29/01/2017</h2>
+      <label for="weekends">Show weekends?</label>
+      <input id="weekends" name="weekends" type="checkbox">
+      <table class="audit">
+        <thead>
+        <tr>
+          <th></th>
+          <th><span>19</span><span> Jan</span><span> 2017</span></th>
+          <th><span>20</span><span> Jan</span><span> 2017</span></th>
+          <th class="weekend"><span>21</span><span> Jan</span><span> 2017</span></th>
+          <th class="weekend"><span>22</span><span> Jan</span><span> 2017</span></th>
+          <th><span>23</span><span> Jan</span><span> 2017</span></th>
+          <th><span>24</span><span> Jan</span><span> 2017</span></th>
+          <th><span>25</span><span> Jan</span><span> 2017</span></th>
+          <th><span>26</span><span> Jan</span><span> 2017</span></th>
+          <th><span>27</span><span> Jan</span><span> 2017</span></th>
+          <th class="weekend"><span>28</span><span> Jan</span><span> 2017</span></th>
+          <th class="weekend"><span>29</span><span> Jan</span><span> 2017</span></th>
+          <th>Period total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th>adam</th>
+          <td></td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend">11</td>
+          <td>12</td>
+          <td>18</td>
+          <td>6</td>
+          <td>5</td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>52</td>
+        </tr>
+        <tr>
+          <th>amanda</th>
+          <td></td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>2</td>
+          <td>3</td>
+          <td>5</td>
+          <td>7</td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>17</td>
+        </tr>
+        <tr>
+          <th>colin</th>
+          <td></td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend">4</td>
+          <td></td>
+          <td>3</td>
+          <td>6</td>
+          <td>7</td>
+          <td>7</td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>27</td>
+        </tr>
+        <tr>
+          <th>lev-e2e-tests</th>
+          <td></td>
+          <td>2</td>
+          <td class="weekend">23</td>
+          <td class="weekend">6</td>
+          <td>3</td>
+          <td>15</td>
+          <td>28</td>
+          <td>31</td>
+          <td>8</td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>116</td>
+        </tr>
+        <tr>
+          <th>norma</th>
+          <td></td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td></td>
+          <td></td>
+          <td>3</td>
+          <td></td>
+          <td></td>
+          <td class="weekend"></td>
+          <td class="weekend"></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <th>Day totals</th>
+          <td>0</td>
+          <td>2</td>
+          <td class="weekend">23</td>
+          <td class="weekend">21</td>
+          <td>17</td>
+          <td>39</td>
+          <td>48</td>
+          <td>50</td>
+          <td>15</td>
+          <td class="weekend">0</td>
+          <td class="weekend">0</td>
+          <td>215</td>
+        </tr>
+        </tbody>
+      </table>
+      <p>
+        <a id="save" class="button" href="#" download="audit_report_19-01-17_to_29-01-17.csv">Save data to spreadsheet...</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+</body>
