@@ -109,7 +109,7 @@ const responseHandler = (resolve, reject) => (err, res, body) => {
     reject(err);
   } else if (res.statusCode !== 200) {
     const name = statusToName[res.statusCode];
-    const statusError = new Error(`Received status code "${res.statusCode}" from API`);
+    const statusError = new Error(`Received status code "${res.statusCode}" from API with body:\n${body}`);
 
     statusError.name = name;
 
