@@ -33,13 +33,13 @@ const requestData = (url, user) =>
 
 const findByNameDOB = (searchFields, user) => {
   if (searchFields === undefined) {
-    throw new ReferenceError('query(): first argument, searchFields, was not defined');
+    throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('query(): second argument, user, was not defined');
+    throw new ReferenceError('findByNameDOB(): second argument, user, was not defined');
   } else if (!(searchFields instanceof Object)) {
-    throw new TypeError('query(): first argument, searchFields, must be an object');
+    throw new TypeError('findByNameDOB(): first argument, searchFields, must be an object');
   } else if (typeof user !== 'string') {
-    throw new TypeError('query(): second argument, user, must be a string');
+    throw new TypeError('findByNameDOB(): second argument, user, must be a string');
   }
 
   return requestData(helpers.buildQueryUri(birthSearch, searchFields), user)
@@ -48,13 +48,13 @@ const findByNameDOB = (searchFields, user) => {
 
 const findBySystemNumber = (systemNumber, user) => {
   if (systemNumber === undefined) {
-    throw new ReferenceError('requestID(): first argument, systemNumber, was not defined');
+    throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('requestID(): second argument, user, was not defined');
+    throw new ReferenceError('findBySystemNumber(): second argument, user, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
-    throw new TypeError('requestID(): first argument, systemNumber, must be an integer');
+    throw new TypeError('findBySystemNumber(): first argument, systemNumber, must be an integer');
   } else if (typeof user !== 'string') {
-    throw new TypeError('requestID(): second argument, user, must be a string');
+    throw new TypeError('findBySystemNumber(): second argument, user, must be a string');
   }
 
   return requestData(birthSearch + '/' + systemNumber, user)
@@ -63,13 +63,13 @@ const findBySystemNumber = (systemNumber, user) => {
 
 const findBirths = (searchFields, user) => {
   if (searchFields === undefined) {
-    throw new ReferenceError('query(): first argument, searchFields, was not defined');
+    throw new ReferenceError('findBirths(): first argument, searchFields, was not defined');
   } else if (user === undefined) {
-    throw new ReferenceError('query(): second argument, user, was not defined');
+    throw new ReferenceError('findBirths(): second argument, user, was not defined');
   } else if (!(searchFields instanceof Object)) {
-    throw new TypeError('query(): first argument, searchFields, must be an object');
+    throw new TypeError('findBirths(): first argument, searchFields, must be an object');
   } else if (typeof user !== 'string') {
-    throw new TypeError('query(): second argument, user, must be a string');
+    throw new TypeError('findBirths(): second argument, user, must be a string');
   }
 
   const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
