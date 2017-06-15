@@ -19,7 +19,7 @@
     "test:ci": "npm-run-all -s lint lint:sass cover check-coverage ci:acceptance",
     "ci:acceptance": "npm-run-all -pr start:mock-kc-proxy chimp",
     "start:acceptance": "NODE_ENV=acceptance npm start",
-    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-117-0978aa84d33711118362d15a7a5cc2d5b37c908e",
+    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-187-321b2a2216a7078c0fc9fa5c4e125210322fdcf6",
     "start:mock-kc-proxy": "node test/acceptance/mock-kc-proxy/front.js",
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm",
     "stop:mockapi:kill": "docker kill lev-api-mock || true",
