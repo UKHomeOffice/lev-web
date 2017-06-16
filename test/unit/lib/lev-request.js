@@ -20,7 +20,7 @@ describe('lib/lev-request', function() {
         fs: {
           readFileSync: fsReadFileSync
         },
-        './request-with-oauth2': {
+        'request': {
           get: requestGet
         },
         '../config': config
@@ -28,21 +28,32 @@ describe('lib/lev-request', function() {
     }));
 
     it('Adds config for mutual TLS when available', () => {
-      config.lev_tls = { // eslint-disable-line camelcase
-        key: 'TLS Key',
-        cert: 'TLS Cert',
-        ca: 'TLS CA'
-      };
+        config.lev_tls = { // eslint-disable-line camelcase
+            key: 'TLS Key',
+            cert: 'TLS Cert',
+            ca: 'TLS CA'
+        };
 
-      fsReadFileSync.returnsArg(0);
+        fsReadFileSync.returnsArg(0);
 
-      levRequest.get('http://testhost.com');
+        levRequest.get('http://testhost.com');
+
+        requestGet.should.have.been.calledWith({
+            url: 'http://testhost.com',
+            key: 'TLS Key',
+            cert: 'TLS Cert',
+            ca: 'TLS CA'
+        });
+    });
+
+    it('Adds a bearer token when provided', () => {
+      levRequest.get('http://testhost.com', 'access_token');
 
       requestGet.should.have.been.calledWith({
         url: 'http://testhost.com',
-        key: 'TLS Key',
-        cert: 'TLS Cert',
-        ca: 'TLS CA'
+        headers: {
+          Authorization: 'Bearer access_token'
+        }
       });
     });
   });

@@ -19,7 +19,7 @@ util.inherits(SearchController, Parent);
 // Only redirect when a single result is returned, otherwise render
 // results page
 SearchController.prototype.successHandler = function successHandler(req, res, callback) {
-  const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+  const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
   const query = _.pick(req.query, _.keys(fields));
   const querystring = helpers.serialize(query);
 
@@ -53,7 +53,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
     }
   };
 
-  api.findBirths(req.form.values, username)
+  api.findBirths(req.form.values, accessToken)
     .then(resolved, rejected);
   this.emit('complete', req, res);
 };

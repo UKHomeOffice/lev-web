@@ -24,10 +24,10 @@ module.exports = function renderDetails(req, res, next) {
     return next(new TypeError('The parameter \'id\' was not an integer'), req, res);
   }
 
-  const username = req.headers['X-Auth-Username'] || req.headers['x-auth-username'];
+  const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
   const canRedirectToResults = (req.query && req.query.multipleResults) !== undefined;
 
-  return api.findBySystemNumber(Number(systemNumber), username)
+  return api.findBySystemNumber(Number(systemNumber), accessToken)
     .then(result => res.render('pages/details', {
           record: result,
           querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
