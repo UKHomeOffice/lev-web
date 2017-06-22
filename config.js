@@ -14,18 +14,11 @@ const conf = {
   session: {
     secret: process.env.SESSION_SECRET || 'secret'
   },
-  oauth: {
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    username: process.env.KEYCLOAK_U || 'exampleuser',
-    password: process.env.KEYCLOAK_P || 'xxxxx'
-  },
   lev_tls: {
     key: process.env.LEV_TLS_KEY || null,
     cert: process.env.LEV_TLS_CERT || null,
     ca: process.env.LEV_TLS_CA || null
   }
 };
-conf.oauth.oauthUrl = process.env.OAUTH_URL || `${conf.api.protocol}://${conf.api.host}:${conf.api.port}/oauth/login`;
 
 module.exports = conf;

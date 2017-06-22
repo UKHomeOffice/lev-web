@@ -4,6 +4,8 @@ const rewire = require('rewire');
 const detailsController = rewire('../../../controllers/details');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
 
+const accessToken = 'accessToken';
+
 describe('controllers/details', function() {
   var req;
   var res;
@@ -11,8 +13,8 @@ describe('controllers/details', function() {
 
   beforeEach(sinon.test(function() {
     var apiFindBySystemNumberStub = this.stub();
-    apiFindBySystemNumberStub.withArgs(1234, 'mrs-caseworker').returns(Promise.resolve({ records: [] }));
-    apiFindBySystemNumberStub.withArgs(34404, 'mrs-caseworker').returns(Promise.reject('error'));
+    apiFindBySystemNumberStub.withArgs(1234, accessToken).returns(Promise.resolve({ records: [] }));
+    apiFindBySystemNumberStub.withArgs(34404, accessToken).returns(Promise.reject('error'));
     api.findBySystemNumber = apiFindBySystemNumberStub;
 
     req = {
@@ -20,7 +22,7 @@ describe('controllers/details', function() {
         sysnum: '1234'
       },
       headers: {
-        'X-Auth-Username': 'mrs-caseworker'
+        'X-Auth-Token': accessToken
       }
     };
 
@@ -62,7 +64,7 @@ describe('controllers/details', function() {
     it('calls the api with the request GET params', function() {
       detailsController(req, res, next);
 
-      api.findBySystemNumber.should.have.been.calledWith(1234, 'mrs-caseworker');
+      api.findBySystemNumber.should.have.been.calledWith(1234, accessToken);
     });
 
     it('raises an error with no GET params', function() {

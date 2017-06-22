@@ -3,7 +3,7 @@
 process.title = 'lev-keycloak-proxy';
 const proxy = require('./');
 
-const server = proxy('localhost', 8002, 'localhost', 8001, 'lev-e2e-tests');
+const server = proxy('localhost', 8002, 'localhost', 8001, '<audit-token>');
 
 // gracefully handle shutdowns -----------------------
 

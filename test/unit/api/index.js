@@ -126,22 +126,19 @@ const parsedResponse = {
   }
 };
 
+const accessToken = 'access_token';
 const expectedHeaders = {
-  'Authorization': 'Bearer access_token',
-  'X-Auth-Downstream-Username': 'mrs-caseworker'
+  'Authorization': 'Bearer ' + accessToken
 };
 
 describe('api/index.js', () => {
   let api;
-  let expectedOAuthRequest;
   const requestGet = sinon.stub();
-  const requestPost = sinon.stub();
   this.resetStubs = true;
 
   before(() => {
     const request = require('request');
     request.get = requestGet;
-    request.post = requestPost;
     api = proxyquire('../../../api', {
       request: request,
       '../config': _.extend(config, {
@@ -149,46 +146,14 @@ describe('api/index.js', () => {
           protocol: 'http',
           host: 'testhost.com',
           port: 1111
-        },
-        oauth: {
-          oauthUrl: 'http://oauthserver.com',
-          clientId: 'clientId',
-          clientSecret: 'clientSecret',
-          username: 'username',
-          password: 'password'
         }
       })
     });
-
-    requestPost.yields(null, { statusCode: 200 }, JSON.stringify({
-      'access_token': 'access_token',
-      'expires_in': 300,
-      'refresh_expires_in': 1800,
-      'refresh_token': 'xxxx',
-      'token_type': 'bearer',
-      'id_token': 'yyyy',
-      'not-before-policy': 0,
-      'session_state': 'zzzz'
-    }));
-
-    const expectedBase64Auth = new Buffer('clientId:clientSecret').toString('base64');
-    expectedOAuthRequest = {
-      url: 'http://oauthserver.com',
-      form: {
-        grant_type: 'password', // eslint-disable-line camelcase
-        username: 'username',
-        password: 'password'
-      },
-      headers: {
-        Authorization: 'Basic ' + expectedBase64Auth
-      }
-    };
   });
 
   beforeEach(() => {
     if (this.resetStubs) {
       requestGet.reset();
-      requestPost.reset();
     }
   });
 
@@ -220,24 +185,22 @@ describe('api/index.js', () => {
           describe('should', () => {
             before(() => {
               this.resetStubs = false;
-              const username = 'mrs-caseworker';
               const query = {
                 surname: 'SURNAME',
                 'forenames': 'FIRST SECOND',
                 dob: '01/01/2001'
               };
 
-              result = api.findByNameDOB(query, username);
+              result = api.findByNameDOB(query, accessToken);
             });
 
-            it('first requests an OAuth2 token', () => requestPost.should.have.been.calledWith(expectedOAuthRequest));
-            it('then makes a request using the correct query string and adds auth headers', () =>
+            it('make a request using the correct query string and adds auth headers', () =>
               requestGet.should.have.been.calledWith({
                 headers: expectedHeaders,
                 url: 'http://testhost.com:1111/api/v0/events/birth'
                    + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
               }));
-            it('then returns a promise', () => result.should.be.instanceOf(Promise));
+            it('then return a promise', () => result.should.be.instanceOf(Promise));
 
             after(() => {
               this.resetStubs = true;
@@ -323,8 +286,7 @@ describe('api/index.js', () => {
         describe('and the second IS a string', () => {
           let result;
           let query;
-          const username = 'mrs-caseworker';
-          const read = () => api.findBirths(query, username);
+          const read = () => api.findBirths(query, accessToken);
 
           describe('and the first DOES NOT contain a \'system-number\' property', () => {
 
@@ -508,10 +470,9 @@ describe('api/index.js', () => {
           describe('should', () => {
             before(() => {
               this.resetStubs = false;
-              const username = 'mrs-caseworker';
               const id = 400000001;
 
-              result = api.findBySystemNumber(id, username);
+              result = api.findBySystemNumber(id, accessToken);
             });
 
             it('makes a request using the correct query string and adds auth headers', () =>
@@ -618,19 +579,15 @@ describe('api/index.js', () => {
         let result;
         const from = '2001-01-01';
         const to = '2001-02-01';
-        const user = 'an-auditor';
 
         before('try to get the user activity data', () => {
           this.resetStubs = false;
-          result = api.userActivityReport(user, moment(from), moment(to));
+          result = api.userActivityReport(accessToken, moment(from), moment(to));
         });
 
         it('should make a request to the API', () =>
           requestGet.lastCall.should.have.been.calledWith({
-            headers: {
-              Authorization: 'Bearer access_token',
-              'X-Auth-Downstream-Username': user
-            },
+            headers: expectedHeaders,
             url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
           }));
 
@@ -646,19 +603,15 @@ describe('api/index.js', () => {
       let result;
       const from = '2001-03-01';
       const to = '2001-04-01';
-      const user = 'an-auditor';
 
       before('try to get the user activity data', () => {
         this.resetStubs = false;
-        result = api.userActivityReport(user, moment(from), moment(to), 'fred');
+        result = api.userActivityReport(accessToken, moment(from), moment(to), 'fred');
       });
 
       it('should make a request to the API', () =>
         requestGet.lastCall.should.have.been.calledWith({
-          headers: {
-            Authorization: 'Bearer access_token',
-            'X-Auth-Downstream-Username': user
-          },
+          headers: expectedHeaders,
           url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}&user=fred`
         }));
 

@@ -56,7 +56,7 @@ describe('controllers/search', function() {
         req = _.extend(reqres.req(), {
           body: undefined,
           headers: {
-            'X-Auth-Username': 'mrs-caseworker'
+            'X-Auth-Token': 'access_token'
           },
           method: 'GET'
         });
