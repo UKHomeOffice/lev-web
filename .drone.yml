@@ -57,6 +57,7 @@ pipeline:
       - ${kubectl} set image deployment/${KUBE_DEPLOYMENT} "${KUBE_CONTAINER}=${IMAGE}:${TAG}"
       - ${kubectl} rollout status deployment/${KUBE_DEPLOYMENT}
       - ${kubectl} scale deployment ${KUBE_DEPLOYMENT} --replicas 1
+      - sleep 60
     when:
       branch: master
       event: push
