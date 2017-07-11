@@ -17,15 +17,15 @@ describe('Smoke Tests', () => {
       browser.url(testURL);
     });
 
-    it('I am presented with the login prompt', () => {
+    it('presents me with the login prompt', () => {
       browser.shouldBeOnLoginPage();
     });
 
-    it('I login to LEV', () => {
+    it('allows me to login to LEV', () => {
       browser.submitLoginPage(testConfig.username, testConfig.password);
     });
 
-    it('I am presented with the NOT FOUND error page', () => {
+    it('presents me with the NOT FOUND error page', () => {
       browser.shouldBeOn404Page();
     });
   });
