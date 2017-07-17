@@ -35,6 +35,7 @@
     "chimp": "NODE_ENV=acceptance chimp --mocha --browser=phantomjs --path=./test/acceptance/spec/",
     "chimp:ff": "NODE_ENV=acceptance chimp --mocha --browser=firefox --path=./test/acceptance/spec/ --watch",
     "smoke": "chimp --mocha --browser=phantomjs --path=./test/smoke/",
+    "test:browser": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo smoke || echo chimp)",
     "create:trigger": "touch ./.acceptance.trgr 2>/dev/null",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
