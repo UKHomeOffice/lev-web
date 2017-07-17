@@ -1,2 +1,2 @@
 FROM lev-web-testing
-ENTRYPOINT ["npm", "run", "chimp"]
+ENTRYPOINT ["npm", "run", "test:browser"]
