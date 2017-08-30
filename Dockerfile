@@ -1,5 +1,8 @@
 FROM quay.io/ukhomeofficedigital/nodejs-base:v6
 
+ARG GIT_COMMIT=unkown
+LABEL git-commit=$GIT_COMMIT
+
 RUN yum clean -q all && \
     yum update -y -q && \
     yum install -y -q git && \
