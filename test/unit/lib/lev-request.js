@@ -42,7 +42,10 @@ describe('lib/lev-request', function() {
             url: 'http://testhost.com',
             key: 'TLS Key',
             cert: 'TLS Cert',
-            ca: 'TLS CA'
+            ca: 'TLS CA',
+            agentOptions: {
+              rejectUnauthorized: false
+            }
         });
     });
 
