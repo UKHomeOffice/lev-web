@@ -45,7 +45,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## License
 
 This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.md) file for details
-
-
-### Delete me!
-Dummy change to test LEVWEB-769...
