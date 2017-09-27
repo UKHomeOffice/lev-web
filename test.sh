@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+usage="Usage: ${0} <ci-test-job>
+Examples:
+    ${0} test:ci
+    ${0} test:browser
+"
+[ -z "${1}" ] && printf "ERROR: no ci-test-job specified!\n\n${usage}" && exit 1
+
 echo "-----------------------
 running ${1}..."
 
