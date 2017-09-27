@@ -83,6 +83,19 @@ pipeline:
       branch: master
       event: push
 
+  save_test_logs:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
+      - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
+      - cat ./build-tests.log >> test.log
+      - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
+      - cat ./e2e-tests.log >> test.log
+      - ${kubectl} annotate deployment ${KUBE_DEPLOYMENT} lev-web-test-details=`cat test.log`
+    when:
+      branch: master
+      event: push
+
   notify_slack_success:
     image: plugins/slack:1.0
     channel: general
