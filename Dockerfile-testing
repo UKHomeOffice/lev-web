@@ -7,4 +7,4 @@ RUN yum install -y -q bzip2 fontconfig git && \
     chown -R nodejs:nodejs .
 
 USER nodejs
-CMD [ "run", "test:ci" ]
+CMD [ "run", "test:wrapper", "test:ci" ]
