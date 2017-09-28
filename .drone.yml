@@ -6,11 +6,13 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - DOCKER_IMAGE=lev-web
     commands:
+      - DOCKER_TEST_IMAGE="${DOCKER_IMAGE}-testing"
       - docker build -t "${DOCKER_IMAGE}" .
-      - docker build -t "${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+      - docker build -t "${DOCKER_TEST_IMAGE}" -f Dockerfile-testing .
       - docker run -d --net host "${DOCKER_IMAGE}"
       - sleep 5
-      - docker run --net host "${DOCKER_IMAGE}-testing"
+      - docker run --net host "${DOCKER_TEST_IMAGE}"
+      - docker cp "${DOCKER_TEST_IMAGE}":/app/test.log ./build-tests.log
     when:
       branch: master
       event: [pull_request, push]
@@ -76,6 +78,20 @@ pipeline:
       - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
       - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
       - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${IMAGE}:${TAG}"
+      - docker cp "${DOCKER_IMAGE}":/app/test.log ./e2e-tests.log
+    when:
+      branch: master
+      event: push
+
+  save_test_logs:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
+      - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
+      - cat ./build-tests.log >> test.log
+      - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
+      - cat ./e2e-tests.log >> test.log
+      - ${kubectl} annotate deployment ${KUBE_DEPLOYMENT} lev-web-test-details=`cat test.log`
     when:
       branch: master
       event: push

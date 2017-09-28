@@ -17,6 +17,7 @@
     "test:acceptance": "npm-run-all stop:mockapi start:mockapi test:acceptance:sub stop:mockapi",
     "test:acceptance:sub": "npm-run-all -pr start:mock-kc-proxy start:acceptance chimp",
     "test:ci": "npm-run-all -s lint lint:sass cover check-coverage ci:acceptance",
+    "test:wrapper": "./test.sh ${1}",
     "ci:acceptance": "npm-run-all -pr start:mock-kc-proxy chimp",
     "start:acceptance": "NODE_ENV=acceptance npm start",
     "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4",

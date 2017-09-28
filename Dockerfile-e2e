@@ -1,2 +1,2 @@
 FROM lev-web-testing
-ENTRYPOINT ["npm", "run", "test:browser"]
+CMD ["run", "test:wrapper", "test:browser"]
