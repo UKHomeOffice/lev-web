@@ -5,8 +5,8 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - DOCKER_IMAGE=lev-web
-      - DOCKER_TEST_IMAGE="${DOCKER_IMAGE}-testing"
     commands:
+      - DOCKER_TEST_IMAGE="${DOCKER_IMAGE}-testing"
       - docker build -t "${DOCKER_IMAGE}" .
       - docker build -t "${DOCKER_TEST_IMAGE}" -f Dockerfile-testing .
       - docker run -d --net host "${DOCKER_IMAGE}"
