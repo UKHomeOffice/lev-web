@@ -10,7 +10,11 @@ pipeline:
       - docker build -t "${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
       - docker run -d --net host "${DOCKER_IMAGE}"
       - sleep 5
-      - docker run --net host "${DOCKER_IMAGE}-testing"
+      - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
+      - tail -f test.log &
+      - TL=$!
+      - docker run --net host "${DOCKER_IMAGE}-testing" >> test.log 2>&1
+      - kill "${TL}"
     when:
       branch: master
       event: [pull_request, push]
@@ -75,7 +79,20 @@ pipeline:
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
       - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
       - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
-      - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${IMAGE}:${TAG}"
+      - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
+      - tail -f test.log &
+      - TL=$!
+      - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${IMAGE}:${TAG}" >> test.log 2>&1
+      - kill "${TL}"
+    when:
+      branch: master
+      event: push
+
+  save_test_logs:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
+      - ${kubectl} annotate deployment ${KUBE_DEPLOYMENT} lev-web-test-details=`cat test.log`
     when:
       branch: master
       event: push
