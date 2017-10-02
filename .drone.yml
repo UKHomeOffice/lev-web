@@ -92,7 +92,7 @@ pipeline:
     image: quay.io/ukhomeofficedigital/kd:latest
     commands:
       - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
-      - ${kubectl} annotate deployment ${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
+      - ${kubectl} annotate --overwrite deployment ${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
     when:
       branch: master
       event: push
