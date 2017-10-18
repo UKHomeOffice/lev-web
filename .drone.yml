@@ -51,7 +51,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - DOCKER_REPO=quay.io
-      - DOCKER_BASEDIR=/ukhomeofficedigital
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_USERNAME=ukhomeofficedigital+lev_web
       - DOCKER_IMAGE=lev-web
     commands:
