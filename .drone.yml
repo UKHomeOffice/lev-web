@@ -23,33 +23,6 @@ pipeline:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
-      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
-      - DOCKER_BASEDIR=/
-      - DOCKER_USERNAME=lev-web-robot
-      - DOCKER_IMAGE=lev-web
-    commands:
-      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
-      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
-      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:${TAG}"
-      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:latest"
-      - docker push "${IMAGE}:${TAG}"
-      - docker push "${IMAGE}:latest"
-      - E2E_IMAGE="${IMAGE}-e2e"
-      - docker build -t "${E2E_IMAGE}" -f Dockerfile-e2e .
-      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:${TAG}"
-      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:latest"
-      - docker push "${E2E_IMAGE}:${TAG}"
-      - docker push "${E2E_IMAGE}:latest"
-    when:
-      branch: master
-      event: push
-
-  push_image_to_quay:
-    image: docker:1.11
-    environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_USERNAME=ukhomeofficedigital+lev_web
@@ -76,8 +49,8 @@ pipeline:
   deploy_image:
     image: quay.io/ukhomeofficedigital/kd:latest
     environment:
-      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
-      - DOCKER_BASEDIR=/
+      - DOCKER_REPO=quay.io
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
@@ -97,15 +70,13 @@ pipeline:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
-      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
-      - DOCKER_BASEDIR=/
-      - DOCKER_USERNAME=lev-web-robot
+      - DOCKER_REPO=quay.io
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web-e2e
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
       - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
-      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" "${DOCKER_REPO}"
       - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
       - tail -f test.log &
       - TL=$!
