@@ -17,7 +17,8 @@ const conf = {
   lev_tls: {
     key: process.env.LEV_TLS_KEY || null,
     cert: process.env.LEV_TLS_CERT || null,
-    ca: process.env.LEV_TLS_CA || null
+    ca: process.env.LEV_TLS_CA || null,
+    verify: String(process.env.LEV_TLS_VERIFY).match(/false/i) === null
   }
 };
 
