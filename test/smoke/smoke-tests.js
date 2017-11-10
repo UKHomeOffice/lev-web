@@ -22,7 +22,7 @@ describe('Smoke Tests', () => {
     });
 
     it('allows me to login to LEV', () => {
-      browser.submitLoginPage(testConfig.username, testConfig.password);
+      browser.completeLoginPage(testConfig.username, testConfig.password);
     });
 
     it('presents me with the NOT FOUND error page', () => {

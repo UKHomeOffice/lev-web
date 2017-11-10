@@ -28,6 +28,6 @@ module.exports = (target) => {
     if (user) {
       this.setValue('input[name="user"]', user);
     }
-    this.submitForm('form');
+    this.click('input[type="submit"]');
   };
 };
