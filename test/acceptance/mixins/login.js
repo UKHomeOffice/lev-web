@@ -1,14 +1,16 @@
 'use strict';
 
+const loginButtonSelector = 'input[name="login"]';
+
 module.exports = (target) => {
   target.shouldBeOnLoginPage = function() {
-    browser.element('input[name="login"]').should.exist;
+    browser.element(loginButtonSelector).should.exist;
   };
 
-  target.submitLoginPage = function(username, password) {
+  target.completeLoginPage = function(username, password) {
     this.click('summary');
     this.setValue('input[name="username"]', username);
     this.setValue('input[name="password"]', password);
-    this.submitForm('form');
+    this.click(loginButtonSelector);
   };
 };

@@ -28,6 +28,6 @@ module.exports = (target) => {
     this.setValue('input[name="surname"]', surname);
     this.setValue('input[name="forenames"]', forenames);
     this.setValue('input[name="dob"]', dob);
-    this.submitForm('form');
+    this.click('input[type="submit"]');
   };
 };

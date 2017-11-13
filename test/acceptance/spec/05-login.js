@@ -16,7 +16,7 @@ if (testConfig.env !== 'local') {
 
     describe('When I login with invalid credentials', () => {
       before(() => {
-        browser.submitLoginPage('invalid-username', 'invalid-password');
+        browser.completeLoginPage('invalid-username', 'invalid-password');
       });
 
       it('displays an error', () => {
@@ -32,7 +32,7 @@ if (testConfig.env !== 'local') {
 
     describe('When I login with valid credentials', () => {
       before(() => {
-        browser.submitLoginPage(testConfig.username, testConfig.password);
+        browser.completeLoginPage(testConfig.username, testConfig.password);
       });
 
       it('lets me through to the next page', () => {
