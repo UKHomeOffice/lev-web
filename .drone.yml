@@ -13,6 +13,7 @@ pipeline:
       - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
       - tail -f test.log &
       - TL=$!
+      - echo "Warning, should the following command fail, the output may not show in the logs"
       - docker run --net host "${DOCKER_IMAGE}-testing" >> test.log 2>&1
       - kill "${TL}"
     when:
