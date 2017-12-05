@@ -49,6 +49,21 @@ describe('lib/lev-request', function() {
         });
     });
 
+    it('Does not verify the TLS certificate when configured to do so', () => {
+      config.lev_tls = { // eslint-disable-line camelcase
+        verify: false
+      };
+
+      levRequest.get('http://testhost.com');
+
+      requestGet.should.have.been.calledWith({
+        url: 'http://testhost.com',
+        agentOptions: {
+          rejectUnauthorized: false
+        }
+      });
+    });
+
     it('Adds a bearer token when provided', () => {
       levRequest.get('http://testhost.com', 'access_token');
 
