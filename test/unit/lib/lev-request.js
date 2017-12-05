@@ -71,6 +71,9 @@ describe('lib/lev-request', function() {
         url: 'http://testhost.com',
         headers: {
           Authorization: 'Bearer access_token'
+        },
+        agentOptions: {
+          rejectUnauthorized: true
         }
       });
     });
