@@ -198,7 +198,10 @@ describe('api/index.js', () => {
               requestGet.should.have.been.calledWith({
                 headers: expectedHeaders,
                 url: 'http://testhost.com:1111/api/v0/events/birth'
-                   + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
+                   + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
+                agentOptions: {
+                  rejectUnauthorized: true
+                }
               }));
             it('then return a promise', () => result.should.be.instanceOf(Promise));
 
@@ -305,7 +308,10 @@ describe('api/index.js', () => {
                 requestGet.should.have.been.calledWith({
                   headers: expectedHeaders,
                   url: 'http://testhost.com:1111/api/v0/events/birth'
-                  + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01'
+                  + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
+                  agentOptions: {
+                    rejectUnauthorized: true
+                  }
                 }));
               it('then return a promise', () => result.should.be.instanceOf(Promise));
 
@@ -380,7 +386,10 @@ describe('api/index.js', () => {
               it('make a request using the correct query string and adds auth headers', () =>
                 requestGet.should.have.been.calledWith({
                   headers: expectedHeaders,
-                  url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
+                  url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
+                  agentOptions: {
+                    rejectUnauthorized: true
+                  }
                 }));
               it('then return a promise', () => result.should.be.instanceOf(Promise));
 
@@ -478,7 +487,10 @@ describe('api/index.js', () => {
             it('makes a request using the correct query string and adds auth headers', () =>
               requestGet.should.have.been.calledWith({
                 headers: expectedHeaders,
-                url: 'http://testhost.com:1111/api/v0/events/birth/400000001'
+                url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
+                agentOptions: {
+                  rejectUnauthorized: true
+                }
               }));
             it('returns a promise', () => result.should.be.instanceOf(Promise));
 
@@ -588,7 +600,10 @@ describe('api/index.js', () => {
         it('should make a request to the API', () =>
           requestGet.lastCall.should.have.been.calledWith({
             headers: expectedHeaders,
-            url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`
+            url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}`,
+            agentOptions: {
+              rejectUnauthorized: true
+            }
           }));
 
         it('returns a promise', () => result.should.be.instanceOf(Promise));
@@ -612,7 +627,10 @@ describe('api/index.js', () => {
       it('should make a request to the API', () =>
         requestGet.lastCall.should.have.been.calledWith({
           headers: expectedHeaders,
-          url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}&user=fred`
+          url: `http://testhost.com:1111/api/v0/audit/user-activity?from=${from}&to=${to}&user=fred`,
+          agentOptions: {
+            rejectUnauthorized: true
+          }
         }));
 
       it('returns a promise', () => result.should.be.instanceOf(Promise));

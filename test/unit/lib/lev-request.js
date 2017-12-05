@@ -28,25 +28,40 @@ describe('lib/lev-request', function() {
     }));
 
     it('Adds config for mutual TLS when available', () => {
-        config.lev_tls = { // eslint-disable-line camelcase
-            key: 'TLS Key',
-            cert: 'TLS Cert',
-            ca: 'TLS CA'
-        };
+      config.lev_tls = { // eslint-disable-line camelcase
+        key: 'TLS Key',
+        cert: 'TLS Cert',
+        ca: 'TLS CA'
+      };
 
-        fsReadFileSync.returnsArg(0);
+      fsReadFileSync.returnsArg(0);
 
-        levRequest.get('http://testhost.com');
+      levRequest.get('http://testhost.com');
 
-        requestGet.should.have.been.calledWith({
-            url: 'http://testhost.com',
-            key: 'TLS Key',
-            cert: 'TLS Cert',
-            ca: 'TLS CA',
-            agentOptions: {
-              rejectUnauthorized: true
-            }
-        });
+      requestGet.should.have.been.calledWith({
+        url: 'http://testhost.com',
+        key: 'TLS Key',
+        cert: 'TLS Cert',
+        ca: 'TLS CA',
+        agentOptions: {
+          rejectUnauthorized: true
+        }
+      });
+    });
+
+    it('Does not verify the TLS certificate when configured to do so', () => {
+      config.lev_tls = { // eslint-disable-line camelcase
+        verify: false
+      };
+
+      levRequest.get('http://testhost.com');
+
+      requestGet.should.have.been.calledWith({
+        url: 'http://testhost.com',
+        agentOptions: {
+          rejectUnauthorized: false
+        }
+      });
     });
 
     it('Adds a bearer token when provided', () => {
@@ -56,6 +71,9 @@ describe('lib/lev-request', function() {
         url: 'http://testhost.com',
         headers: {
           Authorization: 'Bearer access_token'
+        },
+        agentOptions: {
+          rejectUnauthorized: true
         }
       });
     });
