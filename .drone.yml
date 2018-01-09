@@ -22,6 +22,8 @@ pipeline:
 
   push_image:
     image: docker:1.11
+    secrets:
+      - DOCKER_QUAY_PASSWORD
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
@@ -49,6 +51,12 @@ pipeline:
 
   deploy_image:
     image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER
+      - KUBE_NAMESPACE
+      - KUBE_TOKEN
+      - KUBE_DEPLOYMENT
+      - KUBE_CONTAINER
     environment:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
@@ -69,6 +77,10 @@ pipeline:
 
   e2e_test:
     image: docker:1.11
+    secrets:
+      - DEV_URL
+      - DEV_USERNAME
+      - DEV_PASSWORD
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
@@ -89,6 +101,11 @@ pipeline:
 
   save_test_logs:
     image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER
+      - KUBE_NAMESPACE
+      - KUBE_TOKEN
+      - KUBE_DEPLOYMENT
     commands:
       - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
       - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
