@@ -3,7 +3,7 @@ pipeline:
   build:
     image: docker:1.11
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
     commands:
       - docker build -t "${DOCKER_IMAGE}" .
@@ -23,7 +23,7 @@ pipeline:
   push_image:
     image: docker:1.11
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_USERNAME=ukhomeofficedigital+lev_web
@@ -70,7 +70,7 @@ pipeline:
   e2e_test:
     image: docker:1.11
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web-e2e
