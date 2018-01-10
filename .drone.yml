@@ -11,7 +11,7 @@ pipeline:
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
       - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
       - sleep 5
-      - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
+      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
       - tail -f test.log &
       - TL=$!
       - echo "Warning, should the following command fail, the output may not show in the logs"
