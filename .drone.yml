@@ -5,11 +5,13 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
+      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4
     commands:
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
       - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
+      - docker run -d --net "container:$${DOCKER_NAME}" "$${MOCK_IMAGE}"
       - sleep 5
       - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
       - tail -f test.log &
@@ -180,7 +182,3 @@ pipeline:
       branch: master
       event: push
       status: failure
-
-services:
-  mock:
-    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4
