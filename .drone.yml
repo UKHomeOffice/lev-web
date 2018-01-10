@@ -115,6 +115,8 @@ pipeline:
 
   notify_slack_success:
     image: plugins/slack:1.0
+    secrets:
+      - SLACK_WEBHOOK
     channel: general
     username: Drone
     icon_url: http://readme.drone.io/0.5/logo_dark.svg
@@ -128,6 +130,8 @@ pipeline:
 
   notify_slack_failure:
     image: plugins/slack:1.0
+    secrets:
+      - SLACK_WEBHOOK
     channel: alerts
     username: Drone
     icon_url: http://readme.drone.io/0.5/logo_dark.svg
