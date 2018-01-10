@@ -15,7 +15,7 @@ pipeline:
       - tail -f test.log &
       - TL=$!
       - echo "Warning, should the following command fail, the output may not show in the logs"
-      - docker run --net "$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
+      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
       - kill "$${TL}"
     when:
       branch: master
