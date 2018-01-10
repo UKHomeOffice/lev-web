@@ -75,10 +75,39 @@ pipeline:
       branch: master
       event: push
 
+  deploy_image_dsp:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER_DSP
+      - KUBE_NAMESPACE_DSP
+      - KUBE_TOKEN_DSP
+      - KUBE_DEPLOYMENT
+      - KUBE_CONTAINER
+    environment:
+      - DOCKER_REPO=quay.io
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
+      - DOCKER_IMAGE=lev-web
+      - KUBE_SERVER=$${KUBE_SERVER_DSP}
+      - KUBE_NAMESPACE=$${KUBE_NAMESPACE_DSP}
+      - KUBE_TOKEN=$${KUBE_TOKEN_DSP}
+    commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
+      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
+      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
+      - sleep 60
+    when:
+      branch: master
+      event: push
+
   e2e_test:
     image: docker:1.11
     secrets:
-      - DEV_URL
+      - DEV_URL_DSP
       - DEV_USERNAME
       - DEV_PASSWORD
     environment:
@@ -86,6 +115,7 @@ pipeline:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web-e2e
+      - DEV_URL=$${DEV_URL_DSP}
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
@@ -102,10 +132,14 @@ pipeline:
   save_test_logs:
     image: quay.io/ukhomeofficedigital/kd:latest
     secrets:
-      - KUBE_SERVER
-      - KUBE_NAMESPACE
-      - KUBE_TOKEN
+      - KUBE_SERVER_DSP
+      - KUBE_NAMESPACE_DSP
+      - KUBE_TOKEN_DSP
       - KUBE_DEPLOYMENT
+    environment:
+      - KUBE_SERVER=$${KUBE_X_DSP}
+      - KUBE_NAMESPACE=$${KUBE_X_DSP}
+      - KUBE_TOKEN=$${KUBE_X_DSP}
     commands:
       - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
       - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
