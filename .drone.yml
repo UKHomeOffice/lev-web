@@ -5,16 +5,17 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
+      - DOCKER_NAME=$${DOCKER_IMAGE}
     commands:
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
-      - docker run -d --net host "$${DOCKER_IMAGE}"
+      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
       - sleep 5
       - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
       - tail -f test.log &
       - TL=$!
       - echo "Warning, should the following command fail, the output may not show in the logs"
-      - docker run --net host "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
+      - docker run --net "$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
       - kill "$${TL}"
     when:
       branch: master
