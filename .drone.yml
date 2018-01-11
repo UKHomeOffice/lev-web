@@ -3,19 +3,23 @@ pipeline:
   build:
     image: docker:1.11
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
+      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4
     commands:
-      - docker build -t "${DOCKER_IMAGE}" .
-      - docker build -t "${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
-      - docker run -d --net host "${DOCKER_IMAGE}"
+      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
+      - docker build -t "$${DOCKER_IMAGE}" .
+      - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
+      - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" "$${MOCK_IMAGE}"
       - sleep 5
-      - printf "* lev-web unit and acceptence test logs *\n\n" > test.log
+      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
       - tail -f test.log &
       - TL=$!
       - echo "Warning, should the following command fail, the output may not show in the logs"
-      - docker run --net host "${DOCKER_IMAGE}-testing" >> test.log 2>&1
-      - kill "${TL}"
+      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
+      - kill "$${TL}"
+      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
       branch: master
       event: [pull_request, push]
@@ -23,45 +27,78 @@ pipeline:
   push_image:
     image: docker:1.11
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
-      - DOCKER_USERNAME=ukhomeofficedigital+lev_web
       - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
-      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_QUAY_PASSWORD}" "${DOCKER_REPO}"
-      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:${TAG}"
-      - docker tag "${DOCKER_IMAGE}" "${IMAGE}:latest"
-      - docker push "${IMAGE}:${TAG}"
-      - docker push "${IMAGE}:latest"
-      - E2E_IMAGE="${IMAGE}-e2e"
-      - docker build -t "${E2E_IMAGE}" -f Dockerfile-e2e .
-      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:${TAG}"
-      - docker tag "${E2E_IMAGE}" "${E2E_IMAGE}:latest"
-      - docker push "${E2E_IMAGE}:${TAG}"
-      - docker push "${E2E_IMAGE}:latest"
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:$${TAG}"
+      - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:latest"
+      - docker push "$${IMAGE}:$${TAG}"
+      - docker push "$${IMAGE}:latest"
+      - E2E_IMAGE="$${IMAGE}-e2e"
+      - docker build -t "$${E2E_IMAGE}" -f Dockerfile-e2e .
+      - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:$${TAG}"
+      - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:latest"
+      - docker push "$${E2E_IMAGE}:$${TAG}"
+      - docker push "$${E2E_IMAGE}:latest"
     when:
       branch: master
       event: push
 
   deploy_image:
     image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER
+      - KUBE_NAMESPACE
+      - KUBE_TOKEN
+      - KUBE_DEPLOYMENT
+      - KUBE_CONTAINER
     environment:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
-      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
-      - ${kubectl} scale deployment ${KUBE_DEPLOYMENT} --replicas 2
-      - ${kubectl} set image deployment/${KUBE_DEPLOYMENT} "${KUBE_CONTAINER}=${IMAGE}:${TAG}"
-      - ${kubectl} rollout status deployment/${KUBE_DEPLOYMENT}
-      - ${kubectl} scale deployment ${KUBE_DEPLOYMENT} --replicas 1
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
+      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
+      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
+      - sleep 60
+    when:
+      branch: master
+      event: push
+
+  deploy_image_dsp:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER_DSP
+      - KUBE_NAMESPACE_DSP
+      - KUBE_TOKEN_DSP
+      - KUBE_DEPLOYMENT
+      - KUBE_CONTAINER
+    environment:
+      - DOCKER_REPO=quay.io
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
+      - DOCKER_IMAGE=lev-web
+      - KUBE_SERVER=${KUBE_SERVER_DSP}
+      - KUBE_NAMESPACE=${KUBE_NAMESPACE_DSP}
+      - KUBE_TOKEN=${KUBE_TOKEN_DSP}
+    commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
+      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
+      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
       - sleep 60
     when:
       branch: master
@@ -69,35 +106,51 @@ pipeline:
 
   e2e_test:
     image: docker:1.11
+    secrets:
+      - DEV_URL_DSP
+      - DEV_USERNAME
+      - DEV_PASSWORD
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web-e2e
+      - DEV_URL=${DEV_URL_DSP}
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-      - TAG="v${PACKAGE_VERSION}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"
-      - IMAGE="${DOCKER_REPO}${DOCKER_BASEDIR}${DOCKER_IMAGE}"
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
       - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
       - tail -f test.log &
       - TL=$!
-      - docker run --rm -e "ENV=dev" -e "TEST_URL=${DEV_URL}" -e "USERNAME=${DEV_USERNAME}" -e "PASSWORD=${DEV_PASSWORD}" "${IMAGE}:${TAG}" >> test.log 2>&1
-      - kill "${TL}"
+      - docker run --rm -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" >> test.log 2>&1
+      - kill "$${TL}"
     when:
       branch: master
       event: push
 
   save_test_logs:
     image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
+      - KUBE_SERVER_DSP
+      - KUBE_NAMESPACE_DSP
+      - KUBE_TOKEN_DSP
+      - KUBE_DEPLOYMENT
+    environment:
+      - KUBE_SERVER=${KUBE_SERVER_DSP}
+      - KUBE_NAMESPACE=${KUBE_NAMESPACE_DSP}
+      - KUBE_TOKEN=${KUBE_TOKEN_DSP}
     commands:
-      - kubectl="kubectl --insecure-skip-tls-verify --server=${KUBE_SERVER} --namespace=${KUBE_NAMESPACE} --token=${KUBE_TOKEN}"
-      - ${kubectl} annotate --overwrite deployment ${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
     when:
       branch: master
       event: push
 
   notify_slack_success:
     image: plugins/slack:1.0
+    secrets:
+      - SLACK_WEBHOOK
     channel: general
     username: Drone
     icon_url: http://readme.drone.io/0.5/logo_dark.svg
@@ -111,6 +164,8 @@ pipeline:
 
   notify_slack_failure:
     image: plugins/slack:1.0
+    secrets:
+      - SLACK_WEBHOOK
     channel: alerts
     username: Drone
     icon_url: http://readme.drone.io/0.5/logo_dark.svg
@@ -128,13 +183,3 @@ pipeline:
       branch: master
       event: push
       status: failure
-
-services:
-  mock:
-    image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4
-  dind:
-    image: docker:1.11-dind
-    privileged: true
-    command:
-      - "-s"
-      - "overlay"
