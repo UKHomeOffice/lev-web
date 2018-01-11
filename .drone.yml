@@ -159,7 +159,7 @@ pipeline:
       status: success
 
   notify_slack_failure:
-    image: plugins/slack:1.0
+    image: plugins/slack
     secrets:
       - SLACK_WEBHOOK
     channel: alerts
