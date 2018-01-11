@@ -116,7 +116,6 @@ pipeline:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web-e2e
-      - DEV_URL=${DEV_URL_DSP}
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
@@ -124,7 +123,7 @@ pipeline:
       - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
       - tail -f test.log &
       - TL=$!
-      - docker run --rm -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" >> test.log 2>&1
+      - docker run --rm -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" >> test.log 2>&1
       - kill "$${TL}"
     when:
       branch: master
@@ -137,12 +136,8 @@ pipeline:
       - KUBE_NAMESPACE_DSP
       - KUBE_TOKEN_DSP
       - KUBE_DEPLOYMENT
-    environment:
-      - KUBE_SERVER=${KUBE_SERVER_DSP}
-      - KUBE_NAMESPACE=${KUBE_NAMESPACE_DSP}
-      - KUBE_TOKEN=${KUBE_TOKEN_DSP}
     commands:
-      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER_DSP} --namespace=$${KUBE_NAMESPACE_DSP} --token=$${KUBE_TOKEN_DSP}"
       - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
     when:
       branch: master
