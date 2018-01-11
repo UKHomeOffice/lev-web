@@ -26,15 +26,19 @@ pipeline:
 
   push_image:
     image: docker:1.11
+    secrets:
+      - DOCKER_QUAY_PASSWORD
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
+      - DOCKER_USERNAME=ukhomeofficedigital+lev_web
       - DOCKER_IMAGE=lev-web
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - docker login -u="$${DOCKER_USERNAME}" -p="$${DOCKER_QUAY_PASSWORD}" "$${DOCKER_REPO}"
       - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:$${TAG}"
       - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:latest"
       - docker push "$${IMAGE}:$${TAG}"
