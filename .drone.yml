@@ -91,14 +91,11 @@ pipeline:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_IMAGE=lev-web
-      - KUBE_SERVER=${KUBE_SERVER_DSP}
-      - KUBE_NAMESPACE=${KUBE_NAMESPACE_DSP}
-      - KUBE_TOKEN=${KUBE_TOKEN_DSP}
     commands:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
-      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER_DSP} --namespace=$${KUBE_NAMESPACE_DSP} --token=$${KUBE_TOKEN_DSP}"
       - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
       - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
       - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
