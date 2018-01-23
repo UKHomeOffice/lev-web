@@ -80,7 +80,7 @@
     "winston": "^1.0.1"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
+    "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chimp": "^0.42.0",
     "eslint": "^3.4.0",
