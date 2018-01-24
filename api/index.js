@@ -66,7 +66,7 @@ const findBirths = (searchFields, accessToken) => {
     : findByNameDOB(searchFields, accessToken);
 };
 
-const userActivityReport = (accessToken, from, to, userFilter) => {
+const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
   if (!accessToken) {
     throw new ReferenceError('The "accessToken" parameter was not provided');
   }
