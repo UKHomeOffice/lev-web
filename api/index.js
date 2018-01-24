@@ -85,6 +85,9 @@ const userActivityReport = (accessToken, from, to, userFilter) => {
   if (from.isAfter(to)) {
     throw new RangeError('"from" date must be before "to" date for the User Activity report');
   }
+  if (moment(from).add(config.MAX_AUDIT_RANGE, 'days').isBefore(to)) {
+    throw new RangeError(`maximum date range exceeded (should be less than ${config.MAX_AUDIT_RANGE} days)`);
+  }
 
   const data = {
     from: from,
