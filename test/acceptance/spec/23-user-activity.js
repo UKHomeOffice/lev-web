@@ -18,7 +18,7 @@ describe('User Activity', () => {
   describe('submitting valid search dates', () => {
     describe('returning no audit data', () => {
       const from = '01/01/1800';
-      const to = '01/01/1900';
+      const to = '01/04/1800';
 
       before(() => {
         browser.generateReport(from, to);
@@ -192,7 +192,7 @@ describe('User Activity', () => {
   describe('adding a user filter', () => {
     describe('returning no audit data', () => {
       const from = '01/01/1800';
-      const to = '01/01/1900';
+      const to = '01/04/1800';
 
       before(() => {
         browser.generateReport(from, to, user);
