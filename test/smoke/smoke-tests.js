@@ -7,9 +7,7 @@ describe('Smoke Tests', () => {
 
   before(() => {
     require('../acceptance/mixins/login')(browser);
-    browser.shouldBeOn404Page = () => {
-      browser.getText('main').should.contain('Not found');
-    };
+    require('../acceptance/mixins/error')(browser);
   });
 
   describe('Trying to see a non-existent record', () => {
