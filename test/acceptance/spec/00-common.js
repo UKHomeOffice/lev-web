@@ -7,6 +7,7 @@ const mixins = [
   require('../mixins/search'),
   require('../mixins/results'),
   require('../mixins/details'),
+  require('../mixins/error'),
   require('../mixins/audit'),
   require('../mixins/logout')
 ];
