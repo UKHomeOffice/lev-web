@@ -1,12 +1,12 @@
 'use strict';
-var config = require('../config');
-var logger = require('../lib/logger');
+const config = require('../config');
+const logger = require('../lib/logger');
 
 module.exports = function errorMiddlewareFactory() {
 
   /* eslint no-unused-vars: 0*/
   return function errorHandler(err, req, res, next) {
-    var content = {};
+    const content = {};
 
     err.template = 'error';
     content.title = content.title || err.error || 'Error';
@@ -21,7 +21,7 @@ module.exports = function errorMiddlewareFactory() {
         error: err,
         content: content,
         showStack: config.env === 'development',
-        startLink: req.path ? req.path.replace(/^\/([^\/]*).*$/, '') : ''
+        startLink: req.path && req.path.startsWith('/audit/user-activity') ? 'audit/user-activity' : ''
       });
     } else {
       // Cannot render
