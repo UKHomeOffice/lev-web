@@ -572,19 +572,24 @@ describe('api/index.js', () => {
         expect(from => api.userActivityReport('user', from, moment())).to.throw(ReferenceError);
         expect(() => api.userActivityReport('user', moment())).to.throw(ReferenceError);
       });
-      it('should throw a ReferenceError if either parameter is not a `moment` date object', () => {
+      it('should throw a TypeError if either parameter is not a `moment` date object', () => {
         expect(() => api.userActivityReport('user', 'from', moment())).to.throw(TypeError);
         expect(() => api.userActivityReport('user', moment(), 'to')).to.throw(TypeError);
       });
-      it('should throw a ReferenceError if either parameter is not a valid date object', () => {
+      it('should throw a RangeError if either parameter is not a valid date object', () => {
         expect(() => api.userActivityReport('user', moment('from'), moment())).to.throw(RangeError);
-        expect(() => api.userActivityReport('user', moment(), moment('2017-02-29'))).to.throw(RangeError);
+        expect(() => api.userActivityReport('user', moment('2017-02-27'), moment('2017-02-29'))).to.throw(RangeError);
       });
     });
 
     describe('when called with valid dates', () => {
       it('should throw a RangeError if the `to` date is before `from`', () =>
         expect(() => api.userActivityReport('user', moment().add(1, 'days'), moment())).to.throw(RangeError)
+      );
+
+      it(`should throw a RangeError if the date range is greater than the ${config.MAX_AUDIT_RANGE} day limit`, () =>
+        expect(() => api.userActivityReport('user', moment().subtract(config.MAX_AUDIT_RANGE + 1, 'days'), moment()))
+          .to.throw(RangeError, `less than ${config.MAX_AUDIT_RANGE} days`)
       );
 
       describe('as a proper range', () => {

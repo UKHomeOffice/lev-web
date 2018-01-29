@@ -18,7 +18,7 @@ describe('User Activity', () => {
   describe('submitting valid search dates', () => {
     describe('returning no audit data', () => {
       const from = '01/01/1800';
-      const to = '01/01/1900';
+      const to = '01/04/1800';
 
       before(() => {
         browser.generateReport(from, to);
@@ -192,7 +192,7 @@ describe('User Activity', () => {
   describe('adding a user filter', () => {
     describe('returning no audit data', () => {
       const from = '01/01/1800';
-      const to = '01/01/1900';
+      const to = '01/04/1800';
 
       before(() => {
         browser.generateReport(from, to, user);
@@ -367,6 +367,24 @@ describe('User Activity', () => {
 
       it('requests a past date', () => {
         browser.getText('a').should.contain('Please enter a proper date range');
+      });
+    });
+
+    // placeholder test for making search date range limit check part of validation, instead of a 500 error
+    describe.skip(`with a date range greater than ${testConfig.MAX_AUDIT_RANGE} days`, () => {
+      before(() => {
+        browser.generateReport(
+          moment().subtract(testConfig.MAX_AUDIT_RANGE + 1, 'days').format('DD/MM/YYYY'),
+          moment().format('DD/MM/YYYY')
+        );
+      });
+
+      it('displays an error message', () => {
+        browser.getText('h2').should.contain('Fix the following error');
+      });
+
+      it('requests a reduced date range', () => {
+        browser.getText('a').should.contain(`Please enter a date range less than ${testConfig.MAX_AUDIT_RANGE} days`);
       });
     });
 
