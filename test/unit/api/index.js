@@ -572,13 +572,13 @@ describe('api/index.js', () => {
         expect(from => api.userActivityReport('user', from, moment())).to.throw(ReferenceError);
         expect(() => api.userActivityReport('user', moment())).to.throw(ReferenceError);
       });
-      it('should throw a ReferenceError if either parameter is not a `moment` date object', () => {
+      it('should throw a TypeError if either parameter is not a `moment` date object', () => {
         expect(() => api.userActivityReport('user', 'from', moment())).to.throw(TypeError);
         expect(() => api.userActivityReport('user', moment(), 'to')).to.throw(TypeError);
       });
-      it('should throw a ReferenceError if either parameter is not a valid date object', () => {
+      it('should throw a RangeError if either parameter is not a valid date object', () => {
         expect(() => api.userActivityReport('user', moment('from'), moment())).to.throw(RangeError);
-        expect(() => api.userActivityReport('user', moment(), moment('2017-02-29'))).to.throw(RangeError);
+        expect(() => api.userActivityReport('user', moment('2017-02-27'), moment('2017-02-29'))).to.throw(RangeError);
       });
     });
 
