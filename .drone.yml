@@ -179,3 +179,18 @@ pipeline:
       branch: master
       event: push
       status: failure
+
+  promote_to_uat:
+    image: quay.io/ukhomeofficedigital/drone-trigger:latest
+    secrets:
+      - drone_token
+    drone_server: https://drone-gitlab.acp.homeoffice.gov.uk
+    drone_token: $${DRONE_TOKEN}
+    repo: lev/levops
+    branch: master
+    event: push
+    deploy_to: uat
+    when:
+      branch: master
+      event: push
+      status: success
