@@ -5,9 +5,11 @@ const helpers = require('./helpers.js');
 const levRequest = require('../lib/lev-request');
 const config = require('../config');
 
-const baseURL = `${config.api.protocol}://${config.api.host}:${config.api.port}/api/v0`;
-const birthSearch = `${baseURL}/events/birth`;
-const userActivity = `${baseURL}/audit/user-activity`;
+const baseURL = `${config.api.protocol}://${config.api.host}:${config.api.port}`;
+const birthSearch = `${baseURL}/api/v0/events/birth`;
+const deathSearch = `${baseURL}/v1/registration/death`;
+const marriageSearch = `${baseURL}/v1/registration/marriage`;
+const userActivity = `${baseURL}/api/v0/audit/user-activity`;
 
 const requestData = (url, accessToken) =>
   new Promise((resolve, reject) =>
@@ -66,6 +68,102 @@ const findBirths = (searchFields, accessToken) => {
     : findByNameDOB(searchFields, accessToken);
 };
 
+const findDeathsByNameDOB = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findByNameDOB(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findDeathsByNameDOB(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findDeathsByNameDOB(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(helpers.buildQueryUri(deathSearch, searchFields), accessToken)
+    .then((data) => data.map(helpers.processDeathRecord));
+};
+
+const findDeathBySystemNumber = (systemNumber, accessToken) => {
+  if (systemNumber === undefined) {
+    throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findBySystemNumber(): second argument, accessToken, was not defined');
+  } else if ((!Number.isInteger(systemNumber))) {
+    throw new TypeError('findDeathsBySystemNumber(): first argument, systemNumber, must be an integer');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findDeathsBySystemNumber(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(deathSearch + '/' + systemNumber, accessToken)
+    .then(helpers.processDeathRecord);
+};
+
+const findDeaths = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findDeaths(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findDeaths(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findDeaths(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findDeaths(): second argument, accessToken, must be a string');
+  }
+
+  const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
+
+  return systemNumber
+    ? findDeathBySystemNumber(systemNumber, accessToken).then((data) => [data])
+    : findDeathsByNameDOB(searchFields, accessToken);
+};
+
+const findMarriagesByNameDOB = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findMarriagesByNameDOB(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriagesByNameDOB(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findMarriagesByNameDOB(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriagesByNameDOB(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(helpers.buildQueryUri(marriageSearch, searchFields), accessToken)
+    .then((data) => data.map(helpers.processMarriageRecord));
+};
+
+const findMarriageBySystemNumber = (systemNumber, accessToken) => {
+  if (systemNumber === undefined) {
+    throw new ReferenceError('findMarriagesBySystemNumber(): first argument, systemNumber, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriagesBySystemNumber(): second argument, accessToken, was not defined');
+  } else if ((!Number.isInteger(systemNumber))) {
+    throw new TypeError('findMarriagesBySystemNumber(): first argument, systemNumber, must be an integer');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriagesBySystemNumber(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(marriageSearch + '/' + systemNumber, accessToken)
+    .then(helpers.processMarriageRecord);
+};
+
+const findMarriages = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findMarriages(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriages(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findMarriages(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriages(): second argument, accessToken, must be a string');
+  }
+
+  const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
+
+  return systemNumber
+    ? findMarriageBySystemNumber(systemNumber, accessToken).then((data) => [data])
+    : findMarriagesByNameDOB(searchFields, accessToken);
+};
+
 const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
   if (!accessToken) {
     throw new ReferenceError('The "accessToken" parameter was not provided');
@@ -102,5 +200,9 @@ module.exports = {
   findBirths: findBirths,
   findByNameDOB: findByNameDOB,
   findBySystemNumber: findBySystemNumber,
+  findDeaths: findDeaths,
+  findDeathBySystemNumber: findDeathBySystemNumber,
+  findMarriages: findMarriages,
+  findMarriageBySystemNumber: findMarriageBySystemNumber,
   userActivityReport: userActivityReport
 };

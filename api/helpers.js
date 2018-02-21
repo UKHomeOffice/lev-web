@@ -22,6 +22,16 @@ const buildBirthParams = (attrs) => _.pickBy({
   forenames: attrs.forenames,
   dateofbirth: attrs.dob && toInternationalDateFormat(attrs.dob)
 }, _.identity);
+const buildDeathParams = (attrs) => _.pickBy({
+  surname: attrs.surname,
+  forenames: attrs.forenames,
+  dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+}, _.identity);
+const buildMarriageParams = (attrs) => _.pickBy({
+  surname: attrs.surname,
+  forenames: attrs.forenames,
+  dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+}, _.identity);
 const buildAuditParams = (attrs) => _.pickBy({
   from: toInternationalDateFormat(attrs.from),
   to: toInternationalDateFormat(attrs.to),
@@ -33,6 +43,10 @@ const buildQueryUri = (endpoint, attrs) => {
   }
   if (attrs.from && attrs.to) {
     return endpoint + '?' + querystring.stringify(buildAuditParams(attrs));
+  } else if (endpoint.match('death')) {
+    return endpoint + '?' + querystring.stringify(buildDeathParams(attrs));
+  } else if (endpoint.match('marriage')) {
+    return endpoint + '?' + querystring.stringify(buildMarriageParams(attrs));
   }
   return endpoint + '?' + querystring.stringify(buildBirthParams(attrs));
 };
@@ -104,6 +118,45 @@ const processRecord = (record) => {
   };
 };
 
+const processDeathRecord = r => ({
+  id: Number(r.id),
+  date: r.date,
+  registrar: {
+    signature: r.registrar.signature,
+    subdistrict: r.registrar.subdistrict,
+    district: r.registrar.district,
+    administrativeArea: r.registrar.administrativeArea
+  },
+  deceased: {
+    forenames: r.deceased.forenames,
+    surname: r.deceased.surname,
+    dateOfDeath: r.deceased.dateOfDeath,
+    deathplace: r.deceased.deathplace,
+    sex: r.deceased.sex,
+    age: Number(r.deceased.age),
+    occupation: r.deceased.occupation,
+    causeOfDeath: r.deceased.causeOfDeath
+  }
+});
+
+const processMarriageRecord = r => ({
+  id: Number(r.id),
+  date: r.date,
+  dateOfMarriage: r.dateOfMarriage,
+  registrar: {
+    district: r.registrar.district,
+    administrativeArea: r.registrar.administrativeArea
+  },
+  bride: {
+    forenames: r.bride.forenames,
+    surname: r.bride.surname
+  },
+  groom: {
+    forenames: r.groom.forenames,
+    surname: r.groom.surname
+  }
+});
+
 const responseHandler = (resolve, reject) => (err, res, body) => {
   if (err) {
     reject(err);
@@ -126,6 +179,8 @@ const responseHandler = (resolve, reject) => (err, res, body) => {
 module.exports = {
   buildQueryUri: buildQueryUri,
   processRecord: processRecord,
+  processDeathRecord: processDeathRecord,
+  processMarriageRecord: processMarriageRecord,
   refer: refer,
   reformatDate: reformatDate,
   responseHandler: responseHandler,

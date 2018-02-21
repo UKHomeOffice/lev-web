@@ -3,7 +3,7 @@
 const http = require('http');
 const httpProxy = require('http-proxy');
 
-const proxy = (fromHost, fromPort, toHost, toPort, accessToken) => {
+const proxy = (fromHost, fromPort, toHost, toPort, accessToken, client, username) => {
   // Create a proxy server with custom application logic
   const myProxy = httpProxy.createProxyServer({});
 
@@ -16,6 +16,8 @@ const proxy = (fromHost, fromPort, toHost, toPort, accessToken) => {
   // connection is made to the target.
   myProxy.on('proxyReq', (proxyReq) => {
     proxyReq.setHeader('X-Auth-Token', accessToken || '<token>');
+    proxyReq.setHeader('X-Auth-Username', username || 'localuser');
+    proxyReq.setHeader('X-Auth-Aud', client || 'lev-web');
   });
 
   const server = http.createServer((req, res) => {

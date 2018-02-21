@@ -1,0 +1,97 @@
+{{<layout}}
+
+{{$title}}Death record check{{/title}}
+
+{{$journeyHeader}}
+  Death record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      {{record.deceased.forenames}} {{record.deceased.surname}} {{record.deceased.age}}
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent}}
+{{/maincontent}}
+
+{{$content}}
+  <table class="details">
+    <tbody>
+      <tr>
+        <th>System number</th>
+        <td>{{record.id}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Deceased</th>
+      </tr>
+      <tr>
+          <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Surname</th>
+        <td>{{record.deceased.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Forename(s)</th>
+        <td>{{record.deceased.forenames}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Age</th>
+        <td>{{record.deceased.age}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Sex</th>
+        <td>{{record.deceased.sex}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Occupation</th>
+        <td>{{record.deceased.occupation}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of death</th>
+        <td>{{record.deceased.dateOfDeath}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Place of death</th>
+        <td>{{record.deceased.deathplace}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Cause of death</th>
+        <td>{{record.deceased.causeOfDeath}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Registration</th>
+      </tr>
+      <tr>
+        <th>Registrar signature</th>
+        <td>{{record.registrar.signature}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
+        <td>{{record.registrar.subdistrict}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Registration </span>District</th>
+        <td>{{record.registrar.district}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Administrative area</th>
+        <td>{{record.registrar.adminstrativeArea}}</td>
+      </tr>
+      <tr>
+        <th>Date of registration</th>
+        <td>{{record.date}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="buttons">
+    <a id="newSearchLink" href="/death" class="button">New search</a>
+    <a id="editSearchLink" href="/death?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+    {{#canRedirectToResults}}
+      <a id="backToSearchResults" href="/death?{{querystring}}" class="grey button">Back to results</a>
+    {{/canRedirectToResults}}
+  </div>
+{{/content}}
+
+{{/layout}}

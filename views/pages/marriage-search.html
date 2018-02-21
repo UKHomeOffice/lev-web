@@ -1,0 +1,49 @@
+{{<layout}}
+
+{{$title}}Marriage record check{{/title}}
+
+{{$journeyHeader}}
+  Marriage record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      Applicant's details
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$validationSummary}}
+  {{> partials-validation-summary}}
+{{/validationSummary}}
+
+{{$maincontent}}
+  {{> partials-maincontent-left}}
+{{/maincontent}}
+
+{{$content}}
+  {{<partials-form}}
+    {{$form}}
+      {{#input-text}}system-number{{/input-text}}
+      <details{{#errors.system-number}} open{{/errors.system-number}}>
+        <summary><span class="summary">What is the system number?</span></summary>
+        <div class="panel panel-border-narrow">
+          <img
+            src="{{baseUrl}}/public/images/system-number-hint.png"
+            alt="The system number is a nine digit number located in the bottom left corner of the birth certificate"
+            title="Where to find the system number on a birth certificate"
+          />
+        </div>
+      </details>
+      {{#input-text}}surname{{/input-text}}
+      {{#input-text}}forenames{{/input-text}}
+      {{#input-text}}dob{{/input-text}}
+      <div class="buttons">
+        {{#input-submit}}search{{/input-submit}}
+      </div>
+    {{/form}}
+  {{/partials-form}}
+{{/content}}
+
+{{/layout}}
