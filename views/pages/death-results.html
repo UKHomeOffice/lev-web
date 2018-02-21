@@ -1,0 +1,64 @@
+{{<layout}}
+
+{{$title}}Death record check{{/title}}
+
+{{$journeyHeader}}
+  Death record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      {{#count}}<span class="records-count">{{count}} records found for</span>{{/count}}
+      {{^count}}<span class="records-count">No records found for</span>{{/count}}
+      <span class="query">
+        {{#query}}
+          {{system-number}}
+          {{forenames}}
+          {{surname}}
+          {{dob}}
+        {{/query}}
+      </span>
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent}}
+{{/maincontent}}
+
+{{$content}}
+  <ul id="records">
+    {{#records}}
+    <li>
+      <article>
+        <a href="/death/details/{{id}}?{{querystring}}&amp;multipleResults">
+          <h2>{{deceased.forenames}} {{deceased.surname}}</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Age</th>
+                <td>{{deceased.age}}</td>
+              </tr>
+              <tr>
+                <th>Occupation</th>
+                <td>{{deceased.occupation}}</td>
+              </tr>
+              <tr>
+                <th>Date of death</th>
+                <td>{{deceased.dateOfDeath}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </a>
+      </article>
+    </li>
+    {{/records}}
+  </ul>
+  <div class="buttons">
+    <a id="newSearchLink" href="/death" class="button">New search</a>
+    <a id="editSearchLink" href="/death?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+  </div>
+{{/content}}
+
+{{/layout}}
