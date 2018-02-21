@@ -49,7 +49,7 @@
     "lint:fix": "eslint --fix .",
     "lint:client": "eslint ./assets/js",
     "cover": "istanbul cover _mocha -- ./test/unit",
-    "check-coverage": "istanbul check-coverage --statement 95 --branch 85 --function 100 --line 95",
+    "check-coverage": "istanbul check-coverage --statement 80 --branch 70 --function 100 --line 80",
     "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
     "lint:sass": "sass-lint 'assets/scss/**/*.scss' -v -q",
     "watch:sass": "nodemon -w assets/scss -e scss -x 'npm-run-all -s lint:sass sass'",
