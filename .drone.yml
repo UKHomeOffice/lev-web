@@ -85,8 +85,8 @@ pipeline:
       - KUBE_SERVER_DSP
       - KUBE_NAMESPACE_DSP
       - KUBE_TOKEN_DSP
-      - KUBE_DEPLOYMENT
-      - KUBE_CONTAINER
+      - KUBE_DEPLOYMENT_DSP
+      - KUBE_CONTAINER_DSP
     environment:
       - DOCKER_REPO=quay.io
       - DOCKER_BASEDIR=/ukhomeofficedigital/
@@ -135,7 +135,7 @@ pipeline:
       - KUBE_SERVER_DSP
       - KUBE_NAMESPACE_DSP
       - KUBE_TOKEN_DSP
-      - KUBE_DEPLOYMENT
+      - KUBE_DEPLOYMENT_DSP
     commands:
       - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER_DSP} --namespace=$${KUBE_NAMESPACE_DSP} --token=$${KUBE_TOKEN_DSP}"
       - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
