@@ -1,0 +1,56 @@
+{{<layout}}
+
+{{$title}}Marriage record check{{/title}}
+
+{{$journeyHeader}}
+  Marriage record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      {{#count}}<span class="records-count">{{count}} records found for</span>{{/count}}
+      {{^count}}<span class="records-count">No records found for</span>{{/count}}
+      <span class="query">
+        {{#query}}
+          {{system-number}}
+          {{forenames}}
+          {{surname}}
+          {{dob}}
+        {{/query}}
+      </span>
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent}}
+{{/maincontent}}
+
+{{$content}}
+  <ul id="records">
+    {{#records}}
+    <li>
+      <article>
+        <a href="/details/{{system-number}}?{{querystring}}&amp;multipleResults">
+          <h2>{{groom.forenames}} {{groom.surname}} &amp; {{bride.forenames}} {{bride.surname}}</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Date of marriage</th>
+                <td>{{dateOfMarriage}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </a>
+      </article>
+    </li>
+    {{/records}}
+  </ul>
+  <div class="buttons">
+    <a id="newSearchLink" href="/marriage" class="button">New search</a>
+    <a id="editSearchLink" href="/marriage?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+  </div>
+{{/content}}
+
+{{/layout}}

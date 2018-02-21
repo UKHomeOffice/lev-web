@@ -8,6 +8,7 @@ const config = require('../config');
 const baseURL = `${config.api.protocol}://${config.api.host}:${config.api.port}`;
 const birthSearch = `${baseURL}/api/v0/events/birth`;
 const deathSearch = `${baseURL}/v1/registration/death`;
+const marriageSearch = `${baseURL}/v1/registration/marriage`;
 const userActivity = `${baseURL}/api/v0/audit/user-activity`;
 
 const requestData = (url, accessToken) =>
@@ -115,6 +116,54 @@ const findDeaths = (searchFields, accessToken) => {
     : findDeathsByNameDOB(searchFields, accessToken);
 };
 
+const findMarriagesByNameDOB = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findMarriagesByNameDOB(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriagesByNameDOB(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findMarriagesByNameDOB(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriagesByNameDOB(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(helpers.buildQueryUri(marriageSearch, searchFields), accessToken)
+    .then((data) => data.map(helpers.processMarriageRecord));
+};
+
+const findMarriageBySystemNumber = (systemNumber, accessToken) => {
+  if (systemNumber === undefined) {
+    throw new ReferenceError('findMarriagesBySystemNumber(): first argument, systemNumber, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriagesBySystemNumber(): second argument, accessToken, was not defined');
+  } else if ((!Number.isInteger(systemNumber))) {
+    throw new TypeError('findMarriagesBySystemNumber(): first argument, systemNumber, must be an integer');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriagesBySystemNumber(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(marriageSearch + '/' + systemNumber, accessToken)
+    .then(helpers.processMarriageRecord);
+};
+
+const findMarriages = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findMarriages(): first argument, searchFields, was not defined');
+  } else if (accessToken === undefined) {
+    throw new ReferenceError('findMarriages(): second argument, accessToken, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findMarriages(): first argument, searchFields, must be an object');
+  } else if (typeof accessToken !== 'string') {
+    throw new TypeError('findMarriages(): second argument, accessToken, must be a string');
+  }
+
+  const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
+
+  return systemNumber
+    ? findMarriageBySystemNumber(systemNumber, accessToken).then((data) => [data])
+    : findMarriagesByNameDOB(searchFields, accessToken);
+};
+
 const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
   if (!accessToken) {
     throw new ReferenceError('The "accessToken" parameter was not provided');
@@ -153,5 +202,7 @@ module.exports = {
   findBySystemNumber: findBySystemNumber,
   findDeaths: findDeaths,
   findDeathBySystemNumber: findDeathBySystemNumber,
+  findMarriages: findMarriages,
+  findMarriageBySystemNumber: findMarriageBySystemNumber,
   userActivityReport: userActivityReport
 };

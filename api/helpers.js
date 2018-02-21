@@ -27,6 +27,11 @@ const buildDeathParams = (attrs) => _.pickBy({
   forenames: attrs.forenames,
   dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
 }, _.identity);
+const buildMarriageParams = (attrs) => _.pickBy({
+  surname: attrs.surname,
+  forenames: attrs.forenames,
+  dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+}, _.identity);
 const buildAuditParams = (attrs) => _.pickBy({
   from: toInternationalDateFormat(attrs.from),
   to: toInternationalDateFormat(attrs.to),
@@ -40,6 +45,8 @@ const buildQueryUri = (endpoint, attrs) => {
     return endpoint + '?' + querystring.stringify(buildAuditParams(attrs));
   } else if (endpoint.match('death')) {
     return endpoint + '?' + querystring.stringify(buildDeathParams(attrs));
+  } else if (endpoint.match('marriage')) {
+    return endpoint + '?' + querystring.stringify(buildMarriageParams(attrs));
   }
   return endpoint + '?' + querystring.stringify(buildBirthParams(attrs));
 };
@@ -132,6 +139,24 @@ const processDeathRecord = r => ({
   }
 });
 
+const processMarriageRecord = r => ({
+  id: Number(r.id),
+  date: r.date,
+  dateOfMarriage: r.dateOfMarriage,
+  registrar: {
+    district: r.registrar.district,
+    administrativeArea: r.registrar.administrativeArea
+  },
+  bride: {
+    forenames: r.bride.forenames,
+    surname: r.bride.surname
+  },
+  groom: {
+    forenames: r.groom.forenames,
+    surname: r.groom.surname
+  }
+});
+
 const responseHandler = (resolve, reject) => (err, res, body) => {
   if (err) {
     reject(err);
@@ -155,6 +180,7 @@ module.exports = {
   buildQueryUri: buildQueryUri,
   processRecord: processRecord,
   processDeathRecord: processDeathRecord,
+  processMarriageRecord: processMarriageRecord,
   refer: refer,
   reformatDate: reformatDate,
   responseHandler: responseHandler,
