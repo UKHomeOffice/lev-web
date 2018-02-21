@@ -96,10 +96,10 @@ pipeline:
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
       - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER_DSP} --namespace=$${KUBE_NAMESPACE_DSP} --token=$${KUBE_TOKEN_DSP}"
-      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
-      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
-      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
-      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT_DSP} --replicas 2
+      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT_DSP} "$${KUBE_CONTAINER_DSP}=$${IMAGE}:$${TAG}"
+      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT_DSP}
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT_DSP} --replicas 1
       - sleep 60
     when:
       branch: master
@@ -138,7 +138,7 @@ pipeline:
       - KUBE_DEPLOYMENT_DSP
     commands:
       - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER_DSP} --namespace=$${KUBE_NAMESPACE_DSP} --token=$${KUBE_TOKEN_DSP}"
-      - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
+      - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT_DSP} lev-web-test-log="`cat test.log`"
     when:
       branch: master
       event: push
