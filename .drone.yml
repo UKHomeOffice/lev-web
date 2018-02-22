@@ -143,6 +143,18 @@ pipeline:
       branch: master
       event: push
 
+  promote_to_uat:
+    image: quay.io/ukhomeofficedigital/drone-trigger:latest
+    secrets: [ drone_token ]
+    drone_server: https://drone-gitlab.acp.homeoffice.gov.uk
+    repo: lev/levops
+    branch: master
+    event: push
+    deploy_to: uat
+    when:
+      branch: master
+      event: push
+
   notify_slack_success:
     image: plugins/slack:1.0
     secrets: [ slack_webhook ]
@@ -173,18 +185,3 @@ pipeline:
       branch: master
       event: push
       status: failure
-
-  promote_to_uat:
-    image: quay.io/ukhomeofficedigital/drone-trigger:latest
-    secrets:
-      - drone_token
-    drone_server: https://drone-gitlab.acp.homeoffice.gov.uk
-    drone_token: $${DRONE_TOKEN}
-    repo: lev/levops
-    branch: master
-    event: push
-    deploy_to: uat
-    when:
-      branch: master
-      event: push
-      status: success
