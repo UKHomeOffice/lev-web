@@ -47,6 +47,12 @@ app.engine('html', require('hogan-express-strict'));
 app.use(i18n.middleware());
 app.use(mixins(fields));
 
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-cache; no-store');
+  res.set('X-Frame-Options', 'DENY');
+  next();
+});
+
 require('./routes')(app);
 
 app.use(require('./middleware/not-found')());
