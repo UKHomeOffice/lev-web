@@ -145,12 +145,9 @@ pipeline:
 
   notify_slack_success:
     image: plugins/slack:1.0
-    secrets:
-      - SLACK_WEBHOOK
+    secrets: [ slack_webhook ]
     channel: general
     username: Drone
-    icon_url: http://readme.drone.io/0.5/logo_dark.svg
-    icon.url: http://readme.drone.io/0.5/logo_dark.svg
     template: >
       *Deployed {{repo.name}} to Dev* - <{{build.link}}|#{{build.number}}>
     when:
@@ -160,12 +157,9 @@ pipeline:
 
   notify_slack_failure:
     image: plugins/slack
-    secrets:
-      - SLACK_WEBHOOK
+    secrets: [ slack_webhook ]
     channel: alerts
     username: Drone
-    icon_url: http://readme.drone.io/0.5/logo_dark.svg
-    icon.url: http://readme.drone.io/0.5/logo_dark.svg
     template: >
       *Failed to deploy {{repo.name}} to Dev*
 
