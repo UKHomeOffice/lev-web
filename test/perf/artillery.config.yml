@@ -1,0 +1,22 @@
+config:
+  target: http://kc-proxy:8002
+  phases:
+    - duration: 10
+      arrivalRate: 1
+      name: "Warm up the application"
+    - duration: 60
+      arrivalRate: 2
+      name: "Sustained max load"
+  http:
+    pool: 40
+scenarios:
+  - name: "birth record 1"
+    weight: 50
+    flow:
+      - get:
+          url: "/details/999999901"
+  - name: "birth record 2"
+    weight: 50
+    flow:
+      - get:
+          url: "/details/999999910"
