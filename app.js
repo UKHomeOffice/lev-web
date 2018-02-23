@@ -22,9 +22,6 @@ if (config.env !== 'acceptance') {
   app.use(churchill(logger));
 }
 
-// add health check endpoints
-app.use(require('./lib/health'));
-
 app.use('/public', express.static(path.resolve(__dirname, './public')));
 
 app.use(function setAssetPath(req, res, next) {
@@ -46,6 +43,15 @@ app.engine('html', require('hogan-express-strict'));
 
 app.use(i18n.middleware());
 app.use(mixins(fields));
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-cache; no-store');
+  res.set('X-Frame-Options', 'DENY');
+  next();
+});
+
+// add health check endpoints
+app.use(require('./lib/health'));
 
 require('./routes')(app);
 
