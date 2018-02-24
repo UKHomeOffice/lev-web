@@ -2,7 +2,7 @@ DOCKER_IMAGE ?= lev-web
 
 perf_test_image = quay.io/ukhomeofficedigital/artillery-ci:0.2
 compose_network = levweb_default
-web_url = lev-web:8001
+web_url = localhost:8001
 
 probe_web=curl -fs '$(web_url)/readiness' &> /dev/null
 
