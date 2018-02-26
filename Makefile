@@ -18,7 +18,7 @@ docker-compose: docker-compose-deps docker
 	docker-compose build
 
 docker-test: docker-test-deps docker-compose-clean docker-compose
-	docker-compose up &> /dev/null &
+	docker-compose up &
 	eval $(probe_network); \
 	while [ $$? -ne 0 ]; do \
 		echo ...; \
