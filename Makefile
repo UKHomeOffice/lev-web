@@ -25,6 +25,7 @@ docker-test: docker-test-deps docker-compose-clean docker-compose
 		sleep 5; \
 		eval $(probe_network); \
 	done; true
+	sleep 10;
 	docker run --net '$(compose_network)' --env "TEST_CONFIG=$$(cat ./test/perf/artillery.config.yml)" --env "MEDIAN_LATENCY=500" --env "WAIT_URL=lev-web:8001/readiness" --env "TEST_URL=lev-web:8001" '$(perf_test_image)'
 	docker-compose stop
 
