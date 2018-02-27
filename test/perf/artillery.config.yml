@@ -4,8 +4,8 @@ config:
     - duration: 10
       arrivalRate: 10
       name: "Warm up the application"
-    - duration: 60
-      arrivalRate: 20
+    - duration: 30
+      arrivalRate: 10
       name: "Sustained max load"
   http:
     pool: 40
