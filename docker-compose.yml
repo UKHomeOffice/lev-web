@@ -7,6 +7,9 @@ services:
     environment:
       NODE_ENV: test
       API_HOST: mock-api
+    depends_on:
+      - kc-proxy
+      - mock-api
   kc-proxy:
     build:
       context: .
