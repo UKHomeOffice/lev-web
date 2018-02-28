@@ -28,7 +28,7 @@ const proxy = (fromHost, fromPort, toHost, toPort, accessToken, client, username
     });
   });
 
-  console.log(`Mock keycloak-proxy listening on ${fromHost}:${fromPort}`);
+  console.log(`Mock keycloak-proxy is proxying from ${fromHost}:${fromPort} to ${toHost}:${toPort}`);
   server.listen(fromPort, fromHost);
   return server;
 };

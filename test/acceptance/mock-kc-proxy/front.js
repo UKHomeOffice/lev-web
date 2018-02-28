@@ -2,8 +2,10 @@
 
 process.title = 'lev-keycloak-proxy';
 const proxy = require('./');
+const proxyHost = process.env.PROXY_HOST || 'localhost';
+const listenHost = process.env.LISTEN_HOST || 'localhost';
 
-const server = proxy('localhost', 8002, 'localhost', 8001, '<audit-token>');
+const server = proxy(listenHost, 8002, proxyHost, 8001, '<audit-token>');
 
 // gracefully handle shutdowns -----------------------
 

@@ -24,6 +24,15 @@ pipeline:
       branch: master
       event: [pull_request, push]
 
+  perf_test:
+    image: quay.io/ukhomeofficedigital/lev-ci
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - make test
+    when:
+      event: pull_request
+
   push_image:
     image: docker:1.11
     secrets:
