@@ -19,7 +19,7 @@ services:
       - "8002:8002"
     environment:
       PROXY_HOST: lev-web
-      LOCAL_HOST: 0.0.0.0
+      LISTEN_HOST: 0.0.0.0
   mock-api:
     image: quay.io/ukhomeofficedigital/lev-api-mock:v1.2.1-249-8c7263f352ae7d441acf5a55e3f0b9754d5900f4
     ports:
