@@ -1,6 +1,6 @@
 DOCKER_IMAGE ?= lev-web
 
-perf_test_image = quay.io/ukhomeofficedigital/artillery-ci:0.3.1
+perf_test_image = quay.io/ukhomeofficedigital/artillery-ci:0.3.2
 compose_network = levweb_default
 
 probe_network = docker network ls | grep -q '$(compose_network)'
