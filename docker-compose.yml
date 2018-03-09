@@ -1,39 +1,13 @@
 version: "3"
 services:
-  kc-proxy-front:
-    build:
-      context: .
-      dockerfile: Dockerfile-testing
-    command: npm run start:mock-kc-proxy
-    ports:
-      - "8002:8002"
-    environment:
-      PROXY_HOST: lev-web
-      LISTEN_HOST: 0.0.0.0
-    depends_on:
-      - lev-web
   lev-web:
     build: .
     ports:
       - "8001:8001"
     environment:
       NODE_ENV: test
-      API_HOST: kc-proxy-back
-      API_PORT: 8081
-  kc-proxy-back:
-    build:
-      context: .
-      dockerfile: Dockerfile-testing
-    command: npm run start:mock-kc-proxy
-    ports:
-      - "8081:8081"
-    environment:
-      PROXY_HOST: mock-api
-      PROXY_PORT: 8080
-      LISTEN_HOST: 0.0.0.0
-      LISTEN_PORT: 8081
-    depends_on:
-      - lev-web
+      API_HOST: mock-api
+      API_PORT: 8080
   mock-api:
     image: docker.digital.homeoffice.gov.uk/lev-api:0.0
     environment:

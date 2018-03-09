@@ -32,7 +32,11 @@ pipeline:
     image: quay.io/ukhomeofficedigital/lev-ci
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
+      - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
+      - DOCKER_USERNAME_MOCK=lev-kube
+    secrets: [ 'docker_password_mock' ]
     commands:
+      - docker login -u="$${DOCKER_USERNAME_MOCK}" -p="$${DOCKER_PASSWORD_MOCK}" "$${DOCKER_REPO_MOCK}"
       - make test
     when:
       event: pull_request

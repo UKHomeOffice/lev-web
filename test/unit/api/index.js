@@ -128,7 +128,9 @@ const parsedResponse = {
 
 const accessToken = 'access_token';
 const expectedHeaders = {
-  'Authorization': 'Bearer ' + accessToken
+  'Authorization': 'Bearer ' + accessToken,
+  'X-Auth-Username': 'user',
+  'X-Auth-Aud': 'client'
 };
 
 describe('api/index.js', () => {
@@ -145,7 +147,9 @@ describe('api/index.js', () => {
         api: {
           protocol: 'http',
           host: 'testhost.com',
-          port: 1111
+          port: 1111,
+          username: 'user',
+          clientName: 'client'
         }
       })
     });
@@ -163,10 +167,6 @@ describe('api/index.js', () => {
 
     describe('when called with no arguments', () => {
       it('throws a ReferenceError', () => expect(() => api.findByNameDOB()).to.throw(ReferenceError));
-    });
-
-    describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.findByNameDOB({})).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
@@ -270,10 +270,6 @@ describe('api/index.js', () => {
 
     describe('when called with no arguments', () => {
       it('throws a ReferenceError', () => expect(() => api.findBirths()).to.throw(ReferenceError));
-    });
-
-    describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.findBirths({})).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
@@ -459,10 +455,6 @@ describe('api/index.js', () => {
       it('throws a ReferenceError', () => expect(() => api.findBySystemNumber()).to.throw(ReferenceError));
     });
 
-    describe('when called with just one argument', () => {
-      it('throws a ReferenceError', () => expect(() => api.findBySystemNumber({})).to.throw(ReferenceError));
-    });
-
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an integer', () => {
         it('throws a TypeError', () => expect(() => api.findBySystemNumber({}, '')).to.throw(TypeError));
@@ -558,37 +550,37 @@ describe('api/index.js', () => {
     });
 
     describe('when called with an invalid system user', () => {
-      it('should throw a ReferenceError if the `user` parameter is not specified', () =>
-        expect(() => api.userActivityReport(undefined, moment().add(-1, 'days'), moment())).to.throw(ReferenceError)
-      );
       it('should throw a TypeError if the `user` parameter is not a proper string', () => {
-        expect(() => api.userActivityReport(null, moment().add(-1, 'days'), moment())).to.throw(ReferenceError);
-        expect(() => api.userActivityReport(42, moment().add(-1, 'days'), moment())).to.throw(TypeError);
+        expect(() => api.userActivityReport(accessToken, moment().add(-1, 'days'), moment(), null)).to.throw(TypeError);
+        expect(() => api.userActivityReport(accessToken, moment().add(-1, 'days'), moment(), 42)).to.throw(TypeError);
       });
     });
 
     describe('when called without the required `from` or `to` dates', () => {
       it('should throw a ReferenceError if either parameter is omitted', () => {
-        expect(from => api.userActivityReport('user', from, moment())).to.throw(ReferenceError);
-        expect(() => api.userActivityReport('user', moment())).to.throw(ReferenceError);
+        expect(from => api.userActivityReport(accessToken, from, moment())).to.throw(ReferenceError);
+        expect(() => api.userActivityReport(accessToken, moment())).to.throw(ReferenceError);
       });
       it('should throw a TypeError if either parameter is not a `moment` date object', () => {
-        expect(() => api.userActivityReport('user', 'from', moment())).to.throw(TypeError);
-        expect(() => api.userActivityReport('user', moment(), 'to')).to.throw(TypeError);
+        expect(() => api.userActivityReport(accessToken, 'from', moment())).to.throw(TypeError);
+        expect(() => api.userActivityReport(accessToken, moment(), 'to')).to.throw(TypeError);
       });
       it('should throw a RangeError if either parameter is not a valid date object', () => {
-        expect(() => api.userActivityReport('user', moment('from'), moment())).to.throw(RangeError);
-        expect(() => api.userActivityReport('user', moment('2017-02-27'), moment('2017-02-29'))).to.throw(RangeError);
+        expect(() => api.userActivityReport(accessToken, moment('from'), moment()))
+          .to.throw(RangeError);
+        expect(() => api.userActivityReport(accessToken, moment('2017-02-27'), moment('2017-02-29')))
+          .to.throw(RangeError);
       });
     });
 
     describe('when called with valid dates', () => {
       it('should throw a RangeError if the `to` date is before `from`', () =>
-        expect(() => api.userActivityReport('user', moment().add(1, 'days'), moment())).to.throw(RangeError)
+        expect(() => api.userActivityReport(accessToken, moment().add(1, 'days'), moment())).to.throw(RangeError)
       );
 
+      const days = config.MAX_AUDIT_RANGE + 1;
       it(`should throw a RangeError if the date range is greater than the ${config.MAX_AUDIT_RANGE} day limit`, () =>
-        expect(() => api.userActivityReport('user', moment().subtract(config.MAX_AUDIT_RANGE + 1, 'days'), moment()))
+        expect(() => api.userActivityReport(accessToken, moment().subtract(days, 'days'), moment()))
           .to.throw(RangeError, `less than ${config.MAX_AUDIT_RANGE} days`)
       );
 

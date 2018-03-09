@@ -23,11 +23,9 @@ const requestData = (url, accessToken) =>
 const findByNameDOB = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findByNameDOB(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findByNameDOB(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findByNameDOB(): second argument, accessToken, must be a string');
   }
 
@@ -38,11 +36,9 @@ const findByNameDOB = (searchFields, accessToken) => {
 const findBySystemNumber = (systemNumber, accessToken) => {
   if (systemNumber === undefined) {
     throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findBySystemNumber(): second argument, accessToken, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
     throw new TypeError('findBySystemNumber(): first argument, systemNumber, must be an integer');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findBySystemNumber(): second argument, accessToken, must be a string');
   }
 
@@ -53,11 +49,9 @@ const findBySystemNumber = (systemNumber, accessToken) => {
 const findBirths = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findBirths(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findBirths(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findBirths(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findBirths(): second argument, accessToken, must be a string');
   }
 
@@ -71,11 +65,9 @@ const findBirths = (searchFields, accessToken) => {
 const findDeathsByNameDOB = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findByNameDOB(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findDeathsByNameDOB(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findDeathsByNameDOB(): second argument, accessToken, must be a string');
   }
 
@@ -86,11 +78,9 @@ const findDeathsByNameDOB = (searchFields, accessToken) => {
 const findDeathBySystemNumber = (systemNumber, accessToken) => {
   if (systemNumber === undefined) {
     throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findBySystemNumber(): second argument, accessToken, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
     throw new TypeError('findDeathsBySystemNumber(): first argument, systemNumber, must be an integer');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findDeathsBySystemNumber(): second argument, accessToken, must be a string');
   }
 
@@ -101,11 +91,9 @@ const findDeathBySystemNumber = (systemNumber, accessToken) => {
 const findDeaths = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findDeaths(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findDeaths(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findDeaths(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findDeaths(): second argument, accessToken, must be a string');
   }
 
@@ -119,11 +107,9 @@ const findDeaths = (searchFields, accessToken) => {
 const findMarriagesByNameDOB = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findMarriagesByNameDOB(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findMarriagesByNameDOB(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findMarriagesByNameDOB(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findMarriagesByNameDOB(): second argument, accessToken, must be a string');
   }
 
@@ -134,11 +120,9 @@ const findMarriagesByNameDOB = (searchFields, accessToken) => {
 const findMarriageBySystemNumber = (systemNumber, accessToken) => {
   if (systemNumber === undefined) {
     throw new ReferenceError('findMarriagesBySystemNumber(): first argument, systemNumber, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findMarriagesBySystemNumber(): second argument, accessToken, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
     throw new TypeError('findMarriagesBySystemNumber(): first argument, systemNumber, must be an integer');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findMarriagesBySystemNumber(): second argument, accessToken, must be a string');
   }
 
@@ -149,11 +133,9 @@ const findMarriageBySystemNumber = (systemNumber, accessToken) => {
 const findMarriages = (searchFields, accessToken) => {
   if (searchFields === undefined) {
     throw new ReferenceError('findMarriages(): first argument, searchFields, was not defined');
-  } else if (accessToken === undefined) {
-    throw new ReferenceError('findMarriages(): second argument, accessToken, was not defined');
   } else if (!(searchFields instanceof Object)) {
     throw new TypeError('findMarriages(): first argument, searchFields, must be an object');
-  } else if (typeof accessToken !== 'string') {
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('findMarriages(): second argument, accessToken, must be a string');
   }
 
@@ -165,10 +147,7 @@ const findMarriages = (searchFields, accessToken) => {
 };
 
 const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
-  if (!accessToken) {
-    throw new ReferenceError('The "accessToken" parameter was not provided');
-  }
-  if (typeof accessToken !== 'string') {
+  if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('The "accessToken" parameter must be a string');
   }
   if (!from || !to) {
@@ -185,6 +164,9 @@ const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-di
   }
   if (moment(from).add(config.MAX_AUDIT_RANGE, 'days').isBefore(to)) {
     throw new RangeError(`maximum date range exceeded (should be less than ${config.MAX_AUDIT_RANGE} days)`);
+  }
+  if (userFilter !== undefined && typeof userFilter !== 'string') {
+    throw new TypeError('The "userFilter" parameter must be a string');
   }
 
   const data = {

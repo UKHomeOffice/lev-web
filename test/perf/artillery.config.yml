@@ -1,5 +1,5 @@
 config:
-  target: http://kc-proxy:8002
+  target: http://lev-web:8001
   phases:
     - duration: 10
       arrivalRate: 10
