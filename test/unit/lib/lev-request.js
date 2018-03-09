@@ -10,7 +10,12 @@ describe('lib/lev-request', function() {
     var config;
 
     beforeEach(sinon.test(function() {
-      config = {};
+      config = {
+        api: {
+          username: 'user',
+          clientName: 'client'
+        }
+      };
 
       requestGet = this.stub();
 
@@ -45,6 +50,10 @@ describe('lib/lev-request', function() {
         ca: 'TLS CA',
         agentOptions: {
           rejectUnauthorized: true
+        },
+        headers: {
+          'X-Auth-Aud': 'client',
+          'X-Auth-Username': 'user'
         }
       });
     });
@@ -60,6 +69,10 @@ describe('lib/lev-request', function() {
         url: 'http://testhost.com',
         agentOptions: {
           rejectUnauthorized: false
+        },
+        headers: {
+          'X-Auth-Aud': 'client',
+          'X-Auth-Username': 'user'
         }
       });
     });
@@ -70,7 +83,9 @@ describe('lib/lev-request', function() {
       requestGet.should.have.been.calledWith({
         url: 'http://testhost.com',
         headers: {
-          Authorization: 'Bearer access_token'
+          Authorization: 'Bearer access_token',
+          'X-Auth-Username': 'user',
+          'X-Auth-Aud': 'client'
         },
         agentOptions: {
           rejectUnauthorized: true
