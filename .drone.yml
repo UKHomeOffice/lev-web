@@ -5,13 +5,9 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
-      - MOCK_IMAGE=docker.digital.homeoffice.gov.uk/lev-api:0.0
-      - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
-      - DOCKER_USERNAME_MOCK=lev-kube
-    secrets: [ 'docker_password_mock' ]
+      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api:0.0
     commands:
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
-      - docker login -u="$${DOCKER_USERNAME_MOCK}" -p="$${DOCKER_PASSWORD_MOCK}" "$${DOCKER_REPO_MOCK}"
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
       - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
@@ -34,9 +30,7 @@ pipeline:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
       - DOCKER_USERNAME_MOCK=lev-kube
-    secrets: [ 'docker_password_mock' ]
     commands:
-      - docker login -u="$${DOCKER_USERNAME_MOCK}" -p="$${DOCKER_PASSWORD_MOCK}" "$${DOCKER_REPO_MOCK}"
       - make test
     when:
       event: pull_request
