@@ -149,11 +149,13 @@ const processMarriageRecord = r => ({
   },
   bride: {
     forenames: r.bride.forenames,
-    surname: r.bride.surname
+    surname: r.bride.surname,
+    sex: r.bride.sex
   },
   groom: {
     forenames: r.groom.forenames,
-    surname: r.groom.surname
+    surname: r.groom.surname,
+    sex: r.groom.sex
   }
 });
 
