@@ -1,4 +1,4 @@
-FROM quay.io/ukhomeofficedigital/nodejs-base:v6
+FROM quay.io/ukhomeofficedigital/nodejs-base:v8
 
 RUN yum clean -q all && \
     yum update -y -q && \
@@ -24,5 +24,5 @@ RUN npm run postinstall && \
 ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 8001
 
-USER 998
+USER 999
 CMD [ "start" ]
