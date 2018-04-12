@@ -24,5 +24,5 @@ RUN npm run postinstall && \
 ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 8001
 
-USER nodejs
+USER 998
 CMD [ "start" ]
