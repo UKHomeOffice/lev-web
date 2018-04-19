@@ -74,6 +74,8 @@
     "replaced": "Original registration replaced by new registration.",
     "corrected": "Registration has been updated to correct an error.",
     "courtOrderInPlace": "This record has an adoption / court order in place.",
-    "courtOrderRevoked": "This record has an adoption / court order revoked."
+    "courtOrderRevoked": "This record has an adoption / court order revoked.",
+    "reRegistrationLabel": "This is a reregistration.",
+    "reRegistrationLink": "View the previous registration."
   }
 }
