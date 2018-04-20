@@ -43,6 +43,12 @@
   {{#record.status.courtOrderRevoked}}
     <div class="flag">{{#t}}flags.courtOrderRevoked{{/t}}</div>
   {{/record.status.courtOrderRevoked}}
+
+  {{#record.previousRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
+    </div>
+  {{/record.previousRegistration.systemNumber}}
   <table class="details">
     <tbody>
       <tr>
