@@ -13,6 +13,11 @@ $warn-border-colour: #CCAA00;
   border-left: em(10) solid $border-colour;
   padding: em(15);
   margin-bottom: em(20);
+
+  .button {
+    margin: 0;
+    display: inline;
+  }
 }
 
 .alert {
