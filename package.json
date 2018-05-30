@@ -45,7 +45,7 @@
     "lint:client": "eslint ./assets/js",
     "cover": "istanbul cover _mocha -- ./test/unit",
     "check-coverage": "istanbul check-coverage --statement 80 --branch 70 --function 100 --line 80",
-    "sass": "node-sass ./assets/scss/app.scss ./public/css/app.css --include-path ./node_modules",
+    "sass": "if [ -f ./assets/scss/app.scss ]; then node-sass --include-path ./node_modules ./assets/scss/app.scss ./public/css/app.css; fi",
     "lint:sass": "sass-lint 'assets/scss/**/*.scss' -v -q",
     "watch:sass": "nodemon -w assets/scss -e scss -x 'npm-run-all -s lint:sass sass'",
     "copy:images": "cp -r ./assets/images ./public/",
