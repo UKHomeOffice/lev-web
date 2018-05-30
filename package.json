@@ -53,7 +53,7 @@
     "watch:js": "nodemon -w assets/js -x 'npm-run-all -s lint:client uglify'",
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
-    "postinstall": "npm-run-all create:public sass copy:images uglify",
+    "postinstall": "npm-run-all snyk-protect create:public sass copy:images uglify",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
