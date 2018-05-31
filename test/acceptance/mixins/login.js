@@ -8,7 +8,6 @@ module.exports = (target) => {
   };
 
   target.completeLoginPage = function(username, password) {
-    this.click('summary');
     this.setValue('input[name="username"]', username);
     this.setValue('input[name="password"]', password);
     this.click(loginButtonSelector);
