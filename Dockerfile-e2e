@@ -1,2 +1,2 @@
 FROM lev-web-testing
-CMD ["npm", "run", "test:browser"]
+CMD [ "test:browser" ]

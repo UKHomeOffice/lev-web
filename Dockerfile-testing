@@ -1,22 +1,25 @@
-FROM lev-web
+FROM node:8
+
+RUN addgroup --system app \
+ && adduser --system --home /app/ --uid 31337 --ingroup app app \
+ && chown -R app:app /app/
+
+USER app
+WORKDIR /app
+ENV NODE_ENV ci
+
+COPY *node_modules/ package.json .snyk /app/
+RUN npm install > .npm-install.log 2>&1 \
+ && rm .npm-install.log \
+ || ( EC=$?; cat .npm-install.log; exit $EC )
+
+COPY . /app
+
+RUN npm run postinstall
 
 USER root
-ENV NODE_ENV ci
-RUN apk add --no-cache \
-      bzip2 \
-      fontconfig \
-      git \
-      g++ \
-      make \
-      python \
- && npm install > .npm-install.log 2>&1 \
- && rm .npm-install.log \
- || ( EC=$?; cat .npm-install.log; exit $EC ) \
- && apk del --no-cache \
-      g++ \
-      make \
-      python \
- && chown -R app:app .
+RUN chown -R app:app .
 
 USER 31337
-CMD [ "npm", "run", "test:ci" ]
+ENTRYPOINT [ "npm", "run" ]
+CMD [ "test:ci" ]
