@@ -143,6 +143,20 @@ pipeline:
   save_test_logs:
     image: quay.io/ukhomeofficedigital/kd:latest
     secrets:
+      - KUBE_SERVER
+      - KUBE_NAMESPACE
+      - KUBE_TOKEN
+      - KUBE_DEPLOYMENT
+    commands:
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
+    when:
+      branch: master
+      event: push
+
+  save_test_logs_dsp:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    secrets:
       - KUBE_SERVER_DSP
       - KUBE_NAMESPACE_DSP
       - KUBE_TOKEN_DSP
