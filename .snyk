@@ -276,3 +276,12 @@ patch:
         patched: '2017-11-29T15:55:30.698Z'
     - hof > hmpo-form-wizard > express > debug > ms:
         patched: '2017-11-29T15:55:30.698Z'
+  'npm:hoek:20180212':
+    - node-sass > node-gyp > request > hawk > hoek:
+        patched: '2018-06-20T05:43:21.379Z'
+    - node-sass > node-gyp > request > hawk > boom > hoek:
+        patched: '2018-06-20T05:43:21.379Z'
+    - node-sass > node-gyp > request > hawk > sntp > hoek:
+        patched: '2018-06-20T05:43:21.379Z'
+    - node-sass > node-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-06-20T05:43:21.379Z'
