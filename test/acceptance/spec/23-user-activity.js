@@ -110,20 +110,19 @@ describe('User Activity', () => {
           if (!browser.isSelected('#weekends')) {
             checkbox.click();
           }
-          columns = browser.getText('table.audit > tbody > tr > *');
+          columns = browser.$$('table.audit > tbody > tr > *').map(c => c.getText());
         });
 
         it('each row should display the username', () => {
-          columns.should.contain(user);
+          columns[0].should.equal(user);
         });
 
         it('each row should have a column for each day with the search count', () => {
-
           while (columns[0] !== 'Day totals') {
             columns.shift();
             let row = columns.splice(0, days + 1);
             let counts = row.map(c => c ? parseInt(c, 10) : 0);
-            (userCounts = userCounts.concat([counts])).should.not.throwError;
+            (userCounts = userCounts.concat([counts])).should.not.throw;
           }
         });
 
@@ -141,7 +140,7 @@ describe('User Activity', () => {
         });
 
         it('the row should have a column for each day with the total search count', () => {
-          (totals = columns.map(c => c ? parseInt(c, 10) : 0)).should.not.throwError;
+          (totals = columns.map(c => c ? parseInt(c, 10) : 0)).should.not.throw;
         });
 
         it('the day totals should be accurate', () => {

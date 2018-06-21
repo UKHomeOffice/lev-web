@@ -4,11 +4,11 @@ var expectedRecord = require('../expected-record');
 var expectedRecords = require('../expected-records');
 
 describe('Details Page', () => {
-  const urlShouldContainDetails = () => {
-    it('returns a details page', () => {
-      browser.shouldBeOnDetailsPage();
-    });
-  };
+  const urlShouldContainDetails = () =>
+    it('returns a details page', () => browser.shouldBeOnDetailsPage());
+
+  const urlShouldContainSearch = () =>
+    it('returns the search page', () => browser.shouldBeOnSearchPage());
 
   const messageDisplayed = (recordToMatch) => {
     it('an appropriate message is displayed', () => {
@@ -19,44 +19,37 @@ describe('Details Page', () => {
 
   const recordDisplayed = (recordToMatch) => {
     it('the complete record is displayed in a table', () => {
-      const browserText = browser.getText('table tr');
+      const browserText = browser.$$('table tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
-      browserText[0].should.match(new RegExp('System number *' + recordToMatch.systemNumber));
-      browserText[2].should.match(new RegExp('Surname *' + recordToMatch.child.name.surname));
-      browserText[3].should.match(new RegExp('Forename\\(s\\) *' + recordToMatch.child.name.givenName));
-      browserText[4].should.match(new RegExp('Date of birth *' + recordToMatch.child.dateOfBirth));
-      browserText[5].should.match(new RegExp('Sex *' + recordToMatch.child.sex));
-      browserText[6].should.match(new RegExp('Place of birth *' + recordToMatch.child.birthplace));
-      browserText[8].should.match(new RegExp('Name *' + recordToMatch.mother.name.fullName));
-      browserText[9].should.match(new RegExp('Maiden name *' + recordToMatch.mother.maidenSurname));
-      browserText[10].should.match(new RegExp('Previous marriage name *' + recordToMatch.mother.marriageSurname));
-      browserText[11].should.match(new RegExp('Place of birth *' + recordToMatch.mother.birthplace));
-      browserText[13].should.match(new RegExp('Name *' + recordToMatch.father.name.fullName));
-      browserText[14].should.match(new RegExp('Place of birth *' + recordToMatch.father.birthplace));
-      browserText[16].should.match(new RegExp('Birth registered by *Mother'));
-      browserText[17].should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
-      browserText[18].should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
-      browserText[19].should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));
-      browserText[20].should.match(new RegExp('Date of registration *' + recordToMatch.date));
+      browserText[0].getText().should.match(new RegExp('System number *' + recordToMatch.systemNumber));
+      browserText[2].getText().should.match(new RegExp('Surname *' + recordToMatch.child.name.surname));
+      browserText[3].getText().should.match(new RegExp('Forename\\(s\\) *' + recordToMatch.child.name.givenName));
+      browserText[4].getText().should.match(new RegExp('Date of birth *' + recordToMatch.child.dateOfBirth));
+      browserText[5].getText().should.match(new RegExp('Sex *' + recordToMatch.child.sex));
+      browserText[6].getText().should.match(new RegExp('Place of birth *' + recordToMatch.child.birthplace));
+      browserText[8].getText().should.match(new RegExp('Name *' + recordToMatch.mother.name.fullName));
+      browserText[9].getText().should.match(new RegExp('Maiden name *' + recordToMatch.mother.maidenSurname));
+      browserText[10].getText().should.match(new RegExp('Previous marriage name *' + recordToMatch.mother.marriageSurname));
+      browserText[11].getText().should.match(new RegExp('Place of birth *' + recordToMatch.mother.birthplace));
+      browserText[13].getText().should.match(new RegExp('Name *' + recordToMatch.father.name.fullName));
+      browserText[14].getText().should.match(new RegExp('Place of birth *' + recordToMatch.father.birthplace));
+      browserText[16].getText().should.match(new RegExp('Birth registered by *Mother'));
+      browserText[17].getText().should.match(new RegExp('Registration district *' + recordToMatch.registrationDistrict));
+      browserText[18].getText().should.match(new RegExp('Sub-district *' + recordToMatch.subDistrict));
+      browserText[19].getText().should.match(new RegExp('Administrative area *' + recordToMatch.administrativeArea));
+      browserText[20].getText().should.match(new RegExp('Date of registration *' + recordToMatch.date));
     });
   };
 
-  const editSearchDisplayed = () => {
-    it('contains a link back to the search screen', () => {
-      browser.getText('body').should.contain('Edit search');
-    });
-  };
+  const editSearchDisplayed = () =>
+    it('contains a link back to the search screen', () => browser.getText('body').should.contain('Edit search'));
 
-  const backToSearchResultsDisplayed = () => {
-    it('contains a link back to the search screen', () => {
-      browser.getText('body').should.contain('Back to results');
-    });
-  };
+  const backToSearchResultsDisplayed = () =>
+    it('contains a link back to the search screen', () => browser.getText('body').should.contain('Back to results'));
 
   const backToSearchResultsNotDisplayed = () => {
-    it('does not contain a link back to the search screen', () => {
-      browser.getText('body').should.not.contain('Back to search results');
-    });
+    it('does not contain a link back to the search screen', () =>
+      browser.getText('body').should.not.contain('Back to search results'));
   };
 
   describe('When there is one result', () => {
@@ -100,9 +93,7 @@ describe('Details Page', () => {
       browser.click('#newSearchLink');
     });
 
-    it('returns the search page', () => {
-      browser.shouldBeOnSearchPage();
-    });
+    urlShouldContainSearch();
 
     it('has empty form values', () => {
       browser.waitForVisible('input[name="forenames"]', 5000);
@@ -119,9 +110,7 @@ describe('Details Page', () => {
       browser.click('#editSearchLink');
     });
 
-    it('returns the search page', () => {
-      browser.shouldBeOnSearchPage();
-    });
+    urlShouldContainSearch();
 
     it('has the correct form values', () => {
       browser.waitForVisible('input[name="forenames"]', 5000);
@@ -142,9 +131,7 @@ describe('Details Page', () => {
       browser.click('#editSearchLink');
     });
 
-    it('returns the search page', () => {
-      browser.shouldBeOnSearchPage();
-    });
+    urlShouldContainSearch();
 
     it('has the correct form values', () => {
       browser.waitForVisible('input[name="forenames"]', 5000);
