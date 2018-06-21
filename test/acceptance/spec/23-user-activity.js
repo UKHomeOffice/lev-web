@@ -110,20 +110,19 @@ describe('User Activity', () => {
           if (!browser.isSelected('#weekends')) {
             checkbox.click();
           }
-          columns = browser.getText('table.audit > tbody > tr > *');
+          columns = browser.$$('table.audit > tbody > tr > *').map(c => c.getText());
         });
 
         it('each row should display the username', () => {
-          columns.should.contain(user);
+          columns[0].should.equal(user);
         });
 
         it('each row should have a column for each day with the search count', () => {
-
           while (columns[0] !== 'Day totals') {
             columns.shift();
             let row = columns.splice(0, days + 1);
             let counts = row.map(c => c ? parseInt(c, 10) : 0);
-            (userCounts = userCounts.concat([counts])).should.not.throwError;
+            (userCounts = userCounts.concat([counts])).should.not.throw;
           }
         });
 
@@ -141,7 +140,7 @@ describe('User Activity', () => {
         });
 
         it('the row should have a column for each day with the total search count', () => {
-          (totals = columns.map(c => c ? parseInt(c, 10) : 0)).should.not.throwError;
+          (totals = columns.map(c => c ? parseInt(c, 10) : 0)).should.not.throw;
         });
 
         it('the day totals should be accurate', () => {
@@ -352,6 +351,20 @@ describe('User Activity', () => {
       });
     });
 
+    // temporary test checks error page works as expected, should eventually be replaced by the next (skipped) test
+    describe('with a "from" date after the "to" date', () => {
+      before(() => {
+        browser.generateReport(
+          moment().add(-3, 'day').format('DD/MM/YYYY'),
+          moment().add(-10, 'days').format('DD/MM/YYYY')
+        );
+      });
+
+      it('displays an error message', () => browser.getText('h1').should.equal('Error'));
+      it('requests a past date', () =>
+        browser.getText('p').should.equal('"from" date must be before "to" date for the User Activity report'));
+    });
+
     // placeholder test for making search date range check part of validation, instead of a 500 error
     describe.skip('with a "from" date after the "to" date', () => {
       before(() => {
@@ -361,13 +374,22 @@ describe('User Activity', () => {
         );
       });
 
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
+      it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
+      it('requests a past date', () => browser.getText('a').should.contain('Please enter a proper date range'));
+    });
+
+    // temporary test checks error page works as expected, should eventually be replaced by the next (skipped) test
+    describe(`with a date range greater than ${testConfig.MAX_AUDIT_RANGE} days`, () => {
+      before(() => {
+        browser.generateReport(
+          moment().subtract(testConfig.MAX_AUDIT_RANGE + 1, 'days').format('DD/MM/YYYY'),
+          moment().format('DD/MM/YYYY')
+        );
       });
 
-      it('requests a past date', () => {
-        browser.getText('a').should.contain('Please enter a proper date range');
-      });
+      it('displays an error message', () => browser.getText('h1').should.equal('Error'));
+      it('requests a reduced date range', () => browser.getText('p').should.equal(
+        `maximum date range exceeded (should be less than ${testConfig.MAX_AUDIT_RANGE} days)`));
     });
 
     // placeholder test for making search date range limit check part of validation, instead of a 500 error
@@ -379,13 +401,9 @@ describe('User Activity', () => {
         );
       });
 
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
-      });
-
-      it('requests a reduced date range', () => {
-        browser.getText('a').should.contain(`Please enter a date range less than ${testConfig.MAX_AUDIT_RANGE} days`);
-      });
+      it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
+      it('requests a reduced date range', () =>
+        browser.getText('a').should.contain(`Please enter a date range less than ${testConfig.MAX_AUDIT_RANGE} days`));
     });
 
     describe('with invalid characters in the user search filter', () => {

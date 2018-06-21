@@ -68,8 +68,8 @@
     "hof": "^8.0.0",
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
-    "lodash": "^4.13.1",
-    "moment": "^2.10.6",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "moment-round": "^1.0.1",
     "node-sass": "^3.7.0",
     "npm-run-all": "^3.1.2",
@@ -81,7 +81,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "chimp": "^0.42.0",
+    "chimp": "^0.51.1",
     "eslint": "^3.4.0",
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
@@ -89,17 +89,17 @@
     "http-proxy": "^1.15.2",
     "istanbul": "^0.4.3",
     "jscs": "^3.0.2",
-    "jsdom": "^11.0.0",
+    "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^3.0.2",
-    "nodemon": "^1.8.1",
+    "nodemon": "^1.17.5",
     "proxyquire": "^1.7.3",
     "reqres": "^1.2.2",
     "rewire": "^2.5.2",
     "sass-lint": "^1.10.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "webdriverio": "~4.8.0"
+    "webdriverio": "^4.13.0"
   },
   "snyk": true
 }
