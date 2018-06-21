@@ -141,10 +141,7 @@ describe('Search', () => {
         browser.getText('a').should.contain('Please enter a number');
       });
 
-      // phantomJS can't handle visibility properly
-      it.skip('shows the system number details hint', () => {
-        browser.isVisible('details > div').should.be.true;
-      });
+      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
     });
 
     describe('with a system number of an invalid length', () => {
@@ -160,10 +157,7 @@ describe('Search', () => {
         browser.getText('a').should.contain('The system number should be 9 digits');
       });
 
-      // phantomJS can't handle visibility properly
-      it.skip('shows the system number details hint', () => {
-        browser.isVisible('details > div').should.be.true;
-      });
+      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
     });
 
     describe('with an invalid date of birth that is', () => {
