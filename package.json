@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "stop": "pkill levweb || true",
-    "dev": "npm-run-all -s stop:all acceptance:pause dev:up",
+    "dev": "npm-run-all -s postinstall stop:all acceptance:pause dev:up",
     "dev:quick": "npm-run-all -s stop:all acceptance:pause dev:up-quick",
     "dev:up-quick": "npm-run-all -p dev:frontend-quick dev:backend-quick",
     "dev:frontend-quick": "npm-run-all -p create:trigger watch:sass watch:js",
@@ -79,6 +79,7 @@
     "winston": "^1.0.1"
   },
   "devDependencies": {
+    "broken-link-checker": "^0.7.8",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chimp": "^0.51.1",
