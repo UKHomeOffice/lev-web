@@ -285,3 +285,6 @@ patch:
         patched: '2018-06-20T05:43:21.379Z'
     - node-sass > node-gyp > request > hawk > cryptiles > boom > hoek:
         patched: '2018-06-20T05:43:21.379Z'
+  'npm:lodash:20180130':
+    - hof > i18n-future > lodash:
+        patched: '2018-07-04T05:44:00.763Z'
