@@ -19,6 +19,15 @@
 {{/maincontent}}
 
 {{$content}}
+  {{#record.status.refer}}
+    <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+  {{/record.status.refer}}
+
+  {{#record.previousRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/marriage/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
+    </div>
+  {{/record.previousRegistration.systemNumber}}
   <table class="details">
     <tbody>
       <tr>
@@ -29,35 +38,115 @@
         <th>Date of marriage</th>
         <td>{{record.dateOfMarriage}}</td>
       </tr>
-      <tr class="section-head">
-        <th colspan="2">Bride</th>
-      </tr>
       <tr>
-        <th>Surname</th>
-        <td>{{record.bride.surname}}</td>
-      </tr>
-      <tr>
-        <th>Forename(s)</th>
-        <td>{{record.bride.forenames}}</td>
-      </tr>
-      <tr>
-        <th>Sex</th>
-        <td>{{record.bride.sex}}</td>
+        <th>Place of marriage</th>
+        <td>{{record.placeOfMarriage}}</td>
       </tr>
       <tr class="section-head">
         <th colspan="2">Groom</th>
       </tr>
       <tr>
-        <th>Surname</th>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Surname</th>
         <td>{{record.groom.surname}}</td>
       </tr>
       <tr>
-        <th>Forename(s)</th>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Forename(s)</th>
         <td>{{record.groom.forenames}}</td>
       </tr>
       <tr>
-        <th>Sex</th>
-        <td>{{record.groom.sex}}</td>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Age</th>
+        <td>{{record.groom.age}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Occupation</th>
+        <td>{{record.groom.occupation}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Address</th>
+        <td>{{record.groom.address}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Condition</th>
+        <td>{{record.groom.condition}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Signature</th>
+        <td>{{record.groom.signature}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Bride</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Surname</th>
+        <td>{{record.bride.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Forename(s)</th>
+        <td>{{record.bride.forenames}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Age</th>
+        <td>{{record.bride.age}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Occupation</th>
+        <td>{{record.bride.occupation}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Address</th>
+        <td>{{record.bride.address}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Condition</th>
+        <td>{{record.bride.condition}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Signature</th>
+        <td>{{record.bride.signature}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Father of the groom</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Surname</th>
+        <td>{{record.fatherOfGroom.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Forename(s)</th>
+        <td>{{record.fatherOfGroom.forenames}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Occupation</th>
+        <td>{{record.fatherOfGroom.occupation}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Father of the bride</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Surname</th>
+        <td>{{record.fatherOfBride.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Forename(s)</th>
+        <td>{{record.fatherOfBride.forenames}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Occupation</th>
+        <td>{{record.fatherOfBride.occupation}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">First witness</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">First witness' </span>Signature</th>
+        <td>{{record.witness1.signature}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Second witness</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Second witness' </span>Signature</th>
+        <td>{{record.witness2.signature}}</td>
       </tr>
       <tr class="section-head">
         <th colspan="2">Registration</th>

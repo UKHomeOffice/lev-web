@@ -118,46 +118,108 @@ const processRecord = (record) => {
   };
 };
 
-const processDeathRecord = r => ({
-  id: Number(r.id),
-  date: r.date,
-  registrar: {
-    signature: r.registrar.signature,
-    subdistrict: r.registrar.subdistrict,
-    district: r.registrar.district,
-    administrativeArea: r.registrar.administrativeArea
-  },
-  deceased: {
-    forenames: r.deceased.forenames,
-    surname: r.deceased.surname,
-    dateOfDeath: r.deceased.dateOfDeath,
-    deathplace: r.deceased.deathplace,
-    sex: r.deceased.sex,
-    age: Number(r.deceased.age),
-    occupation: r.deceased.occupation,
-    causeOfDeath: r.deceased.causeOfDeath
-  }
-});
+const processDeathRecord = r => {
+  const blocked = r.status.blocked !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
 
-const processMarriageRecord = r => ({
-  id: Number(r.id),
-  date: r.date,
-  dateOfMarriage: r.dateOfMarriage,
-  registrar: {
-    district: r.registrar.district,
-    administrativeArea: r.registrar.administrativeArea
-  },
-  bride: {
-    forenames: r.bride.forenames,
-    surname: r.bride.surname,
-    sex: r.bride.sex
-  },
-  groom: {
-    forenames: r.groom.forenames,
-    surname: r.groom.surname,
-    sex: r.groom.sex
-  }
-});
+  return {
+    id: Number(r.id),
+    date: block(r.date),
+    registrar: {
+      signature: block(r.registrar.signature),
+      subdistrict: block(r.registrar.subdistrict),
+      district: block(r.registrar.district),
+      administrativeArea: block(r.registrar.administrativeArea)
+    },
+    informant: {
+      forenames: block(r.informant.forenames),
+      surname: block(r.informant.surname),
+      address: block(r.informant.address),
+      qualification: block(r.informant.qualification),
+      signature: block(r.informant.signature)
+    },
+    deceased: {
+      forenames: block(r.deceased.forenames),
+      surname: block(r.deceased.surname),
+      dateOfDeath: block(r.deceased.dateOfDeath),
+      deathplace: block(r.deceased.deathplace),
+      sex: block(r.deceased.sex),
+      age: block(Number(r.deceased.age)),
+      occupation: block(r.deceased.occupation),
+      causeOfDeath: block(r.deceased.causeOfDeath)
+    },
+    status: {
+      refer: blocked
+    },
+    previousRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.previousRegistration && r.previousRegistration.date,
+      systemNumber: r.previousRegistration && r.previousRegistration.id
+    }
+  };
+};
+
+const processMarriageRecord = r => {
+  const blocked = r.status.blocked !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
+
+  return {
+    id: Number(r.id),
+    date: block(r.date),
+    dateOfMarriage: block(r.dateOfMarriage),
+    placeOfMarriage: block(r.placeOfMarriage),
+    registrar: {
+      district: block(r.registrar.district),
+      administrativeArea: block(r.registrar.administrativeArea)
+    },
+    groom: {
+      forenames: block(r.groom.forenames),
+      surname: block(r.groom.surname),
+      age: block(Number(r.groom.age)),
+      occupation: block(r.groom.occupation),
+      address: block(r.groom.address),
+      condition: block(r.groom.condition),
+      signature: block(r.groom.signature)
+    },
+    bride: {
+      forenames: block(r.bride.forenames),
+      surname: block(r.bride.surname),
+      age: block(Number(r.bride.age)),
+      occupation: block(r.bride.occupation),
+      address: block(r.bride.address),
+      condition: block(r.bride.condition),
+      signature: block(r.bride.signature)
+    },
+    fatherOfGroom: {
+      forenames: block(r.fatherOfGroom.forenames),
+      surname: block(r.fatherOfGroom.surname),
+      occupation: block(r.fatherOfGroom.occupation)
+    },
+    fatherOfBride: {
+      forenames: block(r.fatherOfBride.forenames),
+      surname: block(r.fatherOfBride.surname),
+      occupation: block(r.fatherOfBride.occupation)
+    },
+    witness1: {
+      signature: block(r.witness1.signature)
+    },
+    witness2: {
+      signature: block(r.witness2.signature)
+    },
+    status: {
+      refer: blocked
+    },
+    previousRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.previousRegistration && r.previousRegistration.date,
+      systemNumber: r.previousRegistration && r.previousRegistration.id
+    }
+  };
+};
 
 const responseHandler = (resolve, reject) => (err, res, body) => {
   if (err) {

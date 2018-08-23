@@ -19,6 +19,15 @@
 {{/maincontent}}
 
 {{$content}}
+  {{#record.status.refer}}
+    <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+  {{/record.status.refer}}
+
+  {{#record.previousRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/death/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
+    </div>
+  {{/record.previousRegistration.systemNumber}}
   <table class="details">
     <tbody>
       <tr>
@@ -29,7 +38,7 @@
         <th colspan="2">Deceased</th>
       </tr>
       <tr>
-          <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Surname</th>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Surname</th>
         <td>{{record.deceased.surname}}</td>
       </tr>
       <tr>
@@ -59,6 +68,29 @@
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Cause of death</th>
         <td>{{record.deceased.causeOfDeath}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Informant</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Surname</th>
+        <td>{{record.informant.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Forename(s)</th>
+        <td>{{record.informant.forenames}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Address</th>
+        <td>{{record.informant.address}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Qualification</th>
+        <td>{{record.informant.qualification}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Signature</th>
+        <td>{{record.informant.signature}}</td>
       </tr>
       <tr class="section-head">
         <th colspan="2">Registration</th>

@@ -40,8 +40,15 @@
                 <th>Date of marriage</th>
                 <td>{{dateOfMarriage}}</td>
               </tr>
+              <tr>
+                <th>Place of marriage</th>
+                <td>{{placeOfMarriage}}</td>
+              </tr>
             </tbody>
           </table>
+          {{#status.refer}}
+            <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+          {{/status.refer}}
         </a>
       </article>
     </li>
