@@ -118,26 +118,48 @@ const processRecord = (record) => {
   };
 };
 
-const processDeathRecord = r => ({
-  id: Number(r.id),
-  date: r.date,
-  registrar: {
-    signature: r.registrar.signature,
-    subdistrict: r.registrar.subdistrict,
-    district: r.registrar.district,
-    administrativeArea: r.registrar.administrativeArea
-  },
-  deceased: {
-    forenames: r.deceased.forenames,
-    surname: r.deceased.surname,
-    dateOfDeath: r.deceased.dateOfDeath,
-    deathplace: r.deceased.deathplace,
-    sex: r.deceased.sex,
-    age: Number(r.deceased.age),
-    occupation: r.deceased.occupation,
-    causeOfDeath: r.deceased.causeOfDeath
-  }
-});
+const processDeathRecord = r => {
+  const blocked = r.status.blocked !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
+
+  return {
+    id: Number(r.id),
+    date: block(r.date),
+    registrar: {
+      signature: block(r.registrar.signature),
+      subdistrict: block(r.registrar.subdistrict),
+      district: block(r.registrar.district),
+      administrativeArea: block(r.registrar.administrativeArea)
+    },
+    informant: {
+      forenames: block(r.informant.forenames),
+      surname: block(r.informant.surname),
+      address: block(r.informant.address),
+      qualification: block(r.informant.qualification),
+      signature: block(r.informant.signature)
+    },
+    deceased: {
+      forenames: block(r.deceased.forenames),
+      surname: block(r.deceased.surname),
+      dateOfDeath: block(r.deceased.dateOfDeath),
+      deathplace: block(r.deceased.deathplace),
+      sex: block(r.deceased.sex),
+      age: block(Number(r.deceased.age)),
+      occupation: block(r.deceased.occupation),
+      causeOfDeath: block(r.deceased.causeOfDeath)
+    },
+    status: {
+      refer: blocked
+    },
+    previousRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.previousRegistration && r.previousRegistration.date,
+      systemNumber: r.previousRegistration && r.previousRegistration.id
+    }
+  };
+};
 
 const processMarriageRecord = r => {
   const blocked = r.status.blocked !== false;
