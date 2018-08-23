@@ -139,25 +139,65 @@ const processDeathRecord = r => ({
   }
 });
 
-const processMarriageRecord = r => ({
-  id: Number(r.id),
-  date: r.date,
-  dateOfMarriage: r.dateOfMarriage,
-  registrar: {
-    district: r.registrar.district,
-    administrativeArea: r.registrar.administrativeArea
-  },
-  bride: {
-    forenames: r.bride.forenames,
-    surname: r.bride.surname,
-    sex: r.bride.sex
-  },
-  groom: {
-    forenames: r.groom.forenames,
-    surname: r.groom.surname,
-    sex: r.groom.sex
-  }
-});
+const processMarriageRecord = r => {
+  const blocked = r.status.blocked !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
+
+  return {
+    id: Number(r.id),
+    date: block(r.date),
+    dateOfMarriage: block(r.dateOfMarriage),
+    placeOfMarriage: block(r.placeOfMarriage),
+    registrar: {
+      district: block(r.registrar.district),
+      administrativeArea: block(r.registrar.administrativeArea)
+    },
+    groom: {
+      forenames: block(r.groom.forenames),
+      surname: block(r.groom.surname),
+      age: block(Number(r.groom.age)),
+      occupation: block(r.groom.occupation),
+      address: block(r.groom.address),
+      condition: block(r.groom.condition),
+      signature: block(r.groom.signature)
+    },
+    bride: {
+      forenames: block(r.bride.forenames),
+      surname: block(r.bride.surname),
+      age: block(Number(r.bride.age)),
+      occupation: block(r.bride.occupation),
+      address: block(r.bride.address),
+      condition: block(r.bride.condition),
+      signature: block(r.bride.signature)
+    },
+    fatherOfGroom: {
+      forenames: block(r.fatherOfGroom.forenames),
+      surname: block(r.fatherOfGroom.surname),
+      occupation: block(r.fatherOfGroom.occupation)
+    },
+    fatherOfBride: {
+      forenames: block(r.fatherOfBride.forenames),
+      surname: block(r.fatherOfBride.surname),
+      occupation: block(r.fatherOfBride.occupation)
+    },
+    witness1: {
+      signature: block(r.witness1.signature)
+    },
+    witness2: {
+      signature: block(r.witness2.signature)
+    },
+    status: {
+      refer: blocked
+    },
+    previousRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.previousRegistration && r.previousRegistration.date,
+      systemNumber: r.previousRegistration && r.previousRegistration.id
+    }
+  };
+};
 
 const responseHandler = (resolve, reject) => (err, res, body) => {
   if (err) {
