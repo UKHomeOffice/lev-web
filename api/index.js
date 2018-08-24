@@ -62,13 +62,13 @@ const findBirths = (searchFields, accessToken) => {
     : findByNameDOB(searchFields, accessToken);
 };
 
-const findDeathsByNameDOB = (searchFields, accessToken) => {
+const findDeathsByNameDate = (searchFields, accessToken) => {
   if (searchFields === undefined) {
-    throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
+    throw new ReferenceError('findDeathsByNameDate(): first argument, searchFields, was not defined');
   } else if (!(searchFields instanceof Object)) {
-    throw new TypeError('findDeathsByNameDOB(): first argument, searchFields, must be an object');
+    throw new TypeError('findDeathsByNameDate(): first argument, searchFields, must be an object');
   } else if (accessToken !== undefined && typeof accessToken !== 'string') {
-    throw new TypeError('findDeathsByNameDOB(): second argument, accessToken, must be a string');
+    throw new TypeError('findDeathsByNameDate(): second argument, accessToken, must be a string');
   }
 
   return requestData(helpers.buildQueryUri(deathSearch, searchFields), accessToken)
@@ -101,16 +101,16 @@ const findDeaths = (searchFields, accessToken) => {
 
   return systemNumber
     ? findDeathBySystemNumber(systemNumber, accessToken).then((data) => [data])
-    : findDeathsByNameDOB(searchFields, accessToken);
+    : findDeathsByNameDate(searchFields, accessToken);
 };
 
-const findMarriagesByNameDOB = (searchFields, accessToken) => {
+const findMarriagesByNameDOM = (searchFields, accessToken) => {
   if (searchFields === undefined) {
-    throw new ReferenceError('findMarriagesByNameDOB(): first argument, searchFields, was not defined');
+    throw new ReferenceError('findMarriagesByNameDOM(): first argument, searchFields, was not defined');
   } else if (!(searchFields instanceof Object)) {
-    throw new TypeError('findMarriagesByNameDOB(): first argument, searchFields, must be an object');
+    throw new TypeError('findMarriagesByNameDOM(): first argument, searchFields, must be an object');
   } else if (accessToken !== undefined && typeof accessToken !== 'string') {
-    throw new TypeError('findMarriagesByNameDOB(): second argument, accessToken, must be a string');
+    throw new TypeError('findMarriagesByNameDOM(): second argument, accessToken, must be a string');
   }
 
   return requestData(helpers.buildQueryUri(marriageSearch, searchFields), accessToken)
@@ -143,7 +143,7 @@ const findMarriages = (searchFields, accessToken) => {
 
   return systemNumber
     ? findMarriageBySystemNumber(systemNumber, accessToken).then((data) => [data])
-    : findMarriagesByNameDOB(searchFields, accessToken);
+    : findMarriagesByNameDOM(searchFields, accessToken);
 };
 
 const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity

@@ -24,7 +24,7 @@ module.exports = {
       field: 'system-number'
     }
   },
-  'dob': {
+  'dobd': {
     validate: ['british-date', 'past', 'required'],
     dependent: {
       value: '',

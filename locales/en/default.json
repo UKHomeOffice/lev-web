@@ -22,6 +22,14 @@
       "label": "Date of birth",
       "hint": "For example, 18/11/2009"
     },
+    "dobd": {
+      "label": "Date of birth or death",
+      "hint": "For example, 08/05/1945"
+    },
+    "dom": {
+      "label": "Date of marriage",
+      "hint": "For example, 18/11/2009"
+    },
     "from": {
       "label": "Search from",
       "hint": "For example 15/1/2017"
@@ -51,6 +59,17 @@
       "required": "Please enter a date of birth",
       "british-date": "Please enter a date of birth in the correct format",
       "past": "Please enter a date of birth in the past",
+      "since": "Please enter a date after our records began (1 July 2009)"
+    },
+    "dobd": {
+      "required": "Please enter a date",
+      "british-date": "Please enter a date in the correct format",
+      "past": "Please enter a date in the past"
+    },
+    "dom": {
+      "required": "Please enter a date of marriage",
+      "british-date": "Please enter a date of marriage in the correct format",
+      "past": "Please enter a date of marriage in the past",
       "since": "Please enter a date after our records began (1 July 2009)"
     },
     "from": {

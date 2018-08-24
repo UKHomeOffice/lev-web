@@ -1,7 +1,7 @@
 {
   "name": "lev-web",
   "description": "Life Event Verification Web Interface",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "app.js",
   "scripts": {
     "start": "node .",
@@ -24,7 +24,7 @@
     "test:acceptance:sub": "npm-run-all -pr start:acceptance chimp",
     "test:ci": "npm-run-all -s lint lint:sass cover check-coverage chimp",
     "start:acceptance": "NODE_ENV=acceptance npm start",
-    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' docker.digital.homeoffice.gov.uk/lev-api:0.0",
+    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' docker.digital.homeoffice.gov.uk/lev-api:0.5",
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm",
     "stop:mockapi:kill": "docker kill lev-api-mock || true",
     "stop:mockapi:rm": "docker rm lev-api-mock || true",
@@ -71,7 +71,7 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "moment-round": "^1.0.1",
-    "node-sass": "^3.7.0",
+    "node-sass": "^4.9.3",
     "npm-run-all": "^3.1.2",
     "request": "^2.85.0",
     "snyk": "^1.83.0",

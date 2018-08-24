@@ -25,12 +25,12 @@ const buildBirthParams = (attrs) => _.pickBy({
 const buildDeathParams = (attrs) => _.pickBy({
   surname: attrs.surname,
   forenames: attrs.forenames,
-  dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+  date: attrs.dobd && toInternationalDateFormat(attrs.dobd)
 }, _.identity);
 const buildMarriageParams = (attrs) => _.pickBy({
   surname: attrs.surname,
   forenames: attrs.forenames,
-  dateOfBirth: attrs.dob && toInternationalDateFormat(attrs.dob)
+  dateOfMarriage: attrs.dom && toInternationalDateFormat(attrs.dom)
 }, _.identity);
 const buildAuditParams = (attrs) => _.pickBy({
   from: toInternationalDateFormat(attrs.from),
