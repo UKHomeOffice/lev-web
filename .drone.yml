@@ -134,8 +134,13 @@ pipeline:
       - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
       - tail -f test.log &
       - TL=$!
-      - docker run --rm -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" >> test.log 2>&1
+      - set +e
+      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" >> test.log 2>&1
+      - XIT=$?
       - kill "$${TL}"
+      - set -e
+      - if [ "$${XIT}" != "0" ] ; then docker logs "$${DOCKER_IMAGE}" ; fi
+      - exit "$${XIT}"
     when:
       branch: master
       event: push
