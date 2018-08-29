@@ -117,7 +117,7 @@ pipeline:
       event: push
 
   e2e_test:
-    image: docker:1.11
+    image: quay.io/ukhomeofficedigital/lev-ci
     secrets:
       - DEV_URL_DSP
       - DEV_USERNAME
@@ -131,18 +131,8 @@ pipeline:
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
-      - touch e2e-test.log
-      - tail -f e2e-test.log &
-      - TL=$!
-      - set +e
-      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" > e2e-test.log 2>&1
-      - XIT=$?
-      - kill "$${TL}"
-      - printf "\n\n* lev-web e2e test logs *\n\n" >> test.log
-      - cat e2e-test.log >> test.log
-      - set -e
-      - if [ "$${XIT}" != "0" ] ; then docker logs "$${DOCKER_IMAGE}" ; fi
-      - exit "$${XIT}"
+      - set -o pipefail
+      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
     when:
       branch: master
       event: push
