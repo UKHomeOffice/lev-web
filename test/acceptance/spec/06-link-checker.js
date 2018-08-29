@@ -37,17 +37,27 @@ describe('Check for broken links', () => {
   /* eslint-disable array-bracket-spacing, no-inline-comments */
   describe('on regular pages', () => {
     [
-      '/',                                              // the search page
-      '/?system-123',                                   // the search page (with help image displayed)
-      '/?surname=multiple&forenames=tester&dob=010110', // the results page
-      '/details/123456789',                             // the details page
-      '/audit/user-activity/?from=010118&to=210118'     // the audit page
+      '/',                                                       // the search page
+      '/?system-123',                                            // the search page (with help image displayed)
+      '/?surname=multiple&forenames=tester&dob=010110',          // the results page
+      '/details/123456789',                                      // the details page
+      '/death',                                                  // the death search page
+      '/death/',                                                 // the death search page
+      '/death/?surname=multiple&forenames=tester&dobd=010110',   // the death results page
+      '/death/details/999999910',                                // the death details page
+      '/marriage',                                               // the marriage search page
+      '/marriage/',                                              // the marriage search page
+      '/marriage/?surname=multiple&forenames=tester&dom=010110', // the marriage results page
+      '/marriage/details/999999910',                             // the marriage details page
+      '/audit/user-activity/?from=010118&to=210118'              // the audit page
     ].forEach(checkLinks(false));
   });
 
   describe('on error pages', () => {
     [
       '/details/123',                               // 404
+      '/death/details/123',                         // 404
+      '/marriage/details/123',                      // 404
       '/audit/user-activity/?from=010111&to=010112' // 500
     ].forEach(checkLinks(true));
   });
