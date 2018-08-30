@@ -114,7 +114,7 @@ describe('User Activity', () => {
         });
 
         it('each row should display the username', () => {
-          columns[0].should.equal(user);
+          columns.should.contain(user);
         });
 
         it('each row should have a column for each day with the search count', () => {
