@@ -3,6 +3,8 @@
 const blc = require('broken-link-checker');
 const { url } = require('../config');
 
+const report = bl => `Broken links found:\n${Object.keys(bl).map(t => `\t- target: ${t}, ${bl[t]}`).join('\n')}\n`;
+
 describe('Check for broken links', () => {
 
   [ // eslint-disable-line array-bracket-spacing
@@ -14,24 +16,23 @@ describe('Check for broken links', () => {
     '/audit/user-activity/?from=010118&to=210118'
   ].forEach(page => describe(page, function() {
     before('run check', function(done) {
-      this.brokenLinks = new Set();
+      this.brokenLinks = {};
       const siteChecker = new blc.SiteChecker({
         filterLevel: 3,
         excludedKeywords: ['*/oauth/logout']
       }, {
-        link: l => l.broken && this.brokenLinks.add(l.url.resolved),
-        end: err => {
-          this.brokenLinks = Array.from(this.brokenLinks.values());
-          done(err);
-        }
+        link: l => {
+          if (l.broken && !this.brokenLinks[l.url.resolved]) {
+            this.brokenLinks[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+          }
+        },
+        end: done
       });
       siteChecker.enqueue(url + page);
     });
 
     it('should have no broken links', function() {
-      expect(this.brokenLinks,
-        `${page} has the following broken links:${this.brokenLinks.map(l => `\n\t- ${l}`)}\n`)
-        .to.be.an('array').and.to.be.empty;
+      expect(this.brokenLinks, report(this.brokenLinks)).to.be.an('object').and.to.be.empty;
     });
   }));
 
