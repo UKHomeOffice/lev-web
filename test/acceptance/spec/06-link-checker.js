@@ -7,33 +7,63 @@ const report = bl => `Broken links found:\n${Object.keys(bl).map(t => `\t- targe
 
 describe('Check for broken links', () => {
 
-  [ // eslint-disable-line array-bracket-spacing
-    '/',                                              // the search page
-    '/?system-123',                                   // the search page (with help image displayed)
-    '/?surname=multiple&forenames=tester&dob=010110', // the results page
-    '/details/123456789',                             // the details page
-    '/audit/user-activity/?from=010118&to=210118'     // the audit page
-  ].forEach(page => describe(page, function() {
-    before('run check', function(done) {
-      this.broken = {};
-      const siteChecker = new blc.SiteChecker({
-        filterLevel: 3,
-        excludedKeywords: ['*/oauth/logout']
-      }, {
-        link: l => {
-          if (l.broken && !this.broken[l.url.resolved]) {
-            this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
-          }
-        },
-        site: (e, url) => e && done(new Error(`${e.message} - code: ${e.code || e.status || e.statusCode} ${url}`)),
-        end: done
+  describe('on regular pages', () => {
+    [ // eslint-disable-line array-bracket-spacing
+      '/',                                              // the search page
+      '/?system-123',                                   // the search page (with help image displayed)
+      '/?surname=multiple&forenames=tester&dob=010110', // the results page
+      '/details/123456789',                             // the details page
+      '/audit/user-activity/?from=010118&to=210118'     // the audit page
+    ].forEach(page => describe(page, function() {
+      before('run check', function(done) {
+        this.broken = {};
+        const siteChecker = new blc.SiteChecker({
+          filterLevel: 3,
+          excludedKeywords: ['*/oauth/logout']
+        }, {
+          link: l => {
+            if (l.broken && !this.broken[l.url.resolved]) {
+              this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+            }
+          },
+          site: (e, url) => e && done(new Error(`${e.message} - code: ${e.code || e.status || e.statusCode} ${url}`)),
+          end: done
+        });
+        siteChecker.enqueue(url + page);
       });
-      siteChecker.enqueue(url + page);
-    });
 
-    it('should have no broken links', function() {
-      expect(this.broken, report(this.broken)).to.be.an('object').and.to.be.empty;
-    });
-  }));
+      it('should have no broken links', function() {
+        expect(this.broken, report(this.broken)).to.be.an('object').and.to.be.empty;
+      });
+    }));
+  });
+
+  describe('on error pages', () => {
+    [ // eslint-disable-line array-bracket-spacing
+      '/details/123',                               // 404
+      '/audit/user-activity/?from=010111&to=010112' // 500
+    ].forEach(page => describe(page, function() {
+      before('run check', function(done) {
+        this.broken = {};
+        const contentChecker = new blc.HtmlChecker({
+          filterLevel: 3,
+          excludedKeywords: ['*/oauth/logout']
+        }, {
+          link: l => {
+            if (l.broken && !this.broken[l.url.resolved]) {
+      console.log(l);
+              this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+            }
+          },
+          complete: done
+        });
+        contentChecker.scan(browser.url(url + page).getHTML('html'), url);
+      });
+
+      it('should have no broken links', function() {
+        expect(this.broken, report(this.broken)).to.be.an('object').and.to.be.empty;
+      });
+    }));
+  });
 
 });
