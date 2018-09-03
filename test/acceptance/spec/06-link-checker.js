@@ -8,22 +8,21 @@ const report = bl => `Broken links found:\n${Object.keys(bl).map(t => `\t- targe
 describe('Check for broken links', () => {
 
   [ // eslint-disable-line array-bracket-spacing
-    '/',
-    '/?surname=multiple&forenames=tester&dob=010110',
-    '/details/123456789',
-    '/?system-number=100000000',
-    '/audit/user-activity/?from=010118&to=210618',
-    '/audit/user-activity/?from=010118&to=210118'
+    '/',                                              // the search page
+    '/?system-123',                                   // the search page (with help image displayed)
+    '/?surname=multiple&forenames=tester&dob=010110', // the results page
+    '/details/123456789',                             // the details page
+    '/audit/user-activity/?from=010118&to=210118'     // the audit page
   ].forEach(page => describe(page, function() {
     before('run check', function(done) {
-      this.brokenLinks = {};
+      this.broken = {};
       const siteChecker = new blc.SiteChecker({
         filterLevel: 3,
         excludedKeywords: ['*/oauth/logout']
       }, {
         link: l => {
-          if (l.broken && !this.brokenLinks[l.url.resolved]) {
-            this.brokenLinks[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+          if (l.broken && !this.broken[l.url.resolved]) {
+            this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
           }
         },
         end: done
@@ -32,7 +31,7 @@ describe('Check for broken links', () => {
     });
 
     it('should have no broken links', function() {
-      expect(this.brokenLinks, report(this.brokenLinks)).to.be.an('object').and.to.be.empty;
+      expect(this.broken, report(this.broken)).to.be.an('object').and.to.be.empty;
     });
   }));
 
