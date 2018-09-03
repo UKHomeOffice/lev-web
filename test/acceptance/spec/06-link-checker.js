@@ -25,6 +25,7 @@ describe('Check for broken links', () => {
             this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
           }
         },
+        site: (e, url) => e && done(new Error(`${e.message} - code: ${e.code || e.status || e.statusCode} ${url}`)),
         end: done
       });
       siteChecker.enqueue(url + page);
