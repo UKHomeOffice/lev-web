@@ -4,4 +4,6 @@ module.exports = (target) => {
   target.shouldBeOnDetailsPage = function() {
     this.getUrl().should.contain('/details');
   };
+
+  target.shouldBeOnBirthDetailsPage = target.shouldBeOnDetailsPage;
 };
