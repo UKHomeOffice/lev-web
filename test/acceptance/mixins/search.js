@@ -10,11 +10,20 @@ module.exports = (target) => {
 
   target.birthSearch = target.search;
 
+  target.deathSearch = function(systemNumber, surname, forenames, dobd) {
+    this.goToDeathSearchPage();
+    this.submitDeathSearchPage(systemNumber, surname, forenames, dobd);
+  };
+
   target.goToSearchPage = function() {
     this.url(url);
   };
 
   target.goToBirthSearchPage = target.goToSearchPage;
+
+  target.goToDeathSearchPage = function() {
+    this.url(url + '/death');
+  };
 
   target.shouldBeOnSearchPage = function() {
     this.getText('h1').should.equal('Applicant\'s details');
@@ -29,6 +38,17 @@ module.exports = (target) => {
 
   target.shouldBeOnBirthSearchPage = target.shouldBeOnSearchPage;
 
+  target.shouldBeOnDeathSearchPage = function() {
+    this.getText('h1').should.equal('Applicant\'s details');
+
+    this.waitForVisible('input[name="system-number"]', 5000);
+    const formLabels = this.getText('label');
+    formLabels[0].should.equal('System number from death certificate');
+    formLabels[1].should.equal('Surname');
+    formLabels[2].should.equal('Forename(s)');
+    formLabels[3].should.contain('Date of birth or death');
+  };
+
   target.submitSearchPage = function(systemNumber, surname, forenames, dob) {
     this.setValue('input[name="system-number"]', systemNumber);
     this.setValue('input[name="surname"]', surname);
@@ -38,4 +58,12 @@ module.exports = (target) => {
   };
 
   target.submitBirthSearchPage = target.submitBirthSearchPage;
+
+  target.submitDeathSearchPage = function(systemNumber, surname, forenames, dobd) {
+    this.setValue('input[name="system-number"]', systemNumber);
+    this.setValue('input[name="surname"]', surname);
+    this.setValue('input[name="forenames"]', forenames);
+    this.setValue('input[name="dobd"]', dobd);
+    this.click('input[type="submit"]');
+  };
 };

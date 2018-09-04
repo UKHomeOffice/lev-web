@@ -6,4 +6,8 @@ module.exports = (target) => {
   };
 
   target.shouldBeOnBirthDetailsPage = target.shouldBeOnDetailsPage;
+
+  target.shouldBeOnDeathDetailsPage = function() {
+    this.getUrl().should.contain('/death/details');
+  };
 };

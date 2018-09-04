@@ -13,6 +13,7 @@ module.exports = (target) => {
 
   target.doBadSearch = () => target.url(url + '/details/404');
   target.doBadBirthSearch = target.doBadSearch;
+  target.doBadDeathSearch = () => target.url(url + '/death/details/404');
 
   target.doBadAuditSearch = () => target.url(url + '/audit/user-activity?from=200118&to=100118');
 };
