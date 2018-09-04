@@ -10,4 +10,8 @@ module.exports = (target) => {
   target.shouldBeOnDeathDetailsPage = function() {
     this.getUrl().should.contain('/death/details');
   };
+
+  target.shouldBeOnMarriageDetailsPage = function() {
+    this.getUrl().should.contain('/marriage/details');
+  };
 };
