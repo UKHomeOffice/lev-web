@@ -1,12 +1,13 @@
 pipeline:
 
   build:
-    image: docker:1.11
+    image: quay.io/ukhomeofficedigital/lev-ci
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
       - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api:0.5
     commands:
+      - set -o pipefail
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
@@ -14,11 +15,7 @@ pipeline:
       - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
       - sleep 5
       - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
-      - tail -f test.log &
-      - TL=$!
-      - echo "Warning, should the following command fail, the output may not show in the logs"
-      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" >> test.log 2>&1
-      - kill "$${TL}"
+      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
       - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
       branch: master
@@ -36,7 +33,7 @@ pipeline:
       event: pull_request
 
   push_image:
-    image: docker:1.11
+    image: quay.io/ukhomeofficedigital/lev-ci
     secrets:
       - DOCKER_QUAY_PASSWORD
     environment:
