@@ -4,23 +4,6 @@ const blc = require('broken-link-checker');
 const { url } = require('../config');
 
 const report = bl => `Broken links found:\n${Object.keys(bl).map(t => `\t- target: ${t}, ${bl[t]}`).join('\n')}\n`;
-const link   = context => l => {
-  if (l.broken && !context.broken[l.url.resolved]) {
-    context.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
-  }
-};
-const checker = (followLinks, context, done) =>
-  new blc[followLinks ? 'SiteChecker' : 'HtmlChecker']({
-    filterLevel: 3,
-    excludedKeywords: ['*/oauth/logout']
-  }, followLinks ? {
-    link: link(context),
-    site: (e, url) => e && done(new Error(`${e.message} - code: ${e.code || e.status || e.statusCode} ${url}`)),
-    end: done
-  } : {
-    link: link(context),
-    complete: done
-  });
 
 describe('Check for broken links', () => {
 
@@ -34,7 +17,19 @@ describe('Check for broken links', () => {
     ].forEach(page => describe(page, function() {
       before('run check', function(done) {
         this.broken = {};
-        checker(true, this, done).enqueue(url + page);
+        const siteChecker = new blc.SiteChecker({
+          filterLevel: 3,
+          excludedKeywords: ['*/oauth/logout']
+        }, {
+          link: l => {
+            if (l.broken && !this.broken[l.url.resolved]) {
+              this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+            }
+          },
+          site: (e, url) => e && done(new Error(`${e.message} - code: ${e.code || e.status || e.statusCode} ${url}`)),
+          end: done
+        });
+        siteChecker.enqueue(url + page);
       });
 
       it('should have no broken links', function() {
@@ -50,7 +45,19 @@ describe('Check for broken links', () => {
     ].forEach(page => describe(page, function() {
       before('run check', function(done) {
         this.broken = {};
-        checker(false, this, done).scan(browser.url(url + page).getHTML('html'), url);
+        const contentChecker = new blc.HtmlChecker({
+          filterLevel: 3,
+          excludedKeywords: ['*/oauth/logout']
+        }, {
+          link: l => {
+            if (l.broken && !this.broken[l.url.resolved]) {
+      console.log(l);
+              this.broken[l.url.resolved] = `found on page: ${l.base.resolved}, with selector: "${l.html.selector}"`;
+            }
+          },
+          complete: done
+        });
+        contentChecker.scan(browser.url(url + page).getHTML('html'), url);
       });
 
       it('should have no broken links', function() {
