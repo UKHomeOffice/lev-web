@@ -116,7 +116,7 @@ pipeline:
   e2e_test:
     image: quay.io/ukhomeofficedigital/lev-ci
     secrets:
-      - DEV_URL_DSP
+      - DEV_URL
       - DEV_USERNAME
       - DEV_PASSWORD
     environment:
@@ -129,7 +129,7 @@ pipeline:
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
       - set -o pipefail
-      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL_DSP}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
+      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
     when:
       branch: master
       event: push
