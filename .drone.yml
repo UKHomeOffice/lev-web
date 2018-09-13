@@ -5,7 +5,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
       - DOCKER_IMAGE=lev-web
-      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api:0.5
+      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api:0.6
     commands:
       - set -o pipefail
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
