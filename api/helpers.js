@@ -141,10 +141,10 @@ const processDeathRecord = r => {
     deceased: {
       forenames: block(r.deceased.forenames),
       surname: block(r.deceased.surname),
+      dateOfBirth: block(toBritishDateFormat(r.deceased.dateOfBirth)),
       dateOfDeath: block(toBritishDateFormat(r.deceased.dateOfDeath)),
       deathplace: block(r.deceased.deathplace),
       sex: block(r.deceased.sex),
-      age: block(Number(r.deceased.age)),
       occupation: block(r.deceased.occupation),
       causeOfDeath: block(r.deceased.causeOfDeath)
     },

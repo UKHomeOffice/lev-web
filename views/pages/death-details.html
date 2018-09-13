@@ -9,7 +9,7 @@
 {{$header}}
   {{<partials-page-header}}
     {{$page-header}}
-      {{record.deceased.forenames}} {{record.deceased.surname}} {{record.deceased.age}}
+      {{record.deceased.forenames}} {{record.deceased.surname}} {{record.deceased.dateOfBirth}}
     {{/page-header}}
   {{/partials-page-header}}
 {{/header}}
@@ -46,8 +46,8 @@
         <td>{{record.deceased.forenames}}</td>
       </tr>
       <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Age</th>
-        <td>{{record.deceased.age}}</td>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of birth</th>
+        <td>{{record.deceased.dateOfBirth}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Sex</th>
