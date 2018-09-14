@@ -40,7 +40,7 @@ describe('Check for broken links', () => {
       '/',                                                       // the search page
       '/?system-123',                                            // the search page (with help image displayed)
       '/?surname=multiple&forenames=tester&dob=010110',          // the results page
-      '/details/123456789',                                      // the details page
+      '/details/999999910',                                      // the details page
       '/death',                                                  // the death search page
       '/death/',                                                 // the death search page
       '/death/?surname=multiple&forenames=tester&dobd=010110',   // the death results page
