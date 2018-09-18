@@ -12,7 +12,7 @@ module.exports = (target) => {
     target.shouldBeOnResultsPage();
   };
 
-  target.shouldBeOnMarriageResultsPage= function() {
+  target.shouldBeOnMarriageResultsPage = function() {
     this.getUrl().should.contain('/marriage');
     target.shouldBeOnResultsPage();
   };
