@@ -124,7 +124,7 @@ const processDeathRecord = r => {
 
   return {
     id: Number(r.id),
-    date: block(r.date),
+    date: block(toBritishDateFormat(r.date)),
     registrar: {
       signature: block(r.registrar.signature),
       subdistrict: block(r.registrar.subdistrict),
@@ -141,10 +141,10 @@ const processDeathRecord = r => {
     deceased: {
       forenames: block(r.deceased.forenames),
       surname: block(r.deceased.surname),
-      dateOfDeath: block(r.deceased.dateOfDeath),
+      dateOfBirth: block(toBritishDateFormat(r.deceased.dateOfBirth)),
+      dateOfDeath: block(toBritishDateFormat(r.deceased.dateOfDeath)),
       deathplace: block(r.deceased.deathplace),
       sex: block(r.deceased.sex),
-      age: block(Number(r.deceased.age)),
       occupation: block(r.deceased.occupation),
       causeOfDeath: block(r.deceased.causeOfDeath)
     },
@@ -167,8 +167,8 @@ const processMarriageRecord = r => {
 
   return {
     id: Number(r.id),
-    date: block(r.date),
-    dateOfMarriage: block(r.dateOfMarriage),
+    date: block(toBritishDateFormat(r.date)),
+    dateOfMarriage: block(toBritishDateFormat(r.dateOfMarriage)),
     placeOfMarriage: block(r.placeOfMarriage),
     registrar: {
       district: block(r.registrar.district),
