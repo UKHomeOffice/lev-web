@@ -95,6 +95,7 @@
     "courtOrderInPlace": "This record has an adoption / court order in place.",
     "courtOrderRevoked": "This record has an adoption / court order revoked.",
     "reRegistrationLabel": "This is a reregistration.",
-    "reRegistrationLink": "View the previous registration."
+    "reRegistrationLink": "View the previous registration.",
+    "reRegisteredLink": "View the next registration."
   }
 }
