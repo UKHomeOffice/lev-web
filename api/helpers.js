@@ -125,8 +125,10 @@ const processDeathRecord = r => {
   return {
     id: Number(r.id),
     date: block(toBritishDateFormat(r.date)),
+    entryNumber: block(r.entryNumber),
     registrar: {
       signature: block(r.registrar.signature),
+      designation: block(r.registrar.designation),
       subdistrict: block(r.registrar.subdistrict),
       district: block(r.registrar.district),
       administrativeArea: block(r.registrar.administrativeArea)
@@ -143,10 +145,13 @@ const processDeathRecord = r => {
       surname: block(r.deceased.surname),
       dateOfBirth: block(toBritishDateFormat(r.deceased.dateOfBirth)),
       dateOfDeath: block(toBritishDateFormat(r.deceased.dateOfDeath)),
+      birthplace: block(r.deceased.birthplace),
       deathplace: block(r.deceased.deathplace),
       sex: block(r.deceased.sex),
+      address: block(r.deceased.address),
       occupation: block(r.deceased.occupation),
-      causeOfDeath: block(r.deceased.causeOfDeath)
+      causeOfDeath: block(r.deceased.causeOfDeath),
+      certifiedBy: block(r.deceased.certifiedBy)
     },
     status: {
       refer: blocked
@@ -157,6 +162,13 @@ const processDeathRecord = r => {
     } : {
       date: r.previousRegistration && r.previousRegistration.date,
       systemNumber: r.previousRegistration && r.previousRegistration.id
+    },
+    nextRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.nextRegistration && r.nextRegistration.date,
+      systemNumber: r.nextRegistration && r.nextRegistration.id
     }
   };
 };

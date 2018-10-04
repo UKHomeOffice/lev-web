@@ -28,6 +28,11 @@
       <a href="/death/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
     </div>
   {{/record.previousRegistration.systemNumber}}
+  {{#record.nextRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/death/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
+    </div>
+  {{/record.nextRegistration.systemNumber}}
   <table class="details">
     <tbody>
       <tr>
@@ -50,8 +55,16 @@
         <td>{{record.deceased.dateOfBirth}}</td>
       </tr>
       <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Place of birth</th>
+        <td>{{record.deceased.birthplace}}</td>
+      </tr>
+      <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Sex</th>
         <td>{{record.deceased.sex}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Address</th>
+        <td>{{record.deceased.address}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Occupation</th>
@@ -68,6 +81,10 @@
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Cause of death</th>
         <td>{{record.deceased.causeOfDeath}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Death certified by</th>
+        <td>{{record.deceased.certifiedBy}}</td>
       </tr>
       <tr class="section-head">
         <th colspan="2">Informant</th>
@@ -100,6 +117,10 @@
         <td>{{record.registrar.signature}}</td>
       </tr>
       <tr>
+        <th>Registrar designation</th>
+        <td>{{record.registrar.designation}}</td>
+      </tr>
+      <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
         <td>{{record.registrar.subdistrict}}</td>
       </tr>
@@ -114,6 +135,10 @@
       <tr>
         <th>Date of registration</th>
         <td>{{record.date}}</td>
+      </tr>
+      <tr>
+        <th>Entry number</th>
+        <td>{{record.entryNumber}}</td>
       </tr>
     </tbody>
   </table>
