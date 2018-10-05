@@ -180,9 +180,14 @@ const processMarriageRecord = r => {
   return {
     id: Number(r.id),
     date: block(toBritishDateFormat(r.date)),
+    entryNumber: block(r.entryNumber),
     dateOfMarriage: block(toBritishDateFormat(r.dateOfMarriage)),
     placeOfMarriage: block(r.placeOfMarriage),
     registrar: {
+      signature: block(r.registrar.signature),
+      designation: block(r.registrar.designation),
+      superintendentSignature: block(r.registrar.superintendentSignature),
+      superintendentDesignation: block(r.registrar.superintendentDesignation),
       district: block(r.registrar.district),
       administrativeArea: block(r.registrar.administrativeArea)
     },
@@ -220,6 +225,30 @@ const processMarriageRecord = r => {
     witness2: {
       signature: block(r.witness2.signature)
     },
+    witness3: {
+      signature: block(r.witness3.signature)
+    },
+    witness4: {
+      signature: block(r.witness4.signature)
+    },
+    witness5: {
+      signature: block(r.witness5.signature)
+    },
+    witness6: {
+      signature: block(r.witness6.signature)
+    },
+    witness7: {
+      signature: block(r.witness7.signature)
+    },
+    witness8: {
+      signature: block(r.witness8.signature)
+    },
+    witness9: {
+      signature: block(r.witness9.signature)
+    },
+    witness10: {
+      signature: block(r.witness10.signature)
+    },
     status: {
       refer: blocked
     },
@@ -229,6 +258,13 @@ const processMarriageRecord = r => {
     } : {
       date: r.previousRegistration && r.previousRegistration.date,
       systemNumber: r.previousRegistration && r.previousRegistration.id
+    },
+    nextRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.nextRegistration && r.nextRegistration.date,
+      systemNumber: r.nextRegistration && r.nextRegistration.id
     }
   };
 };

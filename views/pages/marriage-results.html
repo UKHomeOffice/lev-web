@@ -49,6 +49,9 @@
           {{#status.refer}}
             <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
           {{/status.refer}}
+          {{#nextRegistration.systemNumber}}
+            <div class="flag warning">{{#t}}flags.replaced{{/t}}</div>
+          {{/nextRegistration.systemNumber}}
         </a>
       </article>
     </li>

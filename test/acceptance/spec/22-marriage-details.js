@@ -47,9 +47,16 @@ describe('Marriage details page', () => {
       browserText[26].getText().should.match(new RegExp('Occupation *'));
       browserText[28].getText().should.match(new RegExp('Signature *' + record.witness1.signature));
       browserText[30].getText().should.match(new RegExp('Signature *' + record.witness2.signature));
-      browserText[32].getText().should.match(new RegExp('District *' + record.registrar.district));
-      browserText[33].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      browserText[34].getText().should.match(new RegExp('Date of registration *' + record.date));
+      browserText[32].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
+      browserText[33].getText().should.match(new RegExp('Registrar designation *' + record.registrar.designation));
+      browserText[34].getText().should.match(new RegExp(
+        'Superintendent registrar signature *' + record.registrar.superintendentSignature));
+      browserText[35].getText().should.match(new RegExp(
+        'Superintendent registrar designation *' + record.registrar.superintendentDesignation));
+      browserText[36].getText().should.match(new RegExp('District *' + record.registrar.district));
+      browserText[37].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
+      browserText[38].getText().should.match(new RegExp('Date of registration *' + record.date));
+      browserText[39].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
 
