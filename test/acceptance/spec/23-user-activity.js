@@ -378,20 +378,6 @@ describe('User Activity', () => {
       it('requests a past date', () => browser.getText('a').should.contain('Please enter a proper date range'));
     });
 
-    // temporary test checks error page works as expected, should eventually be replaced by the next (skipped) test
-    describe(`with a date range greater than ${testConfig.MAX_AUDIT_RANGE} days`, () => {
-      before(() => {
-        browser.generateReport(
-          moment().subtract(testConfig.MAX_AUDIT_RANGE + 1, 'days').format('DD/MM/YYYY'),
-          moment().format('DD/MM/YYYY')
-        );
-      });
-
-      it('displays an error message', () => browser.getText('h1').should.equal('Error'));
-      it('requests a reduced date range', () => browser.getText('p').should.equal(
-        `maximum date range exceeded (should be less than ${testConfig.MAX_AUDIT_RANGE} days)`));
-    });
-
     describe('with invalid characters in the user search filter', () => {
       before(() => {
         browser.generateReport(
