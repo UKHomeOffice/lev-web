@@ -23,8 +23,7 @@ const conf = {
     cert: process.env.LEV_TLS_CERT || null,
     ca: process.env.LEV_TLS_CA || null,
     verify: String(process.env.LEV_TLS_VERIFY).match(/false/i) === null
-  },
-  MAX_AUDIT_RANGE: 92
+  }
 };
 
 module.exports = conf;
