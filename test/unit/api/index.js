@@ -578,12 +578,6 @@ describe('api/index.js', () => {
         expect(() => api.userActivityReport(accessToken, moment().add(1, 'days'), moment())).to.throw(RangeError)
       );
 
-      const days = config.MAX_AUDIT_RANGE + 1;
-      it(`should throw a RangeError if the date range is greater than the ${config.MAX_AUDIT_RANGE} day limit`, () =>
-        expect(() => api.userActivityReport(accessToken, moment().subtract(days, 'days'), moment()))
-          .to.throw(RangeError, `less than ${config.MAX_AUDIT_RANGE} days`)
-      );
-
       describe('as a proper range', () => {
         let result;
         const from = '2001-01-01';
