@@ -146,7 +146,7 @@ const findMarriages = (searchFields, accessToken) => {
     : findMarriagesByNameDOM(searchFields, accessToken);
 };
 
-const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
+const userActivityReport = (accessToken, from, to, userFilter) => {
   if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('The "accessToken" parameter must be a string');
   }
