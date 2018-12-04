@@ -42,9 +42,9 @@ describe('Marriage details page', () => {
       browserText[20].getText().should.match(new RegExp('Surname *' + record.fatherOfGroom.surname));
       browserText[21].getText().should.match(new RegExp('Forename\\(s\\) *' + record.fatherOfGroom.forenames));
       browserText[22].getText().should.match(new RegExp('Occupation *' + record.fatherOfGroom.occupation));
-      browserText[24].getText().should.match(new RegExp('Surname *'));
-      browserText[25].getText().should.match(new RegExp('Forename\\(s\\) *'));
-      browserText[26].getText().should.match(new RegExp('Occupation *'));
+      browserText[24].getText().should.match(new RegExp('Surname *' + record.fatherOfBride.surname));
+      browserText[25].getText().should.match(new RegExp('Forename\\(s\\) *' + record.fatherOfBride.forenames));
+      browserText[26].getText().should.match(new RegExp('Occupation *' + record.fatherOfBride.occupation));
       browserText[28].getText().should.match(new RegExp('Signature *' + record.witness1.signature));
       browserText[30].getText().should.match(new RegExp('Signature *' + record.witness2.signature));
       browserText[32].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
