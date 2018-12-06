@@ -362,7 +362,7 @@ describe('User Activity', () => {
 
       it('displays an error message', () => browser.getText('h1').should.equal('Error'));
       it('requests a past date', () =>
-        browser.getText('p').should.equal('"from" date must be before "to" date for the User Activity report'));
+        browser.getText('p').should.contain('"from" date must be before "to" date for the User Activity report'));
     });
 
     // placeholder test for making search date range check part of validation, instead of a 500 error
@@ -388,7 +388,7 @@ describe('User Activity', () => {
       });
 
       it('displays an error message', () => browser.getText('h1').should.equal('Error'));
-      it('requests a reduced date range', () => browser.getText('p').should.equal(
+      it('requests a reduced date range', () => browser.getText('p').should.contain(
         `maximum date range exceeded (should be less than ${testConfig.MAX_AUDIT_RANGE} days)`));
     });
 
