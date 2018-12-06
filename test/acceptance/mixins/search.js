@@ -20,6 +20,19 @@ module.exports = (target) => {
     this.submitMarriageSearchPage(systemNumber, surname, forenames, dom);
   };
 
+  target.marriageSearchWithGourpHeader = function(groups) {
+    this.execute((u, g) => {
+      /* eslint-env browser */
+      var client = new XMLHttpRequest();
+      client.open('GET', u, false);
+      client.setRequestHeader('X-Auth-Groups', g);
+      client.send();
+      document.body.parentElement.innerHTML = client.responseText;
+      /* eslint-env node, mocha */
+    }, this.getUrl(), groups);
+    this.waitForExist('table.details', 5000);
+  };
+
   target.goToSearchPage = function() {
     this.url(url);
   };
