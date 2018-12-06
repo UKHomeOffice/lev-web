@@ -23,6 +23,7 @@
     <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
   {{/record.status.refer}}
 
+  {{^limit}}
   {{#record.previousRegistration.systemNumber}}
     <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
       <a href="/marriage/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
@@ -33,6 +34,7 @@
       <a href="/marriage/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
     </div>
   {{/record.nextRegistration.systemNumber}}
+  {{/limit}}
   <table class="details">
     <tbody>
       <tr>
@@ -58,6 +60,7 @@
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Forename(s)</th>
         <td>{{record.groom.forenames}}</td>
       </tr>
+      {{^limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Age</th>
         <td>{{record.groom.age}}</td>
@@ -66,10 +69,12 @@
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Occupation</th>
         <td>{{record.groom.occupation}}</td>
       </tr>
+      {{/limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Address</th>
         <td>{{record.groom.address}}</td>
       </tr>
+      {{^limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Condition</th>
         <td>{{record.groom.condition}}</td>
@@ -78,6 +83,7 @@
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Signature</th>
         <td>{{record.groom.signature}}</td>
       </tr>
+      {{/limit}}
       <tr class="section-head">
         <th colspan="2">Bride</th>
       </tr>
@@ -89,6 +95,7 @@
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Forename(s)</th>
         <td>{{record.bride.forenames}}</td>
       </tr>
+      {{^limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Age</th>
         <td>{{record.bride.age}}</td>
@@ -97,10 +104,12 @@
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Occupation</th>
         <td>{{record.bride.occupation}}</td>
       </tr>
+      {{/limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Address</th>
         <td>{{record.bride.address}}</td>
       </tr>
+      {{^limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Condition</th>
         <td>{{record.bride.condition}}</td>
@@ -225,9 +234,11 @@
             <td>{{record.witness10.signature}}</td>
         </tr>
       {{/record.witness10.signature}}
+      {{/limit}}
       <tr class="section-head">
         <th colspan="2">Registration</th>
       </tr>
+      {{^limit}}
       <tr>
         <th>Registrar signature</th>
         <td>{{record.registrar.signature}}</td>
@@ -244,6 +255,7 @@
         <th>Superintendent registrar designation</th>
         <td>{{record.registrar.superintendentDesignation}}</td>
       </tr>
+      {{/limit}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>District</th>
         <td>{{record.registrar.district}}</td>
@@ -256,10 +268,12 @@
         <th>Date of registration</th>
         <td>{{record.date}}</td>
       </tr>
+      {{^limit}}
       <tr>
         <th>Entry number</th>
         <td>{{record.entryNumber}}</td>
       </tr>
+      {{/limit}}
     </tbody>
   </table>
   <div class="buttons">
