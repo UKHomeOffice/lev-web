@@ -58,7 +58,7 @@
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Forename(s)</th>
         <td>{{record.groom.forenames}}</td>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Age</th>
             <td>{{record.groom.age}}</td>
@@ -67,12 +67,12 @@
             <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Occupation</th>
             <td>{{record.groom.occupation}}</td>
         </tr>
-      {{/fullData}}
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Address</th>
         <td>{{record.groom.address}}</td>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Condition</th>
             <td>{{record.groom.condition}}</td>
@@ -81,7 +81,7 @@
             <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Signature</th>
             <td>{{record.groom.signature}}</td>
         </tr>
-      {{/fullData}}
+      {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Bride</th>
       </tr>
@@ -93,7 +93,7 @@
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Forename(s)</th>
         <td>{{record.bride.forenames}}</td>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Age</th>
             <td>{{record.bride.age}}</td>
@@ -102,12 +102,12 @@
             <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Occupation</th>
             <td>{{record.bride.occupation}}</td>
         </tr>
-      {{/fullData}}
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Address</th>
         <td>{{record.bride.address}}</td>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Condition</th>
             <td>{{record.bride.condition}}</td>
@@ -232,11 +232,11 @@
                 <td>{{record.witness10.signature}}</td>
             </tr>
         {{/record.witness10.signature}}
-      {{/fullData}}
+      {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Registration</th>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th>Registrar signature</th>
             <td>{{record.registrar.signature}}</td>
@@ -253,7 +253,7 @@
             <th>Superintendent registrar designation</th>
             <td>{{record.registrar.superintendentDesignation}}</td>
         </tr>
-      {{/fullData}}
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>District</th>
         <td>{{record.registrar.district}}</td>
@@ -266,12 +266,12 @@
         <th>Date of registration</th>
         <td>{{record.date}}</td>
       </tr>
-      {{#fullData}}
+      {{#showAll}}
         <tr>
             <th>Entry number</th>
             <td>{{record.entryNumber}}</td>
         </tr>
-      {{/fullData}}
+      {{/showAll}}
     </tbody>
   </table>
   <div class="buttons">
