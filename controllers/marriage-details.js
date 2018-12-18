@@ -18,7 +18,7 @@ module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
   const systemNumber = req.params.sysnum;
   const ri = reqInfo(req);
-  const limit = !(ri.roles.filter(v => v === 'full-data').reduce((acc, val) => acc || val, false) && true);
+  const fullData = ri.roles.filter(v => v === 'full-data').reduce((acc, val) => acc || val, false) && true;
 
   if (systemNumber === undefined) {
     return next(new ReferenceError('The parameter \'id\' was not defined'), req, res);
@@ -33,7 +33,7 @@ module.exports = function renderDetails(req, res, next) {
   return api.findMarriageBySystemNumber(Number(systemNumber), accessToken)
     .then(result => res.render('pages/marriage-details', {
         record: result,
-        limit: limit,
+        fullData: fullData,
         querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
         canRedirectToResults: canRedirectToResults
       }),
