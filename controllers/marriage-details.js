@@ -3,6 +3,7 @@
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const fields = require('../fields/marriage');
+const reqInfo = require('../lib/req-info');
 const _ = require('lodash');
 
 const handleError = (err, next) => {
@@ -16,8 +17,8 @@ const handleError = (err, next) => {
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
   const systemNumber = req.params.sysnum;
-  const groups = req.headers['X-Auth-Groups'] || req.headers['x-auth-groups'];
-  const limit = (groups && groups.toUpperCase().split(',').filter(g => g === 'HMCTS'));
+  const ri = reqInfo(req);
+  const limit = (ri.groups.filter(g => g === 'HMCTS'));
 
   if (systemNumber === undefined) {
     return next(new ReferenceError('The parameter \'id\' was not defined'), req, res);
