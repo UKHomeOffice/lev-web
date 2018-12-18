@@ -34,14 +34,11 @@ module.exports = {
     signature: 'T. Bride'
   },
   fatherOfGroom: {
-    forenames: 'Test Fog',
+    forenames: 'Test',
     surname: 'FATHER',
     occupation: 'Father'
   },
   fatherOfBride: {
-    forenames: 'Test Fob',
-    surname: 'BRIDE',
-    occupation: 'Father'
   },
   witness1: {
     signature: 'A. Witness'
