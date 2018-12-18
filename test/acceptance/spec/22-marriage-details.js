@@ -60,49 +60,6 @@ describe('Marriage details page', () => {
     });
   };
 
-  const limitedRecordDisplayed = (record) => {
-    it('a limited version is displayed in a table', () => {
-      const rowTexts = browser.$$('table tr');
-      const tableText = browser.$('table').getText();
-      // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
-      rowTexts[0].getText().should.match(new RegExp('System number *' + record.id));
-      rowTexts[1].getText().should.match(new RegExp('Date of marriage *' + record.dateOfMarriage));
-      rowTexts[2].getText().should.match(new RegExp('Place of marriage *' + record.placeOfMarriage));
-      rowTexts[4].getText().should.match(new RegExp('Surname *' + record.groom.surname));
-      rowTexts[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.groom.forenames));
-      tableText.should.not.match(new RegExp('Age *' + record.groom.age));
-      tableText.should.not.match(new RegExp('Occupation *' + record.groom.occupation));
-      rowTexts[6].getText().should.match(new RegExp('Address *' + record.groom.address));
-      tableText.should.not.match(new RegExp('Condition *' + record.groom.condition));
-      tableText.should.not.match(new RegExp('Signature *' + record.groom.signature));
-      rowTexts[8].getText().should.match(new RegExp('Surname *' + record.bride.surname));
-      rowTexts[9].getText().should.match(new RegExp('Forename\\(s\\) *' + record.bride.forenames));
-      tableText.should.not.match(new RegExp('Age *' + record.bride.age));
-      tableText.should.not.match(new RegExp('Occupation *' + record.bride.occupation));
-      rowTexts[10].getText().should.match(new RegExp('Address *' + record.bride.address));
-      tableText.should.not.match(new RegExp('Condition *' + record.bride.condition));
-      tableText.should.not.match(new RegExp('Signature *' + record.bride.signature));
-      tableText.should.not.match(new RegExp('Surname *' + record.fatherOfGroom.surname));
-      tableText.should.not.match(new RegExp('Forename\\(s\\) *' + record.fatherOfGroom.forenames));
-      tableText.should.not.match(new RegExp('Occupation *' + record.fatherOfGroom.occupation));
-      tableText.should.not.match(new RegExp('Bride\s*Surname *' + record.fatherOfBride.surname));
-      tableText.should.not.match(new RegExp('Forename\\(s\\) *' + record.fatherOfBride.forenames));
-      tableText.should.not.match(new RegExp('Occupation *' + record.fatherOfBride.occupation));
-      tableText.should.not.match(new RegExp('Signature *' + record.witness1.signature));
-      tableText.should.not.match(new RegExp('Signature *' + record.witness2.signature));
-      tableText.should.not.match(new RegExp('Registrar signature *' + record.registrar.signature));
-      tableText.should.not.match(new RegExp('Registrar designation *' + record.registrar.designation));
-      tableText.should.not.match(new RegExp(
-        'Superintendent registrar signature *' + record.registrar.superintendentSignature));
-      tableText.should.not.match(new RegExp(
-        'Superintendent registrar designation *' + record.registrar.superintendentDesignation));
-      rowTexts[12].getText().should.match(new RegExp('District *' + record.registrar.district));
-      rowTexts[13].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      rowTexts[14].getText().should.match(new RegExp('Date of registration *' + record.date));
-      tableText.should.not.match(new RegExp('Entry number *' + record.entryNumber));
-    });
-  };
-
   const editSearchDisplayed = () =>
     it('contains a link back to the search screen', () => browser.getText('body').should.contain('Edit search'));
 
@@ -126,17 +83,6 @@ describe('Marriage details page', () => {
     recordDisplayed(expectedRecord);
     editSearchDisplayed();
     backToSearchResultsNotDisplayed();
-
-    describe('which shows LIMITED info to HTMCS users', () => {
-      // NOTE: anyone in the HMCTS group should only see the limited info
-      before(() => browser.marriageSearchWithGourpHeader('HMCTS'));
-
-      urlShouldContainDetails();
-      messageDisplayed(expectedRecord);
-      limitedRecordDisplayed(expectedRecord);
-      editSearchDisplayed();
-      backToSearchResultsNotDisplayed();
-    });
   });
 
   describe('When there is more than one result', () => {
@@ -153,17 +99,6 @@ describe('Marriage details page', () => {
     recordDisplayed(expectedRecords);
     editSearchDisplayed();
     backToSearchResultsDisplayed();
-
-    describe('which shows LIMITED info to HTMCS users', () => {
-      // NOTE: anyone in the HMCTS group should only see the limited info
-      before(() => browser.marriageSearchWithGourpHeader('HMCTS'));
-
-      urlShouldContainDetails();
-      messageDisplayed(expectedRecords);
-      limitedRecordDisplayed(expectedRecords);
-      editSearchDisplayed();
-      backToSearchResultsNotDisplayed();
-    });
   });
 
   describe('When I select the "New search" button', () => {
