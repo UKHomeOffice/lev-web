@@ -18,7 +18,7 @@ module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
   const systemNumber = req.params.sysnum;
   const ri = reqInfo(req);
-  const limit = (ri.groups.filter(g => g === 'HMCTS'));
+  const limit = !(ri.roles.filter(v => v === 'full-data').reduce((acc, val) => acc || val, false) && true);
 
   if (systemNumber === undefined) {
     return next(new ReferenceError('The parameter \'id\' was not defined'), req, res);
