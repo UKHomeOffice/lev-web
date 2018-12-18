@@ -23,7 +23,6 @@
     <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
   {{/record.status.refer}}
 
-  {{#fullData}}
   {{#record.previousRegistration.systemNumber}}
     <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
       <a href="/marriage/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
@@ -34,7 +33,6 @@
       <a href="/marriage/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
     </div>
   {{/record.nextRegistration.systemNumber}}
-  {{/fullData}}
   <table class="details">
     <tbody>
       <tr>
