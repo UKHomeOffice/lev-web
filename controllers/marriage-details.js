@@ -3,6 +3,7 @@
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const fields = require('../fields/marriage');
+const reqInfo = require('../lib/req-info');
 const _ = require('lodash');
 
 const handleError = (err, next) => {
@@ -16,6 +17,8 @@ const handleError = (err, next) => {
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
   const systemNumber = req.params.sysnum;
+  const ri = reqInfo(req);
+  const fullDetails = ri.roles.filter(v => v === 'full-details').reduce((acc, val) => acc || val, false) && true;
 
   if (systemNumber === undefined) {
     return next(new ReferenceError('The parameter \'id\' was not defined'), req, res);
@@ -29,10 +32,11 @@ module.exports = function renderDetails(req, res, next) {
 
   return api.findMarriageBySystemNumber(Number(systemNumber), accessToken)
     .then(result => res.render('pages/marriage-details', {
-          record: result,
-          querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
-          canRedirectToResults: canRedirectToResults
-        }),
-        err => handleError(err, next)
+        record: result,
+        showAll: fullDetails,
+        querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
+        canRedirectToResults: canRedirectToResults
+      }),
+      err => handleError(err, next)
     );
 };

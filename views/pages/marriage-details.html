@@ -58,26 +58,30 @@
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Forename(s)</th>
         <td>{{record.groom.forenames}}</td>
       </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Age</th>
-        <td>{{record.groom.age}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Occupation</th>
-        <td>{{record.groom.occupation}}</td>
-      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Age</th>
+            <td>{{record.groom.age}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Occupation</th>
+            <td>{{record.groom.occupation}}</td>
+        </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Address</th>
         <td>{{record.groom.address}}</td>
       </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Condition</th>
-        <td>{{record.groom.condition}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Signature</th>
-        <td>{{record.groom.signature}}</td>
-      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Condition</th>
+            <td>{{record.groom.condition}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Groom's </span>Signature</th>
+            <td>{{record.groom.signature}}</td>
+        </tr>
+      {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Bride</th>
       </tr>
@@ -89,161 +93,167 @@
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Forename(s)</th>
         <td>{{record.bride.forenames}}</td>
       </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Age</th>
-        <td>{{record.bride.age}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Occupation</th>
-        <td>{{record.bride.occupation}}</td>
-      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Age</th>
+            <td>{{record.bride.age}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Occupation</th>
+            <td>{{record.bride.occupation}}</td>
+        </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Address</th>
         <td>{{record.bride.address}}</td>
       </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Condition</th>
-        <td>{{record.bride.condition}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Signature</th>
-        <td>{{record.bride.signature}}</td>
-      </tr>
-      <tr class="section-head">
-        <th colspan="2">Father of the groom</th>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Surname</th>
-        <td>{{record.fatherOfGroom.surname}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Forename(s)</th>
-        <td>{{record.fatherOfGroom.forenames}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Occupation</th>
-        <td>{{record.fatherOfGroom.occupation}}</td>
-      </tr>
-      <tr class="section-head">
-        <th colspan="2">Father of the bride</th>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Surname</th>
-        <td>{{record.fatherOfBride.surname}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Forename(s)</th>
-        <td>{{record.fatherOfBride.forenames}}</td>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Occupation</th>
-        <td>{{record.fatherOfBride.occupation}}</td>
-      </tr>
-      <tr class="section-head">
-        <th colspan="2">First witness</th>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">First witness' </span>Signature</th>
-        <td>{{record.witness1.signature}}</td>
-      </tr>
-      <tr class="section-head">
-        <th colspan="2">Second witness</th>
-      </tr>
-      <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Second witness' </span>Signature</th>
-        <td>{{record.witness2.signature}}</td>
-      </tr>
-      {{#record.witness3.signature}}
-        <tr class="section-head">
-            <th colspan="2">Third witness</th>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Condition</th>
+            <td>{{record.bride.condition}}</td>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Third witness' </span>Signature</th>
-            <td>{{record.witness3.signature}}</td>
+            <th><span class="visuallyhidden" aria-hidden="true">Bride's </span>Signature</th>
+            <td>{{record.bride.signature}}</td>
         </tr>
-      {{/record.witness3.signature}}
-      {{#record.witness4.signature}}
         <tr class="section-head">
-            <th colspan="2">Forth witness</th>
+            <th colspan="2">Father of the groom</th>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Forth witness' </span>Signature</th>
-            <td>{{record.witness4.signature}}</td>
-        </tr>
-      {{/record.witness4.signature}}
-      {{#record.witness5.signature}}
-        <tr class="section-head">
-            <th colspan="2">Fifth witness</th>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Surname</th>
+            <td>{{record.fatherOfGroom.surname}}</td>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Fifth witness' </span>Signature</th>
-            <td>{{record.witness5.signature}}</td>
-        </tr>
-      {{/record.witness5.signature}}
-      {{#record.witness6.signature}}
-        <tr class="section-head">
-            <th colspan="2">Sixth witness</th>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Forename(s)</th>
+            <td>{{record.fatherOfGroom.forenames}}</td>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Sixth witness' </span>Signature</th>
-            <td>{{record.witness6.signature}}</td>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the groom's </span>Occupation</th>
+            <td>{{record.fatherOfGroom.occupation}}</td>
         </tr>
-      {{/record.witness6.signature}}
-      {{#record.witness7.signature}}
         <tr class="section-head">
-            <th colspan="2">Seventh witness</th>
+            <th colspan="2">Father of the bride</th>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Seventh witness' </span>Signature</th>
-            <td>{{record.witness7.signature}}</td>
-        </tr>
-      {{/record.witness7.signature}}
-      {{#record.witness8.signature}}
-        <tr class="section-head">
-            <th colspan="2">Eighth witness</th>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Surname</th>
+            <td>{{record.fatherOfBride.surname}}</td>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Eighth witness' </span>Signature</th>
-            <td>{{record.witness8.signature}}</td>
-        </tr>
-      {{/record.witness8.signature}}
-      {{#record.witness9.signature}}
-        <tr class="section-head">
-            <th colspan="2">Ninth witness</th>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Forename(s)</th>
+            <td>{{record.fatherOfBride.forenames}}</td>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Ninth witness' </span>Signature</th>
-            <td>{{record.witness9.signature}}</td>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of the bride's </span>Occupation</th>
+            <td>{{record.fatherOfBride.occupation}}</td>
         </tr>
-      {{/record.witness9.signature}}
-      {{#record.witness10.signature}}
         <tr class="section-head">
-            <th colspan="2">Tenth witness</th>
+            <th colspan="2">First witness</th>
         </tr>
         <tr>
-            <th><span class="visuallyhidden" aria-hidden="true">Tenth witness' </span>Signature</th>
-            <td>{{record.witness10.signature}}</td>
+            <th><span class="visuallyhidden" aria-hidden="true">First witness' </span>Signature</th>
+            <td>{{record.witness1.signature}}</td>
         </tr>
-      {{/record.witness10.signature}}
+        <tr class="section-head">
+            <th colspan="2">Second witness</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Second witness' </span>Signature</th>
+            <td>{{record.witness2.signature}}</td>
+        </tr>
+        {{#record.witness3.signature}}
+            <tr class="section-head">
+                <th colspan="2">Third witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Third witness' </span>Signature</th>
+                <td>{{record.witness3.signature}}</td>
+            </tr>
+        {{/record.witness3.signature}}
+        {{#record.witness4.signature}}
+            <tr class="section-head">
+                <th colspan="2">Forth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Forth witness' </span>Signature</th>
+                <td>{{record.witness4.signature}}</td>
+            </tr>
+        {{/record.witness4.signature}}
+        {{#record.witness5.signature}}
+            <tr class="section-head">
+                <th colspan="2">Fifth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Fifth witness' </span>Signature</th>
+                <td>{{record.witness5.signature}}</td>
+            </tr>
+        {{/record.witness5.signature}}
+        {{#record.witness6.signature}}
+            <tr class="section-head">
+                <th colspan="2">Sixth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Sixth witness' </span>Signature</th>
+                <td>{{record.witness6.signature}}</td>
+            </tr>
+        {{/record.witness6.signature}}
+        {{#record.witness7.signature}}
+            <tr class="section-head">
+                <th colspan="2">Seventh witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Seventh witness' </span>Signature</th>
+                <td>{{record.witness7.signature}}</td>
+            </tr>
+        {{/record.witness7.signature}}
+        {{#record.witness8.signature}}
+            <tr class="section-head">
+                <th colspan="2">Eighth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Eighth witness' </span>Signature</th>
+                <td>{{record.witness8.signature}}</td>
+            </tr>
+        {{/record.witness8.signature}}
+        {{#record.witness9.signature}}
+            <tr class="section-head">
+                <th colspan="2">Ninth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Ninth witness' </span>Signature</th>
+                <td>{{record.witness9.signature}}</td>
+            </tr>
+        {{/record.witness9.signature}}
+        {{#record.witness10.signature}}
+            <tr class="section-head">
+                <th colspan="2">Tenth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Tenth witness' </span>Signature</th>
+                <td>{{record.witness10.signature}}</td>
+            </tr>
+        {{/record.witness10.signature}}
+      {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Registration</th>
       </tr>
-      <tr>
-        <th>Registrar signature</th>
-        <td>{{record.registrar.signature}}</td>
-      </tr>
-      <tr>
-        <th>Registrar designation</th>
-        <td>{{record.registrar.designation}}</td>
-      </tr>
-      <tr>
-        <th>Superintendent registrar signature</th>
-        <td>{{record.registrar.superintendentSignature}}</td>
-      </tr>
-      <tr>
-        <th>Superintendent registrar designation</th>
-        <td>{{record.registrar.superintendentDesignation}}</td>
-      </tr>
+      {{#showAll}}
+        <tr>
+            <th>Registrar signature</th>
+            <td>{{record.registrar.signature}}</td>
+        </tr>
+        <tr>
+            <th>Registrar designation</th>
+            <td>{{record.registrar.designation}}</td>
+        </tr>
+        <tr>
+            <th>Superintendent registrar signature</th>
+            <td>{{record.registrar.superintendentSignature}}</td>
+        </tr>
+        <tr>
+            <th>Superintendent registrar designation</th>
+            <td>{{record.registrar.superintendentDesignation}}</td>
+        </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>District</th>
         <td>{{record.registrar.district}}</td>
@@ -256,10 +266,12 @@
         <th>Date of registration</th>
         <td>{{record.date}}</td>
       </tr>
-      <tr>
-        <th>Entry number</th>
-        <td>{{record.entryNumber}}</td>
-      </tr>
+      {{#showAll}}
+        <tr>
+            <th>Entry number</th>
+            <td>{{record.entryNumber}}</td>
+        </tr>
+      {{/showAll}}
     </tbody>
   </table>
   <div class="buttons">
