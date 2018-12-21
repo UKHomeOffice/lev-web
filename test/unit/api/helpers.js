@@ -244,7 +244,7 @@ describe('api/helpers.js', () => {
   });
 
   describe('processRecord()', () => {
-    it('is a function', () => (typeof helpers.processRecord).should.equal('function'));
+    it('is a function', () => helpers.processRecord.should.be.a('function'));
     it('takes one argument', () => helpers.processRecord.should.have.lengthOf(1));
 
     describe('when called with an argument that is a valid record', () => {

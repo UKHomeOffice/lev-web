@@ -3,7 +3,7 @@
 const reqInfo = require('../../../lib/req-info');
 
 describe('lib/req-info.js', () => {
-  it('is a function', () => (typeof reqInfo).should.equal('function'));
+  it('is a function', () => reqInfo.should.be.a('function'));
   it('takes one argument', () => reqInfo.length.should.equal(1));
 
   describe('when called with one argument', () => {

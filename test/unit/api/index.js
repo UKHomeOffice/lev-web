@@ -162,7 +162,7 @@ describe('api/index.js', () => {
   });
 
   describe('findByNameDOB()', () => {
-    it('is a function', () => (typeof api.findByNameDOB).should.equal('function'));
+    it('is a function', () => api.findByNameDOB.should.be.a('function'));
     it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
@@ -265,7 +265,7 @@ describe('api/index.js', () => {
   });
 
   describe('findBirths()', () => {
-    it('is a function', () => (typeof api.findBirths).should.equal('function'));
+    it('is a function', () => api.findBirths.should.be.a('function'));
     it('takes two arguments', () => api.findBirths.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
@@ -448,7 +448,7 @@ describe('api/index.js', () => {
   });
 
   describe('findBySystemNumber()', () => {
-    it('is a function', () => (typeof api.findBySystemNumber).should.equal('function'));
+    it('is a function', () => api.findBySystemNumber.should.be.a('function'));
     it('takes two arguments', () => api.findBySystemNumber.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
@@ -544,7 +544,7 @@ describe('api/index.js', () => {
   });
 
   describe('userActivityReport()', () => {
-    it('is a function', () => (typeof api.userActivityReport).should.equal('function'));
+    it('is a function', () => api.userActivityReport.should.be.a('function'));
     it('should throw a ReferenceError when no parameters are provided', () => {
       expect(api.userActivityReport).to.throw(ReferenceError);
     });
