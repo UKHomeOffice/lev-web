@@ -21,6 +21,7 @@ describe('lib/req-info.js', () => {
           client: undefined,
           groups: [],
           roles: [],
+          token: undefined,
           username: undefined
         }));
       });
@@ -31,6 +32,7 @@ describe('lib/req-info.js', () => {
         before(() => {
           result = reqInfo({
             headers: {
+              'x-auth-token': 'token',
               'x-auth-aud': 'client',
               'x-auth-groups': 'group1,group2,group3',
               'x-auth-roles': 'role1,role2,role3',
@@ -51,6 +53,7 @@ describe('lib/req-info.js', () => {
             'role2',
             'role3'
           ],
+          token: 'token',
           username: 'username'
         }));
       });

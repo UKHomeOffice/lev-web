@@ -27,10 +27,9 @@ module.exports = function renderDetails(req, res, next) {
     return next(new TypeError('The parameter \'id\' was not an integer'), req, res);
   }
 
-  const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
   const canRedirectToResults = (req.query && req.query.multipleResults) !== undefined;
 
-  return api.findMarriageBySystemNumber(Number(systemNumber), accessToken)
+  return api.findMarriageBySystemNumber(Number(systemNumber), ri.token)
     .then(result => res.render('pages/marriage-details', {
         record: result,
         showAll: fullDetails,
