@@ -8,6 +8,11 @@ describe('lib/req-info.js', () => {
 
   describe('when called with one argument', () => {
     describe('that is a request object', () => {
+      describe('without any headers', () => {
+        it('should return an empty object', () => reqInfo().should.be.an('object').that.is.empty);
+        it('should return an empty object', () => reqInfo({}).should.be.an('object').that.is.empty);
+      });
+
       describe('without keycloak-gatekeeper headers', () => {
         let result;
 
@@ -37,6 +42,38 @@ describe('lib/req-info.js', () => {
               'x-auth-groups': 'group1,group2,group3',
               'x-auth-roles': 'role1,role2,role3',
               'x-auth-username': 'username'
+            }
+          });
+        });
+
+        it('returns a more friendly object', () => result.should.deep.equal({
+          client: 'client',
+          groups: [
+            'group1',
+            'group2',
+            'group3'
+          ],
+          roles: [
+            'role1',
+            'role2',
+            'role3'
+          ],
+          token: 'token',
+          username: 'username'
+        }));
+      });
+
+      describe('with keycloak-gatekeeper headers with mixed case names', () => {
+        let result;
+
+        before(() => {
+          result = reqInfo({
+            headers: {
+              'X-Auth-Token': 'token',
+              'X-Auth-Aud': 'client',
+              'X-Auth-Groups': 'group1,group2,group3',
+              'X-Auth-Roles': 'role1,role2,role3',
+              'X-Auth-Username': 'username'
             }
           });
         });
