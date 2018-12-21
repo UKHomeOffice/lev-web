@@ -14,11 +14,13 @@ const handleError = (err, next) => {
   return next(err instanceof Error ? err : new Error(err));
 };
 
+const fullDetailsRoleName = 'full-details';
+const showFullDetails = ri => !!(ri && ri.roles && ri.roles.filter(r => r === fullDetailsRoleName).length);
+
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
   const systemNumber = req.params.sysnum;
   const ri = reqInfo(req);
-  const fullDetails = ri.roles.filter(v => v === 'full-details').reduce((acc, val) => acc || val, false) && true;
 
   if (systemNumber === undefined) {
     return next(new ReferenceError('The parameter \'id\' was not defined'), req, res);
@@ -32,7 +34,7 @@ module.exports = function renderDetails(req, res, next) {
   return api.findMarriageBySystemNumber(Number(systemNumber), ri.token)
     .then(result => res.render('pages/marriage-details', {
         record: result,
-        showAll: fullDetails,
+        showAll: showFullDetails(ri),
         querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
         canRedirectToResults: canRedirectToResults
       }),
