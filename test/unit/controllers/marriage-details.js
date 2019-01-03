@@ -13,7 +13,7 @@ describe('controllers/marriage-details', function() {
       const showFullDetails = detailsController.__get__('showFullDetails'); // eslint-disable-line no-underscore-dangle
 
       it('should be a single parameter function', () => expect(showFullDetails).to.be.a('function').with.lengthOf(1));
-      it('should return false when roles does not exist', () => expect(showFullDetails()).to.be.false);
+      it('should return false when roles does not exist', () => expect(() => showFullDetails()).to.throw(TypeError));
       it('should return false when there are no roles', () => expect(showFullDetails({ roles: [] })).to.be.false);
       it('should return false when roles does not include "full-data"', () =>
         expect(showFullDetails({ roles: ['blaa', 'blee', 'bloo'] })).to.be.false);

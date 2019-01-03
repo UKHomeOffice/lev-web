@@ -15,7 +15,7 @@ const handleError = (err, next) => {
 };
 
 const fullDetailsRoleName = 'full-details';
-const showFullDetails = ri => !!(ri && ri.roles && ri.roles.filter(r => r === fullDetailsRoleName).length);
+const showFullDetails = ri => !!ri.roles.filter(r => r === fullDetailsRoleName).length;
 
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
