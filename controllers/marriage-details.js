@@ -1,5 +1,6 @@
 'use strict';
 
+const conf = require('../config');
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const fields = require('../fields/marriage');
@@ -14,8 +15,7 @@ const handleError = (err, next) => {
   return next(err instanceof Error ? err : new Error(err));
 };
 
-const fullDetailsRoleName = 'full-details';
-const showFullDetails = ri => !!ri.roles.filter(r => r === fullDetailsRoleName).length;
+const showFullDetails = ri => !!ri.roles.filter(r => r === conf.fullDetailsRoleName).length;
 
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};

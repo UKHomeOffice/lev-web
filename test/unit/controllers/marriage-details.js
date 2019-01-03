@@ -3,7 +3,7 @@
 const rewire = require('rewire');
 const detailsController = rewire('../../../controllers/marriage-details');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
-const role = detailsController.__get__('fullDetailsRoleName'); // eslint-disable-line no-underscore-dangle
+const role = require('../../../config').fullDetailsRoleName; // eslint-disable-line no-underscore-dangle
 
 const accessToken = 'accessToken';
 

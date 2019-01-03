@@ -2,8 +2,7 @@
 
 const expectedRecord = require('../expected-marriage-record');
 const expectedRecords = require('../expected-marriage-records');
-const role = require('rewire')('../../../controllers/marriage-details') // eslint-disable-line no-underscore-dangle
-  .__get__('fullDetailsRoleName');
+const role = require('../../../config').fullDetailsRoleName;
 
 describe('Marriage details page', () => {
   /* eslint-disable no-unused-vars */
