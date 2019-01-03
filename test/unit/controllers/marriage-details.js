@@ -39,7 +39,7 @@ describe('controllers/marriage-details', function() {
         sysnum: '1234'
       },
       headers: {
-        'X-Auth-Token': accessToken
+        'x-auth-token': accessToken
       }
     };
     res = {
@@ -97,7 +97,7 @@ describe('controllers/marriage-details', function() {
 
       describe('with "full-details" role', () => {
         beforeEach(() => {
-          req.headers['X-Auth-Roles'] = role;
+          req.headers['x-auth-roles'] = role;
         });
 
         it('renders the full details page', () =>

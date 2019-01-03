@@ -62,38 +62,6 @@ describe('lib/req-info.js', () => {
           username: 'username'
         }));
       });
-
-      describe('with keycloak-gatekeeper headers with mixed case names', () => {
-        let result;
-
-        before(() => {
-          result = reqInfo({
-            headers: {
-              'X-Auth-Token': 'token',
-              'X-Auth-Aud': 'client',
-              'X-Auth-Groups': 'group1,group2,group3',
-              'X-Auth-Roles': 'role1,role2,role3',
-              'X-Auth-Username': 'username'
-            }
-          });
-        });
-
-        it('returns a more friendly object', () => result.should.deep.equal({
-          client: 'client',
-          groups: [
-            'group1',
-            'group2',
-            'group3'
-          ],
-          roles: [
-            'role1',
-            'role2',
-            'role3'
-          ],
-          token: 'token',
-          username: 'username'
-        }));
-      });
     });
   });
 });
