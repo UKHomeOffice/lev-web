@@ -20,6 +20,22 @@ module.exports = (target) => {
     this.submitMarriageSearchPage(systemNumber, surname, forenames, dom);
   };
 
+  target.jsRefreshWithRoles = function (roles) {
+    this.jsRefreshWithHeaders({ 'X-Auth-Roles': roles });
+  };
+
+  target.jsRefreshWithHeaders = function(headers) {
+    this.execute((u, h) => {
+      /* eslint-env browser */
+      var client = new XMLHttpRequest();
+      client.open('GET', u, false);
+      Object.keys(h).forEach(key => client.setRequestHeader(key, h[key]));
+      client.send();
+      document.body.parentElement.innerHTML = client.responseText;
+      /* eslint-env node, mocha */
+    }, this.getUrl(), headers);
+  };
+
   target.goToSearchPage = function() {
     this.url(url);
   };
@@ -77,7 +93,7 @@ module.exports = (target) => {
     this.click('input[type="submit"]');
   };
 
-  target.submitBirthSearchPage = target.submitBirthSearchPage;
+  target.submitBirthSearchPage = target.submitSearchPage;
 
   target.submitDeathSearchPage = function(systemNumber, surname, forenames, dobd) {
     this.setValue('input[name="system-number"]', systemNumber);

@@ -3,11 +3,16 @@
 const reqInfo = require('../../../lib/req-info');
 
 describe('lib/req-info.js', () => {
-  it('is a function', () => (typeof reqInfo).should.equal('function'));
+  it('is a function', () => reqInfo.should.be.a('function'));
   it('takes one argument', () => reqInfo.length.should.equal(1));
 
   describe('when called with one argument', () => {
     describe('that is a request object', () => {
+      describe('without any headers', () => {
+        it('should return an empty object', () => reqInfo().should.be.an('object').that.is.empty);
+        it('should return an empty object', () => reqInfo({}).should.be.an('object').that.is.empty);
+      });
+
       describe('without keycloak-gatekeeper headers', () => {
         let result;
 
@@ -21,6 +26,7 @@ describe('lib/req-info.js', () => {
           client: undefined,
           groups: [],
           roles: [],
+          token: undefined,
           username: undefined
         }));
       });
@@ -31,6 +37,7 @@ describe('lib/req-info.js', () => {
         before(() => {
           result = reqInfo({
             headers: {
+              'x-auth-token': 'token',
               'x-auth-aud': 'client',
               'x-auth-groups': 'group1,group2,group3',
               'x-auth-roles': 'role1,role2,role3',
@@ -51,6 +58,7 @@ describe('lib/req-info.js', () => {
             'role2',
             'role3'
           ],
+          token: 'token',
           username: 'username'
         }));
       });

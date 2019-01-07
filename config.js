@@ -8,6 +8,7 @@ const conf = {
   env: process.env.NODE_ENV,
   port: process.env.PORT || 8001,
   listen_host: process.env.LISTEN_HOST || '0.0.0.0',
+  fullDetailsRoleName: 'full-details',
   api: {
     protocol: process.env.API_PROTOCOL || 'http',
     host: process.env.API_PORT_8080_TCP_ADDR || process.env.API_HOST || 'localhost',
