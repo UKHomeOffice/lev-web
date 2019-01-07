@@ -182,7 +182,11 @@ const processMarriageRecord = r => {
     date: block(toBritishDateFormat(r.date)),
     entryNumber: block(r.entryNumber),
     dateOfMarriage: block(toBritishDateFormat(r.dateOfMarriage)),
-    placeOfMarriage: block(r.placeOfMarriage),
+    placeOfMarriage: {
+      address: block(r.placeOfMarriage.address),
+      parish: block(r.placeOfMarriage.parish),
+      short: block(r.placeOfMarriage.short)
+    },
     registrar: {
       signature: block(r.registrar.signature),
       designation: block(r.registrar.designation),

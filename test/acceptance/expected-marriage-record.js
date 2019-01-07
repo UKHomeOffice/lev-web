@@ -6,7 +6,10 @@ module.exports = {
   date: '10/10/2014',
   entryNumber: 10,
   dateOfMarriage: '29/02/2012',
-  placeOfMarriage: 'Test place',
+  placeOfMarriage: {
+    address: 'Test place',
+    short: 'Test place'
+  },
   registrar: {
     signature: 'A. Registrar',
     designation: 'Registrar',
