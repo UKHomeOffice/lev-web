@@ -23,7 +23,7 @@ module.exports = {
     surname: 'MULTIPLE',
     age: 100,
     occupation: 'Unemployed',
-    address: '1, Test street',
+    address: '1 Test street',
     condition: 'Single',
     signature: 'T.1. Multiple'
   },
@@ -32,7 +32,7 @@ module.exports = {
     surname: 'BRIDE',
     age: 18,
     occupation: 'Bride',
-    address: '1, Test street',
+    address: '1 Test street',
     condition: 'Single',
     signature: 'T. Bride'
   },
