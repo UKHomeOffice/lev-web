@@ -130,7 +130,7 @@ describe('Marriage details page', () => {
 
     describe('which shows the full details to select users', () => {
       // NOTE: anyone with the appropriate role should see the full info
-      before(() => browser.marriageSearchWithRoleHeader([role]));
+      before(() => browser.jsRefreshWithRoles([role]));
 
       urlShouldContainDetails();
       messageDisplayed(expectedRecord);
@@ -157,7 +157,7 @@ describe('Marriage details page', () => {
 
     describe('which shows the full details to select users', () => {
       // NOTE: anyone with the appropriate role should see the full info
-      before(() => browser.marriageSearchWithRoleHeader([role]));
+      before(() => browser.jsRefreshWithRoles([role]));
 
       urlShouldContainDetails();
       messageDisplayed(expectedRecords);

@@ -20,17 +20,20 @@ module.exports = (target) => {
     this.submitMarriageSearchPage(systemNumber, surname, forenames, dom);
   };
 
-  target.marriageSearchWithRoleHeader = function(roles) {
-    this.execute((u, r) => {
+  target.jsRefreshWithRoles = function (roles) {
+    this.jsRefreshWithHeaders({ 'X-Auth-Roles': roles });
+  };
+
+  target.jsRefreshWithHeaders = function(headers) {
+    this.execute((u, h) => {
       /* eslint-env browser */
       var client = new XMLHttpRequest();
       client.open('GET', u, false);
-      client.setRequestHeader('X-Auth-Roles', r);
+      Object.keys(h).forEach(key => client.setRequestHeader(key, h[key]));
       client.send();
       document.body.parentElement.innerHTML = client.responseText;
       /* eslint-env node, mocha */
-    }, this.getUrl(), roles);
-    this.waitForExist('table.details', 5000);
+    }, this.getUrl(), headers);
   };
 
   target.goToSearchPage = function() {
