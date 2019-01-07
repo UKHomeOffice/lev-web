@@ -23,6 +23,7 @@ module.exports = {
     surname: 'SOLO',
     age: 100,
     occupation: 'Unemployed',
+    retired: false,
     address: '10 Test street',
     condition: 'Single',
     signature: 'T. Solo'
@@ -32,6 +33,7 @@ module.exports = {
     surname: 'BRIDE',
     age: 18,
     occupation: 'Bride',
+    retired: false,
     address: '10 Test street',
     condition: 'Single',
     signature: 'T. Bride'
@@ -39,12 +41,14 @@ module.exports = {
   fatherOfGroom: {
     forenames: 'Test Fog',
     surname: 'FATHER',
-    occupation: 'Father'
+    occupation: 'Father',
+    retired: true
   },
   fatherOfBride: {
     forenames: 'Test Fob',
     surname: 'BRIDE',
-    occupation: 'Father'
+    occupation: 'Father',
+    retired: true
   },
   witness1: {
     signature: 'A. Witness'

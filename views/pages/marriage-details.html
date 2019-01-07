@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Occupation</th>
-            <td>{{record.groom.occupation}}</td>
+            <td>{{record.groom.occupation}}{{#record.groom.retired}} (retired){{/record.groom.retired}}</td>
         </tr>
       {{/showAll}}
       <tr>
@@ -100,7 +100,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Occupation</th>
-            <td>{{record.bride.occupation}}</td>
+            <td>{{record.bride.occupation}}{{#record.bride.retired}} (retired){{/record.bride.retired}}</td>
         </tr>
       {{/showAll}}
       <tr>
@@ -129,7 +129,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Occupation</th>
-            <td>{{record.fatherOfGroom.occupation}}</td>
+            <td>{{record.fatherOfGroom.occupation}}{{#record.fatherOfGroom.retired}} (retired){{/record.fatherOfGroom.retired}}</td>
         </tr>
         <tr class="section-head">
             <th colspan="2">Father of partner 2</th>
@@ -144,7 +144,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Occupation</th>
-            <td>{{record.fatherOfBride.occupation}}</td>
+            <td>{{record.fatherOfBride.occupation}}{{#record.fatherOfBride.retired}} (retired){{/record.fatherOfBride.retired}}</td>
         </tr>
         <tr class="section-head">
             <th colspan="2">First witness</th>

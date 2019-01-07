@@ -200,6 +200,7 @@ const processMarriageRecord = r => {
       surname: block(r.groom.surname),
       age: block(Number(r.groom.age)),
       occupation: block(r.groom.occupation),
+      retired: block(r.groom.retired),
       address: block(r.groom.address),
       condition: block(r.groom.condition),
       signature: block(r.groom.signature)
@@ -209,6 +210,7 @@ const processMarriageRecord = r => {
       surname: block(r.bride.surname),
       age: block(Number(r.bride.age)),
       occupation: block(r.bride.occupation),
+      retired: block(r.bride.retired),
       address: block(r.bride.address),
       condition: block(r.bride.condition),
       signature: block(r.bride.signature)
@@ -216,12 +218,14 @@ const processMarriageRecord = r => {
     fatherOfGroom: {
       forenames: block(r.fatherOfGroom.forenames),
       surname: block(r.fatherOfGroom.surname),
-      occupation: block(r.fatherOfGroom.occupation)
+      occupation: block(r.fatherOfGroom.occupation),
+      retired: block(r.fatherOfGroom.retired)
     },
     fatherOfBride: {
       forenames: block(r.fatherOfBride.forenames),
       surname: block(r.fatherOfBride.surname),
-      occupation: block(r.fatherOfBride.occupation)
+      occupation: block(r.fatherOfBride.occupation),
+      retired: block(r.fatherOfBride.retired)
     },
     witness1: {
       signature: block(r.witness1.signature)
