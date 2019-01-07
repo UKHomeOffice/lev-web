@@ -93,7 +93,7 @@ module.exports = (target) => {
     this.click('input[type="submit"]');
   };
 
-  target.submitBirthSearchPage = target.submitBirthSearchPage;
+  target.submitBirthSearchPage = target.submitSearchPage;
 
   target.submitDeathSearchPage = function(systemNumber, surname, forenames, dobd) {
     this.setValue('input[name="system-number"]', systemNumber);
