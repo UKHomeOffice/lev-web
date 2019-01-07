@@ -219,13 +219,15 @@ const processMarriageRecord = r => {
       forenames: block(r.fatherOfGroom.forenames),
       surname: block(r.fatherOfGroom.surname),
       occupation: block(r.fatherOfGroom.occupation),
-      retired: block(r.fatherOfGroom.retired)
+      retired: block(r.fatherOfGroom.retired),
+      designation: block(r.fatherOfGroom.designation)
     },
     fatherOfBride: {
       forenames: block(r.fatherOfBride.forenames),
       surname: block(r.fatherOfBride.surname),
       occupation: block(r.fatherOfBride.occupation),
-      retired: block(r.fatherOfBride.retired)
+      retired: block(r.fatherOfBride.retired),
+      designation: block(r.fatherOfBride.designation)
     },
     witness1: {
       signature: block(r.witness1.signature)
