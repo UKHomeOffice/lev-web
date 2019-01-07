@@ -42,13 +42,15 @@ module.exports = {
     forenames: 'Test Fog',
     surname: 'FATHER',
     occupation: 'Father',
-    retired: true
+    retired: true,
+    deceased: true
   },
   fatherOfBride: {
     forenames: 'Test Fob',
     surname: 'BRIDE',
     occupation: 'Father',
-    retired: true
+    retired: true,
+    deceased: true
   },
   witness1: {
     signature: 'A. Witness'
