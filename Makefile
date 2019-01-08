@@ -18,10 +18,10 @@ docker-test-deps: docker-compose-deps
 docker:
 	docker build -t '$(DOCKER_IMAGE)' .
 
-docker-compose: docker-compose-deps docker
+docker-compose: docker-compose-deps
 	docker-compose build
 
-docker-test: docker-test-deps docker
+docker-test: docker-test-deps
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' stop
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' rm -vfs
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' down -v
