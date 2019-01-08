@@ -2,7 +2,7 @@
 
 const testConfig = require('../config');
 
-if (testConfig.env !== 'local') {
+if (testConfig.e2e) {
   describe('Login', () => {
     describe('When I try to use the service', () => {
       before(() => {
