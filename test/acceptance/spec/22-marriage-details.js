@@ -3,6 +3,7 @@
 const expectedRecord = require('../expected-marriage-record');
 const expectedRecords = require('../expected-marriage-records');
 const role = require('../../../config').fullDetailsRoleName;
+const testConfig = require('../config');
 
 describe('Marriage details page', () => {
   /* eslint-disable no-unused-vars */
@@ -165,7 +166,7 @@ describe('Marriage details page', () => {
     editSearchDisplayed();
     backToSearchResultsDisplayed();
 
-    describe('which shows the full details to select users', () => {
+    (testConfig.e2e ? describe.skip : describe)('which shows the full details to select users', () => {
       // NOTE: anyone with the appropriate role should see the full info
       before(() => browser.jsRefreshWithRoles([role]));
 
