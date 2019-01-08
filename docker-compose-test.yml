@@ -1,0 +1,12 @@
+version: "3"
+services:
+  lev-web:
+    build: .
+    environment:
+      NODE_ENV: test
+      API_HOST: mock-api
+      API_PORT: 8080
+  mock-api:
+    image: quay.io/ukhomeofficedigital/lev-api:0.7
+    environment:
+      MOCK: "true"

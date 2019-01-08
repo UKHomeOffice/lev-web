@@ -28,7 +28,7 @@ pipeline:
       - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
       - DOCKER_USERNAME_MOCK=lev-kube
     commands:
-      - make test
+      - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
     when:
       event: pull_request
 
