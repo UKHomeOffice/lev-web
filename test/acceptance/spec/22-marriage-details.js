@@ -166,16 +166,18 @@ describe('Marriage details page', () => {
     editSearchDisplayed();
     backToSearchResultsDisplayed();
 
-    (testConfig.e2e ? describe.skip : describe)('which shows the full details to select users', () => {
-      // NOTE: anyone with the appropriate role should see the full info
-      before(() => browser.jsRefreshWithRoles([role]));
+    if (!testConfig.e2e) {
+      describe('which shows the full details to select users', () => {
+        // NOTE: anyone with the appropriate role should see the full info
+        before(() => browser.jsRefreshWithRoles([role]));
 
-      urlShouldContainDetails();
-      messageDisplayed(expectedRecords);
-      fullRecordDisplayed(expectedRecords);
-      editSearchDisplayed();
-      backToSearchResultsNotDisplayed();
-    });
+        urlShouldContainDetails();
+        messageDisplayed(expectedRecords);
+        fullRecordDisplayed(expectedRecords);
+        editSearchDisplayed();
+        backToSearchResultsNotDisplayed();
+      });
+    }
   });
 
   describe('When I select the "New search" button', () => {
