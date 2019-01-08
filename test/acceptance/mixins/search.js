@@ -20,7 +20,7 @@ module.exports = (target) => {
     this.submitMarriageSearchPage(systemNumber, surname, forenames, dom);
   };
 
-  target.jsRefreshWithRoles = function (roles) {
+  target.jsRefreshWithRoles = function(roles) {
     this.jsRefreshWithHeaders({ 'X-Auth-Roles': roles });
   };
 

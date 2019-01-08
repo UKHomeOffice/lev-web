@@ -6,7 +6,10 @@ module.exports = {
   date: '10/10/2014',
   entryNumber: 1,
   dateOfMarriage: '29/02/2012',
-  placeOfMarriage: 'Test place',
+  placeOfMarriage: {
+    address: 'Test place',
+    short: 'Test place'
+  },
   registrar: {
     signature: 'A. Registrar',
     designation: 'Registrar',
@@ -20,7 +23,8 @@ module.exports = {
     surname: 'MULTIPLE',
     age: 100,
     occupation: 'Unemployed',
-    address: '1, Test street',
+    retired: false,
+    address: '1 Test street',
     condition: 'Single',
     signature: 'T.1. Multiple'
   },
@@ -29,19 +33,24 @@ module.exports = {
     surname: 'BRIDE',
     age: 18,
     occupation: 'Bride',
-    address: '1, Test street',
+    retired: false,
+    address: '1 Test street',
     condition: 'Single',
     signature: 'T. Bride'
   },
   fatherOfGroom: {
     forenames: 'Test Fog',
     surname: 'FATHER',
-    occupation: 'Father'
+    occupation: 'Father',
+    retired: true,
+    deceased: true
   },
   fatherOfBride: {
     forenames: 'Test Fob',
     surname: 'BRIDE',
-    occupation: 'Father'
+    occupation: 'Father',
+    retired: true,
+    deceased: true
   },
   witness1: {
     signature: 'A. Witness'

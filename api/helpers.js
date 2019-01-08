@@ -182,7 +182,11 @@ const processMarriageRecord = r => {
     date: block(toBritishDateFormat(r.date)),
     entryNumber: block(r.entryNumber),
     dateOfMarriage: block(toBritishDateFormat(r.dateOfMarriage)),
-    placeOfMarriage: block(r.placeOfMarriage),
+    placeOfMarriage: {
+      address: block(r.placeOfMarriage.address),
+      parish: block(r.placeOfMarriage.parish),
+      short: block(r.placeOfMarriage.short)
+    },
     registrar: {
       signature: block(r.registrar.signature),
       designation: block(r.registrar.designation),
@@ -196,6 +200,7 @@ const processMarriageRecord = r => {
       surname: block(r.groom.surname),
       age: block(Number(r.groom.age)),
       occupation: block(r.groom.occupation),
+      retired: block(r.groom.retired),
       address: block(r.groom.address),
       condition: block(r.groom.condition),
       signature: block(r.groom.signature)
@@ -205,6 +210,7 @@ const processMarriageRecord = r => {
       surname: block(r.bride.surname),
       age: block(Number(r.bride.age)),
       occupation: block(r.bride.occupation),
+      retired: block(r.bride.retired),
       address: block(r.bride.address),
       condition: block(r.bride.condition),
       signature: block(r.bride.signature)
@@ -212,12 +218,18 @@ const processMarriageRecord = r => {
     fatherOfGroom: {
       forenames: block(r.fatherOfGroom.forenames),
       surname: block(r.fatherOfGroom.surname),
-      occupation: block(r.fatherOfGroom.occupation)
+      occupation: block(r.fatherOfGroom.occupation),
+      retired: block(r.fatherOfGroom.retired),
+      designation: block(r.fatherOfGroom.designation),
+      deceased: block(r.fatherOfGroom.deceased)
     },
     fatherOfBride: {
       forenames: block(r.fatherOfBride.forenames),
       surname: block(r.fatherOfBride.surname),
-      occupation: block(r.fatherOfBride.occupation)
+      occupation: block(r.fatherOfBride.occupation),
+      retired: block(r.fatherOfBride.retired),
+      designation: block(r.fatherOfBride.designation),
+      deceased: block(r.fatherOfBride.deceased)
     },
     witness1: {
       signature: block(r.witness1.signature)

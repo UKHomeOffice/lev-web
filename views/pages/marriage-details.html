@@ -45,7 +45,7 @@
       </tr>
       <tr>
         <th>Place of marriage</th>
-        <td>{{record.placeOfMarriage}}</td>
+        <td>{{record.placeOfMarriage.address}}{{#record.placeOfMarriage.parish}} in the parish of {{record.placeOfMarriage.parish}}{{/record.placeOfMarriage.parish}}</td>
       </tr>
       <tr class="section-head">
         <th colspan="2">Partner 1</th>
@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Occupation</th>
-            <td>{{record.groom.occupation}}</td>
+            <td>{{record.groom.occupation}}{{#record.groom.retired}} (retired){{/record.groom.retired}}</td>
         </tr>
       {{/showAll}}
       <tr>
@@ -100,7 +100,7 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Occupation</th>
-            <td>{{record.bride.occupation}}</td>
+            <td>{{record.bride.occupation}}{{#record.bride.retired}} (retired){{/record.bride.retired}}</td>
         </tr>
       {{/showAll}}
       <tr>
@@ -129,7 +129,15 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Occupation</th>
-            <td>{{record.fatherOfGroom.occupation}}</td>
+            <td>{{record.fatherOfGroom.occupation}}{{#record.fatherOfGroom.retired}} (retired){{/record.fatherOfGroom.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Designation</th>
+            <td>{{record.fatherOfGroom.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Deceased</th>
+            <td>{{#record.fatherOfGroom.deceased}}Yes{{/record.fatherOfGroom.deceased}}{{^record.fatherOfGroom.deceased}}No{{/record.fatherOfGroom.deceased}}</td>
         </tr>
         <tr class="section-head">
             <th colspan="2">Father of partner 2</th>
@@ -144,7 +152,15 @@
         </tr>
         <tr>
             <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Occupation</th>
-            <td>{{record.fatherOfBride.occupation}}</td>
+            <td>{{record.fatherOfBride.occupation}}{{#record.fatherOfBride.retired}} (retired){{/record.fatherOfBride.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Designation</th>
+            <td>{{record.fatherOfBride.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Deceased</th>
+            <td>{{#record.fatherOfBride.deceased}}Yes{{/record.fatherOfBride.deceased}}{{^record.fatherOfBride.deceased}}No{{/record.fatherOfBride.deceased}}</td>
         </tr>
         <tr class="section-head">
             <th colspan="2">First witness</th>
@@ -232,6 +248,24 @@
                 <td>{{record.witness10.signature}}</td>
             </tr>
         {{/record.witness10.signature}}
+        {{#record.witness11.signature}}
+            <tr class="section-head">
+                <th colspan="2">Eleventh witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Eleventh witness' </span>Signature</th>
+                <td>{{record.witness11.signature}}</td>
+            </tr>
+        {{/record.witness11.signature}}
+        {{#record.witness12.signature}}
+            <tr class="section-head">
+                <th colspan="2">Twelfth witness</th>
+            </tr>
+            <tr>
+                <th><span class="visuallyhidden" aria-hidden="true">Twelfth witness' </span>Signature</th>
+                <td>{{record.witness12.signature}}</td>
+            </tr>
+        {{/record.witness12.signature}}
       {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Registration</th>

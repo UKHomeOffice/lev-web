@@ -44,9 +44,11 @@ describe('Marriage details page', () => {
       tableText.should.not.match(new RegExp('Surname *' + record.fatherOfGroom.surname));
       tableText.should.not.match(new RegExp(`Forename\\(s\\) *${record.fatherOfGroom.forenames} *Occupation`));
       tableText.should.not.match(new RegExp('Occupation *' + record.fatherOfGroom.occupation));
+      tableText.should.not.match(new RegExp('Designation *' + record.fatherOfGroom.designation));
       tableText.should.not.match(new RegExp('Bride\s*Surname *' + record.fatherOfBride.surname));
       tableText.should.not.match(new RegExp('Forename\\(s\\) *' + record.fatherOfBride.forenames));
       tableText.should.not.match(new RegExp('Occupation *' + record.fatherOfBride.occupation));
+      tableText.should.not.match(new RegExp('Designation *' + record.fatherOfBride.designation));
       tableText.should.not.match(new RegExp('Signature *' + record.witness1.signature));
       tableText.should.not.match(new RegExp('Signature *' + record.witness2.signature));
       tableText.should.not.match(new RegExp('Registrar signature *' + record.registrar.signature));
@@ -72,35 +74,43 @@ describe('Marriage details page', () => {
       browserText[4].getText().should.match(new RegExp('Surname *' + record.groom.surname));
       browserText[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.groom.forenames));
       browserText[6].getText().should.match(new RegExp('Age *' + record.groom.age));
-      browserText[7].getText().should.match(new RegExp('Occupation *' + record.groom.occupation));
+      browserText[7].getText().should.match(new RegExp(
+        'Occupation *' + record.groom.occupation + (record.groom.retired ? ' *\\(retired\\)' : '')));
       browserText[8].getText().should.match(new RegExp('Address *' + record.groom.address));
       browserText[9].getText().should.match(new RegExp('Condition *' + record.groom.condition));
       browserText[10].getText().should.match(new RegExp('Signature *' + record.groom.signature));
       browserText[12].getText().should.match(new RegExp('Surname *' + record.bride.surname));
       browserText[13].getText().should.match(new RegExp('Forename\\(s\\) *' + record.bride.forenames));
       browserText[14].getText().should.match(new RegExp('Age *' + record.bride.age));
-      browserText[15].getText().should.match(new RegExp('Occupation *' + record.bride.occupation));
+      browserText[15].getText().should.match(new RegExp(
+        'Occupation *' + record.bride.occupation + (record.bride.retired ? ' *\\(retired\\)' : '')));
       browserText[16].getText().should.match(new RegExp('Address *' + record.bride.address));
       browserText[17].getText().should.match(new RegExp('Condition *' + record.bride.condition));
       browserText[18].getText().should.match(new RegExp('Signature *' + record.bride.signature));
       browserText[20].getText().should.match(new RegExp('Surname *' + record.fatherOfGroom.surname));
       browserText[21].getText().should.match(new RegExp('Forename\\(s\\) *' + record.fatherOfGroom.forenames));
-      browserText[22].getText().should.match(new RegExp('Occupation *' + record.fatherOfGroom.occupation));
-      browserText[24].getText().should.match(new RegExp('Surname *' + record.fatherOfBride.surname));
-      browserText[25].getText().should.match(new RegExp('Forename\\(s\\) *' + record.fatherOfBride.forenames));
-      browserText[26].getText().should.match(new RegExp('Occupation *' + record.fatherOfBride.occupation));
-      browserText[28].getText().should.match(new RegExp('Signature *' + record.witness1.signature));
-      browserText[30].getText().should.match(new RegExp('Signature *' + record.witness2.signature));
-      browserText[32].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
-      browserText[33].getText().should.match(new RegExp('Registrar designation *' + record.registrar.designation));
-      browserText[34].getText().should.match(new RegExp(
+      browserText[22].getText().should.match(new RegExp(
+        'Occupation *' + record.fatherOfGroom.occupation + (record.fatherOfGroom.retired ? ' *\\(retired\\)' : '')));
+      browserText[23].getText().should.match(new RegExp('Designation *' + (record.fatherOfGroom.designation || '')));
+      browserText[24].getText().should.match(new RegExp('Deceased *' + (record.fatherOfGroom.deceased ? 'Yes' : 'No')));
+      browserText[26].getText().should.match(new RegExp('Surname *' + record.fatherOfBride.surname));
+      browserText[27].getText().should.match(new RegExp('Forename\\(s\\) *' + record.fatherOfBride.forenames));
+      browserText[28].getText().should.match(new RegExp(
+        'Occupation *' + record.fatherOfBride.occupation + (record.fatherOfBride.retired ? ' *\\(retired\\)' : '')));
+      browserText[29].getText().should.match(new RegExp('Designation *' + (record.fatherOfBride.designation || '')));
+      browserText[30].getText().should.match(new RegExp('Deceased *' + (record.fatherOfBride.deceased ? 'Yes' : 'No')));
+      browserText[32].getText().should.match(new RegExp('Signature *' + record.witness1.signature));
+      browserText[34].getText().should.match(new RegExp('Signature *' + record.witness2.signature));
+      browserText[36].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
+      browserText[37].getText().should.match(new RegExp('Registrar designation *' + record.registrar.designation));
+      browserText[38].getText().should.match(new RegExp(
         'Superintendent registrar signature *' + record.registrar.superintendentSignature));
-      browserText[35].getText().should.match(new RegExp(
+      browserText[39].getText().should.match(new RegExp(
         'Superintendent registrar designation *' + record.registrar.superintendentDesignation));
-      browserText[36].getText().should.match(new RegExp('District *' + record.registrar.district));
-      browserText[37].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      browserText[38].getText().should.match(new RegExp('Date of registration *' + record.date));
-      browserText[39].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
+      browserText[40].getText().should.match(new RegExp('District *' + record.registrar.district));
+      browserText[41].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
+      browserText[42].getText().should.match(new RegExp('Date of registration *' + record.date));
+      browserText[43].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
 
