@@ -26,7 +26,7 @@ describe('Marriage details page', () => {
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       rowTexts[0].getText().should.match(new RegExp('System number *' + record.id));
       rowTexts[1].getText().should.match(new RegExp('Date of marriage *' + record.dateOfMarriage));
-      rowTexts[2].getText().should.match(new RegExp('Place of marriage *' + record.placeOfMarriage));
+      rowTexts[2].getText().should.match(new RegExp('Place of marriage *' + record.placeOfMarriage.address));
       rowTexts[4].getText().should.match(new RegExp('Surname *' + record.groom.surname));
       rowTexts[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.groom.forenames));
       tableText.should.not.match(new RegExp('Age *' + record.groom.age));
@@ -70,7 +70,7 @@ describe('Marriage details page', () => {
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].getText().should.match(new RegExp('System number *' + record.id));
       browserText[1].getText().should.match(new RegExp('Date of marriage *' + record.dateOfMarriage));
-      browserText[2].getText().should.match(new RegExp('Place of marriage *' + record.placeOfMarriage));
+      browserText[2].getText().should.match(new RegExp('Place of marriage *' + record.placeOfMarriage.address));
       browserText[4].getText().should.match(new RegExp('Surname *' + record.groom.surname));
       browserText[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.groom.forenames));
       browserText[6].getText().should.match(new RegExp('Age *' + record.groom.age));

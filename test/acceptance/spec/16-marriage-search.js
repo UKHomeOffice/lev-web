@@ -59,7 +59,7 @@ describe('Marriage search', () => {
       it('displays a subset of each record in a list', () => {
         const browserText = browser.getText('#records li tr');
         const dom = expectedRecords.dateOfMarriage;
-        const pom = expectedRecords.placeOfMarriage;
+        const pom = expectedRecords.placeOfMarriage.short;
 
         browserText[0].should.match(new RegExp('Date of marriage ?' + dom));
         browserText[1].should.match(new RegExp('Place of marriage ?' + pom));
