@@ -21,16 +21,16 @@ pipeline:
       branch: master
       event: [pull_request, push]
 
-  perf_test:
-    image: quay.io/ukhomeofficedigital/lev-ci
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-      - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
-      - DOCKER_USERNAME_MOCK=lev-kube
-    commands:
-      - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
-    when:
-      event: pull_request
+#  perf_test:
+#    image: quay.io/ukhomeofficedigital/lev-ci
+#    environment:
+#      - DOCKER_HOST=tcp://172.17.0.1:2375
+#      - DOCKER_REPO_MOCK=docker.digital.homeoffice.gov.uk
+#      - DOCKER_USERNAME_MOCK=lev-kube
+#    commands:
+#      - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
+#    when:
+#      event: pull_request
 
   push_image:
     image: quay.io/ukhomeofficedigital/lev-ci
@@ -58,8 +58,7 @@ pipeline:
       - docker push "$${E2E_IMAGE}:$${TAG}"
       - docker push "$${E2E_IMAGE}:latest"
     when:
-      branch: master
-      event: push
+      event: [pull_request, push]
 
   deploy_image:
     image: quay.io/ukhomeofficedigital/kd:latest
@@ -84,8 +83,7 @@ pipeline:
       - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
       - sleep 60
     when:
-      branch: master
-      event: push
+      event: [pull_request, push]
 
   e2e_test:
     image: quay.io/ukhomeofficedigital/lev-ci
@@ -105,8 +103,7 @@ pipeline:
       - set -o pipefail
       - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
     when:
-      branch: master
-      event: push
+      event: [pull_request, push]
 
   save_test_logs:
     image: quay.io/ukhomeofficedigital/kd:latest
