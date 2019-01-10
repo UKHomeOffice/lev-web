@@ -139,7 +139,7 @@ describe('Marriage details page', () => {
     editSearchDisplayed();
     backToSearchResultsNotDisplayed();
 
-    describe('which shows the full details to select users', () => {
+    (testConfig.e2e ? describe.skip : describe)('which shows the full details to select users', () => {
       // NOTE: anyone with the appropriate role should see the full info
       before(() => browser.jsRefreshWithRoles([role]));
 
