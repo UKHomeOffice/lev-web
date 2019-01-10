@@ -1,7 +1,8 @@
 #ide specific
 .idea/
 
-node_modules
+node_modules/
+.git/
 coverage
 public
 *.log
@@ -12,3 +13,5 @@ api/mock/lev-api-docs
 artefacts
 Dockerfile
 E2E_test_Dockerfile
+
+Makefile
