@@ -12,8 +12,9 @@ probe_network = docker network ls | grep -o '$(compose_network_regexp)'
 docker-compose-deps:
 	docker-compose pull
 
-docker-test-deps: docker-compose-deps
+docker-test-deps:
 	docker pull '$(perf_test_image)'
+	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' pull
 
 docker:
 	docker build -t '$(DOCKER_IMAGE)' .
@@ -21,9 +22,7 @@ docker:
 docker-compose: docker-compose-deps
 	docker-compose build
 
-docker-test: docker-test-deps
-	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' stop
-	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' rm -vfs
+docker-test:
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' down -v
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' build
 	docker-compose -f docker-compose-test.yml -p '$(compose_project_name)' up &> /dev/null &
