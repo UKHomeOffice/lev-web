@@ -18,7 +18,7 @@ pipeline:
       - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
       - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
-      branch: master
+#      branch: master
       event: [pull_request, push]
 
 #  perf_test:
