@@ -27,8 +27,7 @@ USER root
 RUN apk del --no-cache \
       g++ \
       make \
-      python \
- && chown -R app:app .
+      python
 
 USER 31337
 ENV LISTEN_HOST="0.0.0.0" \
