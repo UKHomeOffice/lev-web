@@ -7,6 +7,7 @@ const packageJson = require('./package.json');
 const conf = {
   env: process.env.NODE_ENV,
   port: process.env.PORT || 8001,
+  disableLogger: /^(?:true|yes)$/i.test(process.env.DISABLE_LOGGER),
   listen_host: process.env.LISTEN_HOST || '0.0.0.0',
   fullDetailsRoleName: 'full-details',
   api: {
