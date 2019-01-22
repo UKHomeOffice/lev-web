@@ -9,7 +9,7 @@ describe('lib/lev-request', function() {
     var fsReadFileSync;
     var config;
 
-    beforeEach(sinon.test(function() {
+    beforeEach(() => {
       config = {
         api: {
           username: 'user',
@@ -17,7 +17,7 @@ describe('lib/lev-request', function() {
         }
       };
 
-      requestGet = this.stub();
+      requestGet = sinon.stub();
 
       fsReadFileSync = sinon.stub();
 
@@ -30,7 +30,7 @@ describe('lib/lev-request', function() {
         },
         '../config': config
       });
-    }));
+    });
 
     it('Adds config for mutual TLS when available', () => {
       config.lev_tls = { // eslint-disable-line camelcase

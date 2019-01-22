@@ -11,11 +11,10 @@ describe('controllers/details', function() {
   var res;
   var next;
 
-  beforeEach(sinon.test(function() {
-    var apiFindBySystemNumberStub = this.stub();
-    apiFindBySystemNumberStub.withArgs(1234, accessToken).returns(Promise.resolve({ records: [] }));
-    apiFindBySystemNumberStub.withArgs(34404, accessToken).returns(Promise.reject('error'));
-    api.findBySystemNumber = apiFindBySystemNumberStub;
+  beforeEach(() => {
+    sinon.stub(api, 'findBySystemNumber');
+    api.findBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
+    api.findBySystemNumber.withArgs(34404, accessToken).rejects('error');
 
     req = {
       params: {
@@ -27,12 +26,16 @@ describe('controllers/details', function() {
     };
 
     res = {
-      render: this.spy(),
-      redirect: this.spy()
+      render: sinon.spy(),
+      redirect: sinon.spy()
     };
 
-    next = this.spy();
-  }));
+    next = sinon.spy();
+  });
+
+  afterEach(() => {
+    api.findBySystemNumber.restore();
+  });
 
   describe('handleError function', () => {
     const fn = detailsController.__get__('handleError'); // eslint-disable-line no-underscore-dangle
@@ -70,7 +73,8 @@ describe('controllers/details', function() {
     it('raises an error with no GET params', function() {
       detailsController({}, res, next);
 
-      next.should.have.been.calledWith(new ReferenceError());
+      next.should.have.been.calledOnce
+        .and.have.deep.property('firstCall.args[0]').that.is.an.instanceOf(ReferenceError);
     });
 
     describe('resolved promise', function() {
@@ -85,12 +89,16 @@ describe('controllers/details', function() {
 
     describe('rejected promise', function() {
 
-      it('renders the error page', function() {
+      beforeEach(() => {
         req.params.sysnum = '34404';
-        detailsController(req, res, next).then(() =>
-          expect(next).to.have.been.calledWith(new Error('error'))
-        );
       });
+
+      it('renders the error page', () =>
+        detailsController(req, res, next).then(() =>
+          expect(next).to.have.been.calledOnce
+            .and.have.deep.property('firstCall.args[0]').that.is.an.instanceOf(Error)
+        )
+      );
 
     });
 
