@@ -28,8 +28,11 @@ function saveData(event) {
   }
 }
 
-document.getElementById('save').addEventListener('click', saveData, false);
-document.getElementById('save').addEventListener('keydown', saveData, false);
+var save = document.getElementById('save');
+if (save) {
+  save.addEventListener('click', saveData, false);
+  save.addEventListener('keydown', saveData, false);
+}
 
 module.exports = {
   getAuditData: getAuditData,
