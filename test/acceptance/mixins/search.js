@@ -54,6 +54,7 @@ module.exports = (target) => {
     this.getText('h1').should.equal('Applicant\'s details');
 
     this.waitForVisible('input[name="system-number"]', 5000);
+    this.shouldBeFocusedOnField('input[name="system-number"]');
     const formLabels = this.getText('label');
     formLabels[0].should.equal('System number from birth certificate');
     formLabels[1].should.equal('Surname');
@@ -67,6 +68,7 @@ module.exports = (target) => {
     this.getText('h1').should.equal('Applicant\'s details');
 
     this.waitForVisible('input[name="system-number"]', 5000);
+    this.shouldBeFocusedOnField('input[name="system-number"]');
     const formLabels = this.getText('label');
     formLabels[0].should.equal('System number from death certificate');
     formLabels[1].should.equal('Surname');
@@ -78,11 +80,16 @@ module.exports = (target) => {
     this.getText('h1').should.equal('Applicant\'s details');
 
     this.waitForVisible('input[name="system-number"]', 5000);
+    this.shouldBeFocusedOnField('input[name="system-number"]');
     const formLabels = this.getText('label');
     formLabels[0].should.equal('System number from marriage certificate');
     formLabels[1].should.equal('Surname');
     formLabels[2].should.equal('Forename(s)');
     formLabels[3].should.contain('Date of marriage');
+  };
+
+  target.shouldBeFocusedOnField = function(selector) {
+    this.$(selector).hasFocus().should.be.true;
   };
 
   target.submitSearchPage = function(systemNumber, surname, forenames, dob) {

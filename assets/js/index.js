@@ -28,8 +28,16 @@ function saveData(event) {
   }
 }
 
-document.getElementById('save').addEventListener('click', saveData, false);
-document.getElementById('save').addEventListener('keydown', saveData, false);
+var save = document.getElementById('save');
+if (save) {
+  save.addEventListener('click', saveData, false);
+  save.addEventListener('keydown', saveData, false);
+}
+
+var sysNum = document.getElementById('system-number');
+if (sysNum) {
+  sysNum.focus();
+}
 
 module.exports = {
   getAuditData: getAuditData,
