@@ -17,6 +17,7 @@ module.exports = (target) => {
     this.getText('h1').should.equal('Audit information');
 
     this.waitForVisible('input[name="from"]', 5000);
+    this.shouldBeFocusedOnField('input[name="from"]');
     const formLabels = this.getText('label');
     formLabels[0].should.match(/^Search from/);
     formLabels[1].should.match(/^Search to/);

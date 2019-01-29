@@ -34,6 +34,11 @@ if (save) {
   save.addEventListener('keydown', saveData, false);
 }
 
+var fromDate = document.getElementById('from');
+if (fromDate) {
+  fromDate.focus();
+}
+
 var sysNum = document.getElementById('system-number');
 if (sysNum) {
   sysNum.focus();
