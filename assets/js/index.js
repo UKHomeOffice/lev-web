@@ -34,6 +34,11 @@ if (save) {
   save.addEventListener('keydown', saveData, false);
 }
 
+var sysNum = document.getElementById('system-number');
+if (sysNum) {
+  sysNum.focus();
+}
+
 module.exports = {
   getAuditData: getAuditData,
   saveData: saveData
