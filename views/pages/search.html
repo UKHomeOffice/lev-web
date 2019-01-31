@@ -28,7 +28,7 @@
       {{#input-text}}system-number{{/input-text}}
       <details{{#errors.system-number}} open{{/errors.system-number}}>
         <summary><span class="summary">What is the system number?</span></summary>
-        <div class="panel panel-border-narrow">
+        <div id="system-number-hint" class="panel panel-border-narrow">
           <img
             src="{{baseUrl}}/public/images/system-number-hint.png"
             alt="The system number is a nine digit number located in the bottom left corner of the birth certificate"
@@ -39,6 +39,19 @@
       {{#input-text}}surname{{/input-text}}
       {{#input-text}}forenames{{/input-text}}
       {{#input-text}}dob{{/input-text}}
+      <details{{#errors.dob}} open{{/errors.dob}}>
+        <summary><span class="summary">You can enter the date in any of these formats:</span></summary>
+        <div id="dob-extended-hint" class="panel panel-border-narrow">
+          <ul class="format-list">
+            <li>Full date format (with slashes): <span>31/12/2010</span></li>
+            <li>Full date format without leading zeros: <span>1/1/2010</span></li>
+            <li>Full date format with 2 digit year: <span>1/1/11</span></li>
+            <li>Short date format (without slashes): <span>31122010</span></li>
+            <li>Short date format must have leading zeros: <span>01012010</span></li>
+            <li>Short date format with 2 digit year: <span>010111</span></li>
+          </ul>
+        </div>
+      </details>
       <div class="buttons">
         {{#input-submit}}search{{/input-submit}}
       </div>
