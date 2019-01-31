@@ -117,4 +117,8 @@ module.exports = (target) => {
     this.setValue('input[name="dom"]', dom);
     this.click('input[type="submit"]');
   };
+
+  target.hintShowing = function(selector) {
+    this.isVisible(selector).should.be.true;
+  };
 };

@@ -193,6 +193,17 @@ h1 {
   :last-child {
     margin-bottom: 0;
   }
+
+  ul {
+    &.format-list {
+      list-style: disc;
+      margin-left: 20px;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .panel-border-wide {

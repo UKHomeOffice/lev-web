@@ -141,7 +141,7 @@ describe('Search', () => {
         browser.getText('a').should.contain('Please enter a number');
       });
 
-      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+      it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
     });
 
     describe('with a system number of an invalid length', () => {
@@ -157,7 +157,7 @@ describe('Search', () => {
         browser.getText('a').should.contain('The system number should be 9 digits');
       });
 
-      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+      it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
     });
 
     describe('with an invalid date of birth that is', () => {
@@ -173,6 +173,8 @@ describe('Search', () => {
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the correct format');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
 
       describe('a date in the future', () => {
@@ -187,6 +189,8 @@ describe('Search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the past');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
 
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
@@ -202,6 +206,8 @@ describe('Search', () => {
           const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
           browser.getText('a').should.contain(link);
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
     });
 
@@ -218,6 +224,8 @@ describe('Search', () => {
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the correct format');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
 
       describe('a date in the future', () => {
@@ -232,6 +240,8 @@ describe('Search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date of birth in the past');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
 
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
@@ -247,6 +257,8 @@ describe('Search', () => {
           const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
           browser.getText('a').should.contain(link);
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dob-extended-hint'));
       });
     });
   });
