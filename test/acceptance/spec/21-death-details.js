@@ -1,7 +1,9 @@
 'use strict';
 
-var expectedRecord = require('../expected-death-record');
-var expectedRecords = require('../expected-death-records');
+const expectedRecord = require('../expected-death-record');
+const expectedRecords = require('../expected-death-records');
+const role = require('../../../config').fullDetailsRoleName;
+const testConfig = require('../config');
 
 describe('Death details page', () => {
   /* eslint-disable no-unused-vars */
@@ -18,6 +20,39 @@ describe('Death details page', () => {
   };
 
   const recordDisplayed = (record) => {
+    it('a limited version is displayed in a table', () => {
+      const browserText = browser.$$('table tr');
+      const tableText = browser.$('table').getText();
+      console.log('text ======>\n', tableText);
+      // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
+      browserText[0].getText().should.match(new RegExp('System number *' + record.id));
+      browserText[2].getText().should.match(new RegExp('Surname *' + record.deceased.surname));
+      browserText[3].getText().should.match(new RegExp('Forename\\(s\\) *' + record.deceased.forenames));
+      browserText[4].getText().should.match(new RegExp('Date of birth *' + record.deceased.dateOfBirth));
+      tableText.should.not.match(new RegExp('Place of birth *' + record.deceased.birthplace));
+      browserText[5].getText().should.match(new RegExp('Sex *' + record.deceased.sex));
+      browserText[6].getText().should.match(new RegExp('Address *' + record.deceased.address));
+      tableText.should.not.match(new RegExp('Occupation *' + record.deceased.occupation));
+      browserText[7].getText().should.match(new RegExp('Date of death *' + record.deceased.dateOfDeath));
+      tableText.should.not.match(new RegExp('Place of death *' + record.deceased.deathplace));
+      tableText.should.not.match(new RegExp('Cause of death *' + record.deceased.causeOfDeath));
+      tableText.should.not.match(new RegExp('Death certified by *' + record.deceased.certifiedBy));
+      tableText.should.not.match(new RegExp('Surname *' + record.informant.surname));
+      tableText.should.not.match(new RegExp('Forename\\(s\\) *' + record.informant.forenames));
+      tableText.should.not.match(new RegExp('Registration.*Address *' + record.informant.address));
+      tableText.should.not.match(new RegExp('Qualification *' + record.informant.qualification));
+      tableText.should.not.match(new RegExp('Signature *' + record.informant.signature));
+      tableText.should.not.match(new RegExp('Registrar signature *' + record.registrar.signature));
+      tableText.should.not.match(new RegExp('Registrar designation *' + record.registrar.designation));
+      browserText[9].getText().should.match(new RegExp('Sub-district *' + record.registrar.subdistrict));
+      browserText[10].getText().should.match(new RegExp('District *' + record.registrar.district));
+      browserText[11].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
+      browserText[12].getText().should.match(new RegExp('Date of registration *' + record.date));
+      tableText.should.not.match(new RegExp('Entry number *' + record.entryNumber));
+    });
+  };
+
+  const fullRecordDisplayed = (record) => {
     it('the complete record is displayed in a table', () => {
       const browserText = browser.$$('table tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
@@ -71,10 +106,20 @@ describe('Death details page', () => {
     recordDisplayed(expectedRecord);
     editSearchDisplayed();
     backToSearchResultsNotDisplayed();
+
+    (testConfig.e2e ? describe.skip : describe)('which shows the full details to select users', () => {
+      // NOTE: anyone with the appropriate role should see the full info
+      before(() => browser.jsRefreshWithRoles([role]));
+
+      urlShouldContainDetails();
+      messageDisplayed(expectedRecord);
+      fullRecordDisplayed(expectedRecord);
+      editSearchDisplayed();
+      backToSearchResultsNotDisplayed();
+    });
   });
 
   describe('When there is more than one result', () => {
-
     before(() => {
       const deceased = expectedRecords.deceased;
 
@@ -87,6 +132,17 @@ describe('Death details page', () => {
     recordDisplayed(expectedRecords);
     editSearchDisplayed();
     backToSearchResultsDisplayed();
+
+    (testConfig.e2e ? describe.skip : describe)('which shows the full details to select users', () => {
+      // NOTE: anyone with the appropriate role should see the full info
+      before(() => browser.jsRefreshWithRoles([role]));
+
+      urlShouldContainDetails();
+      messageDisplayed(expectedRecords);
+      fullRecordDisplayed(expectedRecords);
+      editSearchDisplayed();
+      backToSearchResultsNotDisplayed();
+    });
   });
 
   describe('When I select the "New search" button', () => {
