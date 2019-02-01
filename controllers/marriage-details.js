@@ -1,6 +1,5 @@
 'use strict';
 
-const conf = require('../config');
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const fields = require('../fields/marriage');
@@ -14,8 +13,6 @@ const handleError = (err, next) => {
 
   return next(err instanceof Error ? err : new Error(err));
 };
-
-const showFullDetails = ri => !!ri.roles.filter(r => r === conf.fullDetailsRoleName).length;
 
 module.exports = function renderDetails(req, res, next) {
   req.params = req.params || {};
@@ -34,7 +31,7 @@ module.exports = function renderDetails(req, res, next) {
   return api.findMarriageBySystemNumber(Number(systemNumber), ri.token)
     .then(result => res.render('pages/marriage-details', {
         record: result,
-        showAll: showFullDetails(ri),
+        showAll: helpers.showFullDetails(ri),
         querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
         canRedirectToResults: canRedirectToResults
       }),
