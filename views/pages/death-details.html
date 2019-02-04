@@ -54,10 +54,12 @@
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of birth</th>
         <td>{{record.deceased.dateOfBirth}}</td>
       </tr>
+      {{#showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Place of birth</th>
         <td>{{record.deceased.birthplace}}</td>
       </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Sex</th>
         <td>{{record.deceased.sex}}</td>
@@ -66,14 +68,17 @@
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Address</th>
         <td>{{record.deceased.address}}</td>
       </tr>
+      {{#showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Occupation</th>
         <td>{{record.deceased.occupation}}</td>
       </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of death</th>
         <td>{{record.deceased.dateOfDeath}}</td>
       </tr>
+      {{#showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Place of death</th>
         <td>{{record.deceased.deathplace}}</td>
@@ -109,9 +114,11 @@
         <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Signature</th>
         <td>{{record.informant.signature}}</td>
       </tr>
+      {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Registration</th>
       </tr>
+      {{#showAll}}
       <tr>
         <th>Registrar signature</th>
         <td>{{record.registrar.signature}}</td>
@@ -120,6 +127,7 @@
         <th>Registrar designation</th>
         <td>{{record.registrar.designation}}</td>
       </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Sub-district</th>
         <td>{{record.registrar.subdistrict}}</td>
@@ -136,10 +144,12 @@
         <th>Date of registration</th>
         <td>{{record.date}}</td>
       </tr>
+      {{#showAll}}
       <tr>
         <th>Entry number</th>
         <td>{{record.entryNumber}}</td>
       </tr>
+      {{/showAll}}
     </tbody>
   </table>
   <div class="buttons">
