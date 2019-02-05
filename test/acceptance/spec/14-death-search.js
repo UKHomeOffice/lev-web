@@ -125,36 +125,65 @@ describe('Death search', () => {
       });
     });
 
-    describe('with a system number containing invalid characters', () => {
-      before(() => {
-        browser.deathSearch('invalid', '', '', '');
+    describe('with a system number', () => {
+      describe('containing invalid characters', () => {
+        before(() => {
+          browser.deathSearch('invalid', '', '', '');
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a number', () => {
+          browser.getText('a').should.contain('Please enter a number');
+        });
+
+        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
       });
 
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
-      });
+      describe('of an invalid length', () => {
+        before(() => {
+          browser.deathSearch('12345678', '', '', '');
+        });
 
-      it('requests a number', () => {
-        browser.getText('a').should.contain('Please enter a number');
-      });
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
 
-      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+        it('requests a number of the valid length', () => {
+          browser.getText('a').should.contain('The system number should be 9 digits');
+        });
+
+        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+      });
     });
 
-    describe('with a system number of an invalid length', () => {
-      before(() => {
-        browser.deathSearch('12345678', '', '', '');
-      });
+    describe('with a missing first name', () => {
+      before(() => browser.search('', 'Surname', '', '5/6/2010'));
 
-      it('displays an error message', () => {
-        browser.getText('h2').should.contain('Fix the following error');
-      });
+      it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
 
-      it('requests a number of the valid length', () => {
-        browser.getText('a').should.contain('The system number should be 9 digits');
-      });
+      it('requests the first name field be filled-out', () =>
+        browser.getText('a').should.contain('Please enter at least one forename'));
 
-      it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+      it('the forenames field should be focused', () =>
+        browser.shouldBeFocusedOnField('input[name="forenames"]'));
+
+      describe('and a missing surname', () => {
+        before(() => browser.search('', '', '', '', '5/6/2010'));
+
+        it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
+
+        it('requests the surname field be filled-out', () =>
+          browser.getText('a').should.contain('Please enter a surname'));
+
+        it('requests the first name field be filled-out', () =>
+          browser.getText('a').should.contain('Please enter at least one forename'));
+
+        it('the surname field should be focused (as that comes before forenames)', () =>
+          browser.shouldBeFocusedOnField('input[name="surname"]'));
+      });
     });
 
     describe('with an invalid date that is', () => {
@@ -170,6 +199,9 @@ describe('Death search', () => {
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date in the correct format');
         });
+
+        it('the forenames field should be focused', () =>
+          browser.shouldBeFocusedOnField('input[name="dobd"]'));
       });
 
       describe('a date in the future', () => {
