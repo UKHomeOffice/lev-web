@@ -41,7 +41,13 @@ if (fromDate) {
 
 var sysNum = document.getElementById('system-number');
 if (sysNum) {
-  sysNum.focus();
+  if (document.querySelector('div.validation-summary')) {
+    var fieldName =
+      document.querySelector('div.validation-summary li > a').href.replace(/^.*#(.+)-group$/, '$1');
+    document.querySelector('input[name="' + fieldName + '"]').focus();
+  } else {
+    sysNum.focus();
+  }
 }
 
 module.exports = {
