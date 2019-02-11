@@ -53,9 +53,10 @@
     "watch:js": "nodemon -w assets/js -x 'npm-run-all -s lint:client uglify'",
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
-    "postinstall": "npm-run-all create:public sass copy:images uglify",
+    "postinstall": "npm-run-all create:public sass copy:images uglify hooks",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
