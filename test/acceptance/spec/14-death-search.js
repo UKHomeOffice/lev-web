@@ -139,7 +139,7 @@ describe('Death search', () => {
           browser.getText('a').should.contain('Please enter a number');
         });
 
-        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+        it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
       });
 
       describe('of an invalid length', () => {
@@ -155,7 +155,7 @@ describe('Death search', () => {
           browser.getText('a').should.contain('The system number should be 9 digits');
         });
 
-        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+        it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
       });
     });
 
@@ -200,6 +200,8 @@ describe('Death search', () => {
           browser.getText('a').should.contain('Please enter a date in the correct format');
         });
 
+        it('shows the date of birth/death details hint', () => browser.hintShowing('#dobd-extended-hint'));
+
         it('the forenames field should be focused', () =>
           browser.shouldBeFocusedOnField('input[name="dobd"]'));
       });
@@ -216,6 +218,8 @@ describe('Death search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date in the past');
         });
+
+        it('shows the date of birth/death details hint', () => browser.hintShowing('#dobd-extended-hint'));
       });
     });
 
@@ -232,6 +236,8 @@ describe('Death search', () => {
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date in the correct format');
         });
+
+        it('shows the date of birth/death details hint', () => browser.hintShowing('#dobd-extended-hint'));
       });
 
       describe('a date in the future', () => {
@@ -246,6 +252,8 @@ describe('Death search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date in the past');
         });
+
+        it('shows the date of birth/death details hint', () => browser.hintShowing('#dobd-extended-hint'));
       });
     });
   });
