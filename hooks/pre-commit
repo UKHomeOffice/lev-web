@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo "pre-commit: checking for problems..."
+
+# check there are no "only" statements suppressing tests
+only=`grep --color=always -rnE '(describe|it)\.only\(' ./test`
+if [ -n "${only}" ] ; then
+  printf "\n\033[0;31mERROR:\033[0m Test suppression detected\n${only}\n"
+  exit $( echo "${only}" | wc -l )
+fi
