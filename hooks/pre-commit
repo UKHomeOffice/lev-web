@@ -8,3 +8,14 @@ if [ -n "${only}" ] ; then
   printf "\n\033[0;31mERROR:\033[0m Test suppression detected\n${only}\n"
   exit $( echo "${only}" | wc -l )
 fi
+
+# check there are no "console" statements
+console=`grep --color=always \
+  --exclude-dir=node_modules \
+  --exclude-dir=coverage \
+  --exclude-dir=.idea \
+  -rnE 'console\.(log|dir|debug|info|warn|error|trace)' .`
+if [ -n "${console}" ] ; then
+  printf "\n\033[0;31mERROR:\033[0m Console logging detected\n${console}\n"
+  exit $( echo "${console}" | wc -l )
+fi
