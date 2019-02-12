@@ -135,7 +135,7 @@ describe('Marriage search', () => {
           browser.getText('a').should.contain('Please enter a number');
         });
 
-        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+        it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
       });
 
       describe('of an invalid length', () => {
@@ -151,7 +151,7 @@ describe('Marriage search', () => {
           browser.getText('a').should.contain('The system number should be 9 digits');
         });
 
-        it('shows the system number details hint', () => browser.isVisible('details > div').should.be.true);
+        it('shows the system number details hint', () => browser.hintShowing('#system-number-hint'));
       });
     });
 
@@ -196,6 +196,8 @@ describe('Marriage search', () => {
           browser.getText('a').should.contain('Please enter a date of marriage in the correct format');
         });
 
+        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
+
         it('the surname field should be focused (as that comes before forenames)', () =>
           browser.shouldBeFocusedOnField('input[name="dom"]'));
       });
@@ -212,6 +214,8 @@ describe('Marriage search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date of marriage in the past');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
       });
     });
 
@@ -228,6 +232,8 @@ describe('Marriage search', () => {
         it('requests a British formatted date', () => {
           browser.getText('a').should.contain('Please enter a date of marriage in the correct format');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
       });
 
       describe('a date in the future', () => {
@@ -242,6 +248,8 @@ describe('Marriage search', () => {
         it('requests a past date', () => {
           browser.getText('a').should.contain('Please enter a date of marriage in the past');
         });
+
+        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
       });
     });
   });
