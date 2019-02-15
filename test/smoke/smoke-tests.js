@@ -1,31 +1,99 @@
 'use strict';
 
 const testConfig = require('./config');
-const testURL = `${testConfig.url}/details/404`;
 
 describe('Smoke Tests', () => {
 
   before(() => {
     require('../acceptance/mixins/login')(browser);
     require('../acceptance/mixins/error')(browser);
+    require('../acceptance/mixins/results')(browser);
+    require('../acceptance/mixins/search')(browser);
   });
 
-  describe('Trying to see a non-existent record', () => {
+  describe('Accessing the UI', () => {
     before(() => {
-      browser.url(testURL);
+      browser.url(testConfig.url);
     });
 
     it('presents me with the login prompt', () => {
       browser.shouldBeOnLoginPage();
     });
 
-    it('allows me to login to LEV', () => {
-      browser.completeLoginPage(testConfig.username, testConfig.password);
-    });
+    describe('allows me to login to LEV', () => {
+      before(() => {
+        browser.completeLoginPage(testConfig.username, testConfig.password);
+      });
 
-    it('presents me with the NOT FOUND error page', () => {
-      browser.shouldBeOn404Page();
+      it('presents me with a search form for births', () => {
+        browser.shouldBeOnBirthSearchPage();
+      });
     });
   });
 
+  describe('Birth registrations', () => {
+    describe('Searching for a record', () => {
+      before(() => {
+        browser.birthSearch('404404404', '', '', '');
+      });
+
+      it('presents me with the results page', () => {
+        browser.shouldBeOnBirthResultsPage();
+      });
+    });
+
+    describe('Trying to access a non-existent record', () => {
+      before(() => {
+        browser.url(`${testConfig.url}/details/404`);
+      });
+
+      it('presents me with the NOT FOUND error page', () => {
+        browser.shouldBeOn404Page();
+      });
+    });
+  });
+
+  describe('Death registrations', () => {
+    describe('Searching for a record', () => {
+      before(() => {
+        browser.deathSearch('404404404', '', '', '');
+      });
+
+      it('presents me with the results page', () => {
+        browser.shouldBeOnDeathResultsPage();
+      });
+    });
+
+    describe('Trying to access a non-existent record', () => {
+      before(() => {
+        browser.url(`${testConfig.url}/death/details/404`);
+      });
+
+      it('presents me with the NOT FOUND error page', () => {
+        browser.shouldBeOn404Page();
+      });
+    });
+  });
+
+  describe('Marriage registrations', () => {
+    describe('Searching for a record', () => {
+      before(() => {
+        browser.marriageSearch('404404404', '', '', '');
+      });
+
+      it('presents me with the results page', () => {
+        browser.shouldBeOnMarriageResultsPage();
+      });
+    });
+
+    describe('Trying to access a non-existent record', () => {
+      before(() => {
+        browser.url(`${testConfig.url}/marriage/details/404`);
+      });
+
+      it('presents me with the NOT FOUND error page', () => {
+        browser.shouldBeOn404Page();
+      });
+    });
+  });
 });
