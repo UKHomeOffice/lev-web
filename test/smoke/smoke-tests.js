@@ -52,4 +52,26 @@ describe('Smoke Tests', () => {
       });
     });
   });
+
+  describe('Death registrations', () => {
+    describe('Searching for a record', () => {
+      before(() => {
+        browser.deathSearch('404404404', '', '', '');
+      });
+
+      it('presents me with the results page', () => {
+        browser.shouldBeOnDeathResultsPage();
+      });
+    });
+
+    describe('Trying to access a non-existent record', () => {
+      before(() => {
+        browser.url(`${testConfig.url}/death/details/404`);
+      });
+
+      it('presents me with the NOT FOUND error page', () => {
+        browser.shouldBeOn404Page();
+      });
+    });
+  });
 });
