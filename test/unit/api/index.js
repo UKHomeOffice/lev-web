@@ -223,41 +223,37 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error));
+              expect(api.findByNameDOB({}, '')).to.be.rejectedWith(Error));
           });
 
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              expect(api.findByNameDOB({}, '')).to.be.rejectedWith(Error, 'Received status code "404" from API'));
           });
 
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              expect(api.findByNameDOB({}, '')).to.be.rejectedWith(Error, 'Received status code "401" from API'));
           });
 
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.findByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error, 'Something else happened'));
+              expect(api.findByNameDOB({}, '')).to.be.rejectedWith(Error, 'Something else happened'));
           });
         });
       });
@@ -328,40 +324,36 @@ describe('api/index.js', () => {
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = read();
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              it('rejects with an error', () => expect(read()).to.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = read();
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
-                result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+                 expect(read()).to.be.rejectedWith(Error, 'Received status code "404" from API'));
             });
 
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = read();
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
-                result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+                expect(read()).to.be.rejectedWith(Error, 'Received status code "401" from API'));
             });
 
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = read();
               });
 
               it('rejects with an error', () =>
-                result.should.be.rejectedWith(Error, 'Something else happened'));
+                expect(read()).to.be.rejectedWith(Error, 'Something else happened'));
             });
           });
 
@@ -410,36 +402,33 @@ describe('api/index.js', () => {
                 result = read();
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              it('rejects with an error', () => expect(read()).to.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = read();
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
-                result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+                expect(read()).to.be.rejectedWith(Error, 'Received status code "404" from API'));
             });
 
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = read();
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
-                result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+                expect(read()).to.be.rejectedWith(Error, 'Received status code "401" from API'));
             });
 
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = read();
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error, 'Something else happened'));
+              it('rejects with an error', () => expect(read()).to.be.rejectedWith(Error, 'Something else happened'));
             });
           });
         });
@@ -503,40 +492,36 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findBySystemNumber(0, '');
             });
 
-            it('rejects with an error', () => result.should.be.rejectedWith(Error));
+            it('rejects with an error', () => expect(api.findBySystemNumber(0, '')).to.be.rejectedWith(Error));
           });
 
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              expect(api.findBySystemNumber(0, '')).to.be.rejectedWith(Error, 'Received status code "404" from API'));
           });
 
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              expect(api.findBySystemNumber(0, '')).to.be.rejectedWith(Error, 'Received status code "401" from API'));
           });
 
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.findBySystemNumber(0, '');
             });
 
             it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error, 'Something else happened'));
+              expect(api.findBySystemNumber(0, '')).to.be.rejectedWith(Error, 'Something else happened'));
           });
         });
       });
