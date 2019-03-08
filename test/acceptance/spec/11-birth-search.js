@@ -1,29 +1,29 @@
 'use strict';
 
 const moment = require('moment');
-const expectedRecord = require('../expected-record');
-const expectedRecords = require('../expected-records');
+const expectedRecord = require('../expected-birth-record');
+const expectedRecords = require('../expected-birth-records');
 
 const conf = require('../../../fields/index');
 const since = conf.dob.validate[2].arguments[0];
 
 describe('Search', () => {
   before(() => {
-    browser.goToSearchPage();
+    browser.goToBirthSearchPage();
   });
 
   it('returns the search page', () => {
-    browser.shouldBeOnSearchPage();
+    browser.shouldBeOnBirthSearchPage();
   });
 
   describe('submitting a valid query', () => {
     describe('that returns no records', () => {
       before(() => {
-        browser.search('', 'Churchil', 'Winston', '30/11/2011');
+        browser.birthSearch('', 'Churchil', 'Winston', '30/11/2011');
       });
 
       it('returns a results page', () => {
-        browser.shouldBeOnResultsPage();
+        browser.shouldBeOnBirthResultsPage();
       });
 
       it('displays an appropriate message', () => {
@@ -36,11 +36,11 @@ describe('Search', () => {
         const child = expectedRecord.child;
         const name = child.name;
 
-        browser.search('', name.surname, name.givenName, child.dateOfBirth);
+        browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       });
 
       it('redirects to a details page', () => {
-        browser.shouldBeOnDetailsPage();
+        browser.shouldBeOnBirthDetailsPage();
       });
     });
 
@@ -49,7 +49,7 @@ describe('Search', () => {
       const name = child.name;
 
       before(() => {
-        browser.search('', name.surname, name.givenName, child.dateOfBirth);
+        browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       });
 
       it('returns a results page', () => {
@@ -92,7 +92,7 @@ describe('Search', () => {
       const dob = child.dateOfBirth.replace(/\//g, '');
 
       before(() => {
-        browser.search('', name.surname, name.givenName, dob);
+        browser.birthSearch('', name.surname, name.givenName, dob);
       });
 
       it('returns a results page', () => {
@@ -108,7 +108,7 @@ describe('Search', () => {
   describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
-        browser.search('', '', '', '');
+        browser.birthSearch('', '', '', '');
       });
 
       it('displays an error message', () => {
@@ -131,7 +131,7 @@ describe('Search', () => {
     describe('with a system number', () => {
       describe('containing invalid characters', () => {
         before(() => {
-          browser.search('invalid', '', '', '');
+          browser.birthSearch('invalid', '', '', '');
         });
 
         it('displays an error message', () => {
@@ -147,7 +147,7 @@ describe('Search', () => {
 
       describe('of an invalid length', () => {
         before(() => {
-          browser.search('12345678', '', '', '');
+          browser.birthSearch('12345678', '', '', '');
         });
 
         it('displays an error message', () => {
@@ -163,7 +163,7 @@ describe('Search', () => {
     });
 
     describe('with a missing first name', () => {
-      before(() => browser.search('', 'Surname', '', '5/6/2010'));
+      before(() => browser.birthSearch('', 'Surname', '', '5/6/2010'));
 
       it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
 
@@ -174,7 +174,7 @@ describe('Search', () => {
         browser.shouldBeFocusedOnField('input[name="forenames"]'));
 
       describe('and a missing surname', () => {
-        before(() => browser.search('', '', '', '', '5/6/2010'));
+        before(() => browser.birthSearch('', '', '', '', '5/6/2010'));
 
         it('displays an error message', () => browser.getText('h2').should.contain('Fix the following error'));
 
@@ -192,7 +192,7 @@ describe('Search', () => {
     describe('with an invalid date of birth that is', () => {
       describe('not a date', () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', 'invalid');
+          browser.birthSearch('', 'Churchill', 'Winston', 'invalid');
         });
 
         it('displays an error message', () => {
@@ -211,7 +211,7 @@ describe('Search', () => {
 
       describe('a date in the future', () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
+          browser.birthSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
         });
 
         it('displays an error message', () => {
@@ -227,7 +227,7 @@ describe('Search', () => {
 
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DD/MM/YYYY'));
+          browser.birthSearch('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DD/MM/YYYY'));
         });
 
         it('displays an error message', () => {
@@ -246,7 +246,7 @@ describe('Search', () => {
     describe('with an invalid short date of birth that is', () => {
       describe('too short', () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', '112001');
+          browser.birthSearch('', 'Churchill', 'Winston', '112001');
         });
 
         it('displays an error message', () => {
@@ -262,7 +262,7 @@ describe('Search', () => {
 
       describe('a date in the future', () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', moment().add(1, 'day').format('DDMMYYYY'));
+          browser.birthSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DDMMYYYY'));
         });
 
         it('displays an error message', () => {
@@ -278,7 +278,7 @@ describe('Search', () => {
 
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
         before(() => {
-          browser.search('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DDMMYYYY'));
+          browser.birthSearch('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DDMMYYYY'));
         });
 
         it('displays an error message', () => {

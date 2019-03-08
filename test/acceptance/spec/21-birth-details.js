@@ -1,12 +1,12 @@
 'use strict';
 
-var expectedRecord = require('../expected-record');
-var expectedRecords = require('../expected-records');
+var expectedRecord = require('../expected-birth-record');
+var expectedRecords = require('../expected-birth-records');
 
 describe('Details Page', () => {
-  const urlShouldContainDetails = () => it('returns a details page', () => browser.shouldBeOnDetailsPage());
+  const urlShouldContainDetails = () => it('returns a details page', () => browser.shouldBeOnBirthDetailsPage());
 
-  const urlShouldContainSearch = () => it('returns the search page', () => browser.shouldBeOnSearchPage());
+  const urlShouldContainSearch = () => it('returns the search page', () => browser.shouldBeOnBirthSearchPage());
 
   const messageDisplayed = (recordToMatch) => {
     it('an appropriate message is displayed', () => {
@@ -55,7 +55,7 @@ describe('Details Page', () => {
         const child = expectedRecord.child;
         const name = child.name;
 
-        browser.search('', name.surname, name.givenName, child.dateOfBirth);
+        browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
     });
 
     urlShouldContainDetails();
@@ -71,7 +71,7 @@ describe('Details Page', () => {
       const child = expectedRecords.child;
       const name = child.name;
 
-      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
     });
 
@@ -87,7 +87,7 @@ describe('Details Page', () => {
       const child = expectedRecord.child;
       const name = child.name;
 
-      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       browser.click('#newSearchLink');
     });
 
@@ -104,7 +104,7 @@ describe('Details Page', () => {
 
   describe('When I select the "Edit search" link on the results page', () => {
     before(() => {
-      browser.search('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
+      browser.birthSearch('', 'NotRealPersonSurname', 'NotRealPersonForename', '01/01/2010');
       browser.click('#editSearchLink');
     });
 
@@ -124,7 +124,7 @@ describe('Details Page', () => {
     const name = child.name;
 
     before(() => {
-      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
       browser.click('#editSearchLink');
     });
@@ -145,7 +145,7 @@ describe('Details Page', () => {
       const child = expectedRecords.child;
       const name = child.name;
 
-      browser.search('', name.surname, name.givenName, child.dateOfBirth);
+      browser.birthSearch('', name.surname, name.givenName, child.dateOfBirth);
       browser.clickFirstRecord();
       browser.click('#backToSearchResults');
       browser.getUrl().should.contain('surname=' + name.surname);
