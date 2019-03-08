@@ -1,20 +1,20 @@
 'use strict';
 
 const rewire = require('rewire');
-const detailsController = rewire('../../../controllers/details');
+const detailsController = rewire('../../../controllers/birth-details');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
 
 const accessToken = 'accessToken';
 
-describe('controllers/details', function() {
+describe('controllers/birth-details', function() {
   var req;
   var res;
   var next;
 
   beforeEach(() => {
-    sinon.stub(api, 'findBySystemNumber');
-    api.findBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
-    api.findBySystemNumber.withArgs(34404, accessToken).rejects('error');
+    sinon.stub(api, 'findBirthBySystemNumber');
+    api.findBirthBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
+    api.findBirthBySystemNumber.withArgs(34404, accessToken).rejects('error');
 
     req = {
       params: {
@@ -34,7 +34,7 @@ describe('controllers/details', function() {
   });
 
   afterEach(() => {
-    api.findBySystemNumber.restore();
+    api.findBirthBySystemNumber.restore();
   });
 
   describe('handleError function', () => {
@@ -67,7 +67,7 @@ describe('controllers/details', function() {
     it('calls the api with the request GET params', function() {
       detailsController(req, res, next);
 
-      api.findBySystemNumber.should.have.been.calledWith(1234, accessToken);
+      api.findBirthBySystemNumber.should.have.been.calledWith(1234, accessToken);
     });
 
     it('raises an error with no GET params', function() {
@@ -81,7 +81,7 @@ describe('controllers/details', function() {
 
       it('renders the details page', () =>
         detailsController(req, res, next).then(() =>
-          expect(res.render).to.have.been.calledWith('pages/details')
+          expect(res.render).to.have.been.calledWith('pages/birth-details')
         )
       );
 

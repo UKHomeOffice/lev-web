@@ -4,7 +4,7 @@ const Parent = require('../lib/hof-standalone');
 const api = require('../api');
 const helpers = require('../lib/helpers');
 const validators = require('../lib/custom-validators');
-const fields = require('../fields');
+const fields = require('../fields/birth');
 const util = require('util');
 const _ = require('lodash');
 
@@ -25,9 +25,9 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
 
   const resolved = (records) => {
     if (records.length === 1) {
-      res.redirect('/details/' + records[0]['system-number'] + '?' + querystring);
+      res.redirect('/birth/details/' + records[0]['system-number'] + '?' + querystring);
     } else {
-      res.render('pages/results', {
+      res.render('pages/birth-results', {
         count: records && records.length,
         records: records,
         query: query,
@@ -38,7 +38,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
 
   const rejected = (err) => {
     if (err.name === 'NotFoundError') {
-      res.render('pages/results', {
+      res.render('pages/birth-results', {
         count: 0,
         records: null,
         query: query,
@@ -60,7 +60,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
 
 const form = new SearchController({
   fields: fields,
-  template: 'pages/search'
+  template: 'pages/birth-search'
 });
 
 module.exports = form.requestHandler();

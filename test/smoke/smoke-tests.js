@@ -11,7 +11,7 @@ describe('Smoke Tests', () => {
     require('../acceptance/mixins/search')(browser);
   });
 
-  describe('Accessing the UI', () => {
+  describe.skip('Accessing the UI', () => {
     before(() => {
       browser.url(testConfig.url);
     });

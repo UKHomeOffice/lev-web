@@ -2,7 +2,7 @@
 
 const api = require('../api');
 const helpers = require('../lib/helpers');
-const fields = require('../fields');
+const fields = require('../fields/birth');
 const _ = require('lodash');
 
 const handleError = (err, next) => {
@@ -27,8 +27,8 @@ module.exports = function renderDetails(req, res, next) {
   const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
   const canRedirectToResults = (req.query && req.query.multipleResults) !== undefined;
 
-  return api.findBySystemNumber(Number(systemNumber), accessToken)
-    .then(result => res.render('pages/details', {
+  return api.findBirthBySystemNumber(Number(systemNumber), accessToken)
+    .then(result => res.render('pages/birth-details', {
           record: result,
           querystring: helpers.serialize(_.pick(req.query, _.keys(fields))),
           canRedirectToResults: canRedirectToResults

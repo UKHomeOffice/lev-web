@@ -1,6 +1,6 @@
 'use strict';
 
-var controllers = require('../controllers');
+const controllers = require('../controllers');
 
 module.exports = function defineRoutes(app) {
   app
@@ -8,7 +8,9 @@ module.exports = function defineRoutes(app) {
     .get('/marriage/details/:sysnum?', controllers.marriageDetails)
     .get('/death', controllers.deathSearch)
     .get('/death/details/:sysnum?', controllers.deathDetails)
-    .get('/details/:sysnum?', controllers.details)
+    .get('/birth', controllers.birthSearch)
+    .get('/birth/details/:sysnum?', controllers.birthDetails)
+    .get('/details/:sysnum?', controllers.birthDetails)
     .use('/audit/user-activity', controllers.audit)
-    .use(/^\/$/, controllers.search);
+    .use(/^\/$/, controllers.birthSearch);
 };

@@ -3,12 +3,18 @@
 const url = require('../config').url;
 
 module.exports = (target) => {
+  /**
+   * @deprecated
+   */
   target.search = function(systemNumber, surname, forenames, dob) {
     this.goToSearchPage();
     this.submitSearchPage(systemNumber, surname, forenames, dob);
   };
 
-  target.birthSearch = target.search;
+  target.birthSearch = function(systemNumber, surname, forenames, dob) {
+    this.goToBirthSearchPage();
+    this.submitBirthSearchPage(systemNumber, surname, forenames, dob);
+  };
 
   target.deathSearch = function(systemNumber, surname, forenames, dobd) {
     this.goToDeathSearchPage();
@@ -36,11 +42,16 @@ module.exports = (target) => {
     }, this.getUrl(), headers);
   };
 
+  /**
+   * @deprecated
+   */
   target.goToSearchPage = function() {
     this.url(url);
   };
 
-  target.goToBirthSearchPage = target.goToSearchPage;
+  target.goToBirthSearchPage = function() {
+    this.url(url + '/birth');
+  };
 
   target.goToDeathSearchPage = function() {
     this.url(url + '/death');
@@ -50,7 +61,7 @@ module.exports = (target) => {
     this.url(url + '/marriage');
   };
 
-  target.shouldBeOnSearchPage = function() {
+  target.shouldBeOnBirthSearchPage = function() {
     this.getText('h1').should.equal('Applicant\'s details');
 
     this.waitForVisible('input[name="system-number"]', 5000);
@@ -62,7 +73,10 @@ module.exports = (target) => {
     formLabels[3].should.contain('Date of birth');
   };
 
-  target.shouldBeOnBirthSearchPage = target.shouldBeOnSearchPage;
+  /**
+   * @deprecated
+   */
+  target.shouldBeOnSearchPage = target.shouldBeOnBirthSearchPage;
 
   target.shouldBeOnDeathSearchPage = function() {
     this.getText('h1').should.equal('Applicant\'s details');
@@ -92,7 +106,7 @@ module.exports = (target) => {
     this.$(selector).hasFocus().should.be.true;
   };
 
-  target.submitSearchPage = function(systemNumber, surname, forenames, dob) {
+  target.submitBirthSearchPage = function(systemNumber, surname, forenames, dob) {
     this.setValue('input[name="system-number"]', systemNumber);
     this.setValue('input[name="surname"]', surname);
     this.setValue('input[name="forenames"]', forenames);
@@ -100,7 +114,10 @@ module.exports = (target) => {
     this.click('input[type="submit"]');
   };
 
-  target.submitBirthSearchPage = target.submitSearchPage;
+  /**
+   * @deprecated
+   */
+  target.submitSearchPage = target.submitBirthSearchPage;
 
   target.submitDeathSearchPage = function(systemNumber, surname, forenames, dobd) {
     this.setValue('input[name="system-number"]', systemNumber);

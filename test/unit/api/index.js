@@ -161,22 +161,22 @@ describe('api/index.js', () => {
     }
   });
 
-  describe('findByNameDOB()', () => {
-    it('is a function', () => api.findByNameDOB.should.be.a('function'));
-    it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
+  describe('findBirthsByNameDOB()', () => {
+    it('is a function', () => api.findBirthsByNameDOB.should.be.a('function'));
+    it('takes two arguments', () => api.findBirthsByNameDOB.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.findByNameDOB()).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBirthsByNameDOB()).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an object', () => {
-        it('throws a TypeError', () => expect(() => api.findByNameDOB(0, '')).to.throw(TypeError));
+        it('throws a TypeError', () => expect(() => api.findBirthsByNameDOB(0, '')).to.throw(TypeError));
       });
 
       describe('and the first IS an object', () => {
         describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.findByNameDOB({}, 0)).to.throw(TypeError));
+          it('throws a TypeError', () => expect(() => api.findBirthsByNameDOB({}, 0)).to.throw(TypeError));
         });
 
         describe('and the second IS a string', () => {
@@ -191,7 +191,7 @@ describe('api/index.js', () => {
                 dob: '01/01/2001'
               };
 
-              result = api.findByNameDOB(query, accessToken);
+              result = api.findBirthsByNameDOB(query, accessToken);
             });
 
             it('make a request using the correct query string and adds auth headers', () =>
@@ -213,7 +213,7 @@ describe('api/index.js', () => {
           describe('when the api returns a valid list of records', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-              result = api.findByNameDOB({}, '');
+              result = api.findBirthsByNameDOB({}, '');
             });
 
             it('resolves to a processed record', () =>
@@ -223,7 +223,7 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findByNameDOB({}, '');
+              result = api.findBirthsByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
@@ -233,7 +233,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findByNameDOB({}, '');
+              result = api.findBirthsByNameDOB({}, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
@@ -243,7 +243,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findByNameDOB({}, '');
+              result = api.findBirthsByNameDOB({}, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
@@ -253,7 +253,7 @@ describe('api/index.js', () => {
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.findByNameDOB({}, '');
+              result = api.findBirthsByNameDOB({}, '');
             });
 
             it('rejects with an error', () =>
@@ -447,22 +447,22 @@ describe('api/index.js', () => {
     });
   });
 
-  describe('findBySystemNumber()', () => {
-    it('is a function', () => api.findBySystemNumber.should.be.a('function'));
-    it('takes two arguments', () => api.findBySystemNumber.should.have.lengthOf(2));
+  describe('findBirthBySystemNumber()', () => {
+    it('is a function', () => api.findBirthBySystemNumber.should.be.a('function'));
+    it('takes two arguments', () => api.findBirthBySystemNumber.should.have.lengthOf(2));
 
     describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.findBySystemNumber()).to.throw(ReferenceError));
+      it('throws a ReferenceError', () => expect(() => api.findBirthBySystemNumber()).to.throw(ReferenceError));
     });
 
     describe('when called with two arguments', () => {
       describe('and the first IS NOT an integer', () => {
-        it('throws a TypeError', () => expect(() => api.findBySystemNumber({}, '')).to.throw(TypeError));
+        it('throws a TypeError', () => expect(() => api.findBirthBySystemNumber({}, '')).to.throw(TypeError));
       });
 
       describe('and the first IS an integer', () => {
         describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.findBySystemNumber(0, 0)).to.throw(TypeError));
+          it('throws a TypeError', () => expect(() => api.findBirthBySystemNumber(0, 0)).to.throw(TypeError));
         });
 
         describe('and the second IS a string', () => {
@@ -473,7 +473,7 @@ describe('api/index.js', () => {
               this.resetStubs = false;
               const id = 400000001;
 
-              result = api.findBySystemNumber(id, accessToken);
+              result = api.findBirthBySystemNumber(id, accessToken);
             });
 
             it('makes a request using the correct query string and adds auth headers', () =>
@@ -494,7 +494,7 @@ describe('api/index.js', () => {
           describe('when the api returns a valid record', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-              result = api.findBySystemNumber(0, '');
+              result = api.findBirthBySystemNumber(0, '');
             });
 
             it('resolves to a processed record', () => result.should.eventually.eql(parsedResponse));
@@ -503,7 +503,7 @@ describe('api/index.js', () => {
           describe('when the api returns invalid JSON', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findBySystemNumber(0, '');
+              result = api.findBirthBySystemNumber(0, '');
             });
 
             it('rejects with an error', () => result.should.be.rejectedWith(Error));
@@ -512,7 +512,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 404', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findBySystemNumber(0, '');
+              result = api.findBirthBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotFoundError\' error', () =>
@@ -522,7 +522,7 @@ describe('api/index.js', () => {
           describe('when the api gives a 401', () => {
             before(() => {
               requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findBySystemNumber(0, '');
+              result = api.findBirthBySystemNumber(0, '');
             });
 
             it('rejects with a \'NotAuthorized\' error', () =>
@@ -532,7 +532,7 @@ describe('api/index.js', () => {
           describe('when something else happens', () => {
             before(() => {
               requestGet.yields(new Error('Something else happened'));
-              result = api.findBySystemNumber(0, '');
+              result = api.findBirthBySystemNumber(0, '');
             });
 
             it('rejects with an error', () =>

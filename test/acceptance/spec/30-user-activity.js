@@ -4,7 +4,7 @@ const moment = require('moment');
 const testConfig = require('../config');
 const env = testConfig.env;
 
-describe.skip('User Activity', () => {
+describe('User Activity', () => {
   const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests';
 
   before(() => {

@@ -243,16 +243,16 @@ describe('api/helpers.js', () => {
     });
   });
 
-  describe('processRecord()', () => {
-    it('is a function', () => helpers.processRecord.should.be.a('function'));
-    it('takes one argument', () => helpers.processRecord.should.have.lengthOf(1));
+  describe('processBirthRecord()', () => {
+    it('is a function', () => helpers.processBirthRecord.should.be.a('function'));
+    it('takes one argument', () => helpers.processBirthRecord.should.have.lengthOf(1));
 
     describe('when called with an argument that is a valid record', () => {
       let result;
       let myRecord;
 
       before(() => {
-        result = helpers.processRecord(record);
+        result = helpers.processBirthRecord(record);
       });
 
       it('returns a processed record', () => result.should.eql(expected));
@@ -261,7 +261,7 @@ describe('api/helpers.js', () => {
         before(() => {
           myRecord = _.cloneDeep(record);
           myRecord.status.blockedRegistration = true;
-          result = helpers.processRecord(myRecord);
+          result = helpers.processBirthRecord(myRecord);
         });
 
         it('returns a censored record', () => result.should.eql(blocked));
@@ -271,7 +271,7 @@ describe('api/helpers.js', () => {
         before(() => {
           myRecord = _.cloneDeep(record);
           myRecord.status.reRegistered = 'unexpected';
-          result = helpers.processRecord(myRecord);
+          result = helpers.processBirthRecord(myRecord);
         });
 
         it('returns a record with the refer status', () => result.status.refer.should.equal(true));
@@ -281,7 +281,7 @@ describe('api/helpers.js', () => {
         before(() => {
           myRecord = _.cloneDeep(record);
           myRecord.status.potentiallyFictitiousBirth = true;
-          result = helpers.processRecord(myRecord);
+          result = helpers.processBirthRecord(myRecord);
         });
 
         it('returns a record with the refer status', () => result.status.refer.should.equal(true));
@@ -291,7 +291,7 @@ describe('api/helpers.js', () => {
         before(() => {
           myRecord = _.cloneDeep(record);
           myRecord.status.marginalNote = 'unexpected';
-          result = helpers.processRecord(myRecord);
+          result = helpers.processBirthRecord(myRecord);
         });
 
         it('returns a record with the refer status', () => result.status.refer.should.equal(true));
@@ -301,7 +301,7 @@ describe('api/helpers.js', () => {
         before(() => {
           myRecord = _.cloneDeep(record);
           myRecord.status.cancelled = true;
-          result = helpers.processRecord(myRecord);
+          result = helpers.processBirthRecord(myRecord);
         });
 
         it('returns a record with the refer status', () => result.status.refer.should.equal(true));

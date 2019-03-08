@@ -11,7 +11,7 @@ var hof = require('hof');
 var template = hof.template;
 var i18n = hof.i18n;
 var mixins = hof.mixins;
-var fields = require('./fields');
+var fields = require('./fields/birth');
 
 process.title = 'levweb';
 

@@ -13,11 +13,11 @@ var formSubmission = function formSubmission(extension) {
   }, extension);
 };
 
-describe('controllers/search', function() {
+describe('controllers/birth-search', function() {
   var api = {
     findBirths: sinon.stub()
   };
-  var searchController = proxyquire('../../../controllers/search', {
+  var searchController = proxyquire('../../../controllers/birth-search', {
     '../api': api
   });
 
@@ -45,7 +45,7 @@ describe('controllers/search', function() {
       it('renders the search page', function() {
         searchController(req, res);
 
-        res.render.should.have.been.calledWith('pages/search');
+        res.render.should.have.been.calledWith('pages/birth-search');
       });
     });
 
@@ -75,7 +75,7 @@ describe('controllers/search', function() {
           }]));
 
           res.redirect = function(url) {
-            url.should.equal(`/details/${sysnum}?system-number=${sysnum}`);
+            url.should.equal(`/birth/details/${sysnum}?system-number=${sysnum}`);
             done();
           };
 
@@ -98,7 +98,7 @@ describe('controllers/search', function() {
           api.findBirths.withArgs(query).returns(Promise.resolve(records));
 
           res.render = function(view, locals) {
-            view.should.equal('pages/results');
+            view.should.equal('pages/birth-results');
             locals.should.eql({
               count: 2,
               records: records,
@@ -135,7 +135,7 @@ describe('controllers/search', function() {
 
           it('renders the results page', function(done) {
             res.render = function(view, locals) {
-              view.should.equal('pages/results');
+              view.should.equal('pages/birth-results');
               locals.should.eql({
                 count: 0,
                 records: null,

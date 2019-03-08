@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  search: require('./search'),
-  details: require('./details'),
+  birthSearch: require('./birth-search'),
+  birthDetails: require('./birth-details'),
   deathSearch: require('./death-search'),
   deathDetails: require('./death-details'),
   marriageSearch: require('./marriage-search'),

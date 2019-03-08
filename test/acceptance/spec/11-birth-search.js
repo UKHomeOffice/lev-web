@@ -4,7 +4,7 @@ const moment = require('moment');
 const expectedRecord = require('../expected-birth-record');
 const expectedRecords = require('../expected-birth-records');
 
-const conf = require('../../../fields/index');
+const conf = require('../../../fields/birth');
 const since = conf.dob.validate[2].arguments[0];
 
 describe('Search', () => {

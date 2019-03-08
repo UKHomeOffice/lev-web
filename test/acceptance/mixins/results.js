@@ -5,7 +5,10 @@ module.exports = (target) => {
     this.getText('h1').should.contain('records found for');
   };
 
-  target.shouldBeOnBirthResultsPage = target.shouldBeOnResultsPage;
+  target.shouldBeOnBirthResultsPage = function() {
+    this.getUrl().should.contain('/birth');
+    target.shouldBeOnResultsPage;
+  };
 
   target.shouldBeOnDeathResultsPage = function() {
     this.getUrl().should.contain('/death');
