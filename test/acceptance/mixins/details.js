@@ -1,11 +1,17 @@
 'use strict';
 
 module.exports = (target) => {
+
+  /**
+   * @deprecated
+   */
   target.shouldBeOnDetailsPage = function() {
     this.getUrl().should.contain('/details');
   };
 
-  target.shouldBeOnBirthDetailsPage = target.shouldBeOnDetailsPage;
+  target.shouldBeOnBirthDetailsPage = function() {
+    this.getUrl().should.contain('/birth/details');
+  };
 
   target.shouldBeOnDeathDetailsPage = function() {
     this.getUrl().should.contain('/death/details');

@@ -20,30 +20,30 @@ const requestData = (url, accessToken) =>
     helpers.responseHandler(resolve, reject)
   ));
 
-const findByNameDOB = (searchFields, accessToken) => {
+const findBirthsByNameDOB = (searchFields, accessToken) => {
   if (searchFields === undefined) {
-    throw new ReferenceError('findByNameDOB(): first argument, searchFields, was not defined');
+    throw new ReferenceError('findBirthsByNameDOB(): first argument, searchFields, was not defined');
   } else if (!(searchFields instanceof Object)) {
-    throw new TypeError('findByNameDOB(): first argument, searchFields, must be an object');
+    throw new TypeError('findBirthsByNameDOB(): first argument, searchFields, must be an object');
   } else if (accessToken !== undefined && typeof accessToken !== 'string') {
-    throw new TypeError('findByNameDOB(): second argument, accessToken, must be a string');
+    throw new TypeError('findBirthsByNameDOB(): second argument, accessToken, must be a string');
   }
 
   return requestData(helpers.buildQueryUri(birthSearch, searchFields), accessToken)
-    .then((data) => data.map(helpers.processRecord));
+    .then((data) => data.map(helpers.processBirthRecord));
 };
 
-const findBySystemNumber = (systemNumber, accessToken) => {
+const findBirthBySystemNumber = (systemNumber, accessToken) => {
   if (systemNumber === undefined) {
-    throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
+    throw new ReferenceError('findBirthBySystemNumber(): first argument, systemNumber, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
-    throw new TypeError('findBySystemNumber(): first argument, systemNumber, must be an integer');
+    throw new TypeError('findBirthBySystemNumber(): first argument, systemNumber, must be an integer');
   } else if (accessToken !== undefined && typeof accessToken !== 'string') {
-    throw new TypeError('findBySystemNumber(): second argument, accessToken, must be a string');
+    throw new TypeError('findBirthBySystemNumber(): second argument, accessToken, must be a string');
   }
 
   return requestData(birthSearch + '/' + systemNumber, accessToken)
-    .then(helpers.processRecord);
+    .then(helpers.processBirthRecord);
 };
 
 const findBirths = (searchFields, accessToken) => {
@@ -58,8 +58,8 @@ const findBirths = (searchFields, accessToken) => {
   const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
 
   return systemNumber
-    ? findBySystemNumber(systemNumber, accessToken).then((data) => [data])
-    : findByNameDOB(searchFields, accessToken);
+    ? findBirthBySystemNumber(systemNumber, accessToken).then((data) => [data])
+    : findBirthsByNameDOB(searchFields, accessToken);
 };
 
 const findDeathsByNameDate = (searchFields, accessToken) => {
@@ -77,7 +77,7 @@ const findDeathsByNameDate = (searchFields, accessToken) => {
 
 const findDeathBySystemNumber = (systemNumber, accessToken) => {
   if (systemNumber === undefined) {
-    throw new ReferenceError('findBySystemNumber(): first argument, systemNumber, was not defined');
+    throw new ReferenceError('findBirthBySystemNumber(): first argument, systemNumber, was not defined');
   } else if ((!Number.isInteger(systemNumber))) {
     throw new TypeError('findDeathsBySystemNumber(): first argument, systemNumber, must be an integer');
   } else if (accessToken !== undefined && typeof accessToken !== 'string') {
@@ -180,8 +180,8 @@ const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-di
 
 module.exports = {
   findBirths: findBirths,
-  findByNameDOB: findByNameDOB,
-  findBySystemNumber: findBySystemNumber,
+  findBirthsByNameDOB: findBirthsByNameDOB,
+  findBirthBySystemNumber: findBirthBySystemNumber,
   findDeaths: findDeaths,
   findDeathBySystemNumber: findDeathBySystemNumber,
   findMarriages: findMarriages,

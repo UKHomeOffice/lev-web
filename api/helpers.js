@@ -66,7 +66,7 @@ const refer = (record) => (
   ) ||
   record.status.cancelled !== false;
 
-const processRecord = (record) => {
+const processBirthRecord = (record) => {
   const blocked = record.status.blockedRegistration !== false;
   const block = blocked ? () => 'UNAVAILABLE' : value => value;
 
@@ -302,7 +302,7 @@ const responseHandler = (resolve, reject) => (err, res, body) => {
 
 module.exports = {
   buildQueryUri: buildQueryUri,
-  processRecord: processRecord,
+  processBirthRecord: processBirthRecord,
   processDeathRecord: processDeathRecord,
   processMarriageRecord: processMarriageRecord,
   refer: refer,
