@@ -7,6 +7,6 @@ services:
       API_HOST: mock-api
       API_PORT: 8080
   mock-api:
-    image: quay.io/ukhomeofficedigital/lev-api:0.7
+    image: quay.io/ukhomeofficedigital/lev-api:0.8
     environment:
       MOCK: "true"
