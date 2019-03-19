@@ -76,10 +76,10 @@ describe('Marriage search', () => {
 
     describe('using the "fast entry" date format', () => {
       const groom = expectedRecords.groom;
-      const dod = expectedRecords.dateOfMarriage.replace(/\//g, '');
+      const dom = expectedRecords.dateOfMarriage.replace(/\//g, '');
 
       before(() => {
-        browser.marriageSearch('', groom.surname, groom.forenames, dod);
+        browser.marriageSearch('', groom.surname, groom.forenames, dom);
       });
 
       it('returns a results page', () => {
@@ -93,7 +93,7 @@ describe('Marriage search', () => {
             + ' '
             + groom.surname
             + ' '
-            + dod);
+            + dom);
       });
     });
   });
