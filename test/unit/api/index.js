@@ -126,6 +126,234 @@ const parsedResponse = {
   }
 };
 
+const partnershipResponse = {
+  'id': 999999910,
+  'date': '2014-10-10',
+  'dateOfPartnership': '2012-02-29',
+  'placeOfPartnership': {
+    'address': 'Test place',
+    'short': 'Test place'
+  },
+  'registrar': {
+    'signature': 'A. Registrar'
+  },
+  'partner1': {
+    'prefix': null,
+    'forenames': 'Tester',
+    'surname': 'SOLO',
+    'suffix': null,
+    'dob': '1912-02-29',
+    'sex': 'Female',
+    'occupation': 'Unemployed',
+    'retired': false,
+    'address': '10 Test street',
+    'aliases': [
+      {
+        'prefix': null,
+        'forenames': 'Test Previous',
+        'surname': 'Smithers',
+        'suffix': null
+      }, {
+        'prefix': null,
+        'forenames': null,
+        'surname': null,
+        'suffix': null
+      }
+    ],
+    'signature': 'T. Solo',
+    'condition': 'Single'
+  },
+  'partner2': {
+    'prefix': null,
+    'forenames': 'Test',
+    'surname': 'BRIDE',
+    'suffix': null,
+    'dob': '2008-08-08',
+    'sex': 'Female',
+    'occupation': 'Bride',
+    'retired': false,
+    'address': null,
+    'aliases': [
+      {
+        'prefix': null,
+        'forenames': 'Test Former',
+        'surname': 'SMITHE',
+        'suffix': null
+      },
+      {
+        'prefix': null,
+        'forenames': null,
+        'surname': null,
+        'suffix': null
+      }
+    ],
+    'signature': 'T. Bride',
+    'condition': 'Single'
+  },
+  'fatherOfPartner1': {
+    'forenames': 'Test Fop1',
+    'surname': 'FATHER',
+    'occupation': 'Father',
+    'retired': true,
+    'designation': null,
+    'deceased': true
+  },
+  'motherOfPartner1': {
+    'forenames': 'Serah Mop1',
+    'surname': 'MOTHER',
+    'occupation': 'Mother',
+    'retired': true,
+    'designation': null,
+    'deceased': true
+  },
+  'fatherOfPartner2': {
+    'forenames': 'Test Fop2',
+    'surname': 'FATHER',
+    'occupation': 'Father',
+    'retired': true,
+    'designation': null,
+    'deceased': true
+  },
+  'motherOfPartner2': {
+    'forenames': 'Serah Mop2',
+    'surname': 'MOTHER',
+    'occupation': 'Mother',
+    'retired': true,
+    'designation': null,
+    'deceased': true
+  },
+  'witness1': {
+    'forename': 'Arthur',
+    'surname': 'Witness'
+  },
+  'witness2': {
+    'forename': 'Abernathy',
+    'surname': 'Other'
+  },
+  'status': {
+    'blocked': false,
+    'marginalNotes': null
+  },
+  'nextRegistration': null,
+  'previousRegistration': null
+};
+const parsedPartnershipResponse = {
+  id: 999999910,
+  date: '10/10/2014',
+  dateOfPartnership: '29/02/2012',
+  placeOfPartnership: {
+    address: 'Test place',
+    short: 'Test place'
+  },
+  registrar: {
+    signature: 'A. Registrar'
+  },
+  partner1: {
+    prefix: null,
+    forenames: 'Tester',
+    surname: 'SOLO',
+    suffix: null,
+    dob: '29/02/1912',
+    sex: 'Female',
+    occupation: 'Unemployed',
+    retired: false,
+    address: '10 Test street',
+    aliases: [
+      {
+        prefix: null,
+        forenames: 'Test Previous',
+        surname: 'Smithers',
+        suffix: null
+      }, {
+        prefix: null,
+        forenames: null,
+        surname: null,
+        suffix: null
+      }
+    ],
+    signature: 'T. Solo',
+    condition: 'Single'
+  },
+  partner2: {
+    prefix: null,
+    forenames: 'Test',
+    surname: 'BRIDE',
+    suffix: null,
+    dob: '08/08/2008',
+    sex: 'Female',
+    occupation: 'Bride',
+    retired: false,
+    address: null,
+    aliases: [
+      {
+        prefix: null,
+        forenames: 'Test Former',
+        surname: 'SMITHE',
+        suffix: null
+      }, {
+        prefix: null,
+        forenames: null,
+        surname: null,
+        suffix: null
+      }
+    ],
+    signature: 'T. Bride',
+    condition: 'Single'
+  },
+  fatherOfPartner1: {
+    forenames: 'Test Fop1',
+    surname: 'FATHER',
+    occupation: 'Father',
+    retired: true,
+    designation: null,
+    deceased: true
+  },
+  motherOfPartner1: {
+    forenames: 'Serah Mop1',
+    surname: 'MOTHER',
+    occupation: 'Mother',
+    retired: true,
+    designation: null,
+    deceased: true
+  },
+  fatherOfPartner2: {
+    forenames: 'Test Fop2',
+    surname: 'FATHER',
+    occupation: 'Father',
+    retired: true,
+    designation: null,
+    deceased: true
+  },
+  motherOfPartner2: {
+    forenames: 'Serah Mop2',
+    surname: 'MOTHER',
+    occupation: 'Mother',
+    retired: true,
+    designation: null,
+    deceased: true
+  },
+  witness1: {
+    forename: 'Arthur',
+    surname: 'Witness'
+  },
+  witness2: {
+    forename: 'Abernathy',
+    surname: 'Other'
+  },
+  status: {
+    refer: false,
+    marginalNotes: null
+  },
+  nextRegistration: {
+    systemNumber: null,
+    date: null
+  },
+  previousRegistration: {
+    systemNumber: null,
+    date: null
+  }
+};
+
 const accessToken = 'access_token';
 const expectedHeaders = {
   'Authorization': 'Bearer ' + accessToken,
@@ -161,150 +389,45 @@ describe('api/index.js', () => {
     }
   });
 
-  describe('findByNameDOB()', () => {
-    it('is a function', () => api.findByNameDOB.should.be.a('function'));
-    it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
+  describe('births', () => {
+    describe('findByNameDOB()', () => {
+      it('is a function', () => api.findByNameDOB.should.be.a('function'));
+      it('takes two arguments', () => api.findByNameDOB.should.have.lengthOf(2));
 
-    describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.findByNameDOB()).to.throw(ReferenceError));
-    });
-
-    describe('when called with two arguments', () => {
-      describe('and the first IS NOT an object', () => {
-        it('throws a TypeError', () => expect(() => api.findByNameDOB(0, '')).to.throw(TypeError));
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findByNameDOB()).to.throw(ReferenceError));
       });
 
-      describe('and the first IS an object', () => {
-        describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.findByNameDOB({}, 0)).to.throw(TypeError));
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an object', () => {
+          it('throws a TypeError', () => expect(() => api.findByNameDOB(0, '')).to.throw(TypeError));
         });
 
-        describe('and the second IS a string', () => {
-          let result;
-
-          describe('should', () => {
-            before(() => {
-              this.resetStubs = false;
-              const query = {
-                surname: 'SURNAME',
-                'forenames': 'FIRST SECOND',
-                dob: '01/01/2001'
-              };
-
-              result = api.findByNameDOB(query, accessToken);
-            });
-
-            it('make a request using the correct query string and adds auth headers', () =>
-              requestGet.should.have.been.calledWith({
-                headers: expectedHeaders,
-                url: 'http://testhost.com:1111/api/v0/events/birth'
-                   + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
-                agentOptions: {
-                  rejectUnauthorized: true
-                }
-              }));
-            it('then return a promise', () => result.should.be.instanceOf(Promise));
-
-            after(() => {
-              this.resetStubs = true;
-            });
+        describe('and the first IS an object', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findByNameDOB({}, 0)).to.throw(TypeError));
           });
 
-          describe('when the api returns a valid list of records', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-              result = api.findByNameDOB({}, '');
-            });
-
-            it('resolves to a processed record', () =>
-              result.should.eventually.eql([parsedResponse]));
-          });
-
-          describe('when the api returns invalid JSON', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findByNameDOB({}, '');
-            });
-
-            it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error));
-          });
-
-          describe('when the api gives a 404', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findByNameDOB({}, '');
-            });
-
-            it('rejects with a \'NotFoundError\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
-          });
-
-          describe('when the api gives a 401', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findByNameDOB({}, '');
-            });
-
-            it('rejects with a \'NotAuthorized\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
-          });
-
-          describe('when something else happens', () => {
-            before(() => {
-              requestGet.yields(new Error('Something else happened'));
-              result = api.findByNameDOB({}, '');
-            });
-
-            it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error, 'Something else happened'));
-          });
-        });
-      });
-    });
-  });
-
-  describe('findBirths()', () => {
-    it('is a function', () => api.findBirths.should.be.a('function'));
-    it('takes two arguments', () => api.findBirths.should.have.lengthOf(2));
-
-    describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.findBirths()).to.throw(ReferenceError));
-    });
-
-    describe('when called with two arguments', () => {
-      describe('and the first IS NOT an object', () => {
-        it('throws a TypeError', () => expect(() => api.findBirths(0, '')).to.throw(TypeError));
-      });
-
-      describe('and the first IS an object', () => {
-        describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.findBirths({}, 0)).to.throw(TypeError));
-        });
-
-        describe('and the second IS a string', () => {
-          let result;
-          let query;
-          const read = () => api.findBirths(query, accessToken);
-
-          describe('and the first DOES NOT contain a \'system-number\' property', () => {
+          describe('and the second IS a string', () => {
+            let result;
 
             describe('should', () => {
               before(() => {
                 this.resetStubs = false;
-                query = {
+                const query = {
                   surname: 'SURNAME',
-                  forenames: 'FIRST SECOND',
+                  'forenames': 'FIRST SECOND',
                   dob: '01/01/2001'
                 };
-                result = read();
+
+                result = api.findByNameDOB(query, accessToken);
               });
 
               it('make a request using the correct query string and adds auth headers', () =>
                 requestGet.should.have.been.calledWith({
                   headers: expectedHeaders,
                   url: 'http://testhost.com:1111/api/v0/events/birth'
-                  + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
+                    + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
                   agentOptions: {
                     rejectUnauthorized: true
                   }
@@ -319,25 +442,27 @@ describe('api/index.js', () => {
             describe('when the api returns a valid list of records', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-                result = read();
+                result = api.findByNameDOB({}, '');
               });
 
-              it('resolves to a processed record', () => result.should.eventually.eql([parsedResponse]));
+              it('resolves to a processed record', () =>
+                result.should.eventually.eql([parsedResponse]));
             });
 
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = read();
+                result = api.findByNameDOB({}, '');
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              it('rejects with an error', () =>
+                result.should.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = read();
+                result = api.findByNameDOB({}, '');
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -347,7 +472,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = read();
+                result = api.findByNameDOB({}, '');
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -357,32 +482,336 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = read();
+                result = api.findByNameDOB({}, '');
               });
 
               it('rejects with an error', () =>
                 result.should.be.rejectedWith(Error, 'Something else happened'));
             });
           });
+        });
+      });
+    });
 
-          describe('and the first DOES contain a \'system-number\' property', () => {
+    describe('findBirths()', () => {
+      it('is a function', () => api.findBirths.should.be.a('function'));
+      it('takes two arguments', () => api.findBirths.should.have.lengthOf(2));
+
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findBirths()).to.throw(ReferenceError));
+      });
+
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an object', () => {
+          it('throws a TypeError', () => expect(() => api.findBirths(0, '')).to.throw(TypeError));
+        });
+
+        describe('and the first IS an object', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findBirths({}, 0)).to.throw(TypeError));
+          });
+
+          describe('and the second IS a string', () => {
+            let result;
+            let query;
+            const read = () => api.findBirths(query, accessToken);
+
+            describe('and the first DOES NOT contain a \'system-number\' property', () => {
+
+              describe('should', () => {
+                before(() => {
+                  this.resetStubs = false;
+                  query = {
+                    surname: 'SURNAME',
+                    forenames: 'FIRST SECOND',
+                    dob: '01/01/2001'
+                  };
+                  result = read();
+                });
+
+                it('make a request using the correct query string and adds auth headers', () =>
+                  requestGet.should.have.been.calledWith({
+                    headers: expectedHeaders,
+                    url: 'http://testhost.com:1111/api/v0/events/birth'
+                      + '?lastname=SURNAME&forenames=FIRST%20SECOND&dateofbirth=2001-01-01',
+                    agentOptions: {
+                      rejectUnauthorized: true
+                    }
+                  }));
+                it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+                after(() => {
+                  this.resetStubs = true;
+                });
+              });
+
+              describe('when the api returns a valid list of records', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
+                  result = read();
+                });
+
+                it('resolves to a processed record', () => result.should.eventually.eql([parsedResponse]));
+              });
+
+              describe('when the api returns invalid JSON', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, '[}');
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              });
+
+              describe('when the api gives a 404', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 404 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotFoundError\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              });
+
+              describe('when the api gives a 401', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 401 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotAuthorized\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              });
+
+              describe('when something else happens', () => {
+                before(() => {
+                  requestGet.yields(new Error('Something else happened'));
+                  result = read();
+                });
+
+                it('rejects with an error', () =>
+                  result.should.be.rejectedWith(Error, 'Something else happened'));
+              });
+            });
+
+            describe('and the first DOES contain a \'system-number\' property', () => {
+
+              describe('should', () => {
+                before(() => {
+                  this.resetStubs = false;
+                  query = {
+                    'system-number': '400000001',
+                    surname: 'SURNAME',
+                    forenames: 'FIRST SECOND',
+                    dob: '01/01/2001'
+                  };
+                  result = read();
+                });
+
+                it('make a request using the correct query string and adds auth headers', () =>
+                  requestGet.should.have.been.calledWith({
+                    headers: expectedHeaders,
+                    url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
+                    agentOptions: {
+                      rejectUnauthorized: true
+                    }
+                  }));
+                it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+                after(() => {
+                  this.resetStubs = true;
+                });
+              });
+
+              describe('when the api returns a valid record', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
+                  result = read();
+                });
+
+                it('resolves to a singleton list containing the processed record', () =>
+                  result.should.eventually.eql([parsedResponse]));
+              });
+
+              describe('when the api returns invalid JSON', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, '[}');
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              });
+
+              describe('when the api gives a 404', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 404 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotFoundError\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              });
+
+              describe('when the api gives a 401', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 401 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotAuthorized\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              });
+
+              describe('when something else happens', () => {
+                before(() => {
+                  requestGet.yields(new Error('Something else happened'));
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error, 'Something else happened'));
+              });
+            });
+          });
+        });
+      });
+    });
+
+    describe('findBySystemNumber()', () => {
+      it('is a function', () => api.findBySystemNumber.should.be.a('function'));
+      it('takes two arguments', () => api.findBySystemNumber.should.have.lengthOf(2));
+
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findBySystemNumber()).to.throw(ReferenceError));
+      });
+
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an integer', () => {
+          it('throws a TypeError', () => expect(() => api.findBySystemNumber({}, '')).to.throw(TypeError));
+        });
+
+        describe('and the first IS an integer', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findBySystemNumber(0, 0)).to.throw(TypeError));
+          });
+
+          describe('and the second IS a string', () => {
+            let result;
 
             describe('should', () => {
               before(() => {
                 this.resetStubs = false;
-                query = {
-                  'system-number': '400000001',
+                const id = 400000001;
+
+                result = api.findBySystemNumber(id, accessToken);
+              });
+
+              it('makes a request using the correct query string and adds auth headers', () =>
+                requestGet.should.have.been.calledWith({
+                  headers: expectedHeaders,
+                  url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
+                  agentOptions: {
+                    rejectUnauthorized: true
+                  }
+                }));
+              it('returns a promise', () => result.should.be.instanceOf(Promise));
+
+              after(() => {
+                this.resetStubs = true;
+              });
+            });
+
+            describe('when the api returns a valid record', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
+                result = api.findBySystemNumber(0, '');
+              });
+
+              it('resolves to a processed record', () => result.should.eventually.eql(parsedResponse));
+            });
+
+            describe('when the api returns invalid JSON', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 200 }, '[}');
+                result = api.findBySystemNumber(0, '');
+              });
+
+              it('rejects with an error', () => result.should.be.rejectedWith(Error));
+            });
+
+            describe('when the api gives a 404', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 404 }, '');
+                result = api.findBySystemNumber(0, '');
+              });
+
+              it('rejects with a \'NotFoundError\' error', () =>
+                result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+            });
+
+            describe('when the api gives a 401', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 401 }, '');
+                result = api.findBySystemNumber(0, '');
+              });
+
+              it('rejects with a \'NotAuthorized\' error', () =>
+                result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+            });
+
+            describe('when something else happens', () => {
+              before(() => {
+                requestGet.yields(new Error('Something else happened'));
+                result = api.findBySystemNumber(0, '');
+              });
+
+              it('rejects with an error', () =>
+                result.should.be.rejectedWith(Error, 'Something else happened'));
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe('partnerships', () => {
+    describe('findPartnershipsByNameDOP()', () => {
+      it('is a function', () => api.findPartnershipsByNameDOP.should.be.a('function'));
+      it('takes two arguments', () => api.findPartnershipsByNameDOP.should.have.lengthOf(2));
+
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findPartnershipsByNameDOP()).to.throw(ReferenceError));
+      });
+
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an object', () => {
+          it('throws a TypeError', () => expect(() => api.findPartnershipsByNameDOP(0, '')).to.throw(TypeError));
+        });
+
+        describe('and the first IS an object', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findPartnershipsByNameDOP({}, 0)).to.throw(TypeError));
+          });
+
+          describe('and the second IS a string', () => {
+            let result;
+
+            describe('should', () => {
+              before(() => {
+                this.resetStubs = false;
+                const query = {
                   surname: 'SURNAME',
                   forenames: 'FIRST SECOND',
-                  dob: '01/01/2001'
+                  dop: '01/01/2001'
                 };
-                result = read();
+
+                result = api.findPartnershipsByNameDOP(query, accessToken);
               });
 
               it('make a request using the correct query string and adds auth headers', () =>
                 requestGet.should.have.been.calledWith({
                   headers: expectedHeaders,
-                  url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
+                  url: 'http://testhost.com:1111/v1/registration/partnership'
+                    + '?surname=SURNAME&forenames=FIRST%20SECOND&dateOfPartnership=2001-01-01',
                   agentOptions: {
                     rejectUnauthorized: true
                   }
@@ -394,29 +823,30 @@ describe('api/index.js', () => {
               });
             });
 
-            describe('when the api returns a valid record', () => {
+            describe('when the api returns a valid list of records', () => {
               before(() => {
-                requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-                result = read();
+                requestGet.yields(null, { statusCode: 200 }, JSON.stringify([partnershipResponse]));
+                result = api.findPartnershipsByNameDOP({}, '');
               });
 
-              it('resolves to a singleton list containing the processed record', () =>
-                result.should.eventually.eql([parsedResponse]));
+              it('resolves to a processed record', () =>
+                result.should.eventually.eql([parsedPartnershipResponse]));
             });
 
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = read();
+                result = api.findPartnershipsByNameDOP({}, '');
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              it('rejects with an error', () =>
+                result.should.be.rejectedWith(Error));
             });
 
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = read();
+                result = api.findPartnershipsByNameDOP({}, '');
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -426,7 +856,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = read();
+                result = api.findPartnershipsByNameDOP({}, '');
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -436,107 +866,291 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = read();
+                result = api.findPartnershipsByNameDOP({}, '');
               });
 
-              it('rejects with an error', () => result.should.be.rejectedWith(Error, 'Something else happened'));
+              it('rejects with an error', () =>
+                result.should.be.rejectedWith(Error, 'Something else happened'));
             });
           });
         });
       });
     });
-  });
 
-  describe('findBySystemNumber()', () => {
-    it('is a function', () => api.findBySystemNumber.should.be.a('function'));
-    it('takes two arguments', () => api.findBySystemNumber.should.have.lengthOf(2));
+    describe('findPartnerships()', () => {
+      it('is a function', () => api.findPartnerships.should.be.a('function'));
+      it('takes two arguments', () => api.findPartnerships.should.have.lengthOf(2));
 
-    describe('when called with no arguments', () => {
-      it('throws a ReferenceError', () => expect(() => api.findBySystemNumber()).to.throw(ReferenceError));
-    });
-
-    describe('when called with two arguments', () => {
-      describe('and the first IS NOT an integer', () => {
-        it('throws a TypeError', () => expect(() => api.findBySystemNumber({}, '')).to.throw(TypeError));
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findPartnerships()).to.throw(ReferenceError));
       });
 
-      describe('and the first IS an integer', () => {
-        describe('and the second IS NOT a string', () => {
-          it('throws a TypeError', () => expect(() => api.findBySystemNumber(0, 0)).to.throw(TypeError));
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an object', () => {
+          it('throws a TypeError', () => expect(() => api.findPartnerships(0, '')).to.throw(TypeError));
         });
 
-        describe('and the second IS a string', () => {
-          let result;
-
-          describe('should', () => {
-            before(() => {
-              this.resetStubs = false;
-              const id = 400000001;
-
-              result = api.findBySystemNumber(id, accessToken);
-            });
-
-            it('makes a request using the correct query string and adds auth headers', () =>
-              requestGet.should.have.been.calledWith({
-                headers: expectedHeaders,
-                url: 'http://testhost.com:1111/api/v0/events/birth/400000001',
-                agentOptions: {
-                  rejectUnauthorized: true
-                }
-              }));
-            it('returns a promise', () => result.should.be.instanceOf(Promise));
-
-            after(() => {
-              this.resetStubs = true;
-            });
+        describe('and the first IS an object', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findPartnerships({}, 0)).to.throw(TypeError));
           });
 
-          describe('when the api returns a valid record', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-              result = api.findBySystemNumber(0, '');
+          describe('and the second IS a string', () => {
+            let result;
+            let query;
+            const read = () => api.findPartnerships(query, accessToken);
+
+            describe('and the first DOES NOT contain a \'system-number\' property', () => {
+
+              describe('should', () => {
+                before(() => {
+                  this.resetStubs = false;
+                  query = {
+                    surname: 'SURNAME',
+                    forenames: 'FIRST SECOND',
+                    dop: '01/01/2001'
+                  };
+                  result = read();
+                });
+
+                it('make a request using the correct query string and adds auth headers', () =>
+                  requestGet.should.have.been.calledWith({
+                    headers: expectedHeaders,
+                    url: 'http://testhost.com:1111/v1/registration/partnership'
+                      + '?surname=SURNAME&forenames=FIRST%20SECOND&dateOfPartnership=2001-01-01',
+                    agentOptions: {
+                      rejectUnauthorized: true
+                    }
+                  }));
+                it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+                after(() => {
+                  this.resetStubs = true;
+                });
+              });
+
+              describe('when the api returns a valid list of records', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, JSON.stringify([partnershipResponse]));
+                  result = read();
+                });
+
+                it('resolves to a processed record', () => result.should.eventually.eql([parsedPartnershipResponse]));
+              });
+
+              describe('when the api returns invalid JSON', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, '[}');
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              });
+
+              describe('when the api gives a 404', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 404 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotFoundError\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              });
+
+              describe('when the api gives a 401', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 401 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotAuthorized\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              });
+
+              describe('when something else happens', () => {
+                before(() => {
+                  requestGet.yields(new Error('Something else happened'));
+                  result = read();
+                });
+
+                it('rejects with an error', () =>
+                  result.should.be.rejectedWith(Error, 'Something else happened'));
+              });
             });
 
-            it('resolves to a processed record', () => result.should.eventually.eql(parsedResponse));
+            describe('and the first DOES contain a \'system-number\' property', () => {
+
+              describe('should', () => {
+                before(() => {
+                  this.resetStubs = false;
+                  query = {
+                    'system-number': '400000001',
+                    surname: 'SURNAME',
+                    forenames: 'FIRST SECOND',
+                    dop: '01/01/2001'
+                  };
+                  result = read();
+                });
+
+                it('make a request using the correct query string and adds auth headers', () =>
+                  requestGet.should.have.been.calledWith({
+                    headers: expectedHeaders,
+                    url: 'http://testhost.com:1111/v1/registration/partnership/400000001',
+                    agentOptions: {
+                      rejectUnauthorized: true
+                    }
+                  }));
+                it('then return a promise', () => result.should.be.instanceOf(Promise));
+
+                after(() => {
+                  this.resetStubs = true;
+                });
+              });
+
+              describe('when the api returns a valid record', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, JSON.stringify(partnershipResponse));
+                  result = read();
+                });
+
+                it('resolves to a singleton list containing the processed record', () =>
+                  result.should.eventually.eql([parsedPartnershipResponse]));
+              });
+
+              describe('when the api returns invalid JSON', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 200 }, '[}');
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error));
+              });
+
+              describe('when the api gives a 404', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 404 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotFoundError\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
+              });
+
+              describe('when the api gives a 401', () => {
+                before(() => {
+                  requestGet.yields(null, { statusCode: 401 }, '');
+                  result = read();
+                });
+
+                it('rejects with a \'NotAuthorized\' error', () =>
+                  result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+              });
+
+              describe('when something else happens', () => {
+                before(() => {
+                  requestGet.yields(new Error('Something else happened'));
+                  result = read();
+                });
+
+                it('rejects with an error', () => result.should.be.rejectedWith(Error, 'Something else happened'));
+              });
+            });
+          });
+        });
+      });
+    });
+
+    describe('findPartnershipBySystemNumber()', () => {
+      it('is a function', () => api.findPartnershipBySystemNumber.should.be.a('function'));
+      it('takes two arguments', () => api.findPartnershipBySystemNumber.should.have.lengthOf(2));
+
+      describe('when called with no arguments', () => {
+        it('throws a ReferenceError', () => expect(() => api.findPartnershipBySystemNumber()).to.throw(ReferenceError));
+      });
+
+      describe('when called with two arguments', () => {
+        describe('and the first IS NOT an integer', () => {
+          it('throws a TypeError', () => expect(() => api.findPartnershipBySystemNumber({}, '')).to.throw(TypeError));
+        });
+
+        describe('and the first IS an integer', () => {
+          describe('and the second IS NOT a string', () => {
+            it('throws a TypeError', () => expect(() => api.findPartnershipBySystemNumber(0, 0)).to.throw(TypeError));
           });
 
-          describe('when the api returns invalid JSON', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 200 }, '[}');
-              result = api.findBySystemNumber(0, '');
+          describe('and the second IS a string', () => {
+            let result;
+
+            describe('should', () => {
+              before(() => {
+                this.resetStubs = false;
+                const id = 400000001;
+
+                result = api.findPartnershipBySystemNumber(id, accessToken);
+              });
+
+              it('makes a request using the correct query string and adds auth headers', () =>
+                requestGet.should.have.been.calledWith({
+                  headers: expectedHeaders,
+                  url: 'http://testhost.com:1111/v1/registration/partnership/400000001',
+                  agentOptions: {
+                    rejectUnauthorized: true
+                  }
+                }));
+              it('returns a promise', () => result.should.be.instanceOf(Promise));
+
+              after(() => {
+                this.resetStubs = true;
+              });
             });
 
-            it('rejects with an error', () => result.should.be.rejectedWith(Error));
-          });
+            describe('when the api returns a valid record', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 200 }, JSON.stringify(partnershipResponse));
+                result = api.findPartnershipBySystemNumber(0, '');
+              });
 
-          describe('when the api gives a 404', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 404 }, '');
-              result = api.findBySystemNumber(0, '');
+              it('resolves to a processed record', () => result.should.eventually.eql(parsedPartnershipResponse));
             });
 
-            it('rejects with a \'NotFoundError\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
-          });
+            describe('when the api returns invalid JSON', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 200 }, '[}');
+                result = api.findPartnershipBySystemNumber(0, '');
+              });
 
-          describe('when the api gives a 401', () => {
-            before(() => {
-              requestGet.yields(null, { statusCode: 401 }, '');
-              result = api.findBySystemNumber(0, '');
+              it('rejects with an error', () => result.should.be.rejectedWith(Error));
             });
 
-            it('rejects with a \'NotAuthorized\' error', () =>
-              result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
-          });
+            describe('when the api gives a 404', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 404 }, '');
+                result = api.findPartnershipBySystemNumber(0, '');
+              });
 
-          describe('when something else happens', () => {
-            before(() => {
-              requestGet.yields(new Error('Something else happened'));
-              result = api.findBySystemNumber(0, '');
+              it('rejects with a \'NotFoundError\' error', () =>
+                result.should.be.rejectedWith(Error, 'Received status code "404" from API'));
             });
 
-            it('rejects with an error', () =>
-              result.should.be.rejectedWith(Error, 'Something else happened'));
+            describe('when the api gives a 401', () => {
+              before(() => {
+                requestGet.yields(null, { statusCode: 401 }, '');
+                result = api.findPartnershipBySystemNumber(0, '');
+              });
+
+              it('rejects with a \'NotAuthorized\' error', () =>
+                result.should.be.rejectedWith(Error, 'Received status code "401" from API'));
+            });
+
+            describe('when something else happens', () => {
+              before(() => {
+                requestGet.yields(new Error('Something else happened'));
+                result = api.findPartnershipBySystemNumber(0, '');
+              });
+
+              it('rejects with an error', () =>
+                result.should.be.rejectedWith(Error, 'Something else happened'));
+            });
           });
         });
       });
