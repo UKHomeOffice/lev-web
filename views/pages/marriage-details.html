@@ -296,11 +296,11 @@
         <th><span class="visuallyhidden" aria-hidden="true">Registration </span>Administrative area</th>
         <td>{{record.registrar.administrativeArea}}</td>
       </tr>
-      <tr>
-        <th>Date of registration</th>
-        <td>{{record.date}}</td>
-      </tr>
       {{#showAll}}
+        <tr>
+            <th>Date<span class="visuallyhidden" aria-hidden="true"> filed</span></th>
+            <td>{{record.date}}</td>
+        </tr>
         <tr>
             <th>Entry number</th>
             <td>{{record.entryNumber}}</td>
