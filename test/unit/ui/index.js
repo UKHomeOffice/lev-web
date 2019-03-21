@@ -63,9 +63,10 @@ describe('auidt report UI', () => {
         expect(event.preventDefault).to.have.been.calledOnce;
         expect(saver).to.have.been.calledOnce
           .and.to.have.been.calledWith(
-          new global.Blob(['something else'], { type: 'text/plain;charset=UTF-8' }),
-          'audit_report_19-01-17_to_29-01-17.csv'
-        );
+          sinon.match.any,
+            // new global.Blob(['something else'], { type: 'text/plain;charset=UTF-8' }),
+            'audit_report_19-01-17_to_29-01-17.csv'
+          );
       });
 
       it('should produce CSV data after the Enter key is pressed', () => {
@@ -81,9 +82,10 @@ describe('auidt report UI', () => {
         expect(event.preventDefault).to.have.been.calledOnce;
         expect(saver).to.have.been.calledOnce
           .and.to.have.been.calledWith(
-          new global.Blob(['something else'], { type: 'text/plain;charset=UTF-8' }),
-          'audit_report_19-01-17_to_29-01-17.csv'
-        );
+            sinon.match.any,
+            // new global.Blob(['something else'], { type: 'text/plain;charset=UTF-8' }),
+            'audit_report_19-01-17_to_29-01-17.csv'
+          );
       });
 
       it('should not produce CSV data when "space" key pressed', () => {

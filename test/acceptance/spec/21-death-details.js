@@ -23,7 +23,6 @@ describe('Death details page', () => {
     it('a limited version is displayed in a table', () => {
       const browserText = browser.$$('table tr');
       const tableText = browser.$('table').getText();
-      console.log('text ======>\n', tableText);
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].getText().should.match(new RegExp('System number *' + record.id));
       browserText[2].getText().should.match(new RegExp('Surname *' + record.deceased.surname));
