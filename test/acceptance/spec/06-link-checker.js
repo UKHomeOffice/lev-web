@@ -58,6 +58,7 @@ describe('Check for broken links', () => {
       '/details/123',                               // 404
       '/death/details/123',                         // 404
       '/marriage/details/123',                      // 404
+      '/partnership/details/123',                   // 404
       '/audit/user-activity/?from=010111&to=010112' // 500
     ].forEach(checkLinks(true));
   });
