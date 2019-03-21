@@ -62,6 +62,26 @@ describe('Error page', () => {
     });
   });
 
+  describe('shown after a partnership search error', () => {
+    before('bad partnership search', () => {
+      browser.doBadPartnershipSearch();
+    });
+
+    it('should show the error page', () => {
+      browser.shouldBeOn404Page();
+    });
+
+    describe('has a Start Again link which', () => {
+      before('click the Start Again link', () => {
+        browser.click('a.button');
+      });
+
+      it('should take the user back to the Search page', () => {
+        browser.shouldBeOnSearchPage();
+      });
+    });
+  });
+
   describe('shown after an audit report search error', () => {
     before('bad audit search', () => {
       browser.doBadAuditSearch();
