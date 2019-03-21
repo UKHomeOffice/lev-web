@@ -20,6 +20,11 @@ module.exports = (target) => {
     this.submitMarriageSearchPage(systemNumber, surname, forenames, dom);
   };
 
+  target.partnershipSearch = function(systemNumber, surname, forenames, dop) {
+    this.goToPartnershipSearchPage();
+    this.submitPartnershipSearchPage(systemNumber, surname, forenames, dop);
+  };
+
   target.jsRefreshWithRoles = function(roles) {
     this.jsRefreshWithHeaders({ 'X-Auth-Roles': roles });
   };
@@ -48,6 +53,10 @@ module.exports = (target) => {
 
   target.goToMarriageSearchPage = function() {
     this.url(url + '/marriage');
+  };
+
+  target.goToPartnershipSearchPage = function() {
+    this.url(url + '/partnership');
   };
 
   target.shouldBeOnSearchPage = function() {
@@ -88,6 +97,18 @@ module.exports = (target) => {
     formLabels[3].should.contain('Date of marriage');
   };
 
+  target.shouldBeOnPartnershipSearchPage = function() {
+    this.getText('h1').should.equal('Applicant\'s details');
+
+    this.waitForVisible('input[name="system-number"]', 5000);
+    this.shouldBeFocusedOnField('input[name="system-number"]');
+    const formLabels = this.getText('label');
+    formLabels[0].should.equal('System number from partnership certificate');
+    formLabels[1].should.equal('Surname');
+    formLabels[2].should.equal('Forename(s)');
+    formLabels[3].should.contain('Date of partnership');
+  };
+
   target.shouldBeFocusedOnField = function(selector) {
     this.$(selector).hasFocus().should.be.true;
   };
@@ -115,6 +136,14 @@ module.exports = (target) => {
     this.setValue('input[name="surname"]', surname);
     this.setValue('input[name="forenames"]', forenames);
     this.setValue('input[name="dom"]', dom);
+    this.click('input[type="submit"]');
+  };
+
+  target.submitPartnershipSearchPage = function(systemNumber, surname, forenames, dop) {
+    this.setValue('input[name="system-number"]', systemNumber);
+    this.setValue('input[name="surname"]', surname);
+    this.setValue('input[name="forenames"]', forenames);
+    this.setValue('input[name="dop"]', dop);
     this.click('input[type="submit"]');
   };
 

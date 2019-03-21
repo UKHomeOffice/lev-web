@@ -1,0 +1,250 @@
+{{<layout}}
+
+{{$title}}Partnership record check{{/title}}
+
+{{$journeyHeader}}
+  Partnership record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      {{record.partner2.forenames}} {{record.partner2.surname}} &amp; {{record.partner1.forenames}} {{record.partner1.surname}}
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent}}
+{{/maincontent}}
+
+{{$content}}
+  {{#record.status.refer}}
+    <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+  {{/record.status.refer}}
+
+  {{#record.previousRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/partnership/details/{{record.previousRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegistrationLink{{/t}}</a>
+    </div>
+  {{/record.previousRegistration.systemNumber}}
+  {{#record.nextRegistration.systemNumber}}
+    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+      <a href="/partnership/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
+    </div>
+  {{/record.nextRegistration.systemNumber}}
+  <table class="details">
+    <tbody>
+      <tr>
+        <th>System number</th>
+        <td>{{record.id}}</td>
+      </tr>
+      <tr>
+        <th>Date of partnership</th>
+        <td>{{record.dateOfPartnership}}</td>
+      </tr>
+      <tr>
+        <th>Place of partnership</th>
+        <td>{{record.placeOfPartnership.address}}</td>
+      </tr>
+      <tr class="section-head">
+        <th colspan="2">Partner 1</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Surname</th>
+        <td>{{record.partner1.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Forename(s)</th>
+        <td>{{record.partner1.forenames}}</td>
+      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Date of birth</th>
+            <td>{{record.partner1.dob}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Occupation</th>
+            <td>{{record.partner1.occupation}}{{#record.partner1.retired}} (retired){{/record.partner1.retired}}</td>
+        </tr>
+      {{/showAll}}
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Address</th>
+        <td>{{record.partner1.address}}</td>
+      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Condition</th>
+            <td>{{record.partner1.condition}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 1's </span>Signature</th>
+            <td>{{record.partner1.signature}}</td>
+        </tr>
+      {{/showAll}}
+      <tr class="section-head">
+        <th colspan="2">Partner 2</th>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Surname</th>
+        <td>{{record.partner2.surname}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Forename(s)</th>
+        <td>{{record.partner2.forenames}}</td>
+      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Date of birth</th>
+            <td>{{record.partner2.dob}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Occupation</th>
+            <td>{{record.partner2.occupation}}{{#record.partner2.retired}} (retired){{/record.partner2.retired}}</td>
+        </tr>
+      {{/showAll}}
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Address</th>
+        <td>{{record.partner2.address}}</td>
+      </tr>
+      {{#showAll}}
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Condition</th>
+            <td>{{record.partner2.condition}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Partner 2's </span>Signature</th>
+            <td>{{record.partner2.signature}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">Father of partner 1</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Surname</th>
+            <td>{{record.fatherOfPartner1.surname}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Forename(s)</th>
+            <td>{{record.fatherOfPartner1.forenames}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Occupation</th>
+            <td>{{record.fatherOfPartner1.occupation}}{{#record.fatherOfPartner1.retired}} (retired){{/record.fatherOfPartner1.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Designation</th>
+            <td>{{record.fatherOfPartner1.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 1's </span>Deceased</th>
+            <td>{{#record.fatherOfPartner1.deceased}}Yes{{/record.fatherOfPartner1.deceased}}{{^record.fatherOfPartner1.deceased}}No{{/record.fatherOfPartner1.deceased}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">Mother of partner 1</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 1's </span>Surname</th>
+            <td>{{record.motherOfPartner1.surname}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 1's </span>Forename(s)</th>
+            <td>{{record.motherOfPartner1.forenames}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 1's </span>Occupation</th>
+            <td>{{record.motherOfPartner1.occupation}}{{#record.motherOfPartner1.retired}} (retired){{/record.motherOfPartner1.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 1's </span>Designation</th>
+            <td>{{record.motherOfPartner1.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 1's </span>Deceased</th>
+            <td>{{#record.motherOfPartner1.deceased}}Yes{{/record.motherOfPartner1.deceased}}{{^record.motherOfPartner1.deceased}}No{{/record.motherOfPartner1.deceased}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">Father of partner 2</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Surname</th>
+            <td>{{record.fatherOfPartner2.surname}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Forename(s)</th>
+            <td>{{record.fatherOfPartner2.forenames}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Occupation</th>
+            <td>{{record.fatherOfPartner2.occupation}}{{#record.fatherOfPartner2.retired}} (retired){{/record.fatherOfPartner2.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Designation</th>
+            <td>{{record.fatherOfPartner2.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Father of partner 2's </span>Deceased</th>
+            <td>{{#record.fatherOfPartner2.deceased}}Yes{{/record.fatherOfPartner2.deceased}}{{^record.fatherOfPartner2.deceased}}No{{/record.fatherOfPartner2.deceased}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">Mother of partner 2</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 2's </span>Surname</th>
+            <td>{{record.motherOfPartner2.surname}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 2's </span>Forename(s)</th>
+            <td>{{record.motherOfPartner2.forenames}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 2's </span>Occupation</th>
+            <td>{{record.motherOfPartner2.occupation}}{{#record.motherOfPartner2.retired}} (retired){{/record.motherOfPartner2.retired}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 2's </span>Designation</th>
+            <td>{{record.motherOfPartner2.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Mother of partner 2's </span>Deceased</th>
+            <td>{{#record.motherOfPartner2.deceased}}Yes{{/record.motherOfPartner2.deceased}}{{^record.motherOfPartner2.deceased}}No{{/record.motherOfPartner2.deceased}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">First witness</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">First witness's </span>Signature</th>
+            <td>{{record.witness1.forename}} {{record.witness1.surname}}</td>
+        </tr>
+        <tr class="section-head">
+            <th colspan="2">Second witness</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Second witness's </span>Signature</th>
+            <td>{{record.witness2.forename}} {{record.witness2.surname}}</td>
+        </tr>
+      {{/showAll}}
+      <tr class="section-head">
+        <th colspan="2">Registration</th>
+      </tr>
+      {{#showAll}}
+        <tr>
+            <th>Registrar signature</th>
+            <td>{{record.registrar.signature}}</td>
+        </tr>
+      {{/showAll}}
+      <tr>
+        <th>Date of registration</th>
+        <td>{{record.date}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="buttons">
+    <a id="newSearchLink" href="/partnership" class="button">New search</a>
+    <a id="editSearchLink" href="/partnership?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+    {{#canRedirectToResults}}
+      <a id="backToSearchResults" href="/partnership?{{querystring}}" class="grey button">Back to results</a>
+    {{/canRedirectToResults}}
+  </div>
+{{/content}}
+
+{{/layout}}

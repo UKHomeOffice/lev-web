@@ -1,0 +1,65 @@
+{{<layout}}
+
+{{$title}}Partnership record check{{/title}}
+
+{{$journeyHeader}}
+  Partnership record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      Applicant's details
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$validationSummary}}
+  {{> partials-validation-summary}}
+{{/validationSummary}}
+
+{{$maincontent}}
+  {{> partials-maincontent-left}}
+{{/maincontent}}
+
+{{$content}}
+  {{<partials-form}}
+    {{$form}}
+      <div id="system-number-group" class="form-group">
+        <label for="system-number" class="form-label-bold">System number from partnership certificate</label>
+        <input type="text" name="system-number" id="system-number" class="form-control" aria-required="false" value="{{values.system-number}}" maxlength="9">
+      </div>
+      <details{{#errors.system-number}} open{{/errors.system-number}}>
+        <summary><span class="summary">What is the system number?</span></summary>
+        <div id="system-number-hint" class="panel panel-border-narrow">
+          <img
+            src="{{baseUrl}}/public/images/system-number-hint.png"
+            alt="The system number is a nine digit number located in the bottom left corner of the partnership certificate"
+            title="Where to find the system number on a partnership certificate"
+          />
+        </div>
+      </details>
+      {{#input-text}}surname{{/input-text}}
+      {{#input-text}}forenames{{/input-text}}
+      {{#input-text}}dop{{/input-text}}
+      <details{{#errors.dop}} open{{/errors.dop}}>
+        <summary><span class="summary">You can enter the date in any of these formats:</span></summary>
+        <div id="dop-extended-hint" class="panel panel-border-narrow">
+          <ul class="format-list">
+            <li>Full date format (with slashes): <span>31/12/2010</span></li>
+            <li>Full date format without leading zeros: <span>1/1/2010</span></li>
+            <li>Full date format with 2 digit year: <span>1/1/11</span></li>
+            <li>Short date format (without slashes): <span>31122010</span></li>
+            <li>Short date format must have leading zeros: <span>01012010</span></li>
+            <li>Short date format with 2 digit year: <span>010111</span></li>
+          </ul>
+        </div>
+      </details>
+      <div class="buttons">
+        {{#input-submit}}search{{/input-submit}}
+      </div>
+    {{/form}}
+  {{/partials-form}}
+{{/content}}
+
+{{/layout}}
