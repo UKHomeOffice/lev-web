@@ -96,4 +96,26 @@ describe('Smoke Tests', () => {
       });
     });
   });
+
+  describe('Partnership registrations', () => {
+    describe('Searching for a record', () => {
+      before(() => {
+        browser.partnershipSearch('404404404', '', '', '');
+      });
+
+      it('presents me with the results page', () => {
+        browser.shouldBeOnPartnershipResultsPage();
+      });
+    });
+
+    describe('Trying to access a non-existent record', () => {
+      before(() => {
+        browser.url(`${testConfig.url}/partnership/details/404`);
+      });
+
+      it('presents me with the NOT FOUND error page', () => {
+        browser.shouldBeOn404Page();
+      });
+    });
+  });
 });
