@@ -186,7 +186,6 @@ const processMarriageRecord = r => {
 
   return {
     id: Number(r.id),
-    date: block(toBritishDateFormat(r.date)),
     entryNumber: block(r.entryNumber),
     dateOfMarriage: block(toBritishDateFormat(r.dateOfMarriage)),
     placeOfMarriage: {
@@ -272,17 +271,13 @@ const processMarriageRecord = r => {
       refer: blocked
     },
     previousRegistration: blocked ? {
-      date: null,
       systemNumber: null
     } : {
-      date: r.previousRegistration && r.previousRegistration.date,
       systemNumber: r.previousRegistration && r.previousRegistration.id
     },
     nextRegistration: blocked ? {
-      date: null,
       systemNumber: null
     } : {
-      date: r.nextRegistration && r.nextRegistration.date,
       systemNumber: r.nextRegistration && r.nextRegistration.id
     }
   };
