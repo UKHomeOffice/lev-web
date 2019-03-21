@@ -60,7 +60,6 @@ describe('Marriage details page', () => {
         'Superintendent registrar designation *' + record.registrar.superintendentDesignation));
       rowTexts[12].getText().should.match(new RegExp('District *' + record.registrar.district));
       rowTexts[13].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      tableText.should.not.match(new RegExp('Date\\s*' + record.date));
       tableText.should.not.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
@@ -110,8 +109,7 @@ describe('Marriage details page', () => {
         'Superintendent registrar designation *' + record.registrar.superintendentDesignation));
       browserText[40].getText().should.match(new RegExp('District *' + record.registrar.district));
       browserText[41].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      browserText[42].getText().should.match(new RegExp('Date\\s*' + record.date));
-      browserText[43].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
+      browserText[42].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
 
