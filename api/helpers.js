@@ -32,6 +32,11 @@ const buildMarriageParams = (attrs) => _.pickBy({
   forenames: attrs.forenames,
   dateOfMarriage: attrs.dom && toInternationalDateFormat(attrs.dom)
 }, _.identity);
+const buildPartnershipParams = (attrs) => _.pickBy({
+  surname: attrs.surname,
+  forenames: attrs.forenames,
+  dateOfPartnership: attrs.dop && toInternationalDateFormat(attrs.dop)
+}, _.identity);
 const buildAuditParams = (attrs) => _.pickBy({
   from: toInternationalDateFormat(attrs.from),
   to: toInternationalDateFormat(attrs.to),
@@ -47,6 +52,8 @@ const buildQueryUri = (endpoint, attrs) => {
     return endpoint + '?' + querystring.stringify(buildDeathParams(attrs));
   } else if (endpoint.match('marriage')) {
     return endpoint + '?' + querystring.stringify(buildMarriageParams(attrs));
+  } else if (endpoint.match('partnership')) {
+    return endpoint + '?' + querystring.stringify(buildPartnershipParams(attrs));
   }
   return endpoint + '?' + querystring.stringify(buildBirthParams(attrs));
 };
@@ -281,6 +288,134 @@ const processMarriageRecord = r => {
   };
 };
 
+const processPartnershipRecord = r => {
+  const blocked = r.status.blocked !== false;
+  const block = blocked ? () => 'UNAVAILABLE' : value => value;
+
+  return {
+    id: Number(r.id),
+    date: block(toBritishDateFormat(r.date)),
+    dateOfPartnership: block(toBritishDateFormat(r.dateOfPartnership)),
+    placeOfPartnership: {
+      address: block(r.placeOfPartnership.address),
+      short: block(r.placeOfPartnership.short)
+    },
+    registrar: {
+      signature: block(r.registrar.signature)
+    },
+    partner1: {
+      prefix: r.partner1.prefix,
+      forenames: block(r.partner1.forenames),
+      surname: block(r.partner1.surname),
+      suffix: r.partner1.suffix,
+      dob: block(toBritishDateFormat(r.partner1.dob)),
+      sex: block(r.partner1.sex),
+      occupation: block(r.partner1.occupation),
+      retired: block(r.partner1.retired),
+      address: block(r.partner1.address),
+      aliases: [
+        {
+          prefix: block(r.partner1.aliases[0].prefix),
+          forenames: block(r.partner1.aliases[0].forenames),
+          surname: block(r.partner1.aliases[0].surname),
+          suffix: block(r.partner1.aliases[0].suffix)
+        }, {
+          prefix: block(r.partner1.aliases[1].prefix),
+          forenames: block(r.partner1.aliases[1].forenames),
+          surname: block(r.partner1.aliases[1].surname),
+          suffix: block(r.partner1.aliases[1].suffix)
+        }
+      ],
+      condition: block(r.partner1.condition),
+      signature: block(r.partner1.signature)
+    },
+    partner2: {
+      prefix: block(r.partner2.prefix),
+      forenames: block(r.partner2.forenames),
+      surname: block(r.partner2.surname),
+      suffix: block(r.partner2.suffix),
+      dob: block(toBritishDateFormat(r.partner2.dob)),
+      sex: block(r.partner2.sex),
+      occupation: block(r.partner2.occupation),
+      retired: block(r.partner2.retired),
+      address: block(r.partner2.address),
+      aliases: [
+        {
+          prefix: block(r.partner2.aliases[0].prefix),
+          forenames: block(r.partner2.aliases[0].forenames),
+          surname: block(r.partner2.aliases[0].surname),
+          suffix: block(r.partner2.aliases[0].suffix)
+        }, {
+          prefix: block(r.partner2.aliases[1].prefix),
+          forenames: block(r.partner2.aliases[1].forenames),
+          surname: block(r.partner2.aliases[1].surname),
+          suffix: block(r.partner2.aliases[1].suffix)
+        }
+      ],
+      condition: block(r.partner2.condition),
+      signature: block(r.partner2.signature)
+    },
+    fatherOfPartner1: {
+      forenames: block(r.fatherOfPartner1.forenames),
+      surname: block(r.fatherOfPartner1.surname),
+      occupation: block(r.fatherOfPartner1.occupation),
+      retired: block(r.fatherOfPartner1.retired),
+      designation: block(r.fatherOfPartner1.designation),
+      deceased: block(r.fatherOfPartner1.deceased)
+    },
+    fatherOfPartner2: {
+      forenames: block(r.fatherOfPartner2.forenames),
+      surname: block(r.fatherOfPartner2.surname),
+      occupation: block(r.fatherOfPartner2.occupation),
+      retired: block(r.fatherOfPartner2.retired),
+      designation: block(r.fatherOfPartner2.designation),
+      deceased: block(r.fatherOfPartner2.deceased)
+    },
+    motherOfPartner1: {
+      forenames: block(r.motherOfPartner1.forenames),
+      surname: block(r.motherOfPartner1.surname),
+      occupation: block(r.motherOfPartner1.occupation),
+      retired: block(r.motherOfPartner1.retired),
+      designation: block(r.motherOfPartner1.designation),
+      deceased: block(r.motherOfPartner1.deceased)
+    },
+    motherOfPartner2: {
+      forenames: block(r.motherOfPartner2.forenames),
+      surname: block(r.motherOfPartner2.surname),
+      occupation: block(r.motherOfPartner2.occupation),
+      retired: block(r.motherOfPartner2.retired),
+      designation: block(r.motherOfPartner2.designation),
+      deceased: block(r.motherOfPartner2.deceased)
+    },
+    witness1: {
+      forename: block(r.witness1.forename),
+      surname: block(r.witness1.surname)
+    },
+    witness2: {
+      forename: block(r.witness2.forename),
+      surname: block(r.witness2.surname)
+    },
+    status: {
+      refer: blocked,
+      marginalNotes: r.status.marginalNotes
+    },
+    previousRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.previousRegistration && r.previousRegistration.date,
+      systemNumber: r.previousRegistration && r.previousRegistration.id
+    },
+    nextRegistration: blocked ? {
+      date: null,
+      systemNumber: null
+    } : {
+      date: r.nextRegistration && r.nextRegistration.date,
+      systemNumber: r.nextRegistration && r.nextRegistration.id
+    }
+  };
+};
+
 const responseHandler = (resolve, reject) => (err, res, body) => {
   if (err) {
     reject(err);
@@ -305,6 +440,7 @@ module.exports = {
   processRecord: processRecord,
   processDeathRecord: processDeathRecord,
   processMarriageRecord: processMarriageRecord,
+  processPartnershipRecord: processPartnershipRecord,
   refer: refer,
   reformatDate: reformatDate,
   responseHandler: responseHandler,

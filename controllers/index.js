@@ -7,5 +7,7 @@ module.exports = {
   deathDetails: require('./death-details'),
   marriageSearch: require('./marriage-search'),
   marriageDetails: require('./marriage-details'),
+  partnershipSearch: require('./partnership-search'),
+  partnershipDetails: require('./partnership-details'),
   audit: require('./audit')
 };

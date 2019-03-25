@@ -1,0 +1,66 @@
+{{<layout}}
+
+{{$title}}Partnership record check{{/title}}
+
+{{$journeyHeader}}
+  Partnership record check
+{{/journeyHeader}}
+
+{{$header}}
+  {{<partials-page-header}}
+    {{$page-header}}
+      {{#count}}<span class="records-count">{{count}} records found for</span>{{/count}}
+      {{^count}}<span class="records-count">No records found for</span>{{/count}}
+      <span class="query">
+        {{#query}}
+          {{system-number}}
+          {{forenames}}
+          {{surname}}
+          {{dop}}
+        {{/query}}
+      </span>
+    {{/page-header}}
+  {{/partials-page-header}}
+{{/header}}
+
+{{$maincontent}}
+  {{> partials-maincontent}}
+{{/maincontent}}
+
+{{$content}}
+  <ul id="records">
+    {{#records}}
+    <li>
+      <article>
+        <a href="/partnership/details/{{id}}?{{querystring}}&amp;multipleResults">
+          <h2>{{partner1.forenames}} {{partner1.surname}} &amp; {{partner2.forenames}} {{partner2.surname}}</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Date of partnership</th>
+                <td>{{dateOfPartnership}}</td>
+              </tr>
+              <tr>
+                <th>Place of partnership</th>
+                <td>{{placeOfPartnership.short}}</td>
+              </tr>
+            </tbody>
+          </table>
+          {{#status.refer}}
+            <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
+          {{/status.refer}}
+          {{#nextRegistration.systemNumber}}
+            <div class="flag warning">{{#t}}flags.replaced{{/t}}</div>
+          {{/nextRegistration.systemNumber}}
+        </a>
+      </article>
+    </li>
+    {{/records}}
+  </ul>
+  <div class="buttons">
+    <a id="newSearchLink" href="/partnership" class="button">New search</a>
+    <a id="editSearchLink" href="/partnership?edit&amp;{{querystring}}" class="blue button">Edit search</a>
+  </div>
+{{/content}}
+
+{{/layout}}

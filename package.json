@@ -24,7 +24,7 @@
     "test:acceptance:sub": "npm-run-all -pr start:acceptance chimp",
     "test:ci": "npm-run-all -s lint lint:sass cover check-coverage chimp",
     "start:acceptance": "NODE_ENV=acceptance npm start",
-    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.7",
+    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.8",
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm",
     "stop:mockapi:kill": "docker kill lev-api-mock || true",
     "stop:mockapi:rm": "docker rm lev-api-mock || true",

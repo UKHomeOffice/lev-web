@@ -1,6 +1,7 @@
 'use strict';
 
 const rewire = require('rewire');
+const proxyquire = require('proxyquire');
 const logger = rewire('../../../lib/logger');
 
 const fn = logger.__get__('stringify'); // eslint-disable-line no-underscore-dangle
@@ -31,5 +32,27 @@ describe('logger', () => {
           'stack'
         );
     });
+  });
+
+  describe('with production mode enabled', function() {
+    before(() => {
+      this.logger = proxyquire('../../../lib/logger', {
+        '../config': { env: 'production' }
+      });
+    });
+
+    it('should have exception handlers', () =>
+      expect(this.logger).to.be.an('object').that.has.property('exceptionHandlers').which.is.not.empty);
+  });
+
+  describe('with production mode disabled', function() {
+    before(() => {
+      this.logger = proxyquire('../../../lib/logger', {
+        '../config': { env: 'development' }
+      });
+    });
+
+    it('should not have exception handlers', () =>
+      expect(this.logger).to.be.an('object').that.has.property('exceptionHandlers').which.is.empty);
   });
 });

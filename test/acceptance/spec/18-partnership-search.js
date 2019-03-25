@@ -1,26 +1,26 @@
 'use strict';
 
 const moment = require('moment');
-const expectedRecord = require('../expected-marriage-record');
-const expectedRecords = require('../expected-marriage-records');
+const expectedRecord = require('../expected-partnership-record');
+const expectedRecords = require('../expected-partnership-records');
 
-describe('Marriage search', () => {
+describe('Partnership search', () => {
   before(() => {
-    browser.goToMarriageSearchPage();
+    browser.goToPartnershipSearchPage();
   });
 
   it('returns the search page', () => {
-    browser.shouldBeOnMarriageSearchPage();
+    browser.shouldBeOnPartnershipSearchPage();
   });
 
   describe('submitting a valid query', () => {
     describe('that returns no records', () => {
       before(() => {
-        browser.marriageSearch('', 'Churchil', 'Winston', '30/11/2011');
+        browser.partnershipSearch('', 'Churchil', 'Winston', '30/11/2011');
       });
 
       it('returns a results page', () => {
-        browser.shouldBeOnMarriageResultsPage();
+        browser.shouldBeOnPartnershipResultsPage();
       });
 
       it('displays an appropriate message', () => {
@@ -29,44 +29,46 @@ describe('Marriage search', () => {
     });
 
     describe('that returns 1 record', () => {
-      before(() => {
-        const groom = expectedRecord.groom;
+      const partner1 = expectedRecord.partner1;
+      const forename = partner1.forenames.split(' ')[0];
 
-        browser.marriageSearch('', groom.surname, groom.forenames, expectedRecord.dateOfMarriage);
+      before(() => {
+        browser.partnershipSearch('', partner1.surname, forename, expectedRecord.dateOfPartnership);
       });
 
       it('redirects to a details page', () => {
-        browser.shouldBeOnMarriageDetailsPage();
+        browser.shouldBeOnPartnershipDetailsPage();
       });
     });
 
     describe('that returns more than 1 record', () => {
-      const groom = expectedRecords.groom;
+      const partner1 = expectedRecords.partner1;
+      const forename = partner1.forenames.split(' ')[0];
 
       before(() => {
-        browser.marriageSearch('', groom.surname, groom.forenames, expectedRecord.dateOfMarriage);
+        browser.partnershipSearch('', partner1.surname, forename, expectedRecords.dateOfPartnership);
       });
 
       it('returns a results page', () => {
-        browser.shouldBeOnMarriageResultsPage();
+        browser.shouldBeOnPartnershipResultsPage();
       });
 
       it('displays an appropriate message', () => {
-        const h1 = `3 records found for ${groom.forenames} ${groom.surname} ${expectedRecord.dateOfMarriage}`;
+        const h1 = `3 records found for ${forename} ${partner1.surname} ${expectedRecords.dateOfPartnership}`;
         browser.getText('h1').should.equal(h1);
       });
 
       it('displays a subset of each record in a list', () => {
         const browserText = browser.getText('#records li tr');
-        const dom = expectedRecords.dateOfMarriage;
-        const pom = expectedRecords.placeOfMarriage.short;
+        const dop = expectedRecords.dateOfPartnership;
+        const pop = expectedRecords.placeOfPartnership.short;
 
-        browserText[0].should.match(new RegExp('Date of marriage ?' + dom));
-        browserText[1].should.match(new RegExp('Place of marriage ?' + pom));
-        browserText[2].should.match(new RegExp('Date of marriage ?' + dom));
-        browserText[3].should.match(new RegExp('Place of marriage ?' + pom));
-        browserText[4].should.match(new RegExp('Date of marriage ?' + dom));
-        browserText[5].should.match(new RegExp('Place of marriage ?' + pom));
+        browserText[0].should.match(new RegExp('Date of partnership ?' + dop));
+        browserText[1].should.match(new RegExp('Place of partnership ?' + pop));
+        browserText[2].should.match(new RegExp('Date of partnership ?' + dop));
+        browserText[3].should.match(new RegExp('Place of partnership ?' + pop));
+        browserText[4].should.match(new RegExp('Date of partnership ?' + dop));
+        browserText[5].should.match(new RegExp('Place of partnership ?' + pop));
       });
 
       it('contains a link back to the search screen', () => {
@@ -75,25 +77,20 @@ describe('Marriage search', () => {
     });
 
     describe('using the "fast entry" date format', () => {
-      const groom = expectedRecords.groom;
-      const dom = expectedRecords.dateOfMarriage.replace(/\//g, '');
+      const dop = expectedRecords.dateOfPartnership.replace(/\//g, '');
+      const partner1 = expectedRecords.partner1;
+      const forename = partner1.forenames.split(' ')[0];
 
       before(() => {
-        browser.marriageSearch('', groom.surname, groom.forenames, dom);
+        browser.partnershipSearch('', partner1.surname, forename, dop);
       });
 
       it('returns a results page', () => {
-        browser.shouldBeOnMarriageResultsPage();
+        browser.shouldBeOnPartnershipResultsPage();
       });
 
       it('displays an appropriate message', () => {
-        browser.getText('h1').should.equal(
-          '3 records found for '
-            + groom.forenames
-            + ' '
-            + groom.surname
-            + ' '
-            + dom);
+        browser.getText('h1').should.equal(`3 records found for ${forename} ${partner1.surname} ${dop}`);
       });
     });
   });
@@ -101,7 +98,7 @@ describe('Marriage search', () => {
   describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
-        browser.marriageSearch('', '', '', '');
+        browser.partnershipSearch('', '', '', '');
       });
 
       it('displays an error message', () => {
@@ -116,15 +113,15 @@ describe('Marriage search', () => {
         browser.getText('a').should.contain('Please enter at least one forename');
       });
 
-      it('requests a date of marriage', () => {
-        browser.getText('a').should.contain('Please enter a date of marriage');
+      it('requests a date of partnership', () => {
+        browser.getText('a').should.contain('Please enter a date of partnership');
       });
     });
 
     describe('with a system number', () => {
       describe('containing invalid characters', () => {
         before(() => {
-          browser.marriageSearch('invalid', '', '', '');
+          browser.partnershipSearch('invalid', '', '', '');
         });
 
         it('displays an error message', () => {
@@ -140,7 +137,7 @@ describe('Marriage search', () => {
 
       describe('of an invalid length', () => {
         before(() => {
-          browser.marriageSearch('12345678', '', '', '');
+          browser.partnershipSearch('12345678', '', '', '');
         });
 
         it('displays an error message', () => {
@@ -185,7 +182,7 @@ describe('Marriage search', () => {
     describe('with an invalid date that is', () => {
       describe('not a date', () => {
         before(() => {
-          browser.marriageSearch('', 'Churchill', 'Winston', 'invalid');
+          browser.partnershipSearch('', 'Churchill', 'Winston', 'invalid');
         });
 
         it('displays an error message', () => {
@@ -193,18 +190,18 @@ describe('Marriage search', () => {
         });
 
         it('requests a British formatted date', () => {
-          browser.getText('a').should.contain('Please enter a date of marriage in the correct format');
+          browser.getText('a').should.contain('Please enter a date of partnership in the correct format');
         });
 
-        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
+        it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
 
         it('the surname field should be focused (as that comes before forenames)', () =>
-          browser.shouldBeFocusedOnField('input[name="dom"]'));
+          browser.shouldBeFocusedOnField('input[name="dop"]'));
       });
 
       describe('a date in the future', () => {
         before(() => {
-          browser.marriageSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
+          browser.partnershipSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DD/MM/YYYY'));
         });
 
         it('displays an error message', () => {
@@ -212,17 +209,17 @@ describe('Marriage search', () => {
         });
 
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of marriage in the past');
+          browser.getText('a').should.contain('Please enter a date of partnership in the past');
         });
 
-        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
+        it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
       });
     });
 
     describe('with an invalid short date that is', () => {
       describe('too short', () => {
         before(() => {
-          browser.marriageSearch('', 'Churchill', 'Winston', '112001');
+          browser.partnershipSearch('', 'Churchill', 'Winston', '112001');
         });
 
         it('displays an error message', () => {
@@ -230,15 +227,15 @@ describe('Marriage search', () => {
         });
 
         it('requests a British formatted date', () => {
-          browser.getText('a').should.contain('Please enter a date of marriage in the correct format');
+          browser.getText('a').should.contain('Please enter a date of partnership in the correct format');
         });
 
-        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
+        it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
       });
 
       describe('a date in the future', () => {
         before(() => {
-          browser.marriageSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DDMMYYYY'));
+          browser.partnershipSearch('', 'Churchill', 'Winston', moment().add(1, 'day').format('DDMMYYYY'));
         });
 
         it('displays an error message', () => {
@@ -246,10 +243,10 @@ describe('Marriage search', () => {
         });
 
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of marriage in the past');
+          browser.getText('a').should.contain('Please enter a date of partnership in the past');
         });
 
-        it('shows the date of birth details hint', () => browser.hintShowing('#dom-extended-hint'));
+        it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
       });
     });
   });

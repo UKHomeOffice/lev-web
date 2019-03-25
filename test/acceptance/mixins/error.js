@@ -15,6 +15,7 @@ module.exports = (target) => {
   target.doBadBirthSearch = target.doBadSearch;
   target.doBadDeathSearch = () => target.url(url + '/death/details/404');
   target.doBadMarriageSearch = () => target.url(url + '/marriage/details/404');
+  target.doBadPartnershipSearch = () => target.url(url + '/partnership/details/404');
 
   target.doBadAuditSearch = () => target.url(url + '/audit/user-activity?from=200118&to=100118');
 };

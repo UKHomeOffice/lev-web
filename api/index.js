@@ -9,6 +9,7 @@ const baseURL = `${config.api.protocol}://${config.api.host}:${config.api.port}`
 const birthSearch = `${baseURL}/api/v0/events/birth`;
 const deathSearch = `${baseURL}/v1/registration/death`;
 const marriageSearch = `${baseURL}/v1/registration/marriage`;
+const partnershipSearch = `${baseURL}/v1/registration/partnership`;
 const userActivity = `${baseURL}/api/v0/audit/user-activity`;
 
 const requestData = (url, accessToken) =>
@@ -146,6 +147,48 @@ const findMarriages = (searchFields, accessToken) => {
     : findMarriagesByNameDOM(searchFields, accessToken);
 };
 
+const findPartnershipsByNameDOP = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findPartnershipsByNameDOP(): first argument, searchFields, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findPartnershipsByNameDOP(): first argument, searchFields, must be an object');
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
+    throw new TypeError('findPartnershipsByNameDOP(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(helpers.buildQueryUri(partnershipSearch, searchFields), accessToken)
+    .then((data) => data.map(helpers.processPartnershipRecord));
+};
+
+const findPartnershipBySystemNumber = (systemNumber, accessToken) => {
+  if (systemNumber === undefined) {
+    throw new ReferenceError('findPartnershipsBySystemNumber(): first argument, systemNumber, was not defined');
+  } else if ((!Number.isInteger(systemNumber))) {
+    throw new TypeError('findPartnershipsBySystemNumber(): first argument, systemNumber, must be an integer');
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
+    throw new TypeError('findPartnershipsBySystemNumber(): second argument, accessToken, must be a string');
+  }
+
+  return requestData(partnershipSearch + '/' + systemNumber, accessToken)
+    .then(helpers.processPartnershipRecord);
+};
+
+const findPartnerships = (searchFields, accessToken) => {
+  if (searchFields === undefined) {
+    throw new ReferenceError('findPartnerships(): first argument, searchFields, was not defined');
+  } else if (!(searchFields instanceof Object)) {
+    throw new TypeError('findPartnerships(): first argument, searchFields, must be an object');
+  } else if (accessToken !== undefined && typeof accessToken !== 'string') {
+    throw new TypeError('findPartnerships(): second argument, accessToken, must be a string');
+  }
+
+  const systemNumber = searchFields['system-number'] && Number.parseInt(searchFields['system-number'], 10);
+
+  return systemNumber
+    ? findPartnershipBySystemNumber(systemNumber, accessToken).then((data) => [data])
+    : findPartnershipsByNameDOP(searchFields, accessToken);
+};
+
 const userActivityReport = (accessToken, from, to, userFilter) => { // eslint-disable-line complexity
   if (accessToken !== undefined && typeof accessToken !== 'string') {
     throw new TypeError('The "accessToken" parameter must be a string');
@@ -186,5 +229,8 @@ module.exports = {
   findDeathBySystemNumber: findDeathBySystemNumber,
   findMarriages: findMarriages,
   findMarriageBySystemNumber: findMarriageBySystemNumber,
+  findPartnerships: findPartnerships,
+  findPartnershipsByNameDOP: findPartnershipsByNameDOP,
+  findPartnershipBySystemNumber: findPartnershipBySystemNumber,
   userActivityReport: userActivityReport
 };

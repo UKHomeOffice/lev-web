@@ -17,4 +17,16 @@ describe('helpers', () => {
     it(`should return true when only role is "${role}"`, () =>
       expect(showFullDetails({ roles: [role] })).to.be.true);
   });
+
+  describe('serialize', () => {
+    const serialize = helpers.serialize;
+
+    it('should serialize objects', () =>
+      expect(serialize({ an: 'object' })).to.be.a('string').that.equals('an=object')
+    );
+
+    it('should serialize objects with array fields', () =>
+      expect(serialize({ array: ['item'] })).to.be.a('string').that.equals('array%5B0%5D=item')
+    );
+  });
 });
