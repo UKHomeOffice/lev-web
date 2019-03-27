@@ -289,7 +289,6 @@ const processPartnershipRecord = r => {
 
   return {
     id: Number(r.id),
-    date: block(toBritishDateFormat(r.date)),
     dateOfPartnership: block(toBritishDateFormat(r.dateOfPartnership)),
     placeOfPartnership: {
       address: block(r.placeOfPartnership.address),
@@ -395,17 +394,13 @@ const processPartnershipRecord = r => {
       marginalNotes: r.status.marginalNotes
     },
     previousRegistration: blocked ? {
-      date: null,
       systemNumber: null
     } : {
-      date: r.previousRegistration && r.previousRegistration.date,
       systemNumber: r.previousRegistration && r.previousRegistration.id
     },
     nextRegistration: blocked ? {
-      date: null,
       systemNumber: null
     } : {
-      date: r.nextRegistration && r.nextRegistration.date,
       systemNumber: r.nextRegistration && r.nextRegistration.id
     }
   };

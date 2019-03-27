@@ -128,7 +128,6 @@ const parsedResponse = {
 
 const partnershipResponse = {
   'id': 999999910,
-  'date': '2014-10-10',
   'dateOfPartnership': '2012-02-29',
   'placeOfPartnership': {
     'address': 'Test place',
@@ -239,7 +238,6 @@ const partnershipResponse = {
 };
 const parsedPartnershipResponse = {
   id: 999999910,
-  date: '10/10/2014',
   dateOfPartnership: '29/02/2012',
   placeOfPartnership: {
     address: 'Test place',
@@ -346,11 +344,9 @@ const parsedPartnershipResponse = {
   },
   nextRegistration: {
     systemNumber: null,
-    date: null
   },
   previousRegistration: {
     systemNumber: null,
-    date: null
   }
 };
 

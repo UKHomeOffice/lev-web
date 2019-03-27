@@ -54,7 +54,6 @@ describe('Partnership details page', () => {
       tableText.should.not.match(new RegExp('Signature *' + record.witness2.signature));
       tableText.should.not.match(new RegExp('Registrar signature *' + record.registrar.signature));
       tableText.should.not.match(new RegExp('Registrar designation *' + record.registrar.designation));
-      rowTexts[12].getText().should.match(new RegExp('Date of registration *' + record.date));
     });
   };
 
@@ -114,7 +113,6 @@ describe('Partnership details page', () => {
       browserText[46].getText().should.match(new RegExp(
         `Signature *${record.witness2.forename} ${record.witness2.surname}`));
       browserText[48].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
-      browserText[49].getText().should.match(new RegExp('Date of registration *' + record.date));
     });
   };
 
