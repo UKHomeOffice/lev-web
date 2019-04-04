@@ -26,8 +26,9 @@ describe('Partnership details page', () => {
       const tableText = browser.$('table').getText();
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       rowTexts[0].getText().should.match(new RegExp('System number *' + record.id));
-      rowTexts[1].getText().should.match(new RegExp('Date of partnership *' + record.dateOfPartnership));
-      rowTexts[2].getText().should.match(new RegExp('Place of partnership *' + record.placeOfPartnership.address));
+      rowTexts[1].getText().should.match(new RegExp('Date of civil partnership *' + record.dateOfPartnership));
+      rowTexts[2].getText().should.match(new RegExp(
+        'Place of civil partnership *' + record.placeOfPartnership.address));
       rowTexts[4].getText().should.match(new RegExp('Surname *' + record.partner1.surname));
       rowTexts[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.partner1.forenames));
       tableText.should.not.match(new RegExp('Age *' + record.partner1.age));
@@ -62,8 +63,9 @@ describe('Partnership details page', () => {
       const browserText = browser.$$('table tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].getText().should.match(new RegExp('System number *' + record.id));
-      browserText[1].getText().should.match(new RegExp('Date of partnership *' + record.dateOfPartnership));
-      browserText[2].getText().should.match(new RegExp('Place of partnership *' + record.placeOfPartnership.address));
+      browserText[1].getText().should.match(new RegExp('Date of civil partnership *' + record.dateOfPartnership));
+      browserText[2].getText().should.match(new RegExp(
+        'Place of civil partnership *' + record.placeOfPartnership.address));
       browserText[4].getText().should.match(new RegExp('Surname *' + record.partner1.surname));
       browserText[5].getText().should.match(new RegExp('Forename\\(s\\) *' + record.partner1.forenames));
       browserText[6].getText().should.match(new RegExp('Date of birth *' + record.partner1.dob));

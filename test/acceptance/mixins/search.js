@@ -103,10 +103,10 @@ module.exports = (target) => {
     this.waitForVisible('input[name="system-number"]', 5000);
     this.shouldBeFocusedOnField('input[name="system-number"]');
     const formLabels = this.getText('label');
-    formLabels[0].should.equal('System number from partnership certificate');
+    formLabels[0].should.equal('System number from civil partnership certificate');
     formLabels[1].should.equal('Surname');
     formLabels[2].should.equal('Forename(s)');
-    formLabels[3].should.contain('Date of partnership');
+    formLabels[3].should.contain('Date of civil partnership');
   };
 
   target.shouldBeFocusedOnField = function(selector) {

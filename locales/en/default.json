@@ -31,7 +31,7 @@
       "hint": "For example, 18/11/2009"
     },
     "dop": {
-      "label": "Date of partnership",
+      "label": "Date of civil partnership",
       "hint": "For example, 18/11/2009"
     },
     "from": {
@@ -77,9 +77,9 @@
       "since": "Please enter a date after our records began (1 July 2009)"
     },
     "dop": {
-      "required": "Please enter a date of partnership",
-      "british-date": "Please enter a date of partnership in the correct format",
-      "past": "Please enter a date of partnership in the past",
+      "required": "Please enter a date of civil partnership",
+      "british-date": "Please enter a date of civil partnership in the correct format",
+      "past": "Please enter a date of civil partnership in the past",
       "since": "Please enter a date after our records began (1 July 2009)"
     },
     "from": {
