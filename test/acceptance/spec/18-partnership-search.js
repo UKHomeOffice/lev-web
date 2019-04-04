@@ -63,12 +63,12 @@ describe('Partnership search', () => {
         const dop = expectedRecords.dateOfPartnership;
         const pop = expectedRecords.placeOfPartnership.short;
 
-        browserText[0].should.match(new RegExp('Date of partnership ?' + dop));
-        browserText[1].should.match(new RegExp('Place of partnership ?' + pop));
-        browserText[2].should.match(new RegExp('Date of partnership ?' + dop));
-        browserText[3].should.match(new RegExp('Place of partnership ?' + pop));
-        browserText[4].should.match(new RegExp('Date of partnership ?' + dop));
-        browserText[5].should.match(new RegExp('Place of partnership ?' + pop));
+        browserText[0].should.match(new RegExp('Date of civil partnership ?' + dop));
+        browserText[1].should.match(new RegExp('Place of civil partnership ?' + pop));
+        browserText[2].should.match(new RegExp('Date of civil partnership ?' + dop));
+        browserText[3].should.match(new RegExp('Place of civil partnership ?' + pop));
+        browserText[4].should.match(new RegExp('Date of civil partnership ?' + dop));
+        browserText[5].should.match(new RegExp('Place of civil partnership ?' + pop));
       });
 
       it('contains a link back to the search screen', () => {
@@ -114,7 +114,7 @@ describe('Partnership search', () => {
       });
 
       it('requests a date of partnership', () => {
-        browser.getText('a').should.contain('Please enter a date of partnership');
+        browser.getText('a').should.contain('Please enter a date of civil partnership');
       });
     });
 
@@ -190,7 +190,7 @@ describe('Partnership search', () => {
         });
 
         it('requests a British formatted date', () => {
-          browser.getText('a').should.contain('Please enter a date of partnership in the correct format');
+          browser.getText('a').should.contain('Please enter a date of civil partnership in the correct format');
         });
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
@@ -209,7 +209,7 @@ describe('Partnership search', () => {
         });
 
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of partnership in the past');
+          browser.getText('a').should.contain('Please enter a date of civil partnership in the past');
         });
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
@@ -227,7 +227,7 @@ describe('Partnership search', () => {
         });
 
         it('requests a British formatted date', () => {
-          browser.getText('a').should.contain('Please enter a date of partnership in the correct format');
+          browser.getText('a').should.contain('Please enter a date of civil partnership in the correct format');
         });
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
@@ -243,7 +243,7 @@ describe('Partnership search', () => {
         });
 
         it('requests a past date', () => {
-          browser.getText('a').should.contain('Please enter a date of partnership in the past');
+          browser.getText('a').should.contain('Please enter a date of civil partnership in the past');
         });
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
