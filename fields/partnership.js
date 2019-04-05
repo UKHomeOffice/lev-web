@@ -25,7 +25,10 @@ module.exports = {
     }
   },
   'dop': {
-    validate: ['british-date', 'past', 'required'],
+    validate: ['british-date', 'past', {
+      type: 'since',
+      arguments: [require('moment')('1/12/2005', 'DD/MM/YYYY')]
+    }, 'required'],
     dependent: {
       value: '',
       field: 'system-number'

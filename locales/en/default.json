@@ -80,7 +80,7 @@
       "required": "Please enter a date of civil partnership",
       "british-date": "Please enter a date of civil partnership in the correct format",
       "past": "Please enter a date of civil partnership in the past",
-      "since": "Please enter a date after our records began (1 July 2009)"
+      "since": "Please enter a date after our records began (1 December 2005)"
     },
     "from": {
       "required": "Please enter a date to search from",
