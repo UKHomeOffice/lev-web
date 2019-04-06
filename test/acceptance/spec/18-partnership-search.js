@@ -4,6 +4,9 @@ const moment = require('moment');
 const expectedRecord = require('../expected-partnership-record');
 const expectedRecords = require('../expected-partnership-records');
 
+const conf = require('../../../fields/partnership');
+const since = conf.dop.validate[2].arguments[0];
+
 describe('Partnership search', () => {
   before(() => {
     browser.goToPartnershipSearchPage();
@@ -214,6 +217,23 @@ describe('Partnership search', () => {
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
       });
+
+      describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
+        before(() => {
+          browser.partnershipSearch('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DD/MM/YYYY'));
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a date after records began', () => {
+          const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
+          browser.getText('a').should.contain(link);
+        });
+
+        it('shows the date of partnership details hint', () => browser.hintShowing('#dop-extended-hint'));
+      });
     });
 
     describe('with an invalid short date that is', () => {
@@ -247,6 +267,23 @@ describe('Partnership search', () => {
         });
 
         it('shows the date of birth details hint', () => browser.hintShowing('#dop-extended-hint'));
+      });
+
+      describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
+        before(() => {
+          browser.partnershipSearch('', 'Churchill', 'Winston', moment(since).add(-1, 'day').format('DDMMYYYY'));
+        });
+
+        it('displays an error message', () => {
+          browser.getText('h2').should.contain('Fix the following error');
+        });
+
+        it('requests a date after records began', () => {
+          const link = `Please enter a date after our records began (${since.format('D MMMM YYYY')})`;
+          browser.getText('a').should.contain(link);
+        });
+
+        it('shows the date of partnership details hint', () => browser.hintShowing('#dop-extended-hint'));
       });
     });
   });
