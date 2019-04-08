@@ -27,7 +27,8 @@ describe('Details Page', () => {
       browserText[6].getText().should.match(new RegExp('Place of birth *' + record.child.birthplace));
       browserText[8].getText().should.match(new RegExp('Name *' + record.mother.name.fullName));
       browserText[9].getText().should.match(new RegExp('Maiden name *' + record.mother.maidenSurname));
-      browserText[10].getText().should.match(new RegExp('Previous marriage name *' + record.mother.marriageSurname));
+      browserText[10].getText().should.match(new RegExp(
+        'Surname at marriage\\sif different from maiden name *' + record.mother.marriageSurname));
       browserText[11].getText().should.match(new RegExp('Place of birth *' + record.mother.birthplace));
       browserText[13].getText().should.match(new RegExp('Name *' + record.father.name.fullName));
       browserText[14].getText().should.match(new RegExp('Place of birth *' + record.father.birthplace));
