@@ -391,8 +391,7 @@ const processPartnershipRecord = r => {
       surname: block(r.witness2.surname)
     },
     status: {
-      refer: blocked,
-      marginalNotes: r.status.marginalNotes
+      refer: blocked || r.status.marginalNote !== 'None'
     },
     previousRegistration: blocked ? {
       systemNumber: null
