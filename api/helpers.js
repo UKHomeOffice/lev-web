@@ -161,7 +161,8 @@ const processDeathRecord = r => {
       certifiedBy: block(r.deceased.certifiedBy)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None'
+      refer: blocked || r.status.marginalNote !== 'None',
+      corrected: r.status.correction !== 'None'
     },
     previousRegistration: blocked ? {
       date: null,
