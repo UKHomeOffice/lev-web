@@ -269,7 +269,7 @@ const processMarriageRecord = r => {
       signature: block(r.witness10.signature)
     },
     status: {
-      refer: blocked
+      refer: blocked || r.status.marginalNote !== 'None'
     },
     previousRegistration: blocked ? {
       systemNumber: null
