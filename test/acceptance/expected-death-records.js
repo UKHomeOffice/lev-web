@@ -15,7 +15,7 @@ module.exports = {
   informant: {
     forenames: 'Informy',
     surname: 'McInformface',
-    address: '666, Inform House, 6, Inform street, Informington, Informshire, IN7 0RM',
+    address: '666 Inform House, 6 Inform street, Informington, Informshire',
     qualification: 'Life-long nemesis, Present at death',
     signature: 'I. McInformface'
   },
@@ -27,7 +27,7 @@ module.exports = {
     birthplace: 'Test address',
     deathplace: 'Test address',
     sex: 'Male',
-    address: '1, Test street',
+    address: '1 Test street',
     occupation: 'Unemployed',
     causeOfDeath: 'Old age',
     certifiedBy: 'A. Doctor MD'
