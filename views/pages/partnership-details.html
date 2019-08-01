@@ -29,7 +29,9 @@
     </div>
   {{/record.previousRegistration.systemNumber}}
   {{#record.nextRegistration.systemNumber}}
-    <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
+    <div class="flag warning">
+      {{#t}}flags.replaced{{/t}}<br />
+      {{#t}}flags.reRegistrationLabel{{/t}}
       <a href="/partnership/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
     </div>
   {{/record.nextRegistration.systemNumber}}
