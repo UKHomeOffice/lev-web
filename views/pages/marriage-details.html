@@ -22,6 +22,9 @@
   {{#record.status.refer}}
     <div class="flag alert">{{#t}}flags.refer{{/t}}</div>
   {{/record.status.refer}}
+  {{#record.status.corrected}}
+    <div class="flag warning">{{#t}}flags.corrected{{/t}}</div>
+  {{/record.status.corrected}}
 
   {{#record.previousRegistration.systemNumber}}
     <div class="flag">{{#t}}flags.reRegistrationLabel{{/t}}
