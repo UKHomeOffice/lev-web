@@ -231,7 +231,7 @@ const partnershipResponse = {
   },
   'status': {
     'blocked': false,
-    'marginalNotes': null
+    'marginalNote': 'None'
   },
   'nextRegistration': null,
   'previousRegistration': null
@@ -339,8 +339,7 @@ const parsedPartnershipResponse = {
     surname: 'Other'
   },
   status: {
-    refer: false,
-    marginalNotes: null
+    refer: false
   },
   nextRegistration: {
     systemNumber: null,
