@@ -25,15 +25,17 @@ describe('Death details page', () => {
       const tableText = browser.$('table').getText();
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].getText().should.match(new RegExp('System number *' + record.id));
-      browserText[2].getText().should.match(new RegExp('Surname *' + record.deceased.surname));
-      browserText[3].getText().should.match(new RegExp('Forename\\(s\\) *' + record.deceased.forenames));
-      browserText[4].getText().should.match(new RegExp('Date of birth *' + record.deceased.dateOfBirth));
+      browserText[2].getText().should.match(new RegExp(
+        'Name *' + record.deceased.forenames + '.*' + record.deceased.surname));
+      tableText.should.not.match(new RegExp('Maiden name *' + record.deceased.maidenSurname));
+      browserText[3].getText().should.match(new RegExp('Date of birth *' + record.deceased.dateOfBirth));
       tableText.should.not.match(new RegExp('Place of birth *' + record.deceased.birthplace));
-      browserText[5].getText().should.match(new RegExp('Sex *' + record.deceased.sex));
-      browserText[6].getText().should.match(new RegExp('Address *' + record.deceased.address));
+      browserText[4].getText().should.match(new RegExp('Sex *' + record.deceased.sex));
+      browserText[5].getText().should.match(new RegExp('Address *' + record.deceased.address));
       tableText.should.not.match(new RegExp('Occupation *' + record.deceased.occupation));
-      browserText[7].getText().should.match(new RegExp('Date of death *' + record.deceased.dateOfDeath));
+      browserText[6].getText().should.match(new RegExp('Date of death *' + record.deceased.dateOfDeath));
       tableText.should.not.match(new RegExp('Place of death *' + record.deceased.deathplace));
+      tableText.should.not.match(new RegExp('Age at death *' + record.deceased.ageAtDeath));
       tableText.should.not.match(new RegExp('Cause of death *' + record.deceased.causeOfDeath));
       tableText.should.not.match(new RegExp('Death certified by *' + record.deceased.certifiedBy));
       tableText.should.not.match(new RegExp('Surname *' + record.informant.surname));
@@ -43,10 +45,10 @@ describe('Death details page', () => {
       tableText.should.not.match(new RegExp('Signature *' + record.informant.signature));
       tableText.should.not.match(new RegExp('Registrar signature *' + record.registrar.signature));
       tableText.should.not.match(new RegExp('Registrar designation *' + record.registrar.designation));
-      browserText[9].getText().should.match(new RegExp('Sub-district *' + record.registrar.subdistrict));
-      browserText[10].getText().should.match(new RegExp('District *' + record.registrar.district));
-      browserText[11].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      browserText[12].getText().should.match(new RegExp('Date of registration *' + record.date));
+      browserText[8].getText().should.match(new RegExp('Sub-district *' + record.registrar.subdistrict));
+      browserText[9].getText().should.match(new RegExp('District *' + record.registrar.district));
+      browserText[10].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
+      browserText[11].getText().should.match(new RegExp('Date of registration *' + record.date));
       tableText.should.not.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
@@ -56,8 +58,9 @@ describe('Death details page', () => {
       const browserText = browser.$$('table tr');
       // Regexes used here as htmlunit and chrome differ in showing space so need regex to work with both
       browserText[0].getText().should.match(new RegExp('System number *' + record.id));
-      browserText[2].getText().should.match(new RegExp('Surname *' + record.deceased.surname));
-      browserText[3].getText().should.match(new RegExp('Forename\\(s\\) *' + record.deceased.forenames));
+      browserText[2].getText().should.match(new RegExp(
+        'Name *' + record.deceased.forenames + '.*' + record.deceased.surname));
+      browserText[3].getText().should.match(new RegExp('Maiden name *' + record.deceased.maidenSurname));
       browserText[4].getText().should.match(new RegExp('Date of birth *' + record.deceased.dateOfBirth));
       browserText[5].getText().should.match(new RegExp('Place of birth *' + record.deceased.birthplace));
       browserText[6].getText().should.match(new RegExp('Sex *' + record.deceased.sex));
@@ -65,20 +68,21 @@ describe('Death details page', () => {
       browserText[8].getText().should.match(new RegExp('Occupation *' + record.deceased.occupation));
       browserText[9].getText().should.match(new RegExp('Date of death *' + record.deceased.dateOfDeath));
       browserText[10].getText().should.match(new RegExp('Place of death *' + record.deceased.deathplace));
-      browserText[11].getText().should.match(new RegExp('Cause of death *' + record.deceased.causeOfDeath));
-      browserText[12].getText().should.match(new RegExp('Death certified by *' + record.deceased.certifiedBy));
-      browserText[14].getText().should.match(new RegExp('Surname *' + record.informant.surname));
-      browserText[15].getText().should.match(new RegExp('Forename\\(s\\) *' + record.informant.forenames));
-      browserText[16].getText().should.match(new RegExp('Address *' + record.informant.address));
-      browserText[17].getText().should.match(new RegExp('Qualification *' + record.informant.qualification));
-      browserText[18].getText().should.match(new RegExp('Signature *' + record.informant.signature));
-      browserText[20].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
-      browserText[21].getText().should.match(new RegExp('Registrar designation *' + record.registrar.designation));
-      browserText[22].getText().should.match(new RegExp('Sub-district *' + record.registrar.subdistrict));
-      browserText[23].getText().should.match(new RegExp('District *' + record.registrar.district));
-      browserText[24].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
-      browserText[25].getText().should.match(new RegExp('Date of registration *' + record.date));
-      browserText[26].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
+      browserText[11].getText().should.match(new RegExp('Age at death *' + record.deceased.ageAtDeath));
+      browserText[12].getText().should.match(new RegExp('Cause of death *' + record.deceased.causeOfDeath));
+      browserText[13].getText().should.match(new RegExp('Death certified by *' + record.deceased.certifiedBy));
+      browserText[15].getText().should.match(new RegExp('Surname *' + record.informant.surname));
+      browserText[16].getText().should.match(new RegExp('Forename\\(s\\) *' + record.informant.forenames));
+      browserText[17].getText().should.match(new RegExp('Address *' + record.informant.address));
+      browserText[18].getText().should.match(new RegExp('Qualification *' + record.informant.qualification));
+      browserText[19].getText().should.match(new RegExp('Signature *' + record.informant.signature));
+      browserText[21].getText().should.match(new RegExp('Registrar signature *' + record.registrar.signature));
+      browserText[22].getText().should.match(new RegExp('Registrar designation *' + record.registrar.designation));
+      browserText[23].getText().should.match(new RegExp('Sub-district *' + record.registrar.subdistrict));
+      browserText[24].getText().should.match(new RegExp('District *' + record.registrar.district));
+      browserText[25].getText().should.match(new RegExp('Administrative area *' + record.registrar.administrativeArea));
+      browserText[26].getText().should.match(new RegExp('Date of registration *' + record.date));
+      browserText[27].getText().should.match(new RegExp('Entry number *' + record.entryNumber));
     });
   };
 

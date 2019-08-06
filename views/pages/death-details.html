@@ -33,8 +33,7 @@
   {{/record.previousRegistration.systemNumber}}
   {{#record.nextRegistration.systemNumber}}
     <div class="flag warning">
-      {{#t}}flags.replaced{{/t}}<br />
-      {{#t}}flags.reRegistrationLabel{{/t}}
+      {{#t}}flags.replaced{{/t}}
       <a href="/death/details/{{record.nextRegistration.systemNumber}}?{{querystring}}" class="button">{{#t}}flags.reRegisteredLink{{/t}}</a>
     </div>
   {{/record.nextRegistration.systemNumber}}
@@ -48,13 +47,23 @@
         <th colspan="2">Deceased</th>
       </tr>
       <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Surname</th>
-        <td>{{record.deceased.surname}}</td>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Name</th>
+        <td>
+          {{record.deceased.forenames}} {{record.deceased.surname}}
+          {{#record.deceased.aliases}}
+            {{#type}}
+              <br />
+              {{type}} {{prefix}} {{forenames}} {{surname}} {{suffix}}
+            {{/type}}
+          {{/record.deceased.aliases}}
+        </td>
       </tr>
+      {{#showAll}}
       <tr>
-        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Forename(s)</th>
-        <td>{{record.deceased.forenames}}</td>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Maiden name</th>
+        <td>{{record.deceased.maidenSurname}}</td>
       </tr>
+      {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of birth</th>
         <td>{{record.deceased.dateOfBirth}}</td>
@@ -76,17 +85,44 @@
       {{#showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Occupation</th>
-        <td>{{record.deceased.occupation}}</td>
+        <td>
+          {{#record.deceased.occupation}}
+            {{record.deceased.occupation}}
+            {{#record.deceased.retired}}
+              (retired)
+            {{/record.deceased.retired}}
+          {{/record.deceased.occupation}}
+          {{^record.deceased.occupation}}
+            {{#record.partner.occupation}}
+                <br />{{record.deceased.relationshipToPartner}} {{record.partner.name}}, {{record.partner.occupation}}
+                {{#record.partner.retired}}
+                (retired)
+                {{/record.partner.retired}}
+            {{/record.partner.occupation}}
+            {{^record.partner.occupation}}
+                {{#record.father.occupation}}
+                    <br />Child of {{record.father.name}}, {{record.father.occupation}}
+                {{/record.father.occupation}}
+                {{#record.mother.occupation}}
+                    <br />Child of {{record.mother.name}}, {{record.mother.occupation}}
+                {{/record.mother.occupation}}
+            {{/record.partner.occupation}}
+          {{/record.deceased.occupation}}
+        </td>
       </tr>
       {{/showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Date of death</th>
-        <td>{{record.deceased.dateOfDeath}}</td>
+        <td>{{record.deceased.dateOfDeathQualifier}} {{record.deceased.dateOfDeath}}</td>
       </tr>
       {{#showAll}}
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Place of death</th>
         <td>{{record.deceased.deathplace}}</td>
+      </tr>
+      <tr>
+        <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Age at death</th>
+        <td>{{record.deceased.ageAtDeath}}</td>
       </tr>
       <tr>
         <th><span class="visuallyhidden" aria-hidden="true">Deceased's </span>Cause of death</th>
@@ -119,6 +155,27 @@
         <th><span class="visuallyhidden" aria-hidden="true">Informant's </span>Signature</th>
         <td>{{record.informant.signature}}</td>
       </tr>
+      {{#record.inquestDate}}
+        <tr class="section-head">
+            <th colspan="2">Inquest</th>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Inquest </span>Date</th>
+            <td>{{record.inquestDate}}</td>
+        </tr>
+        <tr>
+            <th>Coroner's name</th>
+            <td>{{record.coroner.name}}</td>
+        </tr>
+        <tr>
+            <th>Coroner's designation</th>
+            <td>{{record.coroner.designation}}</td>
+        </tr>
+        <tr>
+            <th><span class="visuallyhidden" aria-hidden="true">Coroner's </span>Area</th>
+            <td>{{record.coroner.area}}</td>
+        </tr>
+      {{/record.inquestDate}}
       {{/showAll}}
       <tr class="section-head">
         <th colspan="2">Registration</th>

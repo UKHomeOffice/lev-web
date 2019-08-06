@@ -22,8 +22,10 @@ module.exports = {
   deceased: {
     forenames: 'Tester',
     surname: 'SOLO',
+    maidenSurname: 'TESTER',
     dateOfBirth: '29/02/1912',
     dateOfDeath: '29/02/2012',
+    ageAtDeath: '100 years',
     birthplace: 'Test address',
     deathplace: 'Test address',
     sex: 'Male',

@@ -111,7 +111,7 @@ const processRecord = (record) => {
       subsequentlyMarried: record.status.reRegistered === 'Subsequently married',
       fatherModified: record.status.reRegistered === 'Father modified',
       replaced: record.status.reRegistered === 'Replacement registration',
-      corrected: record.status.correction !== 'None',
+      corrected: record.status.correction && record.status.correction !== 'None',
       courtOrderInPlace: record.status.marginalNote === 'Court order in place',
       courtOrderRevoked: record.status.marginalNote === 'Court order revoked'
     },
@@ -150,19 +150,44 @@ const processDeathRecord = r => {
     deceased: {
       forenames: block(r.deceased.forenames),
       surname: block(r.deceased.surname),
+      maidenSurname: block(r.deceased.maidenSurname),
       dateOfBirth: block(toBritishDateFormat(r.deceased.dateOfBirth)),
       dateOfDeath: block(toBritishDateFormat(r.deceased.dateOfDeath)),
+      dateOfDeathQualifier: block(r.deceased.dateOfDeathQualifier),
       birthplace: block(r.deceased.birthplace),
       deathplace: block(r.deceased.deathplace),
+      ageAtDeath: block(r.deceased.ageAtDeath),
       sex: block(r.deceased.sex),
       address: block(r.deceased.address),
       occupation: block(r.deceased.occupation),
+      retired: blocked ? false : r.deceased.retired,
       causeOfDeath: block(r.deceased.causeOfDeath),
-      certifiedBy: block(r.deceased.certifiedBy)
+      certifiedBy: block(r.deceased.certifiedBy),
+      relationshipToPartner: block(r.deceased.relationshipToPartner),
+      aliases: blocked ? [] : r.deceased.aliases
     },
+    partner: {
+      name: block(r.partner.name),
+      occupation: block(r.partner.occupation),
+      retired: block(r.partner.retired)
+    },
+    mother: {
+      name: block(r.mother.name),
+      occupation: block(r.mother.occupation)
+    },
+    father: {
+      name: block(r.father.name),
+      occupation: block(r.father.occupation)
+    },
+    coroner: {
+      name: block(r.coroner.name),
+      designation: block(r.coroner.designation),
+      area: block(r.coroner.area)
+    },
+    inquestDate: block(r.inquestDate),
     status: {
-      refer: blocked || r.status.marginalNote !== 'None',
-      corrected: r.status.correction !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None'),
+      corrected: r.status.correction && r.status.correction !== 'None'
     },
     previousRegistration: blocked ? {
       date: null,
@@ -269,7 +294,7 @@ const processMarriageRecord = r => {
       signature: block(r.witness10.signature)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None')
     },
     previousRegistration: blocked ? {
       systemNumber: null
@@ -391,7 +416,7 @@ const processPartnershipRecord = r => {
       surname: block(r.witness2.surname)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None')
     },
     previousRegistration: blocked ? {
       systemNumber: null
