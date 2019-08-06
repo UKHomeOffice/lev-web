@@ -111,7 +111,7 @@ const processRecord = (record) => {
       subsequentlyMarried: record.status.reRegistered === 'Subsequently married',
       fatherModified: record.status.reRegistered === 'Father modified',
       replaced: record.status.reRegistered === 'Replacement registration',
-      corrected: record.status.correction !== 'None',
+      corrected: record.status.correction && record.status.correction !== 'None',
       courtOrderInPlace: record.status.marginalNote === 'Court order in place',
       courtOrderRevoked: record.status.marginalNote === 'Court order revoked'
     },
@@ -161,8 +161,8 @@ const processDeathRecord = r => {
       certifiedBy: block(r.deceased.certifiedBy)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None',
-      corrected: r.status.correction !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None'),
+      corrected: r.status.correction && r.status.correction !== 'None'
     },
     previousRegistration: blocked ? {
       date: null,
@@ -269,7 +269,7 @@ const processMarriageRecord = r => {
       signature: block(r.witness10.signature)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None')
     },
     previousRegistration: blocked ? {
       systemNumber: null
@@ -391,7 +391,7 @@ const processPartnershipRecord = r => {
       surname: block(r.witness2.surname)
     },
     status: {
-      refer: blocked || r.status.marginalNote !== 'None'
+      refer: blocked || (r.status.marginalNote && r.status.marginalNote !== 'None')
     },
     previousRegistration: blocked ? {
       systemNumber: null
