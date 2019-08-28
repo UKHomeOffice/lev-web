@@ -76,7 +76,7 @@
     "npm-run-all": "^3.1.2",
     "request": "^2.85.0",
     "snyk": "^1.83.0",
-    "uglifyify": "^3.0.1",
+    "uglifyify": "^5.0.2",
     "winston": "^1.0.1"
   },
   "devDependencies": {
