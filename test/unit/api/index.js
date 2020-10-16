@@ -172,20 +172,7 @@ const partnershipResponse = {
     'occupation': 'Bride',
     'retired': false,
     'address': null,
-    'aliases': [
-      {
-        'prefix': null,
-        'forenames': 'Test Former',
-        'surname': 'SMITHE',
-        'suffix': null
-      },
-      {
-        'prefix': null,
-        'forenames': null,
-        'surname': null,
-        'suffix': null
-      }
-    ],
+    'aliases': [],
     'signature': 'T. Bride',
     'condition': 'Single'
   },
@@ -282,19 +269,7 @@ const parsedPartnershipResponse = {
     occupation: 'Bride',
     retired: false,
     address: null,
-    aliases: [
-      {
-        prefix: null,
-        forenames: 'Test Former',
-        surname: 'SMITHE',
-        suffix: null
-      }, {
-        prefix: null,
-        forenames: null,
-        surname: null,
-        suffix: null
-      }
-    ],
+    aliases: [],
     signature: 'T. Bride',
     condition: 'Single'
   },
