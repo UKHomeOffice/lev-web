@@ -78,7 +78,7 @@ describe('lib/lev-request', function() {
     });
 
     it('Adds a bearer token when provided', () => {
-      levRequest.get('http://testhost.com', 'access_token');
+      levRequest.get('http://testhost.com', { token: 'access_token' });
 
       requestGet.should.have.been.calledWith({
         url: 'http://testhost.com',

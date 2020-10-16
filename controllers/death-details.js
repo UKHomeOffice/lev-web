@@ -28,7 +28,7 @@ module.exports = function renderDetails(req, res, next) {
 
   const canRedirectToResults = (req.query && req.query.multipleResults) !== undefined;
 
-  return api.findDeathBySystemNumber(Number(systemNumber), ri.token)
+  return api.findDeathBySystemNumber(Number(systemNumber), ri)
     .then(result => res.render('pages/death-details', {
         record: result,
         showAll: helpers.showFullDetails(ri),

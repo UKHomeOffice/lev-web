@@ -7,6 +7,7 @@ const rewire = require('rewire');
 var _ = require('lodash');
 
 const auditController = rewire('../../../controllers/audit');
+const reqInfo = require('../../../lib/req-info');
 /* eslint-disable no-underscore-dangle */
 const dayGenerator = auditController.__get__('dayGenerator');
 const daysInDateRange = auditController.__get__('daysInDateRange');
@@ -61,6 +62,7 @@ describe('Audit Controller', () => {
 
     describe('when there is a query string', () => {
       let req;
+      let ri;
 
       beforeEach(() => {
         req = _.extend(reqres.req(), {
@@ -70,6 +72,7 @@ describe('Audit Controller', () => {
           },
           method: 'GET'
         });
+        ri = reqInfo(req);
       });
 
       describe('the resolved promise', () => {
@@ -82,7 +85,7 @@ describe('Audit Controller', () => {
             const toAdjusted = '02/01/1900';
             const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
             const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-            api.userActivityReport.withArgs(accessToken, matchFrom, matchTo).returns(Promise.resolve({}));
+            api.userActivityReport.withArgs(ri, matchFrom, matchTo).returns(Promise.resolve({}));
 
             res.render = (view, data) => {
               try {
@@ -113,7 +116,7 @@ describe('Audit Controller', () => {
             const toAdjusted = '03/03/1900';
             const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
             const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-            api.userActivityReport.withArgs(accessToken, matchFrom, matchTo, req.query.user)
+            api.userActivityReport.withArgs(ri, matchFrom, matchTo, req.query.user)
               .returns(Promise.resolve({}));
 
             res.render = (view, data) => {
@@ -150,7 +153,7 @@ describe('Audit Controller', () => {
             const toAdjusted = '04/02/2017';
             const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
             const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-            api.userActivityReport.withArgs(accessToken, matchFrom, matchTo).returns(Promise.resolve(records));
+            api.userActivityReport.withArgs(ri, matchFrom, matchTo).returns(Promise.resolve(records));
 
             res.render = (view, data) => {
               try {
@@ -195,7 +198,7 @@ describe('Audit Controller', () => {
             const toAdjusted = '04/02/2017';
             const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
             const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-            api.userActivityReport.withArgs(accessToken, matchFrom, matchTo, req.query.user)
+            api.userActivityReport.withArgs(ri, matchFrom, matchTo, req.query.user)
               .returns(Promise.resolve(records));
 
             res.render = (view, data) => {
@@ -225,7 +228,7 @@ describe('Audit Controller', () => {
           const toAdjusted = '16/01/2016';
           const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
           const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(accessToken, matchFrom, matchTo).returns(Promise.reject(err));
+          api.userActivityReport.withArgs(ri, matchFrom, matchTo).returns(Promise.reject(err));
 
           const next = (error) => {
             try {
@@ -248,7 +251,7 @@ describe('Audit Controller', () => {
           const toAdjusted = '21/01/2009';
           const matchFrom = sinon.match.object.and(momentMatcher(moment(req.query.from, 'DD/MM/YYYY')));
           const matchTo = sinon.match.object.and(momentMatcher(moment(toAdjusted, 'DD/MM/YYYY')));
-          api.userActivityReport.withArgs(accessToken, matchFrom, matchTo).returns(Promise.reject(err.message));
+          api.userActivityReport.withArgs(ri, matchFrom, matchTo).returns(Promise.reject(err.message));
 
           const next = (error) => {
             try {

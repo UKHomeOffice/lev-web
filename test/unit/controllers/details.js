@@ -2,20 +2,18 @@
 
 const rewire = require('rewire');
 const detailsController = rewire('../../../controllers/details');
+const reqInfo = require('../../../lib/req-info');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
 
 const accessToken = 'accessToken';
 
 describe('controllers/details', function() {
+  var ri;
   var req;
   var res;
   var next;
 
   beforeEach(() => {
-    sinon.stub(api, 'findBySystemNumber');
-    api.findBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
-    api.findBySystemNumber.withArgs(34404, accessToken).rejects('error');
-
     req = {
       params: {
         sysnum: '1234'
@@ -31,6 +29,12 @@ describe('controllers/details', function() {
     };
 
     next = sinon.spy();
+
+    ri = reqInfo(req);
+
+    sinon.stub(api, 'findBySystemNumber');
+    api.findBySystemNumber.withArgs(1234, ri).resolves({ records: [] });
+    api.findBySystemNumber.withArgs(34404, ri).rejects('error');
   });
 
   afterEach(() => {
@@ -67,7 +71,7 @@ describe('controllers/details', function() {
     it('calls the api with the request GET params', function() {
       detailsController(req, res, next);
 
-      api.findBySystemNumber.should.have.been.calledWith(1234, accessToken);
+      api.findBySystemNumber.should.have.been.calledWith(1234, ri);
     });
 
     it('raises an error with no GET params', function() {

@@ -2,21 +2,19 @@
 
 const rewire = require('rewire');
 const detailsController = rewire('../../../controllers/partnership-details');
+const reqInfo = require('../../../lib/req-info');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
 const role = require('../../../config').fullDetailsRoleName;
 
 const accessToken = 'accessToken';
 
 describe('controllers/partnership-details', function() {
+  let ri;
   let req;
   let res;
   let next;
 
   beforeEach(() => {
-    sinon.stub(api, 'findPartnershipBySystemNumber');
-    api.findPartnershipBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
-    api.findPartnershipBySystemNumber.withArgs(34404, accessToken).rejects('error');
-
     req = {
       params: {
         sysnum: '1234'
@@ -30,6 +28,11 @@ describe('controllers/partnership-details', function() {
       redirect: sinon.spy()
     };
     next = sinon.spy();
+    ri = reqInfo(req);
+
+    sinon.stub(api, 'findPartnershipBySystemNumber');
+    api.findPartnershipBySystemNumber.withArgs(1234, ri).resolves({ records: [] });
+    api.findPartnershipBySystemNumber.withArgs(34404, ri).rejects('error');
   });
 
   afterEach(() => {
@@ -65,7 +68,7 @@ describe('controllers/partnership-details', function() {
     it('calls the api with the request GET params', () => {
       detailsController(req, res, next);
 
-      api.findPartnershipBySystemNumber.should.have.been.calledWith(1234, accessToken);
+      api.findPartnershipBySystemNumber.should.have.been.calledWith(1234, ri);
     });
 
     it('raises an error with no GET params', () => {
@@ -95,6 +98,9 @@ describe('controllers/partnership-details', function() {
       describe('with "full-details" role', () => {
         beforeEach(() => {
           req.headers['x-auth-roles'] = role;
+          ri = reqInfo(req);
+          api.findPartnershipBySystemNumber.withArgs(1234, ri).resolves({ records: [] });
+          api.findPartnershipBySystemNumber.withArgs(34404, ri).rejects('error');
         });
 
         it('renders the full details page', () =>

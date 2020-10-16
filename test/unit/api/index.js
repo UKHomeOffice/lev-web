@@ -350,6 +350,7 @@ const parsedPartnershipResponse = {
 };
 
 const accessToken = 'access_token';
+const ri = { token: accessToken };
 const expectedHeaders = {
   'Authorization': 'Bearer ' + accessToken,
   'X-Auth-Username': 'user',
@@ -415,7 +416,7 @@ describe('api/index.js', () => {
                   dob: '01/01/2001'
                 };
 
-                result = api.findByNameDOB(query, accessToken);
+                result = api.findByNameDOB(query, ri);
               });
 
               it('make a request using the correct query string and adds auth headers', () =>
@@ -437,7 +438,7 @@ describe('api/index.js', () => {
             describe('when the api returns a valid list of records', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, JSON.stringify([response]));
-                result = api.findByNameDOB({}, '');
+                result = api.findByNameDOB({}, {});
               });
 
               it('resolves to a processed record', () =>
@@ -447,7 +448,7 @@ describe('api/index.js', () => {
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = api.findByNameDOB({}, '');
+                result = api.findByNameDOB({}, {});
               });
 
               it('rejects with an error', () =>
@@ -457,7 +458,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = api.findByNameDOB({}, '');
+                result = api.findByNameDOB({}, {});
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -467,7 +468,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = api.findByNameDOB({}, '');
+                result = api.findByNameDOB({}, {});
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -477,7 +478,7 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = api.findByNameDOB({}, '');
+                result = api.findByNameDOB({}, {});
               });
 
               it('rejects with an error', () =>
@@ -509,7 +510,7 @@ describe('api/index.js', () => {
           describe('and the second IS a string', () => {
             let result;
             let query;
-            const read = () => api.findBirths(query, accessToken);
+            const read = () => api.findBirths(query, ri);
 
             describe('and the first DOES NOT contain a \'system-number\' property', () => {
 
@@ -697,7 +698,7 @@ describe('api/index.js', () => {
                 this.resetStubs = false;
                 const id = 400000001;
 
-                result = api.findBySystemNumber(id, accessToken);
+                result = api.findBySystemNumber(id, ri);
               });
 
               it('makes a request using the correct query string and adds auth headers', () =>
@@ -718,7 +719,7 @@ describe('api/index.js', () => {
             describe('when the api returns a valid record', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, JSON.stringify(response));
-                result = api.findBySystemNumber(0, '');
+                result = api.findBySystemNumber(0, {});
               });
 
               it('resolves to a processed record', () => result.should.eventually.eql(parsedResponse));
@@ -727,7 +728,7 @@ describe('api/index.js', () => {
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = api.findBySystemNumber(0, '');
+                result = api.findBySystemNumber(0, {});
               });
 
               it('rejects with an error', () => result.should.be.rejectedWith(Error));
@@ -736,7 +737,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = api.findBySystemNumber(0, '');
+                result = api.findBySystemNumber(0, {});
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -746,7 +747,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = api.findBySystemNumber(0, '');
+                result = api.findBySystemNumber(0, {});
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -756,7 +757,7 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = api.findBySystemNumber(0, '');
+                result = api.findBySystemNumber(0, {});
               });
 
               it('rejects with an error', () =>
@@ -799,7 +800,7 @@ describe('api/index.js', () => {
                   dop: '01/01/2001'
                 };
 
-                result = api.findPartnershipsByNameDOP(query, accessToken);
+                result = api.findPartnershipsByNameDOP(query, ri);
               });
 
               it('make a request using the correct query string and adds auth headers', () =>
@@ -821,7 +822,7 @@ describe('api/index.js', () => {
             describe('when the api returns a valid list of records', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, JSON.stringify([partnershipResponse]));
-                result = api.findPartnershipsByNameDOP({}, '');
+                result = api.findPartnershipsByNameDOP({}, {});
               });
 
               it('resolves to a processed record', () =>
@@ -831,7 +832,7 @@ describe('api/index.js', () => {
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = api.findPartnershipsByNameDOP({}, '');
+                result = api.findPartnershipsByNameDOP({}, {});
               });
 
               it('rejects with an error', () =>
@@ -841,7 +842,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = api.findPartnershipsByNameDOP({}, '');
+                result = api.findPartnershipsByNameDOP({}, {});
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -851,7 +852,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = api.findPartnershipsByNameDOP({}, '');
+                result = api.findPartnershipsByNameDOP({}, {});
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -861,7 +862,7 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = api.findPartnershipsByNameDOP({}, '');
+                result = api.findPartnershipsByNameDOP({}, {});
               });
 
               it('rejects with an error', () =>
@@ -893,7 +894,7 @@ describe('api/index.js', () => {
           describe('and the second IS a string', () => {
             let result;
             let query;
-            const read = () => api.findPartnerships(query, accessToken);
+            const read = () => api.findPartnerships(query, ri);
 
             describe('and the first DOES NOT contain a \'system-number\' property', () => {
 
@@ -1081,7 +1082,7 @@ describe('api/index.js', () => {
                 this.resetStubs = false;
                 const id = 400000001;
 
-                result = api.findPartnershipBySystemNumber(id, accessToken);
+                result = api.findPartnershipBySystemNumber(id, ri);
               });
 
               it('makes a request using the correct query string and adds auth headers', () =>
@@ -1102,7 +1103,7 @@ describe('api/index.js', () => {
             describe('when the api returns a valid record', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, JSON.stringify(partnershipResponse));
-                result = api.findPartnershipBySystemNumber(0, '');
+                result = api.findPartnershipBySystemNumber(0, {});
               });
 
               it('resolves to a processed record', () => result.should.eventually.eql(parsedPartnershipResponse));
@@ -1111,7 +1112,7 @@ describe('api/index.js', () => {
             describe('when the api returns invalid JSON', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 200 }, '[}');
-                result = api.findPartnershipBySystemNumber(0, '');
+                result = api.findPartnershipBySystemNumber(0, {});
               });
 
               it('rejects with an error', () => result.should.be.rejectedWith(Error));
@@ -1120,7 +1121,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 404', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 404 }, '');
-                result = api.findPartnershipBySystemNumber(0, '');
+                result = api.findPartnershipBySystemNumber(0, {});
               });
 
               it('rejects with a \'NotFoundError\' error', () =>
@@ -1130,7 +1131,7 @@ describe('api/index.js', () => {
             describe('when the api gives a 401', () => {
               before(() => {
                 requestGet.yields(null, { statusCode: 401 }, '');
-                result = api.findPartnershipBySystemNumber(0, '');
+                result = api.findPartnershipBySystemNumber(0, {});
               });
 
               it('rejects with a \'NotAuthorized\' error', () =>
@@ -1140,7 +1141,7 @@ describe('api/index.js', () => {
             describe('when something else happens', () => {
               before(() => {
                 requestGet.yields(new Error('Something else happened'));
-                result = api.findPartnershipBySystemNumber(0, '');
+                result = api.findPartnershipBySystemNumber(0, {});
               });
 
               it('rejects with an error', () =>
@@ -1160,36 +1161,36 @@ describe('api/index.js', () => {
 
     describe('when called with an invalid system user', () => {
       it('should throw a TypeError if the `user` parameter is not a proper string', () => {
-        expect(() => api.userActivityReport(accessToken, moment().add(-1, 'days'), moment(), null)).to.throw(TypeError);
-        expect(() => api.userActivityReport(accessToken, moment().add(-1, 'days'), moment(), 42)).to.throw(TypeError);
+        expect(() => api.userActivityReport(ri, moment().add(-1, 'days'), moment(), null)).to.throw(TypeError);
+        expect(() => api.userActivityReport(ri, moment().add(-1, 'days'), moment(), 42)).to.throw(TypeError);
       });
     });
 
     describe('when called without the required `from` or `to` dates', () => {
       it('should throw a ReferenceError if either parameter is omitted', () => {
-        expect(from => api.userActivityReport(accessToken, from, moment())).to.throw(ReferenceError);
-        expect(() => api.userActivityReport(accessToken, moment())).to.throw(ReferenceError);
+        expect(from => api.userActivityReport(ri, from, moment())).to.throw(ReferenceError);
+        expect(() => api.userActivityReport(ri, moment())).to.throw(ReferenceError);
       });
       it('should throw a TypeError if either parameter is not a `moment` date object', () => {
-        expect(() => api.userActivityReport(accessToken, 'from', moment())).to.throw(TypeError);
-        expect(() => api.userActivityReport(accessToken, moment(), 'to')).to.throw(TypeError);
+        expect(() => api.userActivityReport(ri, 'from', moment())).to.throw(TypeError);
+        expect(() => api.userActivityReport(ri, moment(), 'to')).to.throw(TypeError);
       });
       it('should throw a RangeError if either parameter is not a valid date object', () => {
-        expect(() => api.userActivityReport(accessToken, moment('from'), moment()))
+        expect(() => api.userActivityReport(ri, moment('from'), moment()))
           .to.throw(RangeError);
-        expect(() => api.userActivityReport(accessToken, moment('2017-02-27'), moment('2017-02-29')))
+        expect(() => api.userActivityReport(ri, moment('2017-02-27'), moment('2017-02-29')))
           .to.throw(RangeError);
       });
     });
 
     describe('when called with valid dates', () => {
       it('should throw a RangeError if the `to` date is before `from`', () =>
-        expect(() => api.userActivityReport(accessToken, moment().add(1, 'days'), moment())).to.throw(RangeError)
+        expect(() => api.userActivityReport(ri, moment().add(1, 'days'), moment())).to.throw(RangeError)
       );
 
       const days = config.MAX_AUDIT_RANGE + 1;
       it(`should throw a RangeError if the date range is greater than the ${config.MAX_AUDIT_RANGE} day limit`, () =>
-        expect(() => api.userActivityReport(accessToken, moment().subtract(days, 'days'), moment()))
+        expect(() => api.userActivityReport(ri, moment().subtract(days, 'days'), moment()))
           .to.throw(RangeError, `less than ${config.MAX_AUDIT_RANGE} days`)
       );
 
@@ -1200,7 +1201,7 @@ describe('api/index.js', () => {
 
         before('try to get the user activity data', () => {
           this.resetStubs = false;
-          result = api.userActivityReport(accessToken, moment(from), moment(to));
+          result = api.userActivityReport(ri, moment(from), moment(to));
         });
 
         it('should make a request to the API', () =>
@@ -1227,7 +1228,7 @@ describe('api/index.js', () => {
 
       before('try to get the user activity data', () => {
         this.resetStubs = false;
-        result = api.userActivityReport(accessToken, moment(from), moment(to), 'fred');
+        result = api.userActivityReport(ri, moment(from), moment(to), 'fred');
       });
 
       it('should make a request to the API', () =>

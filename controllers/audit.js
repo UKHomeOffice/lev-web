@@ -3,6 +3,7 @@
 const moment = require('moment');
 const Parent = require('../lib/hof-standalone');
 const api = require('../api');
+const reqInfo = require('../lib/req-info');
 const validators = require('../lib/custom-validators');
 const util = require('util');
 
@@ -68,7 +69,7 @@ const expandUsers = (records, days) => {
 };
 
 AuditController.prototype.successHandler = function successHandler(req, res, callback) {
-  const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
+  const ri = reqInfo(req);
   const from = validators.parseDate(req.form.values.from).floor(24, 'hours');
   const to = validators.parseDate(req.form.values.to).floor(24, 'hours');
   const toInclusive = moment(to).add(1, 'day');
@@ -100,7 +101,7 @@ AuditController.prototype.successHandler = function successHandler(req, res, cal
     callback(error, req, res);
   };
 
-  api.userActivityReport(accessToken, from, toInclusive, userFilter).then(resolved, rejected);
+  api.userActivityReport(ri, from, toInclusive, userFilter).then(resolved, rejected);
 };
 
 const form = new AuditController({
