@@ -5,6 +5,7 @@ const api = require('../api');
 const helpers = require('../lib/helpers');
 const validators = require('../lib/custom-validators');
 const fields = require('../fields/marriage');
+const reqInfo = require('../lib/req-info');
 const util = require('util');
 const _ = require('lodash');
 
@@ -19,9 +20,9 @@ util.inherits(SearchController, Parent);
 // Only redirect when a single result is returned, otherwise render
 // results page
 SearchController.prototype.successHandler = function successHandler(req, res, callback) {
-  const accessToken = req.headers['X-Auth-Token'] || req.headers['x-auth-token'];
   const query = _.pick(req.query, _.keys(fields));
   const querystring = helpers.serialize(query);
+  const ri = reqInfo(req);
 
   const resolved = (records) => {
     if (records.length === 1) {
@@ -53,7 +54,7 @@ SearchController.prototype.successHandler = function successHandler(req, res, ca
     }
   };
 
-  api.findMarriages(req.form.values, accessToken)
+  api.findMarriages(req.form.values, ri)
     .then(resolved, rejected);
   this.emit('complete', req, res);
 };
