@@ -59,17 +59,17 @@ describe('Death search', () => {
       it('displays a subset of each record in a list', () => {
         const browserText = browser.getText('#records li tr');
         const dob = expectedRecords.deceased.dateOfBirth;
-        const occupation = expectedRecords.deceased.occupation;
+        const address = expectedRecords.deceased.address;
         const dod = expectedRecords.deceased.dateOfDeath;
 
         browserText[0].should.match(new RegExp('Date of birth ?' + dob));
-        browserText[1].should.match(new RegExp('Occupation ?' + occupation));
+        browserText[1].should.match(new RegExp('Address ?' + address));
         browserText[2].should.match(new RegExp('Date of death ?' + dod));
         browserText[3].should.match(new RegExp('Date of birth ?' + dob));
-        browserText[4].should.match(new RegExp('Occupation ?' + occupation));
+        browserText[4].should.match(new RegExp('Address ?' + address.replace('1', '2')));
         browserText[5].should.match(new RegExp('Date of death ?' + dod));
         browserText[6].should.match(new RegExp('Date of birth ?' + dob));
-        browserText[7].should.match(new RegExp('Occupation ?' + occupation));
+        browserText[7].should.match(new RegExp('Address ?' + address.replace('1', '3')));
         browserText[8].should.match(new RegExp('Date of death ?' + dod));
       });
 
