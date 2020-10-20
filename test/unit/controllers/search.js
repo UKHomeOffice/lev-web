@@ -1,10 +1,10 @@
 'use strict';
 
-var proxyquire = require('proxyquire');
-var reqres = require('reqres');
-var _ = require('lodash');
+const proxyquire = require('proxyquire');
+const reqres = require('reqres');
+const _ = require('lodash');
 
-var formSubmission = function formSubmission(extension) {
+const formSubmission = function formSubmission(extension) {
   return _.extend({
     'system-number': '',
     'surname': '',
@@ -14,10 +14,10 @@ var formSubmission = function formSubmission(extension) {
 };
 
 describe('controllers/search', function() {
-  var api = {
+  const api = {
     findBirths: sinon.stub()
   };
-  var searchController = proxyquire('../../../controllers/search', {
+  const searchController = proxyquire('../../../controllers/search', {
     '../api': api
   });
 
@@ -26,7 +26,7 @@ describe('controllers/search', function() {
   });
 
   describe('middleware', function() {
-    var res;
+    let res;
 
     beforeEach(function() {
       res = {
@@ -36,7 +36,7 @@ describe('controllers/search', function() {
     });
 
     describe('when there is no query string', function() {
-      var req;
+      let req;
 
       beforeEach(function() {
         req = reqres.req();
@@ -50,7 +50,7 @@ describe('controllers/search', function() {
     });
 
     describe('when there is a query string', function() {
-      var req;
+      let req;
 
       beforeEach(function() {
         req = _.extend(reqres.req(), {
@@ -64,8 +64,8 @@ describe('controllers/search', function() {
 
       describe('resolved promise', function() {
         it('redirects to the details page on one record returned', function(done) {
-          var sysnum = 123456789;
-          var query = formSubmission({
+          const sysnum = 123456789;
+          const query = formSubmission({
             'system-number': `${sysnum}`
           });
 
@@ -83,12 +83,12 @@ describe('controllers/search', function() {
         });
 
         it('renders the results page', function(done) {
-          var query = formSubmission({
+          const query = formSubmission({
             'surname': 'smiths',
             'forenames': 'john',
             'dob': '01/01/2011'
           });
-          var records = [{
+          const records = [{
             surname: 'smith'
           }, {
             surname: 'smith'
@@ -114,7 +114,7 @@ describe('controllers/search', function() {
       });
 
       describe('rejected promise', function() {
-        var query;
+        let query;
 
         beforeEach(function() {
           query = formSubmission({
@@ -150,7 +150,7 @@ describe('controllers/search', function() {
         });
 
         describe('due to any other error', function() {
-          var err;
+          let err;
 
           beforeEach(function() {
             err = new Error({
@@ -160,7 +160,7 @@ describe('controllers/search', function() {
           });
 
           it('passes on to the error handler', function(done) {
-            var next = function(error) {
+            const next = function(error) {
               error.should.equal(err);
               done();
             };

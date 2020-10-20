@@ -8,10 +8,10 @@ const api = detailsController.__get__('api'); // eslint-disable-line no-undersco
 const accessToken = 'accessToken';
 
 describe('controllers/details', function() {
-  var ri;
-  var req;
-  var res;
-  var next;
+  let ri;
+  let req;
+  let res;
+  let next;
 
   beforeEach(() => {
     req = {
