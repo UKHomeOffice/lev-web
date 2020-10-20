@@ -333,19 +333,7 @@ const processPartnershipRecord = r => {
       occupation: block(r.partner1.occupation),
       retired: block(r.partner1.retired),
       address: block(r.partner1.address),
-      aliases: [
-        {
-          prefix: block(r.partner1.aliases[0].prefix),
-          forenames: block(r.partner1.aliases[0].forenames),
-          surname: block(r.partner1.aliases[0].surname),
-          suffix: block(r.partner1.aliases[0].suffix)
-        }, {
-          prefix: block(r.partner1.aliases[1].prefix),
-          forenames: block(r.partner1.aliases[1].forenames),
-          surname: block(r.partner1.aliases[1].surname),
-          suffix: block(r.partner1.aliases[1].suffix)
-        }
-      ],
+      aliases: blocked ? [] : r.partner1.aliases,
       condition: block(r.partner1.condition),
       signature: block(r.partner1.signature)
     },
@@ -359,19 +347,7 @@ const processPartnershipRecord = r => {
       occupation: block(r.partner2.occupation),
       retired: block(r.partner2.retired),
       address: block(r.partner2.address),
-      aliases: [
-        {
-          prefix: block(r.partner2.aliases[0].prefix),
-          forenames: block(r.partner2.aliases[0].forenames),
-          surname: block(r.partner2.aliases[0].surname),
-          suffix: block(r.partner2.aliases[0].suffix)
-        }, {
-          prefix: block(r.partner2.aliases[1].prefix),
-          forenames: block(r.partner2.aliases[1].forenames),
-          surname: block(r.partner2.aliases[1].surname),
-          suffix: block(r.partner2.aliases[1].suffix)
-        }
-      ],
+      aliases: blocked ? [] : r.partner2.aliases,
       condition: block(r.partner2.condition),
       signature: block(r.partner2.signature)
     },

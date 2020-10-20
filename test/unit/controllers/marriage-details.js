@@ -2,21 +2,19 @@
 
 const rewire = require('rewire');
 const detailsController = rewire('../../../controllers/marriage-details');
+const reqInfo = require('../../../lib/req-info');
 const api = detailsController.__get__('api'); // eslint-disable-line no-underscore-dangle
 const role = require('../../../config').fullDetailsRoleName;
 
 const accessToken = 'accessToken';
 
 describe('controllers/marriage-details', function() {
+  let ri;
   let req;
   let res;
   let next;
 
   beforeEach(() => {
-    sinon.stub(api, 'findMarriageBySystemNumber');
-    api.findMarriageBySystemNumber.withArgs(1234, accessToken).resolves({ records: [] });
-    api.findMarriageBySystemNumber.withArgs(34404, accessToken).rejects('error');
-
     req = {
       params: {
         sysnum: '1234'
@@ -30,6 +28,11 @@ describe('controllers/marriage-details', function() {
       redirect: sinon.spy()
     };
     next = sinon.spy();
+    ri = reqInfo(req);
+
+    sinon.stub(api, 'findMarriageBySystemNumber');
+    api.findMarriageBySystemNumber.withArgs(1234, ri).resolves({ records: [] });
+    api.findMarriageBySystemNumber.withArgs(34404, ri).rejects('error');
   });
 
   afterEach(() => {
@@ -65,7 +68,7 @@ describe('controllers/marriage-details', function() {
     it('calls the api with the request GET params', () => {
       detailsController(req, res, next);
 
-      api.findMarriageBySystemNumber.should.have.been.calledWith(1234, accessToken);
+      api.findMarriageBySystemNumber.should.have.been.calledWith(1234, ri);
     });
 
     it('raises an error with no GET params', () => {
@@ -87,6 +90,9 @@ describe('controllers/marriage-details', function() {
       describe('with "full-details" role', () => {
         beforeEach(() => {
           req.headers['x-auth-roles'] = role;
+          ri = reqInfo(req);
+          api.findMarriageBySystemNumber.withArgs(1234, ri).resolves({ records: [] });
+          api.findMarriageBySystemNumber.withArgs(34404, ri).rejects('error');
         });
 
         it('renders the full details page', () =>
