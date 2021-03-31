@@ -73,7 +73,7 @@
     "moment": "^2.22.2",
     "moment-round": "^1.0.1",
     "node-sass": "^4.14.1",
-    "npm-run-all": "^3.1.2",
+    "npm-run-all": "^4.0.0",
     "request": "^2.85.0",
     "snyk": "^1.83.0",
     "uglifyify": "^3.0.1",
