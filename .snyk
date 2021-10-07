@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.12.0
+version: v1.22.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:brace-expansion:20170302':
@@ -285,3 +285,23 @@ patch:
         patched: '2018-06-20T05:43:21.379Z'
     - node-sass > node-gyp > request > hawk > cryptiles > boom > hoek:
         patched: '2018-06-20T05:43:21.379Z'
+  SNYK-JS-LODASH-567746:
+    - hof > hmpo-frontend-toolkit > async > lodash:
+        patched: '2021-10-07T15:49:30.769Z'
+  'npm:mime:20170907':
+    - hof > hmpo-form-wizard > express > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hmpo-form-wizard > express > serve-static > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hmpo-form-wizard > hmpo-form-controller > express > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hof-controllers > hmpo-form-wizard > express > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hof-controllers > hmpo-form-wizard > express > serve-static > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'
+    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > mime:
+        patched: '2021-10-07T15:49:30.769Z'

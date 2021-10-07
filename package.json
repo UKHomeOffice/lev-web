@@ -54,7 +54,7 @@
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
     "postinstall": "npm-run-all create:public sass copy:images uglify hooks",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepublish": "npm run snyk-protect",
     "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./"
   },
@@ -69,15 +69,15 @@
     "hof": "^8.0.0",
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.22.2",
     "moment-round": "^1.0.1",
     "node-sass": "^4.14.1",
     "npm-run-all": "^3.1.2",
     "request": "^2.85.0",
-    "snyk": "^1.83.0",
     "uglifyify": "^3.0.1",
-    "winston": "^1.0.1"
+    "winston": "^1.0.1",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "broken-link-checker": "^0.7.8",
