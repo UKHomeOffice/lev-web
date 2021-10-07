@@ -15,7 +15,7 @@ WORKDIR /app
 ENV NODE_ENV production
 
 COPY *node_modules/ package.json /app/
-RUN npm install --only production > .npm-install.log 2>&1 \
+RUN npm ci --only production > .npm-install.log 2>&1 \
  && rm .npm-install.log \
  || ( EC=$?; cat .npm-install.log; exit $EC )
 
