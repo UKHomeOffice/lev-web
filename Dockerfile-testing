@@ -4,7 +4,8 @@ RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
  && chown -R app:app /app/ \
  && apt-get update --quiet -y \
- && apt-get upgrade --quiet -y
+ && apt-get upgrade --quiet -y \
+ && apt-get install ca-certificates --quiet -y
 
 
 USER app
