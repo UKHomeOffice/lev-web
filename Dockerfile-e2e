@@ -1,2 +1,3 @@
 FROM lev-web-testing
+ENV NODE_TLS_REJECT_UNAUTHORIZED 0
 CMD [ "test:browser" ]
