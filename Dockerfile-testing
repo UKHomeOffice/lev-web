@@ -5,7 +5,7 @@ RUN addgroup --system app \
  && chown -R app:app /app/ \
  && apt-get update --quiet -y \
  && apt-get upgrade --quiet -y \
- && apt-get install ca-certificates g++ build-essential --quiet -y
+ && apt-get install ca-certificates --quiet -y
 
 
 USER app
