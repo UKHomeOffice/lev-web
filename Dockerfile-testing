@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:12
 
 RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
