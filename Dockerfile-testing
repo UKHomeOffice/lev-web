@@ -1,12 +1,12 @@
-FROM node:8
+FROM node:10
 
 RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
  && chown -R app:app /app/ \
  && apt-get update --quiet -y \
  && apt-get upgrade --quiet -y \
- && apt-get install ca-certificates --quiet -y
-
+ && apt-get install g++ build-essential -y \
+ && apt-get install ca-certificates -y
 
 USER app
 WORKDIR /app
