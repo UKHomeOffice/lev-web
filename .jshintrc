@@ -1,14 +1,12 @@
 {
+  "esversion": 6,
   "boss": true,
   "node": true,
   "strict": true,
   "white": true,
   "smarttabs": true,
-  "maxlen": 80,
   "newcap": false,
   "undef": true,
-  "unused": true,
-  "onecase": true,
   "indent": 2,
   "sub": true,
 
@@ -17,5 +15,5 @@
   "asi": true,
   "loopfunc": true,
   "unused": false,
-  "predef": [ "it", "describe", "before" ]
+  "predef": [ "it", "describe", "before", "browser"]
 }
