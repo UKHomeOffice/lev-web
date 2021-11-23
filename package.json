@@ -54,7 +54,7 @@
     "browserify": "browserify ./assets/js/index.js > ./public/js/bundle.js",
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
     "postinstall": "npm-run-all create:public sass copy:images uglify hooks",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepublish": "npm run snyk-protect",
     "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./"
   },
@@ -76,9 +76,9 @@
     "npm-run-all": "^3.1.2",
     "phantomjs": "^2.1.7",
     "request": "^2.85.0",
-    "snyk": "1.454.0",
     "uglifyify": "^3.0.1",
-    "winston": "^1.0.1"
+    "winston": "^1.0.1",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "broken-link-checker": "^0.7.8",
