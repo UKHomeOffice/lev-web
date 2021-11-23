@@ -10,17 +10,42 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 The following tools are needed to install the software
-- NodeJS / NPM
+- Docker / NodeJS / NPM
 
-### Installing
-```bash
-npm install
+### Local development environment (LDE)
+There is a common local development setup that builds, tests, and executes that service within docker.
+This reduces the risk of issues arising due to differences in developers local setup.
+
+To build a new or reset the LDE:
+```shell
+./bin/build
 ```
+
+Once you have the LDE created you can start with:
+```shell
+./bin/start
+```
+
+Access the LDE:
+```shell
+./bin/bash
+```
+
+Once a developer has access to the LDE they should execute all their node / NPM commands within the container:
+```shell
+npm install
+npm start & #background
+npm stop
+npm test
+npm run smoke
+...
+```
+
 
 ## Running the tests
 
 ### Locally
-```bash
+```shall
 npm test
 ```
 
