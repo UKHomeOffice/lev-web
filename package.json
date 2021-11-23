@@ -27,7 +27,7 @@
     "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.16 > /dev/null 2>&1;true",
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm > /dev/null 2>&1;true",
     "stop:mockapi:kill": "docker kill lev-api-mock > /dev/null 2>&1;true",
-    "stop:mockapi:rm": "docker rm lev-api-mock > /dev/null 2>&1;true`}",
+    "stop:mockapi:rm": "docker rm lev-api-mock > /dev/null 2>&1;true",
     "stop:all": "npm-run-all -c stop:mockapi stop",
     "acceptance:pause": "touch ./.acceptance.lock 2>/dev/null",
     "acceptance:play": "rm -f ./.acceptance.lock ; [ -e ./.acceptance.waiting ] && npm run create:trigger || true",
