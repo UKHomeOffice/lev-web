@@ -45,7 +45,7 @@ npm run smoke
 ## Running the tests
 
 ### Locally
-```shall
+```bash
 npm test
 ```
 
