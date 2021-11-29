@@ -1,5 +1,6 @@
 ---
 kind: pipeline
+type: kubernetes
 name: default
 
 platform:
@@ -23,6 +24,7 @@ steps:
   - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
   - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
   environment:
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_IMAGE: lev-web
     MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
   when:
@@ -38,6 +40,7 @@ steps:
   commands:
   - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
   environment:
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
     DOCKER_USERNAME_MOCK: lev-kube
   when:
@@ -48,6 +51,7 @@ steps:
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/lev-ci
   commands:
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
   - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
   - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
@@ -63,6 +67,7 @@ steps:
   - docker push "$${E2E_IMAGE}:$${TAG}"
   - docker push "$${E2E_IMAGE}:latest"
   environment:
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_BASEDIR: /ukhomeofficedigital/
     DOCKER_IMAGE: lev-web
     DOCKER_QUAY_PASSWORD:
@@ -112,6 +117,7 @@ steps:
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/lev-ci
   commands:
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
   - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
   - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
@@ -125,6 +131,7 @@ steps:
     DEV_USERNAME:
       from_secret: DEV_USERNAME
     DOCKER_BASEDIR: /ukhomeofficedigital/
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_IMAGE: lev-web-e2e
     DOCKER_REPO: quay.io
   when:
@@ -210,4 +217,6 @@ steps:
 
 services:
 - name: docker
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  pull: always
+  image: quay.io/ukhomeofficedigital/lev-ci
+...
