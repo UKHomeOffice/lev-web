@@ -12,6 +12,7 @@ steps:
   image: quay.io/ukhomeofficedigital/lev-ci
   commands:
   - set -o pipefail
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
   - docker build -t "$${DOCKER_IMAGE}" .
   - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
@@ -22,7 +23,6 @@ steps:
   - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
   - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
   environment:
-    DOCKER_HOST: tcp://172.17.0.1:2375
     DOCKER_IMAGE: lev-web
     MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
   when:
@@ -38,7 +38,6 @@ steps:
   commands:
   - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
   environment:
-    DOCKER_HOST: tcp://172.17.0.1:2375
     DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
     DOCKER_USERNAME_MOCK: lev-kube
   when:
@@ -65,7 +64,6 @@ steps:
   - docker push "$${E2E_IMAGE}:latest"
   environment:
     DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_HOST: tcp://172.17.0.1:2375
     DOCKER_IMAGE: lev-web
     DOCKER_QUAY_PASSWORD:
       from_secret: DOCKER_QUAY_PASSWORD
@@ -127,7 +125,6 @@ steps:
     DEV_USERNAME:
       from_secret: DEV_USERNAME
     DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_HOST: tcp://172.17.0.1:2375
     DOCKER_IMAGE: lev-web-e2e
     DOCKER_REPO: quay.io
   when:
@@ -211,4 +208,6 @@ steps:
     status:
     - failure
 
-...
+services:
+- name: docker
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
