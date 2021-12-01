@@ -220,6 +220,7 @@ steps:
 services:
   - name: docker
     image: docker:dind
+    privileged: true
     volumes:
       - name: dockersock
         path: /var/run
