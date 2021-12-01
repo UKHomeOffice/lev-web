@@ -10,9 +10,22 @@ platform:
 steps:
   - name: build
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+    environment:
+      DOCKER_HOST: tcp://127.0.0.1:2375
+      DOCKER_IMAGE: lev-web
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
     commands:
       - sleep 20
-      - docker ps -a
+      - set -o pipefail
+      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
+      - docker build -t "$${DOCKER_IMAGE}" .
+      - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
+      - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
+      - sleep 5
+      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
+      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
+      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
       branch:
         - master
