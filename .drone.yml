@@ -8,214 +8,221 @@ platform:
   arch: amd64
 
 steps:
-- name: build
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/lev-ci
-  commands:
-  - set -o pipefail
-  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
-  - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
-  - docker build -t "$${DOCKER_IMAGE}" .
-  - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
-  - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
-  - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
-  - sleep 5
-  - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
-  - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
-  - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
-  environment:
-    DOCKER_HOST: tcp://172.17.0.1:2375
-    DOCKER_IMAGE: lev-web
-    MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
-  when:
-    branch:
-    - master
-    event:
-    - pull_request
-    - push
+  - name: build
+    pull: if-not-exists
+    image: docker:dind
+    commands:
+      - set -o pipefail
+      - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
+      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
+      - docker build -t "$${DOCKER_IMAGE}" .
+      - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
+      - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
+      - sleep 5
+      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
+      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
+      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
+    environment:
+      DOCKER_HOST: tcp://172.17.0.1:2375
+      DOCKER_IMAGE: lev-web
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+    when:
+      branch:
+        - master
+      event:
+        - pull_request
+        - push
 
-- name: perf_test
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/lev-ci
-  commands:
-  - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
-  environment:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
-    DOCKER_USERNAME_MOCK: lev-kube
-  when:
-    event:
-    - pull_request
+  - name: perf_test
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/lev-ci
+    commands:
+      - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
+    environment:
+      DOCKER_HOST: tcp://docker:2375
+      DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
+      DOCKER_USERNAME_MOCK: lev-kube
+    when:
+      event:
+        - pull_request
 
-- name: push_image
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/lev-ci
-  commands:
-  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
-  - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-  - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
-  - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
-  - docker login -u="$${DOCKER_USERNAME}" -p="$${DOCKER_QUAY_PASSWORD}" "$${DOCKER_REPO}"
-  - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:$${TAG}"
-  - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:latest"
-  - docker push "$${IMAGE}:$${TAG}"
-  - docker push "$${IMAGE}:latest"
-  - E2E_IMAGE="$${IMAGE}-e2e"
-  - docker build -t "$${E2E_IMAGE}" -f Dockerfile-e2e .
-  - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:$${TAG}"
-  - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:latest"
-  - docker push "$${E2E_IMAGE}:$${TAG}"
-  - docker push "$${E2E_IMAGE}:latest"
-  environment:
-    DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_IMAGE: lev-web
-    DOCKER_QUAY_PASSWORD:
-      from_secret: DOCKER_QUAY_PASSWORD
-    DOCKER_REPO: quay.io
-    DOCKER_USERNAME: ukhomeofficedigital+lev_web
-  when:
-    branch:
-    - master
-    event:
-    - push
+  - name: push_image
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/lev-ci
+    commands:
+      - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - docker login -u="$${DOCKER_USERNAME}" -p="$${DOCKER_QUAY_PASSWORD}" "$${DOCKER_REPO}"
+      - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:$${TAG}"
+      - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:latest"
+      - docker push "$${IMAGE}:$${TAG}"
+      - docker push "$${IMAGE}:latest"
+      - E2E_IMAGE="$${IMAGE}-e2e"
+      - docker build -t "$${E2E_IMAGE}" -f Dockerfile-e2e .
+      - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:$${TAG}"
+      - docker tag "$${E2E_IMAGE}" "$${E2E_IMAGE}:latest"
+      - docker push "$${E2E_IMAGE}:$${TAG}"
+      - docker push "$${E2E_IMAGE}:latest"
+    environment:
+      DOCKER_BASEDIR: /ukhomeofficedigital/
+      DOCKER_IMAGE: lev-web
+      DOCKER_QUAY_PASSWORD:
+        from_secret: DOCKER_QUAY_PASSWORD
+      DOCKER_REPO: quay.io
+      DOCKER_USERNAME: ukhomeofficedigital+lev_web
+    when:
+      branch:
+        - master
+      event:
+        - push
 
-- name: deploy_image
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/kd:latest
-  commands:
-  - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-  - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
-  - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
-  - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
-  - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
-  - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
-  - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
-  - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
-  - sleep 60
-  environment:
-    DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_IMAGE: lev-web
-    DOCKER_REPO: quay.io
-    KUBE_CONTAINER:
-      from_secret: KUBE_CONTAINER
-    KUBE_DEPLOYMENT:
-      from_secret: KUBE_DEPLOYMENT
-    KUBE_NAMESPACE:
-      from_secret: KUBE_NAMESPACE
-    KUBE_SERVER:
-      from_secret: KUBE_SERVER
-    KUBE_TOKEN:
-      from_secret: KUBE_TOKEN
-  when:
-    branch:
-    - master
-    event:
-    - push
+  - name: deploy_image
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 2
+      - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=$${IMAGE}:$${TAG}"
+      - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+      - $${kubectl} scale deployment $${KUBE_DEPLOYMENT} --replicas 1
+      - sleep 60
+    environment:
+      DOCKER_BASEDIR: /ukhomeofficedigital/
+      DOCKER_IMAGE: lev-web
+      DOCKER_REPO: quay.io
+      KUBE_CONTAINER:
+        from_secret: KUBE_CONTAINER
+      KUBE_DEPLOYMENT:
+        from_secret: KUBE_DEPLOYMENT
+      KUBE_NAMESPACE:
+        from_secret: KUBE_NAMESPACE
+      KUBE_SERVER:
+        from_secret: KUBE_SERVER
+      KUBE_TOKEN:
+        from_secret: KUBE_TOKEN
+    when:
+      branch:
+        - master
+      event:
+        - push
 
-- name: e2e_test
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/lev-ci
-  commands:
-  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
-  - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-  - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
-  - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
-  - set -o pipefail
-  - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
-  environment:
-    DEV_PASSWORD:
-      from_secret: DEV_PASSWORD
-    DEV_URL:
-      from_secret: DEV_URL
-    DEV_USERNAME:
-      from_secret: DEV_USERNAME
-    DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_IMAGE: lev-web-e2e
-    DOCKER_REPO: quay.io
-  when:
-    branch:
-    - master
-    event:
-    - push
+  - name: e2e_test
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/lev-ci
+    commands:
+      - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
+      - set -o pipefail
+      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
+    environment:
+      DEV_PASSWORD:
+        from_secret: DEV_PASSWORD
+      DEV_URL:
+        from_secret: DEV_URL
+      DEV_USERNAME:
+        from_secret: DEV_USERNAME
+      DOCKER_BASEDIR: /ukhomeofficedigital/
+      DOCKER_HOST: tcp://docker:2375
+      DOCKER_IMAGE: lev-web-e2e
+      DOCKER_REPO: quay.io
+    when:
+      branch:
+        - master
+      event:
+        - push
 
-- name: save_test_logs
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/kd:latest
-  commands:
-  - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
-  - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
-  environment:
-    KUBE_DEPLOYMENT:
-      from_secret: KUBE_DEPLOYMENT
-    KUBE_NAMESPACE:
-      from_secret: KUBE_NAMESPACE
-    KUBE_SERVER:
-      from_secret: KUBE_SERVER
-    KUBE_TOKEN:
-      from_secret: KUBE_TOKEN
-  when:
-    branch:
-    - master
-    event:
-    - push
+  - name: save_test_logs
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+      - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+      - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-test-log="`cat test.log`"
+    environment:
+      KUBE_DEPLOYMENT:
+        from_secret: KUBE_DEPLOYMENT
+      KUBE_NAMESPACE:
+        from_secret: KUBE_NAMESPACE
+      KUBE_SERVER:
+        from_secret: KUBE_SERVER
+      KUBE_TOKEN:
+        from_secret: KUBE_TOKEN
+    when:
+      branch:
+        - master
+      event:
+        - push
 
-- name: promote_to_uat
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/drone-trigger:latest
-  settings:
-    branch: master
-    deploy_to: uat
-    drone_server: https://drone-gitlab.acp.homeoffice.gov.uk
-    event: push
-    repo: lev/levops
-  environment:
-    DRONE_TOKEN:
-      from_secret: drone_token
-  when:
-    branch:
-    - master
-    event:
-    - push
+  - name: promote_to_uat
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/drone-trigger:latest
+    settings:
+      branch: master
+      deploy_to: uat
+      drone_server: https://drone-gitlab.acp.homeoffice.gov.uk
+      event: push
+      repo: lev/levops
+    environment:
+      DRONE_TOKEN:
+        from_secret: drone_token
+    when:
+      branch:
+        - master
+      event:
+        - push
 
-- name: notify_slack_success
-  pull: if-not-exists
-  image: plugins/slack:1.0
-  settings:
-    channel: general
-    template: "*Deployed {{repo.name}} to Dev* - <{{build.link}}|#{{build.number}}>\n"
-    username: Drone
-  environment:
-    SLACK_WEBHOOK:
-      from_secret: slack_webhook
-  when:
-    branch:
-    - master
-    event:
-    - push
-    status:
-    - success
+  - name: notify_slack_success
+    pull: if-not-exists
+    image: plugins/slack:1.0
+    settings:
+      channel: general
+      template: "*Deployed {{repo.name}} to Dev* - <{{build.link}}|#{{build.number}}>\n"
+      username: Drone
+    environment:
+      SLACK_WEBHOOK:
+        from_secret: slack_webhook
+    when:
+      branch:
+        - master
+      event:
+        - push
+      status:
+        - success
 
-- name: notify_slack_failure
-  pull: if-not-exists
-  image: plugins/slack
-  settings:
-    channel: alerts
-    template: "*Failed to deploy {{repo.name}} to Dev*\nAuthor: {{build.author}}\nDuration: {{since job.started}} Job: <{{build.link}}|#{{build.number}}>\nCommit: {{build.commit}}\n"
-    username: Drone
-  environment:
-    SLACK_WEBHOOK:
-      from_secret: slack_webhook
-  when:
-    branch:
-    - master
-    event:
-    - push
-    status:
-    - failure
+  - name: notify_slack_failure
+    pull: if-not-exists
+    image: plugins/slack
+    settings:
+      channel: alerts
+      template: "*Failed to deploy {{repo.name}} to Dev*\nAuthor: {{build.author}}\nDuration: {{since job.started}} Job: <{{build.link}}|#{{build.number}}>\nCommit: {{build.commit}}\n"
+      username: Drone
+    environment:
+      SLACK_WEBHOOK:
+        from_secret: slack_webhook
+    when:
+      branch:
+        - master
+      event:
+        - push
+      status:
+        - failure
 
 services:
-- name: docker
-  pull: always
-  image: quay.io/ukhomeofficedigital/lev-ci
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
 ...
