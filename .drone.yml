@@ -10,10 +10,11 @@ platform:
 steps:
   - name: build
     pull: if-not-exists
-    image: docker
+    image: docker:dind
     commands:
       - set -o pipefail
-      - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
+      - sleep 5 # give docker enough time to start
+      - docker ps -a
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
@@ -26,6 +27,9 @@ steps:
     environment:
       DOCKER_IMAGE: lev-web
       MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+    volumes:
+      - name: dockersock
+        path: /var/run
     when:
       branch:
         - master
@@ -216,7 +220,6 @@ steps:
 services:
   - name: docker
     image: docker:dind
-    command: [ '-H', 'unix:///drone/docker.sock' ]
     volumes:
       - name: dockersock
         path: /var/run
