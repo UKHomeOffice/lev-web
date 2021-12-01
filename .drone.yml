@@ -10,7 +10,7 @@ platform:
 steps:
   - name: build
     pull: if-not-exists
-    image: docker:dind
+    image: docker
     commands:
       - set -o pipefail
       - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
@@ -216,6 +216,7 @@ steps:
 services:
   - name: docker
     image: docker:dind
+    command: [ '-H', 'unix:///drone/docker.sock' ]
     volumes:
       - name: dockersock
         path: /var/run
