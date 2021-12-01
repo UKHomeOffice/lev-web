@@ -24,7 +24,6 @@ steps:
   - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
   - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
   environment:
-    DOCKER_HOST: tcp://docker:2375
     DOCKER_IMAGE: lev-web
     MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
   when:
@@ -67,7 +66,6 @@ steps:
   - docker push "$${E2E_IMAGE}:$${TAG}"
   - docker push "$${E2E_IMAGE}:latest"
   environment:
-    DOCKER_HOST: tcp://docker:2375
     DOCKER_BASEDIR: /ukhomeofficedigital/
     DOCKER_IMAGE: lev-web
     DOCKER_QUAY_PASSWORD:
