@@ -9,12 +9,14 @@ platform:
 
 steps:
   - name: build
-    pull: if-not-exists
-    image: docker:dind
-    volumes:
-        - name: dockersock
-          path: /var/run/
+    image: quay.io/ukhomeofficedigital/lev-ci
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+      - DOCKER_IMAGE=lev-web
+      - MOCK_IMAGE=quay.io/ukhomeofficedigital/lev-api:0.16
     commands:
+      - set -o pipefail
+      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
       - docker ps -a
 #    commands:
 #      - set -eo pipefail
@@ -30,9 +32,6 @@ steps:
 #      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
 #      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
 #      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
-    environment:
-      DOCKER_IMAGE: lev-web
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
     when:
       branch:
         - master
