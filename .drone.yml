@@ -10,12 +10,13 @@ platform:
 steps:
   - name: build
     pull: if-not-exists
-    image: docker:dind
+    image: plugins/docker
     commands:
-      - set -o pipefail
+      - set -eo pipefail
       - sleep 5 # give docker enough time to start
       - docker ps -a
       - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
+      - echo DOCKER_NAME
       - docker build -t "$${DOCKER_IMAGE}" .
       - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
       - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
@@ -216,14 +217,6 @@ steps:
         - push
       status:
         - failure
-
-services:
-  - name: docker
-    image: docker:dind
-    privileged: true
-    volumes:
-      - name: dockersock
-        path: /var/run
 
 volumes:
   - name: dockersock
