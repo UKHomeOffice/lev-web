@@ -10,27 +10,29 @@ platform:
 steps:
   - name: build
     pull: if-not-exists
-    image: plugins/docker
-    commands:
-      - set -eo pipefail
-      - sleep 5 # give docker enough time to start
-      - docker ps -a
-      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
-      - echo DOCKER_NAME
-      - docker build -t "$${DOCKER_IMAGE}" .
-      - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
-      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
-      - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
-      - sleep 5
-      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
-      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
-      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
-    environment:
-      DOCKER_IMAGE: lev-web
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+    image: docker:dind
     volumes:
-      - name: dockersock
-        path: /var/run
+        - name: dockersock
+          path: /var/run/
+    commands:
+      - docker ps -a
+#    commands:
+#      - set -eo pipefail
+#      - sleep 5 # give docker enough time to start
+#      - docker ps -a
+#      - DOCKER_NAME="$${DOCKER_IMAGE}-$${DRONE_BUILD_NUMBER}"
+#      - echo DOCKER_NAME
+#      - docker build -t "$${DOCKER_IMAGE}" .
+#      - docker build -t "$${DOCKER_IMAGE}-testing" -f Dockerfile-testing .
+#      - docker run -d --name "$${DOCKER_NAME}" "$${DOCKER_IMAGE}"
+#      - docker run -d --name "$${DOCKER_NAME}-mock" --net "container:$${DOCKER_NAME}" --env "MOCK=true" "$${MOCK_IMAGE}"
+#      - sleep 5
+#      - printf "* lev-web unit and acceptance test logs *\n\n" > test.log
+#      - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
+#      - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
+#    environment:
+#      DOCKER_IMAGE: lev-web
+#      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
     when:
       branch:
         - master
@@ -220,5 +222,6 @@ steps:
 
 volumes:
   - name: dockersock
-    temp: {}
+    host:
+      path: /var/run/
 ...
