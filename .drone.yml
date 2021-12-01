@@ -9,12 +9,9 @@ platform:
 
 steps:
   - name: build
-    image: docker:dind
-    volumes:
-      - name: dockersock
-        path: /var/run
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     commands:
-      - sleep 20 # give docker enough time to start
+      - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
       - docker ps -a
     when:
       branch:
@@ -25,12 +22,5 @@ steps:
 
 services:
   - name: docker
-    image: docker:dind
-    volumes:
-      - name: dockersock
-        path: /var/run
-
-volumes:
-  - name: dockersock
-    temp: { }
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
 ...
