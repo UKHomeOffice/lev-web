@@ -222,6 +222,5 @@ steps:
 
 volumes:
   - name: dockersock
-    host:
-      path: /var/run/
+    temp: {}
 ...
