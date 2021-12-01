@@ -24,7 +24,6 @@ steps:
       - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
       - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     environment:
-      DOCKER_HOST: tcp://172.17.0.1:2375
       DOCKER_IMAGE: lev-web
       MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
     when:
