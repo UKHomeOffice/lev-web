@@ -162,22 +162,20 @@ steps:
         - push
 
   - name: promote_to_uat
-    pull: if-not-exists
-    image: quay.io/ukhomeofficedigital/drone-trigger:latest
+    image: plugins/downstream
     settings:
-      branch: master
-      deploy_to: uat
-      drone_server: https://drone-gl.acp.homeoffice.gov.uk
-      event: push
-      repo: lev/levops
-    environment:
-      DRONE_TOKEN:
+      server: https://drone-gl.acp.homeoffice.gov.uk
+      token:
         from_secret: drone_token
-    when:
-      branch:
-        - master
-      event:
-        - push
+      fork: true
+      deploy: uat
+      repositories:
+        - lev/levops@master
+      when:
+        branch:
+          - master
+        event:
+          - push
 
   - name: notify_slack_success
     pull: if-not-exists
