@@ -171,11 +171,12 @@ steps:
       deploy: uat
       repositories:
         - lev/levops@master
-      when:
-        branch:
-          - master
-        event:
-          - push
+      last_successful: true
+    when:
+      branch:
+        - master
+      event:
+        - push
 
   - name: notify_slack_success
     pull: if-not-exists
