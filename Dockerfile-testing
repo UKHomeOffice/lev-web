@@ -1,15 +1,19 @@
-FROM node:8
+FROM node:10
 
 RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
- && chown -R app:app /app/
+ && chown -R app:app /app/ \
+ && apt-get update --quiet -y \
+ && apt-get upgrade --quiet -y \
+ && apt-get install g++ build-essential -y \
+ && apt-get install ca-certificates -y
 
 USER app
 WORKDIR /app
 ENV NODE_ENV ci
 
-COPY *node_modules/ package.json .snyk /app/
-RUN npm install > .npm-install.log 2>&1 \
+COPY *node_modules/ package.json package-lock.json .snyk /app/
+RUN npm ci > .npm-install.log 2>&1 \
  && rm .npm-install.log \
  || ( EC=$?; cat .npm-install.log; exit $EC )
 

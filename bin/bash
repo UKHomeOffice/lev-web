@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+docker exec -it lev-web_lev-web_1 sh
