@@ -48,6 +48,8 @@ steps:
       DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
       DOCKER_USERNAME_MOCK: lev-kube
     when:
+      branch:
+        - master
       event:
         - pull_request
     resources:
