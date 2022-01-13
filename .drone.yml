@@ -7,6 +7,11 @@ platform:
   os: linux
   arch: amd64
 
+resources:
+  requests:
+    cpu: 1000
+    memory: 2GiB
+
 steps:
   - name: build
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -45,6 +50,10 @@ steps:
     when:
       event:
         - pull_request
+  resources:
+    limits:
+      cpu: 1000
+      memory: 2GiB
 
   - name: push_image
     pull: if-not-exists
