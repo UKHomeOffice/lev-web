@@ -7,6 +7,10 @@ platform:
   os: linux
   arch: amd64
 
+trigger:
+  branch:
+    - master
+
 steps:
   - name: build
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -27,8 +31,6 @@ steps:
       - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
       - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
-      branch:
-        - master
       event:
         - pull_request
         - push
@@ -43,8 +45,6 @@ steps:
       DOCKER_REPO_MOCK: docker.digital.homeoffice.gov.uk
       DOCKER_USERNAME_MOCK: lev-kube
     when:
-      branch:
-        - master
       event:
         - pull_request
 
@@ -77,8 +77,6 @@ steps:
       - docker push "$${E2E_IMAGE}:$${TAG}"
       - docker push "$${E2E_IMAGE}:latest"
     when:
-      branch:
-        - master
       event:
         - push
 
@@ -110,8 +108,6 @@ steps:
       KUBE_TOKEN:
         from_secret: KUBE_TOKEN
     when:
-      branch:
-        - master
       event:
         - push
 
@@ -137,8 +133,6 @@ steps:
       DOCKER_IMAGE: lev-web-e2e
       DOCKER_REPO: quay.io
     when:
-      branch:
-        - master
       event:
         - push
 
@@ -158,8 +152,6 @@ steps:
       KUBE_TOKEN:
         from_secret: KUBE_TOKEN
     when:
-      branch:
-        - master
       event:
         - push
 
@@ -174,8 +166,6 @@ steps:
       SLACK_WEBHOOK:
         from_secret: slack_webhook
     when:
-      branch:
-        - master
       event:
         - push
       status:
@@ -192,8 +182,6 @@ steps:
       SLACK_WEBHOOK:
         from_secret: slack_webhook
     when:
-      branch:
-        - master
       event:
         - push
       status:
@@ -203,8 +191,6 @@ services:
   - name: docker
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     when:
-      branch:
-        - master
       event:
         - pull_request
         - push
