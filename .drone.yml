@@ -50,10 +50,10 @@ steps:
     when:
       event:
         - pull_request
-  resources:
-    limits:
-      cpu: 1000
-      memory: 2GiB
+    resources:
+      limits:
+        cpu: 1000
+        memory: 2GiB
 
   - name: push_image
     pull: if-not-exists
