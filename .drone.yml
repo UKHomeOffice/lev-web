@@ -161,23 +161,6 @@ steps:
       event:
         - push
 
-  - name: promote_to_uat
-    image: plugins/downstream
-    settings:
-      server: https://drone-gl.acp.homeoffice.gov.uk
-      token:
-        from_secret: drone_token
-      fork: true
-      deploy: uat
-      repositories:
-        - lev/levops@master
-      last_successful: true
-    when:
-      branch:
-        - master
-      event:
-        - push
-
   - name: notify_slack_success
     pull: if-not-exists
     image: plugins/slack:1.0
