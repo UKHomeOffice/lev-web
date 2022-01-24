@@ -5,8 +5,8 @@ RUN apk add --no-cache \
       g++ \
       make \
       python \
-      git
-RUN apk upgrade --no-cache
+      git \
+ && apk upgrade --no-cache
 
 ENV PHANTOMJS_VERSION=2.1.1
 ENV NPM_CONFIG_PREFIX=/root/.npm-global
