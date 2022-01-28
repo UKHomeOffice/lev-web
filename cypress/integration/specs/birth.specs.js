@@ -30,8 +30,8 @@ describe('My first test', () => {
       redirect_uri: 'https://dev.notprod.lev.homeoffice.gov.uk',
       // eslint-disable-next-line camelcase
       client_id: 'lev-web',
-      username: 'James.Woodward@digital.homeoffice.gov.uk',
-      password: 'Lev28oct'
+      username: 'xxxxx',
+      password: 'xxxxx'
     });
 
     cy.visit('https://dev.notprod.lev.homeoffice.gov.uk/');
