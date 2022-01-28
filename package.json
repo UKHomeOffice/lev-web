@@ -56,7 +56,9 @@
     "postinstall": "npm-run-all create:public sass copy:images uglify hooks",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
-    "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./"
+    "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./",
+    "cypress": "cypress open",
+    "cypress:all": "cypress run --headless --browser chrome"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -86,6 +88,8 @@
     "chai-as-promised": "^5.3.0",
     "chimpy": "^3.0.4",
     "chromedriver": "^96.0.0",
+    "cypress": "^6.5.0",
+    "cypress-keycloak": "^1.8.0",
     "eslint": "^3.4.0",
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
