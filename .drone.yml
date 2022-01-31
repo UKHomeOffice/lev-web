@@ -36,8 +36,8 @@ steps:
         - push
 
   - name: perf_test
-    pull: if-not-exists
-    image: quay.io/ukhomeofficedigital/lev-ci
+    pull: always
+    image: quay.io/ukhomeofficedigital/lev-ci:latest
     commands:
       - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
     environment:

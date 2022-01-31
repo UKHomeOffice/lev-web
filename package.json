@@ -76,7 +76,7 @@
     "npm-run-all": "^3.1.2",
     "phantomjs": "^2.1.7",
     "request": "^2.85.0",
-    "snyk": "1.454.0",
+    "snyk": "^1.841.0",
     "uglifyify": "^3.0.1",
     "winston": "^1.0.1"
   },
