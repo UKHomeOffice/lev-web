@@ -39,4 +39,3 @@ docker-compose-clean:
 	docker-compose stop
 	docker-compose rm -vf
 
-test: docker-test
