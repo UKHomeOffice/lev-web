@@ -7,10 +7,6 @@ platform:
   os: linux
   arch: amd64
 
-trigger:
-  branch:
-    - master
-
 steps:
   - name: build
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -31,13 +27,15 @@ steps:
       - docker run --net "container:$${DOCKER_NAME}" "$${DOCKER_IMAGE}-testing" | tee -a 'test.log'
       - docker rm -vf "$${DOCKER_NAME}" "$${DOCKER_NAME}-mock"
     when:
+      branch:
+        - master
       event:
         - pull_request
         - push
 
   - name: perf_test
-    pull: always
-    image: quay.io/ukhomeofficedigital/lev-ci:latest
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/lev-ci
     commands:
       - make 'compose_project_name=lev-web-${DRONE_BUILD_NUMBER}' test
     environment:
@@ -77,6 +75,8 @@ steps:
       - docker push "$${E2E_IMAGE}:$${TAG}"
       - docker push "$${E2E_IMAGE}:latest"
     when:
+      branch:
+        - master
       event:
         - push
 
@@ -108,6 +108,8 @@ steps:
       KUBE_TOKEN:
         from_secret: KUBE_TOKEN
     when:
+      branch:
+        - master
       event:
         - push
 
@@ -133,6 +135,8 @@ steps:
       DOCKER_IMAGE: lev-web-e2e
       DOCKER_REPO: quay.io
     when:
+      branch:
+        - master
       event:
         - push
 
@@ -152,6 +156,8 @@ steps:
       KUBE_TOKEN:
         from_secret: KUBE_TOKEN
     when:
+      branch:
+        - master
       event:
         - push
 
@@ -166,6 +172,8 @@ steps:
       SLACK_WEBHOOK:
         from_secret: slack_webhook
     when:
+      branch:
+        - master
       event:
         - push
       status:
@@ -182,6 +190,8 @@ steps:
       SLACK_WEBHOOK:
         from_secret: slack_webhook
     when:
+      branch:
+        - master
       event:
         - push
       status:
