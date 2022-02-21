@@ -6,6 +6,7 @@ plugins:
   - filenames
   - one-variable-per-var
   - mocha
+  - cypress
 
 rules:
 
