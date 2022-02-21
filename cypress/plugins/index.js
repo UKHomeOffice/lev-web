@@ -21,4 +21,11 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  // Populate the environment from process.env
+  config.env.env = process.env.ENV;
+  config.env.url = process.env.TEST_URL;
+  config.env.username = process.env.TEST_USERNAME;
+  config.env.password = process.env.TEST_PASSWORD;
+  return config;
 };
