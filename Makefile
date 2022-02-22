@@ -42,7 +42,7 @@ docker-compose-clean:
 test: docker-test
 
 clean:
-	rm -r node_modules package-lock.json
+	rm -rf node_modules package-lock.json
 
 install:
 	npm install
