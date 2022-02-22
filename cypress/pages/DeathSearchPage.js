@@ -1,17 +1,19 @@
 'use strict';
 
-class BirthSearchPage {
+const SearchPage = require('./SearchPage');
+
+class DeathSearchPage extends SearchPage {
 
   /**
-   * Navigate to birth registration search page
+   * Navigate to death registration search page
    */
   static visit() {
-    cy.visit('/');
-    BirthSearchPage.shouldBeVisible();
+    cy.visit('/death');
+    DeathSearchPage.shouldBeVisible();
   }
 
   /**
-   * Check birth registrations search page is visible
+   * Check death registrations search page is visible
    */
   static shouldBeVisible() {
 
@@ -22,14 +24,14 @@ class BirthSearchPage {
     cy.get('#system-number').should('have.focus');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from birth certificate');
+    cy.get('label[for=system-number]').contains('System number from death certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
-    cy.get('label[for=dob]').contains('Date of birth');
+    cy.get('label[for=dobd]').contains('Date of birth or death');
   }
 
   /**
-   * Perform a birth registration search with the given params
+   * Perform a death registration search with the given params
    *
    * @param systemNumber
    * @param surname
@@ -63,4 +65,4 @@ class BirthSearchPage {
   }
 }
 
-module.exports = BirthSearchPage;
+module.exports = DeathSearchPage;

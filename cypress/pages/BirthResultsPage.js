@@ -1,15 +1,8 @@
 'use strict';
 
-class BirthResultsPage {
+const ResultsPage = require('./ResultsPage');
 
-  /**
-   * Check birth registrations results page is visible
-   */
-  static shouldBeVisible() {
-
-    // Has title
-    cy.get('h1').contains('records found for');
-  }
+class BirthResultsPage extends ResultsPage {
 }
 
 module.exports = BirthResultsPage;

@@ -2,6 +2,8 @@
 
 const BirthSearchPage = require('../../../pages/BirthSearchPage');
 const BirthResultsPage = require('../../../pages/BirthResultsPage');
+const DeathSearchPage = require('../../../pages/DeathSearchPage');
+const DeathResultsPage = require('../../../pages/DeathResultsPage');
 const ErrorPage = require('../../../pages/ErrorPage');
 const LoginPage = require('../../../pages/LoginPage');
 
@@ -23,6 +25,7 @@ describe('Accessing the UI', () => {
       BirthSearchPage.visit();
       BirthSearchPage.shouldBeVisible();
     });
+
     describe('Birth registrations', () => {
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
@@ -34,6 +37,24 @@ describe('Accessing the UI', () => {
       describe('Trying to access a non-existent record', () => {
         it('presents me with the NOT FOUND error page', () => {
           cy.visit('/details/404', {
+            failOnStatusCode: false
+          });
+          ErrorPage.shouldBeOn404Page();
+        });
+      });
+    });
+
+    describe('Death registrations', () => {
+      describe('Searching for a record', () => {
+        it('presents me with the results page', () => {
+          DeathSearchPage.visit();
+          DeathSearchPage.performSearch('404404404');
+          DeathResultsPage.shouldBeVisible();
+        });
+      });
+      describe('Trying to access a non-existent record', () => {
+        it('presents me with the NOT FOUND error page', () => {
+          cy.visit('/death/details/404', {
             failOnStatusCode: false
           });
           ErrorPage.shouldBeOn404Page();
