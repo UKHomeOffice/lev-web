@@ -7,7 +7,7 @@ class LoginPage {
    */
   static logout() {
     cy.logout({
-      root: 'https://sso-dev.notprod.homeoffice.gov.uk',
+      root: Cypress.env('keycloakUrl'),
       realm: 'lev',
       // eslint-disable-next-line camelcase
       redirect_uri: Cypress.env('url')
@@ -21,7 +21,7 @@ class LoginPage {
     this.logout();
 
     cy.login({
-      root: 'https://sso-dev.notprod.homeoffice.gov.uk',
+      root: Cypress.env('keycloakUrl'),
       realm: 'lev',
       // eslint-disable-next-line camelcase
       redirect_uri: Cypress.env('url'),
