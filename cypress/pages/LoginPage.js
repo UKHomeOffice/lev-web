@@ -3,15 +3,22 @@
 class LoginPage {
 
   /**
-   * Login using keycloak
+   * Logout
    */
-  static login() {
+  static logout() {
     cy.logout({
       root: 'https://sso-dev.notprod.homeoffice.gov.uk',
       realm: 'lev',
       // eslint-disable-next-line camelcase
       redirect_uri: Cypress.env('url')
     });
+  }
+
+  /**
+   * Login using keycloak
+   */
+  static login() {
+    LoginPage.logout();
 
     cy.login({
       root: 'https://sso-dev.notprod.homeoffice.gov.uk',
