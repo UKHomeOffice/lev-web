@@ -1,47 +1,31 @@
 'use strict';
 
+const BirthSearchPage = require('../../../pages/BirthSearchPage');
+const BirthResultsPage = require('../../../pages/BirthResultsPage');
+const LoginPage = require('../../../pages/LoginPage');
+
 describe('Accessing the UI', () => {
   it('presents me with the login prompt', () => {
-    cy.visit('/');
-    cy.get('input[name="login"]').should('exist');
+    BirthSearchPage.visit();
+    LoginPage.shouldBeVisible();
   });
 
   describe('allows me to login to LEV', () => {
     before(() => {
-      cy.logout({
-        root: 'https://sso-dev.notprod.homeoffice.gov.uk',
-        realm: 'lev',
-        // eslint-disable-next-line camelcase
-        redirect_uri: Cypress.env('url')
-      });
-
-      cy.login({
-        root: 'https://sso-dev.notprod.homeoffice.gov.uk',
-        realm: 'lev',
-        // eslint-disable-next-line camelcase
-        redirect_uri: Cypress.env('url'),
-        // eslint-disable-next-line camelcase
-        client_id: 'lev-web',
-        username: Cypress.env('username'),
-        password: Cypress.env('password')
-      });
+      LoginPage.login();
     });
-    it('should display the Birth search page', () => {
-
-      // Visit birth page
-      cy.visit('/');
-
-      // Has title
-      cy.get('h1').contains('Applicant\'s details');
-
-      // Has focus
-      cy.get('#system-number').should('have.focus');
-
-      // Has labels
-      cy.get('label[for=system-number]').contains('System number from birth certificate');
-      cy.get('label[for=surname]').contains('Surname');
-      cy.get('label[for=forenames]').contains('Forename(s)');
-      cy.get('label[for=dob]').contains('Date of birth');
+    it('presents me with a search form for births', () => {
+      BirthSearchPage.visit();
+      BirthSearchPage.shouldBeVisible();
+    });
+    describe('Birth registrations', () => {
+      describe('Searching for a record', () => {
+        it('presents me with the results page', () => {
+          BirthSearchPage.visit();
+          BirthSearchPage.performSearch('404404404');
+          BirthResultsPage.shouldBeVisible();
+        });
+      });
     });
   });
 });
