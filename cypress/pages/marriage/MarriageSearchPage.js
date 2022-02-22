@@ -35,7 +35,7 @@ class MarriageSearchPage extends SearchPage {
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dob
+   * @param dom
    */
   static performSearch({
                          systemNumber,
@@ -44,28 +44,11 @@ class MarriageSearchPage extends SearchPage {
                          dom
                        }) {
 
-    // System Number
-    if (systemNumber) {
-      cy.get('#system-number').type(systemNumber);
-    }
-
-    // Surname
-    if (surname) {
-      cy.get('#surname').type(surname);
-    }
-
-    // Forename(s)
-    if (forenames) {
-      cy.get('#forenames').type(forenames);
-    }
-
-    // DOB
-    if (dom) {
-      cy.get('#dobd').type(dom);
-    }
-
-    // Submit
-    cy.get('input[type="submit"]').click();
+    this.setText('#system-number', systemNumber);
+    this.setText('#surname', surname);
+    this.setText('#forenames', forenames);
+    this.setText('#dom', dom);
+    this.submit();
   }
 }
 

@@ -8,6 +8,8 @@ const ErrorPage = require('../../pages/ErrorPage');
 const LoginPage = require('../../pages/LoginPage');
 const MarriageSearchPage = require('../../pages/marriage/MarriageSearchPage');
 const MarriageResultsPage = require('../../pages/marriage/MarriageResultsPage');
+const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
+const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
 
 describe('Accessing the UI', () => {
   before(() => {
@@ -82,6 +84,26 @@ describe('Accessing the UI', () => {
       describe('Trying to access a non-existent record', () => {
         it('presents me with the NOT FOUND error page', () => {
           cy.visit('/marriage/details/404', {
+            failOnStatusCode: false
+          });
+          ErrorPage.shouldBeOn404Page();
+        });
+      });
+    });
+
+    describe('Partnership registrations', () => {
+      describe('Searching for a record', () => {
+        it('presents me with the results page', () => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({ systemNumber: '404404404' });
+          PartnershipResultsPage.shouldBeVisible();
+        });
+      });
+
+      describe('Trying to access a non-existent record', () => {
+        it('presents me with the NOT FOUND error page', () => {
+          cy.visit('/partnership/details/404', {
             failOnStatusCode: false
           });
           ErrorPage.shouldBeOn404Page();

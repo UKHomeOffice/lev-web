@@ -18,7 +18,7 @@ class LoginPage {
    * Login using keycloak
    */
   static login() {
-    LoginPage.logout();
+    this.logout();
 
     cy.login({
       root: 'https://sso-dev.notprod.homeoffice.gov.uk',

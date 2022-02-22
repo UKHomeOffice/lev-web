@@ -9,7 +9,7 @@ class ErrorPage {
    * Check the 404 Not Found page is visible
    */
   static shouldBeOn404Page() {
-    ErrorPage.shouldBeVisible();
+    this.shouldBeVisible();
     cy.get('main').contains('Not found');
   }
 }

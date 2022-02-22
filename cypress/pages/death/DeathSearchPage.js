@@ -35,7 +35,7 @@ class DeathSearchPage extends SearchPage {
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dob
+   * @param dobd
    */
   static performSearch({
                          systemNumber,
@@ -44,28 +44,12 @@ class DeathSearchPage extends SearchPage {
                          dobd
                        }) {
 
-    // System Number
-    if (systemNumber) {
-      cy.get('#system-number').type(systemNumber);
-    }
 
-    // Surname
-    if (surname) {
-      cy.get('#surname').type(surname);
-    }
-
-    // Forename(s)
-    if (forenames) {
-      cy.get('#forenames').type(forenames);
-    }
-
-    // DOB
-    if (dobd) {
-      cy.get('#dobd').type(dobd);
-    }
-
-    // Submit
-    cy.get('input[type="submit"]').click();
+    this.setText('#system-number', systemNumber);
+    this.setText('#surname', surname);
+    this.setText('#forenames', forenames);
+    this.setText('#dobd', dobd);
+    this.submit();
   }
 }
 
