@@ -1,19 +1,16 @@
 'use strict';
 
-const SearchPage = require('./SearchPage');
-
-class DeathSearchPage extends SearchPage {
+class BirthSearchPage {
 
   /**
-   * Navigate to death registration search page
+   * Navigate to birth registration search page
    */
   static visit() {
-    cy.visit('/death');
-    DeathSearchPage.shouldBeVisible();
+    cy.visit('/');
   }
 
   /**
-   * Check death registrations search page is visible
+   * Check birth registrations search page is visible
    */
   static shouldBeVisible() {
 
@@ -24,39 +21,44 @@ class DeathSearchPage extends SearchPage {
     cy.get('#system-number').should('have.focus');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from death certificate');
+    cy.get('label[for=system-number]').contains('System number from birth certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
-    cy.get('label[for=dobd]').contains('Date of birth or death');
+    cy.get('label[for=dob]').contains('Date of birth');
   }
 
   /**
-   * Perform a death registration search with the given params
+   * Perform a birth registration search with the given params
    *
    * @param systemNumber
    * @param surname
    * @param forenames
    * @param dob
    */
-  static performSearch(systemNumber = '', surname = '', forenames = '', dob = '') {
+  static performSearch({
+                         systemNumber,
+                         surname,
+                         forenames,
+                         dob
+                       }) {
 
     // System Number
-    if (systemNumber !== '') {
+    if (systemNumber) {
       cy.get('#system-number').type(systemNumber);
     }
 
     // Surname
-    if (surname !== '') {
+    if (surname) {
       cy.get('#surname').type(surname);
     }
 
     // Forename(s)
-    if (forenames !== '') {
+    if (forenames) {
       cy.get('#forenames').type(forenames);
     }
 
     // DOB
-    if (dob !== '') {
+    if (dob) {
       cy.get('#dob').type(dob);
     }
 
@@ -65,4 +67,4 @@ class DeathSearchPage extends SearchPage {
   }
 }
 
-module.exports = DeathSearchPage;
+module.exports = BirthSearchPage;

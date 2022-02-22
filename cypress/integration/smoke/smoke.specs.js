@@ -1,11 +1,11 @@
 'use strict';
 
-const BirthSearchPage = require('../../../pages/BirthSearchPage');
-const BirthResultsPage = require('../../../pages/BirthResultsPage');
-const DeathSearchPage = require('../../../pages/DeathSearchPage');
-const DeathResultsPage = require('../../../pages/DeathResultsPage');
-const ErrorPage = require('../../../pages/ErrorPage');
-const LoginPage = require('../../../pages/LoginPage');
+const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
+const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
+const DeathSearchPage = require('../../pages/death/DeathSearchPage');
+const DeathResultsPage = require('../../pages/death/DeathResultsPage');
+const ErrorPage = require('../../pages/ErrorPage');
+const LoginPage = require('../../pages/LoginPage');
 
 describe('Accessing the UI', () => {
   before(() => {
@@ -21,6 +21,7 @@ describe('Accessing the UI', () => {
     before(() => {
       LoginPage.login();
     });
+
     it('presents me with a search form for births', () => {
       BirthSearchPage.visit();
       BirthSearchPage.shouldBeVisible();
@@ -30,10 +31,12 @@ describe('Accessing the UI', () => {
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch('404404404');
+          BirthSearchPage.shouldBeVisible();
+          BirthSearchPage.performSearch({ systemNumber: '404404404' });
           BirthResultsPage.shouldBeVisible();
         });
       });
+
       describe('Trying to access a non-existent record', () => {
         it('presents me with the NOT FOUND error page', () => {
           cy.visit('/details/404', {
@@ -48,10 +51,12 @@ describe('Accessing the UI', () => {
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           DeathSearchPage.visit();
-          DeathSearchPage.performSearch('404404404');
+          DeathSearchPage.shouldBeVisible();
+          DeathSearchPage.performSearch({ systemNumber: '404404404' });
           DeathResultsPage.shouldBeVisible();
         });
       });
+
       describe('Trying to access a non-existent record', () => {
         it('presents me with the NOT FOUND error page', () => {
           cy.visit('/death/details/404', {
