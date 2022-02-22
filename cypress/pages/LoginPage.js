@@ -6,12 +6,7 @@ class LoginPage {
    * Logout
    */
   static logout() {
-    cy.logout({
-      root: Cypress.env('keycloakUrl'),
-      realm: 'lev',
-      // eslint-disable-next-line camelcase
-      redirect_uri: Cypress.env('url')
-    });
+    cy.logout(Cypress.env('keycloak'));
   }
 
   /**
@@ -19,17 +14,7 @@ class LoginPage {
    */
   static login() {
     this.logout();
-
-    cy.login({
-      root: Cypress.env('keycloakUrl'),
-      realm: 'lev',
-      // eslint-disable-next-line camelcase
-      redirect_uri: Cypress.env('url'),
-      // eslint-disable-next-line camelcase
-      client_id: 'lev-web',
-      username: Cypress.env('username'),
-      password: Cypress.env('password')
-    });
+    cy.login(Cypress.env('keycloak'));
   }
 
   /**

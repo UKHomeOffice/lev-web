@@ -24,9 +24,16 @@ module.exports = (on, config) => {
 
   // Populate the environment from process.env
   config.env.env = process.env.ENV;
-  config.env.keycloakUrl = 'https://sso-dev.notprod.homeoffice.gov.uk';
-  config.env.url = process.env.TEST_URL;
-  config.env.username = process.env.TEST_USERNAME;
-  config.env.password = process.env.TEST_PASSWORD;
+  config.env.keycloak = {
+    root: 'https://sso-dev.notprod.homeoffice.gov.uk',
+    realm: 'lev',
+    username: process.env.TEST_USERNAME,
+    password: process.env.TEST_PASSWORD,
+    // eslint-disable-next-line camelcase
+    client_id: 'lev-web',
+    // eslint-disable-next-line camelcase
+    redirect_uri: process.env.TEST_URL
+  };
+
   return config;
 };
