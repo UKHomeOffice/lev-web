@@ -13,7 +13,7 @@ steps:
     environment:
       DOCKER_HOST: tcp://127.0.0.1:2375
       DOCKER_IMAGE: lev-web
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.18
     commands:
       - sleep 20
       - set -o pipefail
@@ -51,7 +51,7 @@ steps:
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
       DOCKER_HOST: tcp://127.0.0.1:2375
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.18
       DOCKER_BASEDIR: /ukhomeofficedigital/
       DOCKER_IMAGE: lev-web
       DOCKER_QUAY_PASSWORD:

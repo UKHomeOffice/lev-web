@@ -13,7 +13,7 @@ services:
     ports:
       - "8001:8001"
   mock-api:
-    image: quay.io/ukhomeofficedigital/lev-api:0.16
+    image: quay.io/ukhomeofficedigital/lev-api:0.18
     environment:
       MOCK: "true"
 
