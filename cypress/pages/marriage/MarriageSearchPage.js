@@ -43,7 +43,6 @@ class MarriageSearchPage extends SearchPage {
                          forenames,
                          dom
                        }) {
-
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);

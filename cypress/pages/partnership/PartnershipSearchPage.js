@@ -43,8 +43,6 @@ class PartnershipSearchPage extends SearchPage {
                          forenames,
                          dop
                        }) {
-
-
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);

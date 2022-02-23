@@ -43,8 +43,6 @@ class DeathSearchPage extends SearchPage {
                          forenames,
                          dobd
                        }) {
-
-
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);

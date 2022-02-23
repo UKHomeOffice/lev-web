@@ -43,8 +43,6 @@ class BirthSearchPage extends SearchPage {
                          forenames,
                          dob
                        }) {
-
-
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
