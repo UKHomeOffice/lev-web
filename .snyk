@@ -1,159 +1,108 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.12.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:brace-expansion:20170302':
     - hof > i18n-future > glob > minimatch > brace-expansion:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.400Z'
     - hof > vow-fs > glob > minimatch > brace-expansion:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.400Z'
     - hof > prompt > utile > rimraf > glob > minimatch > brace-expansion:
         reason: HOF
         expires: '2017-12-29T15:58:16.400Z'
-      hof > hmpo-frontend-toolkit > browserify > glob > minimatch > brace-expansion:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-frontend-toolkit > browserify > glob > minimatch > brace-expansion:
         reason: HOF
         expires: '2017-12-29T15:58:16.401Z'
-      hof > prompt > utile > rimraf > glob > minimatch > brace-expansion:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
   'npm:concat-stream:20160901':
     - hof > hmpo-model > concat-stream:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > cross-spawn > spawn-sync > concat-stream:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hmpo-form-wizard > hmpo-model > concat-stream:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-model > concat-stream:
         reason: HOF
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-frontend-toolkit > browserify > concat-stream:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-frontend-toolkit > browserify > concat-stream:
         reason: HOF
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-frontend-toolkit > browserify > insert-module-globals > concat-stream:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-frontend-toolkit > browserify > insert-module-globals > concat-stream:
         reason: HOF
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-frontend-toolkit > browserify > module-deps > concat-stream:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-frontend-toolkit > browserify > module-deps > concat-stream:
         reason: HOF
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > hmpo-model > concat-stream:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
   'npm:qs:20170213':
     - hof > hmpo-form-wizard > express > qs:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > express > qs:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
     - hof > hof-controllers > hmpo-form-wizard > express > qs:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > qs:
         reason: HOF
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
   'npm:forwarded:20170908':
     - hof > hmpo-form-wizard > express > proxy-addr > forwarded:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > express > proxy-addr > forwarded:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hof-controllers > hmpo-form-wizard > express > proxy-addr > forwarded:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > proxy-addr > forwarded:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
   'npm:fresh:20170908':
     - hof > hmpo-govuk-template > serve-static > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-form-wizard > express > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-form-wizard > express > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-form-wizard > express > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-form-wizard > express > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-form-wizard > hmpo-form-controller > express > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-form-wizard > express > serve-static > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > express > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > express > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-form-wizard > express > serve-static > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > express > send > fresh:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > express > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > hmpo-form-wizard > express > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > hmpo-form-wizard > express > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > hmpo-form-wizard > express > serve-static > send > fresh:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.401Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > fresh:
         reason: None given
         expires: '2017-12-29T15:58:16.401Z'
-      hof > hmpo-govuk-template > serve-static > send > fresh:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
   'npm:mime:20170907':
     - hof > hmpo-govuk-template > serve-static > send > mime:
         reason: None given
@@ -185,25 +134,19 @@ ignore:
   'npm:moment:20170905':
     - hof > hmpo-template-mixins > moment:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
     - hof > hmpo-form-wizard > hmpo-form-controller > moment:
         reason: None given
         expires: '2017-12-29T15:58:16.402Z'
-      hof > hof-controllers > moment:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > moment:
         reason: None given
         expires: '2017-12-29T15:58:16.402Z'
-      hof > hmpo-form-wizard > hmpo-form-controller > moment:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
     - hof > hof-controllers > moment-business > moment:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
     - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > moment:
         reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
+        expires: '2017-12-29T15:58:16.402Z'
   'npm:ms:20170412':
     - hof > hmpo-govuk-template > serve-static > send > ms:
         reason: None given
@@ -211,350 +154,6 @@ ignore:
     - hof > hmpo-govuk-template > serve-static > send > debug > ms:
         reason: None given
         expires: '2017-12-29T15:58:16.402Z'
-  SNYK-JS-ANSIREGEX-1583908:
-    - node-sass > sass-graph > yargs > string-width > strip-ansi > ansi-regex:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - node-sass > sass-graph > yargs > cliui > strip-ansi > ansi-regex:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - node-sass > sass-graph > yargs > cliui > string-width > strip-ansi > ansi-regex:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - node-sass > sass-graph > yargs > cliui > wrap-ansi > strip-ansi > ansi-regex:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - node-sass > sass-graph > yargs > cliui > wrap-ansi > string-width > strip-ansi > ansi-regex:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-1059081:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TRIMNEWLINES-1298042:
-    - node-sass > meow > trim-newlines:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1536528:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1536531:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1536758:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1579147:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1579152:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-TAR-1579155:
-    - node-sass > node-gyp > tar:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-567746:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: HOF
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-ELLIPTIC-1064899:
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > browserify-sign > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > create-ecdh > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-ELLIPTIC-511941:
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > browserify-sign > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > create-ecdh > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-ELLIPTIC-571484:
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > browserify-sign > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > browserify > crypto-browserify > create-ecdh > elliptic:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-I-1726768:
-    - hof > i:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > prompt > utile > i:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-ISMYJSONVALID-597165:
-    - hof > is-my-json-valid:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-ISMYJSONVALID-597167:
-    - hof > is-my-json-valid:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  'npm:is-my-json-valid:20180214':
-    - hof > is-my-json-valid:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-JSONPOINTER-1577288:
-    - hof > is-my-json-valid > jsonpointer:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-JSONPOINTER-598804:
-    - hof > is-my-json-valid > jsonpointer:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-JSYAML-173999:
-    - hof > js-yaml:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-JSYAML-174129:
-    - hof > js-yaml:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-1018905:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-1040724:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-450202:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-590103:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-608086:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-73638:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-LODASH-73639:
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hof-controllers > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > i18n-future > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > inquirer > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > xmlbuilder > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  'npm:lodash:20180130':
-    - hof > hmpo-frontend-toolkit > async > lodash:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-MINIMIST-559764:
-    - hof > hmpo-frontend-toolkit > browserify > subarg > minimist:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > browserify > deps-sort > subarg > minimist:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > browserify > module-deps > subarg > minimist:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-535498:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-535500:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-540958:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-540964:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-540978:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-540992:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-540998:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-541000:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-NODESASS-541002:
-    - node-sass:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-PATHVAL-596926:
-    - hof > pathval:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-SHELLQUOTE-1766506:
-    - hof > hmpo-frontend-toolkit > browserify > shell-quote:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-  SNYK-JS-UNDERSCORE-1080984:
-    - hof > hmpo-model > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-form-wizard > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-frontend-toolkit > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-template-mixins > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-form-wizard > hmpo-form-controller > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-form-wizard > hmpo-model > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.059Z'
-    - hof > hmpo-form-wizard > i18n-lookup > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > i18n-lookup > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > hmpo-model > underscore:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-  'npm:base64-url:20180512':
-    - hof > hmpo-form-wizard > csrf > base64-url:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hmpo-form-wizard > csrf > uid-safe > base64-url:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > express-session > uid-safe > base64-url:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > csrf > base64-url:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-    - hof > hof-controllers > hmpo-form-wizard > csrf > uid-safe > base64-url:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
-  'npm:utile:20180614':
-    - hof > prompt > utile:
-        reason: None given
-        expires: '2022-03-25T14:58:39.060Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20151024':
@@ -686,31 +285,3 @@ patch:
         patched: '2018-06-20T05:43:21.379Z'
     - node-sass > node-gyp > request > hawk > cryptiles > boom > hoek:
         patched: '2018-06-20T05:43:21.379Z'
-  'npm:lodash:20180130':
-    - hof > i18n-future > lodash:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > inquirer > lodash:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > xmlbuilder > lodash:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hof-controllers > lodash:
-        patched: '2022-02-23T14:56:46.167Z'
-  'npm:mime:20170907':
-    - hof > hmpo-form-wizard > express > serve-static > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hmpo-form-wizard > hmpo-form-controller > express > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hof-controllers > hmpo-form-wizard > express > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hof-controllers > hmpo-form-wizard > express > serve-static > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hof-controllers > hmpo-form-wizard > hmpo-form-controller > express > serve-static > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hmpo-govuk-template > serve-static > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
-    - hof > hmpo-form-wizard > express > send > mime:
-        patched: '2022-02-23T14:56:46.167Z'
