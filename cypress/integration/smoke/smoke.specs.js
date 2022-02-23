@@ -43,7 +43,7 @@ describe('Smoke Tests', () => {
       it('presents me with the results page', () => {
         BirthSearchPage.visit();
         BirthSearchPage.shouldBeVisible();
-        BirthSearchPage.performSearch({systemNumber: '404404404'});
+        BirthSearchPage.performSearch({ systemNumber: '404404404' });
         BirthResultsPage.shouldBeVisible();
       });
     });
@@ -67,7 +67,7 @@ describe('Smoke Tests', () => {
       it('presents me with the results page', () => {
         DeathSearchPage.visit();
         DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.performSearch({systemNumber: '404404404'});
+        DeathSearchPage.performSearch({ systemNumber: '404404404' });
         DeathResultsPage.shouldBeVisible();
       });
     });
@@ -91,7 +91,7 @@ describe('Smoke Tests', () => {
       it('presents me with the results page', () => {
         MarriageSearchPage.visit();
         MarriageSearchPage.shouldBeVisible();
-        MarriageSearchPage.performSearch({systemNumber: '404404404'});
+        MarriageSearchPage.performSearch({ systemNumber: '404404404' });
         MarriageResultsPage.shouldBeVisible();
       });
     });
@@ -115,7 +115,7 @@ describe('Smoke Tests', () => {
       it('presents me with the results page', () => {
         PartnershipSearchPage.visit();
         PartnershipSearchPage.shouldBeVisible();
-        PartnershipSearchPage.performSearch({systemNumber: '404404404'});
+        PartnershipSearchPage.performSearch({ systemNumber: '404404404' });
         PartnershipResultsPage.shouldBeVisible();
       });
     });
