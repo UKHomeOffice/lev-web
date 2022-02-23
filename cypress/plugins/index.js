@@ -25,7 +25,7 @@ module.exports = (on, config) => {
   // Populate the environment from process.env
   config.env.env = process.env.ENV;
   config.env.keycloak = {
-    root: 'https://sso-dev.notprod.homeoffice.gov.uk',
+    root: process.env.KEYCLOAK_URL,
     realm: 'lev',
     username: process.env.TEST_USERNAME,
     password: process.env.TEST_PASSWORD,
