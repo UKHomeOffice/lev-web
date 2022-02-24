@@ -23,7 +23,7 @@ class LoginPage {
   static shouldBeVisible() {
 
     // Has login button
-    cy.get('input[name="login"]').should('exist');
+    cy.get('#kc-login').should('exist');
   }
 }
 
