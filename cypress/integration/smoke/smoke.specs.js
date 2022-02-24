@@ -50,6 +50,7 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
+        cy.request({ url: '/details/404', failOnStatusCode: false }).its('status').should('equal', 404);
         cy.visit('/details/404', {
           failOnStatusCode: false
         });
