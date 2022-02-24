@@ -1,10 +1,10 @@
 'use strict';
 
+const BadSearchPage = require('../../pages/BadSearchPage');
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
 const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
 const DeathSearchPage = require('../../pages/death/DeathSearchPage');
 const DeathResultsPage = require('../../pages/death/DeathResultsPage');
-const ErrorPage = require('../../pages/ErrorPage');
 const LoginPage = require('../../pages/LoginPage');
 const MarriageSearchPage = require('../../pages/marriage/MarriageSearchPage');
 const MarriageResultsPage = require('../../pages/marriage/MarriageResultsPage');
@@ -50,11 +50,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        cy.request({ url: '/details/404', failOnStatusCode: false }).its('status').should('equal', 404);
-        cy.visit('/details/404', {
-          failOnStatusCode: false
-        });
-        ErrorPage.shouldBeOn404Page();
+        BadSearchPage.visit('/details/404');
+        BadSearchPage.shouldBeVisible();
       });
     });
   });
@@ -75,10 +72,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        cy.visit('/death/details/404', {
-          failOnStatusCode: false
-        });
-        ErrorPage.shouldBeOn404Page();
+        BadSearchPage.visit('/death/details/404');
+        BadSearchPage.shouldBeVisible();
       });
     });
   });
@@ -99,10 +94,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        cy.visit('/marriage/details/404', {
-          failOnStatusCode: false
-        });
-        ErrorPage.shouldBeOn404Page();
+        BadSearchPage.visit('/marriage/details/404');
+        BadSearchPage.shouldBeVisible();
       });
     });
   });
@@ -123,10 +116,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        cy.visit('/partnership/details/404', {
-          failOnStatusCode: false
-        });
-        ErrorPage.shouldBeOn404Page();
+        BadSearchPage.visit('/partnership/details/404');
+        BadSearchPage.shouldBeVisible();
       });
     });
   });
