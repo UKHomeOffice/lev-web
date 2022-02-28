@@ -51,7 +51,7 @@ npm test
 
 ### Acceptance tests against a server
 ```bash
-ENV=dev TEST_URL=http://lev-web-dev.dsp.notprod.homeoffice.gov.uk USERNAME=xxxx PASSWORD=xxxx npm run chimp
+ENV=dev TEST_URL=xxxx USERNAME=xxxx PASSWORD=xxxx npm run chimp
 ```
 OR
 ```
