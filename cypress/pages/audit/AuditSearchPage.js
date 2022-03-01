@@ -5,7 +5,7 @@ const SearchPage = require('../SearchPage');
 class AuditSearchPage extends SearchPage {
 
   /**
-   * Check User Activity Search page is visible
+   * Check user activity search page is visible
    */
   static shouldBeVisible() {
 
