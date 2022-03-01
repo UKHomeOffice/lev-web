@@ -1,6 +1,5 @@
 'use strict';
 
-const BadSearchPage = require('../../pages/BadSearchPage');
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
 const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
 const DeathSearchPage = require('../../pages/death/DeathSearchPage');
@@ -10,6 +9,7 @@ const MarriageSearchPage = require('../../pages/marriage/MarriageSearchPage');
 const MarriageResultsPage = require('../../pages/marriage/MarriageResultsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
+const SearchErrorPage = require('../../pages/SearchErrorPage');
 
 describe('Smoke Tests', () => {
   describe('Accessing the UI', () => {
@@ -50,8 +50,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        BadSearchPage.visit('/details/404');
-        BadSearchPage.shouldBeVisible();
+        SearchErrorPage.visit('/details/404');
+        SearchErrorPage.shouldBeVisible();
       });
     });
   });
@@ -72,8 +72,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        BadSearchPage.visit('/death/details/404');
-        BadSearchPage.shouldBeVisible();
+        SearchErrorPage.visit('/death/details/404');
+        SearchErrorPage.shouldBeVisible();
       });
     });
   });
@@ -94,8 +94,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        BadSearchPage.visit('/marriage/details/404');
-        BadSearchPage.shouldBeVisible();
+        SearchErrorPage.visit('/marriage/details/404');
+        SearchErrorPage.shouldBeVisible();
       });
     });
   });
@@ -116,8 +116,8 @@ describe('Smoke Tests', () => {
 
     describe('Trying to access a non-existent record', () => {
       it('presents me with the NOT FOUND error page', () => {
-        BadSearchPage.visit('/partnership/details/404');
-        BadSearchPage.shouldBeVisible();
+        SearchErrorPage.visit('/partnership/details/404');
+        SearchErrorPage.shouldBeVisible();
       });
     });
   });
