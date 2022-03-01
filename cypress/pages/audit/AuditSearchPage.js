@@ -4,6 +4,9 @@ const SearchPage = require('../SearchPage');
 
 class AuditSearchPage extends SearchPage {
 
+  /**
+   * Check User Activity Search page is visible
+   */
   static shouldBeVisible() {
 
     // Has title

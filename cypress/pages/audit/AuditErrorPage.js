@@ -7,6 +7,9 @@ class AuditErrorPage extends ErrorPage {
     super.visit('/audit/user-activity?from=200118&to=100118', 500);
   }
 
+  /**
+   * Check User Activity Error page is visible
+   */
   static shouldBeVisible() {
     super.shouldBeVisible();
     cy.get('main').contains('Error');
