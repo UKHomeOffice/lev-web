@@ -10,7 +10,7 @@ class AuditSearchPage extends SearchPage {
     cy.get('h1').contains('Audit information');
 
     // Has focus
-    cy.get('from').should('have.focus');
+    cy.get('#from').should('have.focus');
 
     // Has labels
     cy.get('label[for=from]').contains('Search from');
