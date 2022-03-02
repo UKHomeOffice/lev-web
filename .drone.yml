@@ -9,7 +9,7 @@ platform:
 
 steps:
   - name: build
-    image: cypress/base:10
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
       DOCKER_HOST: tcp://127.0.0.1:2375
       DOCKER_IMAGE: lev-web
