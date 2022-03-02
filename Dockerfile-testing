@@ -1,4 +1,4 @@
-FROM node:10
+FROM cypress/base:10
 
 RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
