@@ -51,14 +51,14 @@ npm test
 
 ### Smoke tests against a server
 ```bash
-ENV=dev KEYCLOAK_URL=https://sso-dev.notprod.homeoffice.gov.uk TEST_URL=https://dev.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run acceptance
-ENV=uat KEYCLOAK_URL=https://sso.digital.homeoffice.gov.uk TEST_URL=https://uat.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run acceptance
+ENV=dev KEYCLOAK_URL=https://sso-dev.notprod.homeoffice.gov.uk TEST_URL=https://dev.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run smoke
+ENV=uat KEYCLOAK_URL=https://sso.digital.homeoffice.gov.uk TEST_URL=https://uat.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run smoke
 ```
 
 ### Acceptance tests against a server
 ```bash
-ENV=dev KEYCLOAK_URL=https://sso-dev.notprod.homeoffice.gov.uk TEST_URL=https://dev.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run smoke
-ENV=uat KEYCLOAK_URL=https://sso.digital.homeoffice.gov.uk TEST_URL=https://uat.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run smoke
+ENV=dev KEYCLOAK_URL=https://sso-dev.notprod.homeoffice.gov.uk TEST_URL=https://dev.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run acceptance
+ENV=uat KEYCLOAK_URL=https://sso.digital.homeoffice.gov.uk TEST_URL=https://uat.notprod.lev.homeoffice.gov.uk/ TEST_USERNAME=xxxx TEST_PASSWORD=xxxx npm run acceptance
 ```
 OR
 ```
