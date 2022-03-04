@@ -1,6 +1,8 @@
 'use strict';
 
-class ResultsPage {
+const Page = require('./Page');
+
+class ResultsPage extends Page {
 
   /**
    * Check results page is visible

@@ -1,6 +1,8 @@
 'use strict';
 
-class ErrorPage {
+const Page = require('./Page');
+
+class ErrorPage extends Page {
 
   /**
    * Navigate to error page
