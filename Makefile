@@ -40,3 +40,10 @@ docker-compose-clean:
 	docker-compose rm -vf
 
 test: docker-test
+
+clean:
+	rm -rf node_modules package-lock.json
+
+install:
+	npm install
+

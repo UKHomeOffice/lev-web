@@ -13,7 +13,7 @@ steps:
     environment:
       DOCKER_HOST: tcp://127.0.0.1:2375
       DOCKER_IMAGE: lev-web
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.18
     commands:
       - sleep 20
       - set -o pipefail
@@ -51,7 +51,7 @@ steps:
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
       DOCKER_HOST: tcp://127.0.0.1:2375
-      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.16
+      MOCK_IMAGE: quay.io/ukhomeofficedigital/lev-api:0.18
       DOCKER_BASEDIR: /ukhomeofficedigital/
       DOCKER_IMAGE: lev-web
       DOCKER_QUAY_PASSWORD:
@@ -122,7 +122,7 @@ steps:
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
       - set -o pipefail
-      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
+      - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "USERNAME=$${DEV_USERNAME}" -e "PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
     environment:
       DEV_PASSWORD:
         from_secret: DEV_PASSWORD
