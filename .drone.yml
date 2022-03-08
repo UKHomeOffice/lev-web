@@ -120,7 +120,7 @@ steps:
       - sleep 20
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - TAG="v$${PACKAGE_VERSION}-$${DRONE_BUILD_NUMBER}-$${DRONE_COMMIT}"
-      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}-testing"
+      - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}-e2e"
       - set -o pipefail
       - docker run --rm --name "$${DOCKER_IMAGE}" -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" "$${IMAGE}:$${TAG}" | tee 'test.log'
     environment:
