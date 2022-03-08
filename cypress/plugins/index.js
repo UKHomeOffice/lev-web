@@ -23,7 +23,8 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   // Populate the environment from process.env
-  config.env.env = process.env.ENV;
+  config.env.env = process.env.ENV || 'local';
+  config.env.e2e = config.env.env !== 'local';
   config.env.keycloak = {
     root: process.env.KEYCLOAK_URL,
     realm: 'lev',

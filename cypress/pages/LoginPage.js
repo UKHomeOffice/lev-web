@@ -6,15 +6,19 @@ class LoginPage {
    * Logout
    */
   static logout() {
-    cy.logout(Cypress.env('keycloak'));
+    if (Cypress.env('e2e')) {
+      cy.logout(Cypress.env('keycloak'));
+    }
   }
 
   /**
    * Login using keycloak
    */
   static login() {
-    this.logout();
-    cy.login(Cypress.env('keycloak'));
+    if (Cypress.env('e2e')) {
+      this.logout();
+      cy.login(Cypress.env('keycloak'));
+    }
   }
 
   /**
