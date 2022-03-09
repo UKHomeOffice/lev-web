@@ -7,22 +7,19 @@ if (Cypress.env('e2e')) {
   describe('Logout', () => {
     before(() => {
       LoginPage.login();
+      HomePage.visit();
     });
 
     describe('when I logout', () => {
-      before(() => {
-        HomePage.visit();
-        HomePage.shouldBeVisible();
-        HomePage.clickLogoutButton();
-      });
-
       it('redirects me to the login page', () => {
+        HomePage.clickLogoutButton();
         LoginPage.shouldBeVisible();
       });
 
       it('makes me login again before using the application', () => {
+        LoginPage.login();
         HomePage.visit();
-        LoginPage.shouldBeVisible();
+        HomePage.shouldBeVisible();
       });
     });
   });
