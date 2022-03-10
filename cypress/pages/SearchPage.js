@@ -1,6 +1,8 @@
 'use strict';
 
-class SearchPage {
+const Page = require('./Page');
+
+class SearchPage extends Page {
 
   /**
    * Type the value into the selected field, or clear it.

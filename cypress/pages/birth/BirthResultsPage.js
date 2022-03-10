@@ -43,14 +43,3 @@ class BirthResultsPage extends ResultsPage {
 }
 
 module.exports = BirthResultsPage;
-
-//
-// browserText[0].should.match(new RegExp('Place of birth ?' + birthplace));
-// browserText[1].should.match(new RegExp('Mother ?' + motherNameRegex));
-// browserText[2].should.match(new RegExp('Father ?' + fatherNameRegex));
-// browserText[3].should.match(new RegExp('Place of birth ?' + birthplace));
-// browserText[4].should.match(new RegExp('Mother ?' + motherNameRegex));
-// browserText[5].should.match(new RegExp('Father ?' + fatherNameRegex));
-// browserText[6].should.match(new RegExp('Place of birth ?' + birthplace));
-// browserText[7].should.match(new RegExp('Mother ?' + motherNameRegex));
-// browserText[8].should.match(new RegExp('Father ?' + fatherNameRegex));

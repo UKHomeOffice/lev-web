@@ -9,7 +9,7 @@ const moment = require("moment");
 const conf = require("../../../fields");
 const since = conf.dob.validate[2].arguments[0];
 
-describe.only('Birth search', () => {
+describe('Birth search', () => {
   before(() => {
     LoginPage.login();
   });
