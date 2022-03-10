@@ -11,6 +11,15 @@ class DeathResultsPage extends ResultsPage {
     super.shouldBeVisible();
     cy.url().should('include', '/death');
   }
+
+  /**
+   * Check death registrations results page has expected title
+   *
+   * @param title
+   */
+  static hasTitle(title) {
+    cy.get('h1').contains(title);
+  }
 }
 
 module.exports = DeathResultsPage;
