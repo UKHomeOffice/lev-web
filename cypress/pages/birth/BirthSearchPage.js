@@ -1,6 +1,7 @@
 'use strict';
 
 const SearchPage = require('../SearchPage');
+const conf = require("../../../fields");
 
 class BirthSearchPage extends SearchPage {
 
@@ -48,6 +49,60 @@ class BirthSearchPage extends SearchPage {
     this.setText('#forenames', forenames);
     this.setText('#dob', dob);
     this.submit();
+  }
+
+  static noSearchCriteria() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter a surname');
+    cy.get('a').contains('Please enter at least one forename');
+    cy.get('a').contains('Please enter a date of birth');
+  }
+
+  static noSystemNumber() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter a number');
+    cy.get('#system-number-hint').should('exist')
+  }
+
+  static invalidLengthSystemNumber() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('The system number should be 9 digits');
+    cy.get('#system-number-hint').should('exist')
+  }
+
+  static noForenames() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter at least one forename');
+    cy.get('input[name="forenames"]').should('have.focus');
+  }
+
+  static noSurname() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter a surname');
+    cy.get('a').contains('Please enter at least one forename');
+    cy.get('input[name="surname"]').should('have.focus');
+  }
+
+  static invalidDOB() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter a date of birth in the correct format');
+    cy.get('#dob-extended-hint').should('exist');
+    cy.get('input[name="dob"]').should('have.focus');
+  }
+
+
+  static dobInFuture() {
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains('Please enter a date of birth in the past');
+    cy.get('#dob-extended-hint').should('exist');
+  }
+
+  static dobBeforeRecordsBegan() {
+    const since = conf.dob.validate[2].arguments[0];
+
+    cy.get('h2').contains('Fix the following error');
+    cy.get('a').contains(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
+    cy.get('#dob-extended-hint').should('exist');
   }
 }
 
