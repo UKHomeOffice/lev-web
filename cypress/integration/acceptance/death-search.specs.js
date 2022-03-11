@@ -32,7 +32,7 @@ describe('Death search', () => {
       });
 
       it('displays an appropriate message', () => {
-        DeathResultsPage.hasTitle(`No records found for ${search.forenames} ${search.surname} ${search.dobd}`);
+        DeathResultsPage.hasExpectedTitle(expectedNoRecords);
       });
     });
 
@@ -52,7 +52,7 @@ describe('Death search', () => {
     });
 
     describe('that returns more than 1 record', () => {
-      const {search} = expectedMultipleRecords;
+      const { search } = expectedMultipleRecords;
 
       before(() => {
         DeathSearchPage.visit();
@@ -64,11 +64,11 @@ describe('Death search', () => {
       });
 
       it('displays an appropriate message', () => {
-        DeathResultsPage.hasTitle(`3 records found for ${search.forenames} ${search.surname} ${search.dobd}`);
+        DeathResultsPage.hasExpectedTitle(expectedMultipleRecords);
       });
 
       it('displays a subset of each record in a list', () => {
-        DeathResultsPage.hasExpectedResult(expectedMultipleRecords.result);
+        DeathResultsPage.hasExpectedRows(expectedMultipleRecords);
       });
 
       it('contains a link back to the search screen', () => {

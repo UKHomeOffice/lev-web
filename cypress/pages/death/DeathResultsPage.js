@@ -13,17 +13,27 @@ class DeathResultsPage extends ResultsPage {
   }
 
   /**
-   * Check death registrations results page has expected title
+   * Check expected title is displayed
    *
-   * @param title
+   * @param expected
    */
-  static hasTitle(title) {
+  static hasExpectedTitle(expected) {
+    const { search, results } = expected;
+    const title = `${results.length === 0 ? 'No' : results.length} records found for ${search.forenames} ${search.surname} ${search.dobd}`;
+
     cy.get('h1').contains(title);
   }
 
-  static hasExpectedResult(result) {
+  /**
+   * Check expected rows are displayed
+   *
+   * @param expected
+   */
+  static hasExpectedRows(expected) {
+    const { results } = expected;
+
     cy.get('#records li').each((element, index) => {
-      const { dateOfBirth, address, dateOfDeath } = result[index].deceased;
+      const { dateOfBirth, address, dateOfDeath } = results[index].deceased;
 
       cy.wrap(element).contains('tr', `Date of birth ${dateOfBirth}`);
       cy.wrap(element).contains('tr', `Address ${address}`);
@@ -31,10 +41,16 @@ class DeathResultsPage extends ResultsPage {
     });
   }
 
+  /**
+   * Check "New Search" link exists
+   */
   static hasNewSearchLink() {
     cy.get('#newSearchLink').should('exist');
   }
 
+  /**
+   * Check "Edit Search" link exists
+   */
   static hasEditSearchLink() {
     cy.get('#editSearchLink').should('exist');
   }

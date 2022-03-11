@@ -7,7 +7,7 @@ const search = {
 };
 
 // Used for tests where multiple records are returned
-const result = {
+const result1 = {
   id: 999999901,
   date: '10/10/2014',
   entryNumber: 1,
@@ -46,25 +46,25 @@ const result = {
 };
 
 const result2 = {
-  ...result,
+  ...result1,
   deceased: {
-    ...result.deceased,
+    ...result1.deceased,
     address: '2 Test street'
   }
-}
+};
 
 const result3 = {
-  ...result,
+  ...result1,
   deceased: {
-    ...result.deceased,
+    ...result1.deceased,
     address: '3 Test street'
   }
-}
+};
 
 module.exports = {
   search,
-  result: [
-    result,
+  results: [
+    result1,
     result2,
     result3
   ]
