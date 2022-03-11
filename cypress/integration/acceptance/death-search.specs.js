@@ -39,7 +39,6 @@ describe('Death search', () => {
 
     describe('that returns 1 record', () => {
       const { search, result } = expectedSingleRecord;
-      const { deceased } = result;
 
       before(() => {
         DeathSearchPage.visit();
@@ -48,7 +47,7 @@ describe('Death search', () => {
 
       it('redirects to a details page', () => {
         DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasTitle(`${deceased.forenames} ${deceased.surname} ${deceased.dateOfBirth}`);
+        DeathDetailsPage.hasExpectedTitle(result);
       });
     });
 
