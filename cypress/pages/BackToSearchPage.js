@@ -5,18 +5,33 @@ const Page = require('./Page');
 class BackToSearchPage extends Page {
 
   /**
-   * Check "New Search" link exists
+   * Check "New Search" button exists
    */
-  static hasNewSearchLink() {
+  static hasNewSearchButton() {
     cy.get('#newSearchLink').should('exist');
   }
 
   /**
-   * Check "Edit Search" link exists
+   * Click the "New Search button
    */
-  static hasEditSearchLink() {
+  static clickNewSearchButton() {
+    cy.get('#newSearchLink').click();
+  }
+
+  /**
+   * Check "Edit Search" button exists
+   */
+  static hasEditSearchButton() {
     cy.get('#editSearchLink').should('exist');
   }
+
+  /**
+   * Click the "Edit Search button
+   */
+  static clickEditSearchButton() {
+    cy.get('#editSearchLink').click();
+  }
+
 }
 
 module.exports = BackToSearchPage;

@@ -33,7 +33,7 @@ describe('Death details page', () => {
     });
 
     it('contains a link back to the search screen', () => {
-      DeathDetailsPage.hasEditSearchLink();
+      DeathDetailsPage.hasEditSearchButton();
     });
 
     it('does not contain a link back to the search results screen', () => {
@@ -65,11 +65,54 @@ describe('Death details page', () => {
     });
 
     it('contains a link back to the search screen', () => {
-      DeathDetailsPage.hasEditSearchLink();
+      DeathDetailsPage.hasEditSearchButton();
     });
 
     it('does not contain a link back to the search results screen', () => {
       DeathDetailsPage.backToSearchResultsDisplayed();
+    });
+  });
+
+  describe('When I select the "New search" button', () => {
+    const { search } = expectedSingleRecord;
+
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch(search);
+      DeathDetailsPage.shouldBeVisible();
+      DeathDetailsPage.clickNewSearchButton();
+    });
+
+    it('returns the search page', () => {
+      DeathSearchPage.shouldBeVisible();
+    });
+
+    it('has empty form values', () => {
+      DeathSearchPage.hasExpectedValues({
+        systemNumber: '',
+        surname: '',
+        forenames: '',
+        dobd: ''
+      });
+    });
+  });
+
+  describe('When I select the "Edit search" link on the results page', () => {
+    const { search } = expectedSingleRecord;
+
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch(search);
+      DeathDetailsPage.shouldBeVisible();
+      DeathDetailsPage.clickEditSearchButton();
+    });
+
+    it('returns the search page', () => {
+      DeathSearchPage.shouldBeVisible();
+    });
+
+    it('has the correct form values', () => {
+      DeathSearchPage.hasExpectedValues(search);
     });
   });
 });

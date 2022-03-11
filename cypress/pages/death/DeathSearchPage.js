@@ -109,6 +109,18 @@ class DeathSearchPage extends SearchPage {
     cy.get('#dobd-extended-hint').should('exist');
     cy.get('#dobd').should('have.focus');
   }
+
+  static hasExpectedValues({
+                             systemNumber,
+                             surname,
+                             forenames,
+                             dobd
+                           }) {
+    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#surname').should('have.value', surname);
+    cy.get('#forenames').should('have.value', forenames);
+    cy.get('#dobd').should('have.value', dobd);
+  }
 }
 
 module.exports = DeathSearchPage;

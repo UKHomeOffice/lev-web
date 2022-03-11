@@ -72,8 +72,8 @@ describe('Death search', () => {
       });
 
       it('contains a link back to the search screen', () => {
-        DeathResultsPage.hasNewSearchLink();
-        DeathResultsPage.hasEditSearchLink();
+        DeathResultsPage.hasNewSearchButton();
+        DeathResultsPage.hasEditSearchButton();
       });
     });
 
