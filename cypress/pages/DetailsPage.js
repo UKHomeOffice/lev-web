@@ -1,8 +1,12 @@
 'use strict';
 
-const Page = require('./Page');
+const BackToSearchPage = require('./BackToSearchPage');
 
-class DetailsPage extends Page {
+class DetailsPage extends BackToSearchPage {
+
+  static backToSearchResultsNotDisplayed() {
+    cy.get('#backToSearchResults').should('not.exist');
+  }
 }
 
 module.exports = DetailsPage;

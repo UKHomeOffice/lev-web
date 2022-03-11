@@ -1,8 +1,8 @@
 'use strict';
 
-const Page = require('./Page');
+const BackToSearchPage = require('./BackToSearchPage');
 
-class ResultsPage extends Page {
+class ResultsPage extends BackToSearchPage {
 
   /**
    * Check results page is visible

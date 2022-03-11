@@ -40,20 +40,6 @@ class DeathResultsPage extends ResultsPage {
       cy.wrap(element).contains('tr', `Date of death ${dateOfDeath}`);
     });
   }
-
-  /**
-   * Check "New Search" link exists
-   */
-  static hasNewSearchLink() {
-    cy.get('#newSearchLink').should('exist');
-  }
-
-  /**
-   * Check "Edit Search" link exists
-   */
-  static hasEditSearchLink() {
-    cy.get('#editSearchLink').should('exist');
-  }
 }
 
 module.exports = DeathResultsPage;
