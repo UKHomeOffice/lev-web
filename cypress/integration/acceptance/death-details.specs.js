@@ -68,7 +68,7 @@ describe('Death details page', () => {
       DeathDetailsPage.hasEditSearchButton();
     });
 
-    it('does not contain a link back to the search results screen', () => {
+    it('contains a link back to the search results screen', () => {
       DeathDetailsPage.backToSearchResultsDisplayed();
     });
   });
@@ -83,7 +83,7 @@ describe('Death details page', () => {
       DeathDetailsPage.clickNewSearchButton();
     });
 
-    it('returns the search page', () => {
+    it('returns me to the search page', () => {
       DeathSearchPage.shouldBeVisible();
     });
 
@@ -98,6 +98,30 @@ describe('Death details page', () => {
   });
 
   describe('When I select the "Edit search" link on the results page', () => {
+    const search = {
+      systemNumber: '',
+      surname: 'NotRealPersonSurname',
+      forenames: 'NotRealPersonForename',
+      dobd: '01/01/2010'
+    };
+
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch(search);
+      DeathResultsPage.shouldBeVisible();
+      DeathResultsPage.clickEditSearchButton();
+    });
+
+    it('returns me to the search page', () => {
+      DeathSearchPage.shouldBeVisible();
+    });
+
+    it('has the correct form values', () => {
+      DeathSearchPage.hasExpectedValues(search);
+    });
+  });
+
+  describe('When I select the "Edit search" link on the details page', () => {
     const { search } = expectedSingleRecord;
 
     before(() => {
@@ -107,12 +131,34 @@ describe('Death details page', () => {
       DeathDetailsPage.clickEditSearchButton();
     });
 
-    it('returns the search page', () => {
+    it('returns me to the search page', () => {
       DeathSearchPage.shouldBeVisible();
     });
 
     it('has the correct form values', () => {
       DeathSearchPage.hasExpectedValues(search);
+    });
+  });
+
+  describe('When I select the "Back to search results link on the details page"', () => {
+    const { search } = expectedMultipleRecords;
+
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch(search);
+      DeathResultsPage.shouldBeVisible();
+      DeathResultsPage.clickFirstRecord();
+      DeathDetailsPage.shouldBeVisible();
+      DeathDetailsPage.clickBackToResultsButton();
+    });
+
+    it('returns me to the results page', () => {
+      DeathResultsPage.shouldBeVisible();
+    });
+
+    it('has the correct rows', () => {
+      DeathResultsPage.hasExpectedTitle(expectedMultipleRecords);
+      DeathResultsPage.hasExpectedRows(expectedMultipleRecords);
     });
   });
 });

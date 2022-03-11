@@ -11,6 +11,10 @@ class DetailsPage extends BackToSearchPage {
   static backToSearchResultsNotDisplayed() {
     cy.get('#backToSearchResults').should('not.exist');
   }
+
+  static clickBackToResultsButton() {
+    cy.get('#backToSearchResults').click();
+  }
 }
 
 module.exports = DetailsPage;
