@@ -102,7 +102,7 @@ describe('Death search', () => {
     });
   });
 
-  describe.only('submitting an invalid query', () => {
+  describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
         DeathSearchPage.visit();
