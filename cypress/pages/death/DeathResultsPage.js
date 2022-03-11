@@ -20,6 +20,24 @@ class DeathResultsPage extends ResultsPage {
   static hasTitle(title) {
     cy.get('h1').contains(title);
   }
+
+  static hasExpectedResult(result) {
+    cy.get('#records li').each((element, index) => {
+      const { dateOfBirth, address, dateOfDeath } = result[index].deceased;
+
+      cy.wrap(element).contains('tr', `Date of birth ${dateOfBirth}`);
+      cy.wrap(element).contains('tr', `Address ${address}`);
+      cy.wrap(element).contains('tr', `Date of death ${dateOfDeath}`);
+    });
+  }
+
+  static hasNewSearchLink() {
+    cy.get('#newSearchLink').should('exist');
+  }
+
+  static hasEditSearchLink() {
+    cy.get('#editSearchLink').should('exist');
+  }
 }
 
 module.exports = DeathResultsPage;

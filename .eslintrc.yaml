@@ -1,6 +1,6 @@
 env:
   node: true
-  es6: true
+  es9: true
 
 plugins:
   - filenames

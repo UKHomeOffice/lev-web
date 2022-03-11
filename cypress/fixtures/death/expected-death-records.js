@@ -45,7 +45,27 @@ const result = {
   }
 };
 
+const result2 = {
+  ...result,
+  deceased: {
+    ...result.deceased,
+    address: '2 Test street'
+  }
+}
+
+const result3 = {
+  ...result,
+  deceased: {
+    ...result.deceased,
+    address: '3 Test street'
+  }
+}
+
 module.exports = {
   search,
-  result
+  result: [
+    result,
+    result2,
+    result3
+  ]
 };
