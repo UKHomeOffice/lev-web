@@ -41,6 +41,9 @@ class DeathResultsPage extends ResultsPage {
     });
   }
 
+  /**
+   * Click the first record
+   */
   static clickFirstRecord() {
     cy.get('#records a').eq(0).click();
   }
