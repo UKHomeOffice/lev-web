@@ -1,21 +1,21 @@
 'use strict';
 
-const LoginPage = require("../../pages/LoginPage");
-const BirthSearchPage = require("../../pages/birth/BirthSearchPage");
-const BirthDetailsPage = require("../../pages/birth/BirthDetailsPage");
-const BirthResultsPage = require("../../pages/birth/BirthResultsPage");
-const {multipleValidRecords, validRecord} = require('../../fixtures/birth');
+const LoginPage = require('../../pages/LoginPage');
+const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
+const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
+const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
+const { multipleValidRecords, validRecord } = require('../../fixtures/birth');
 
 describe.only('Birth details', () => {
-  const child = validRecord.child;
-  const name = child.name;
   before(() => {
     LoginPage.login();
   });
   describe('single record found', () => {
+    const child = validRecord.child;
+    const name = child.name;
     it('back to search results link not displayed', () => {
       BirthDetailsPage.backToSearchResultsNotDisplayed();
-    })
+    });
     describe('When I select the "New search" button', () => {
       before(() => {
         BirthSearchPage.visit();
@@ -61,7 +61,7 @@ describe.only('Birth details', () => {
     });
     it('back to search results link not displayed', () => {
       BirthDetailsPage.backToSearchResultsNotDisplayed();
-    })
+    });
     describe('When I select the "Back to search results link on the details page"', () => {
       before(() => {
         BirthSearchPage.visit();
@@ -77,6 +77,6 @@ describe.only('Birth details', () => {
       });
     });
   });
-})
+});
 
 

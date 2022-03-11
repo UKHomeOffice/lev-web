@@ -15,7 +15,7 @@ class BirthResultsPage extends ResultsPage {
     const birthplace = expectedMultipleRec.child.birthplace;
     const fatherName = expectedMultipleRec.father.name.fullName;
     const motherName = expectedMultipleRec.mother.name.fullName;
-    const dateOfBirth = dob ? dob : child.dateOfBirth
+    const dateOfBirth = dob ? dob : child.dateOfBirth;
 
     ResultsPage.shouldBeVisible();
 
@@ -33,7 +33,7 @@ class BirthResultsPage extends ResultsPage {
   }
 
   static editSearchLinkDisplayed() {
-    cy.get('a').contains('Edit search')
+    cy.get('a').contains('Edit search');
   }
 
   static clickNewSearchLink() {

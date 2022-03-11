@@ -2,10 +2,10 @@
 
 const LoginPage = require('../../pages/LoginPage');
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
-const moment = require("moment");
-const conf = require("../../../fields");
-const {validRecord} = require("../../fixtures/birth");
-const BirthDetailsPage = require("../../pages/birth/BirthDetailsPage");
+const moment = require('moment');
+const conf = require('../../../fields');
+const { validRecord } = require('../../fixtures/birth');
+const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const since = conf.dob.validate[2].arguments[0];
 
 describe.only('Birth search', () => {
@@ -20,8 +20,7 @@ describe.only('Birth search', () => {
       before(() => {
         BirthSearchPage.visit();
         BirthSearchPage.performSearch({
-          surname: name.surname, forenames: name.givenName,
-          dob: child.dateOfBirth
+          surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
         });
       });
       it('single record should be displayed', () => {
@@ -32,8 +31,7 @@ describe.only('Birth search', () => {
         before(() => {
           BirthSearchPage.visit();
           BirthSearchPage.performSearch({
-            surname: name.surname, forenames: name.givenName,
-            dob: child.dateOfBirth
+            surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
           });
           BirthDetailsPage.clickNewSearchLink();
 
@@ -49,8 +47,7 @@ describe.only('Birth search', () => {
         before(() => {
           BirthSearchPage.visit();
           BirthSearchPage.performSearch({
-            surname: name.surname,
-            forenames: name.givenName, dob: child.dateOfBirth
+            surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
           });
           BirthDetailsPage.clickEditSearchLink();
         });
@@ -66,7 +63,7 @@ describe.only('Birth search', () => {
       describe('with all fields empty', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({surname: '', forenames: '', dob: ''})
+          BirthSearchPage.performSearch({ surname: '', forenames: '', dob: '' });
         });
         it('displays appropriate error messages', () => {
           BirthSearchPage.noSearchCriteria();
@@ -77,16 +74,20 @@ describe.only('Birth search', () => {
       describe('containing invalid characters', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({systemNumber: 'invalid', surname: '', forenames: '', dob: ''})
+          BirthSearchPage.performSearch({
+            systemNumber: 'invalid', surname: '', forenames: '', dob: ''
+          });
         });
         it('displays an error message, requests a number and shows hint image', () => {
-          BirthSearchPage.noSystemNumber()
+          BirthSearchPage.noSystemNumber();
         });
       });
       describe('of an invalid length', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({systemNumber: 12345678, surname: '', forenames: '', dob: ''})
+          BirthSearchPage.performSearch({
+            systemNumber: 12345678, surname: '', forenames: '', dob: ''
+          });
         });
 
         it('displays an error message, requests a 9 digit number and shows hint image', () => {
@@ -97,7 +98,9 @@ describe.only('Birth search', () => {
     describe('with a missing first name', () => {
       before(() => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({surname: 'Surname', forenames: '', dob: '5/6/2010'})
+        BirthSearchPage.performSearch({
+          surname: 'Surname', forenames: '', dob: '5/6/2010'
+        });
       });
       it('displays an error message, requests a forename and focuses on forename field', () => {
         BirthSearchPage.noForenames();
@@ -106,7 +109,9 @@ describe.only('Birth search', () => {
     describe('and a missing surname', () => {
       before(() => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({surname: '', forenames: '', dob: '5/6/2010'})
+        BirthSearchPage.performSearch({
+          surname: '', forenames: '', dob: '5/6/2010'
+        });
       });
       it('displays an error message, requests a surname, forename and focuses on ' +
         'surname field (as that comes before forenames)', () => {
@@ -118,8 +123,10 @@ describe.only('Birth search', () => {
         before(() => {
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
-          BirthSearchPage.performSearch({surname: 'TEST', forenames: 'TEST', dob: 'invalid'})
-        })
+          BirthSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dob: 'invalid'
+          });
+        });
         it('displays an error message, requests a valid dob and focuses on dob field', () => {
           BirthSearchPage.invalidDOB();
         });
@@ -127,7 +134,9 @@ describe.only('Birth search', () => {
       describe('too short', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({surname: 'McFly', forenames: 'Marty Jr', dob: '112001'})
+          BirthSearchPage.performSearch({
+            surname: 'McFly', forenames: 'Marty Jr', dob: '112001'
+          });
         });
         it('displays an error message', () => {
           BirthSearchPage.invalidDOB();
@@ -139,7 +148,7 @@ describe.only('Birth search', () => {
           BirthSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr',
             dob: moment().add(1, 'day').format('DD/MM/YYYY')
-          })
+          });
         });
         it('displays an error message, requests a past date and shows the dob hint', () => {
           BirthSearchPage.dobInFuture();
@@ -150,7 +159,7 @@ describe.only('Birth search', () => {
           BirthSearchPage.visit();
           BirthSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr',
-            dob: moment(since).add(-1, 'day').format('DD/MM/YYYY'),
+            dob: moment(since).add(-1, 'day').format('DD/MM/YYYY')
           });
         });
         it('displays an error message and shows dob hint', () => {

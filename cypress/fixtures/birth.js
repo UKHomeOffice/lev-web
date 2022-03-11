@@ -73,5 +73,5 @@ module.exports = {
     'systemNumber': 999999901,
     'date': '10/10/2014'
   }
-}
+};
 

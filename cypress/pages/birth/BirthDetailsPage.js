@@ -23,7 +23,7 @@ class BirthDetailsPage extends DetailsPage {
     cy.get('.details').contains(`Place of birth ${record.mother.birthplace}`);
     cy.get('.details').contains(`Name ${record.father.name.fullName}`);
     cy.get('.details').contains(`Place of birth ${record.father.birthplace}`);
-    cy.get('.details').contains(`Birth registered by Mother`);
+    cy.get('.details').contains('Birth registered by Mother');
     cy.get('.details').contains(`Registration district ${record.registrationDistrict}`);
     cy.get('.details').contains(`Administrative area ${record.administrativeArea}`);
     cy.get('.details').contains(`Date of registration ${record.date}`);

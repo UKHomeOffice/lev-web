@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchPage = require('../SearchPage');
-const conf = require("../../../fields");
+const conf = require('../../../fields');
 
 class BirthSearchPage extends SearchPage {
 
@@ -105,17 +105,17 @@ class BirthSearchPage extends SearchPage {
   }
 
   static searchFormClear() {
-    cy.get('#system-number').should("have.value",'');
-    cy.get('#surname').should("have.value",'');
-    cy.get('#forenames').should("have.value",'');
-    cy.get('#dob').should("have.value",'');
+    cy.get('#system-number').should('have.value', '');
+    cy.get('#surname').should('have.value', '');
+    cy.get('#forenames').should('have.value', '');
+    cy.get('#dob').should('have.value', '');
   }
 
   static searchFormRetainedValues(record) {
-    cy.get('#system-number').should("have.value",'');
-    cy.get('#surname').should("have.value",`${record.name.surname}`);
-    cy.get('#forenames').should("have.value",`${record.name.givenName}`);
-    cy.get('#dob').should("have.value",`${record.dateOfBirth}`);
+    cy.get('#system-number').should('have.value', '');
+    cy.get('#surname').should('have.value', `${record.name.surname}`);
+    cy.get('#forenames').should('have.value', `${record.name.givenName}`);
+    cy.get('#dob').should('have.value', `${record.dateOfBirth}`);
   }
 }
 

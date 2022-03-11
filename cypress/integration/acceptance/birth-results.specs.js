@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
-const LoginPage = require("../../pages/LoginPage");
-const BirthSearchPage = require("../../pages/birth/BirthSearchPage");
-const BirthResultsPage = require("../../pages/birth/BirthResultsPage");
-const { multipleValidRecords } = require("../../fixtures/birth");
-const BirthDetailsPage = require("../../pages/birth/BirthDetailsPage");
+const LoginPage = require('../../pages/LoginPage');
+const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
+const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
+const { multipleValidRecords } = require('../../fixtures/birth');
+const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 
 describe.only('Birth results', () => {
   const child = multipleValidRecords.child;
@@ -15,10 +15,11 @@ describe.only('Birth results', () => {
   describe('that returns no records', () => {
     it('a record not found message should be displayed', () => {
       BirthSearchPage.visit();
-      BirthSearchPage.performSearch({surname: 'InvalidRecord', forenames: 'Test ', dob: '01/01/2011'});
+      BirthSearchPage.performSearch({ surname: 'InvalidRecord',
+        forenames: 'Test ', dob: '01/01/2011' });
       BirthResultsPage.noRecordFound();
-    })
-  })
+    });
+  });
   describe('that returns multiple records', () => {
     it('displays message that multiple records found', () => {
       BirthSearchPage.visit();
@@ -42,7 +43,7 @@ describe.only('Birth results', () => {
           surname: name.surname, forenames: name.givenName, dob: dob
         });
         BirthResultsPage.multipleRecordsFound(dob);
-      })
+      });
     });
     it('displays message that multiple records found', () => {
       BirthSearchPage.visit();
@@ -60,7 +61,7 @@ describe.only('Birth results', () => {
         BirthResultsPage.clickEditSearchLink();
       });
       it('has the correct form values', () => {
-        BirthSearchPage.searchFormRetainedValues(child)
+        BirthSearchPage.searchFormRetainedValues(child);
       });
     });
     describe('When I select the "New search" link on the results page', () => {
