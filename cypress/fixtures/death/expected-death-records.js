@@ -26,7 +26,7 @@ const result1 = {
     signature: 'I. McInformface'
   },
   deceased: {
-    forenames: 'Tester',
+    forenames: 'Tester One',
     surname: 'MULTIPLE',
     maidenSurname: 'TESTER',
     dateOfBirth: '01/01/1910',
