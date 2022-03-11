@@ -61,13 +61,13 @@ class BirthSearchPage extends SearchPage {
   static noSystemNumber() {
     cy.get('h2').contains('Fix the following error');
     cy.get('a').contains('Please enter a number');
-    cy.get('#system-number-hint').should('exist')
+    cy.get('#system-number-hint').should('exist');
   }
 
   static invalidLengthSystemNumber() {
     cy.get('h2').contains('Fix the following error');
     cy.get('a').contains('The system number should be 9 digits');
-    cy.get('#system-number-hint').should('exist')
+    cy.get('#system-number-hint').should('exist');
   }
 
   static noForenames() {
@@ -90,7 +90,6 @@ class BirthSearchPage extends SearchPage {
     cy.get('input[name="dob"]').should('have.focus');
   }
 
-
   static dobInFuture() {
     cy.get('h2').contains('Fix the following error');
     cy.get('a').contains('Please enter a date of birth in the past');
@@ -103,6 +102,20 @@ class BirthSearchPage extends SearchPage {
     cy.get('h2').contains('Fix the following error');
     cy.get('a').contains(`Please enter a date after our records began (${since.format('D MMMM YYYY')})`);
     cy.get('#dob-extended-hint').should('exist');
+  }
+
+  static searchFormClear() {
+    cy.get('#system-number').should("have.value",'');
+    cy.get('#surname').should("have.value",'');
+    cy.get('#forenames').should("have.value",'');
+    cy.get('#dob').should("have.value",'');
+  }
+
+  static searchFormRetainedValues(record) {
+    cy.get('#system-number').should("have.value",'');
+    cy.get('#surname').should("have.value",`${record.name.surname}`);
+    cy.get('#forenames').should("have.value",`${record.name.givenName}`);
+    cy.get('#dob').should("have.value",`${record.dateOfBirth}`);
   }
 }
 
