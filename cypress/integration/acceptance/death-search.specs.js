@@ -101,7 +101,7 @@ describe('Death search', () => {
     });
   });
 
-  describe('submitting an invalid query', () => {
+  describe.only('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
         DeathSearchPage.visit();
@@ -109,7 +109,19 @@ describe('Death search', () => {
       });
 
       it('displays an error message', () => {
-        DeathSearchPage.hasNoSearchCriteria();
+        DeathSearchPage.hasErrorTitle();
+      });
+
+      it('requests a surname', () => {
+        DeathSearchPage.hasErrorMessage('Please enter a surname');
+      });
+
+      it('requests a forename', () => {
+        DeathSearchPage.hasErrorMessage('Please enter at least one forename');
+      });
+
+      it('requests a date of birth or death', () => {
+        DeathSearchPage.hasErrorMessage('Please enter a date');
       });
     });
 
@@ -123,7 +135,15 @@ describe('Death search', () => {
         });
 
         it('displays an error message', () => {
-          DeathSearchPage.hasInvalidSystemNumber('Please enter a number');
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a system number', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a number');
+        });
+
+        it('shows the system number details hint', () => {
+          DeathSearchPage.hasSystemNumberHint();
         });
       });
 
@@ -136,7 +156,15 @@ describe('Death search', () => {
         });
 
         it('displays an error message', () => {
-          DeathSearchPage.hasInvalidSystemNumber('The system number should be 9 digits');
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a system number of the valid length', () => {
+          DeathSearchPage.hasErrorMessage('The system number should be 9 digits');
+        });
+
+        it('shows the system number details hint', () => {
+          DeathSearchPage.hasSystemNumberHint();
         });
       });
     });
@@ -151,7 +179,15 @@ describe('Death search', () => {
       });
 
       it('displays an error message', () => {
-        DeathSearchPage.hasMissingForenames();
+        DeathSearchPage.hasErrorTitle();
+      });
+
+      it('requests a forename', () => {
+        DeathSearchPage.hasErrorMessage('Please enter at least one forename');
+      });
+
+      it('the forenames field should be focused', () => {
+        DeathSearchPage.hasForenamesFocused();
       });
 
       describe('and a missing surname', () => {
@@ -163,7 +199,19 @@ describe('Death search', () => {
         });
 
         it('displays an error message', () => {
-          DeathSearchPage.hasMissingForenamesAndSurname();
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a surname', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a surname');
+        });
+
+        it('requests a forename', () => {
+          DeathSearchPage.hasErrorMessage('Please enter at least one forename');
+        });
+
+        it('the surname field should be focused (as that comes before forenames)', () => {
+          DeathSearchPage.hasSurnameFocused();
         });
       });
     });
@@ -180,7 +228,19 @@ describe('Death search', () => {
         });
 
         it('displays the error message', () => {
-          DeathSearchPage.hasInvalidDate();
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a British formatted date', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a date in the correct format');
+        });
+
+        it('shows the date of birth/death details hint', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathHint();
+        });
+
+        it('the date of birth/death field should be focused', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathFocused();
         });
       });
 
@@ -195,7 +255,15 @@ describe('Death search', () => {
         });
 
         it('displays an error message', () => {
-          DeathSearchPage.hasDateInFuture();
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a past date', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a date in the past');
+        });
+
+        it('shows the date of birth/death details hint', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathHint();
         });
       });
     });

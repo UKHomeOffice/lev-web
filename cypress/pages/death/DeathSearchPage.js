@@ -50,64 +50,32 @@ class DeathSearchPage extends SearchPage {
     this.submit();
   }
 
-  /**
-   * Check the expected errors are displayed when no search criteria in given
-   */
-  static hasNoSearchCriteria() {
-    cy.get('h2').contains('Fix the following errors');
-    cy.get('a').contains('Please enter a surname');
-    cy.get('a').contains('Please enter at least one forename');
-    cy.get('a').contains('Please enter a date');
-    cy.get('#dobd-extended-hint').should('exist');
-    cy.get('#surname').should('have.focus');
+  static hasErrorTitle() {
+    cy.get('.validation-summary > h2').contains('Fix the following error');
   }
 
-  /**
-   * Check the expected errors are displayed when an invalid system number in given
-   */
-  static hasInvalidSystemNumber(message) {
-    cy.get('h2').contains('Fix the following error');
-    cy.get('a').contains(message);
+  static hasErrorMessage(message) {
+    cy.get('.validation-summary a').contains(message);
+  }
+
+  static hasSystemNumberHint() {
     cy.get('#system-number-hint').should('exist');
   }
 
-  /**
-   * Check the expected errors are displayed when the forename(s) are missing
-   */
-  static hasMissingForenames() {
-    cy.get('h2').contains('Fix the following error');
-    cy.get('a').contains('Please enter at least one forename');
-    cy.get('#forenames').should('have.focus');
-  }
-
-  /**
-   * Check the expected errors are displayed when the forename(s) and surname are missing
-   */
-  static hasMissingForenamesAndSurname() {
-    cy.get('h2').contains('Fix the following errors');
-    cy.get('a').contains('Please enter a surname');
-    cy.get('a').contains('Please enter at least one forename');
+  static hasSurnameFocused() {
     cy.get('#surname').should('have.focus');
   }
 
-  /**
-   * Check the expected errors are displayed when an invalid date is given
-   */
-  static hasInvalidDate() {
-    cy.get('h2').contains('Fix the following error');
-    cy.get('a').contains('Please enter a date in the correct format');
-    cy.get('#dobd-extended-hint').should('exist');
+  static hasForenamesFocused() {
+    cy.get('#forenames').should('have.focus');
+  }
+
+  static hasDateOfBirthOrDeathFocused() {
     cy.get('#dobd').should('have.focus');
   }
 
-  /**
-   * Check the expected errors are displayed when a date in the future is given
-   */
-  static hasDateInFuture() {
-    cy.get('h2').contains('Fix the following error');
-    cy.get('a').contains('Please enter a date in the past');
+  static hasDateOfBirthOrDeathHint() {
     cy.get('#dobd-extended-hint').should('exist');
-    cy.get('#dobd').should('have.focus');
   }
 
   static hasExpectedValues({
