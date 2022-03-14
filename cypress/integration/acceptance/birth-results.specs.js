@@ -28,6 +28,9 @@ describe.only('Birth results', () => {
     it('single record summary should be displayed', () => {
       BirthDetailsPage.recordSummaryDisplayed(multipleValidRecords);
     });
+    it('system number should be displayed', () => {
+      BirthDetailsPage.recordDisplaysSystemNumber(multipleValidRecords);
+    });
     it('child details should be displayed', () => {
       BirthDetailsPage.recordDisplaysChildDetails(multipleValidRecords);
     });

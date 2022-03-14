@@ -21,6 +21,9 @@ describe.only('Birth search', () => {
       it('single record summary should be displayed', () => {
         BirthDetailsPage.recordSummaryDisplayed(validRecord);
       });
+      it('single record summary should be displayed', () => {
+        BirthDetailsPage.recordDisplaysSystemNumber(validRecord);
+      });
       it('child details should be displayed', () => {
         BirthDetailsPage.recordDisplaysChildDetails(validRecord);
       });
