@@ -8,21 +8,28 @@ class BirthDetailsPage extends DetailsPage {
     DetailsPage.shouldBeVisible();
     cy.get('h1').contains(`${record.child.name.fullName} ${record.child.dateOfBirth}`);
 }
-
-  static recordDisplayed(record) {
-    cy.get('h1').contains(`${record.child.name.fullName} ${record.child.dateOfBirth}`);
-    cy.get('.details').contains(`System number ${record.systemNumber}`);
+  static recordDisplaysChildDetails(record) {
     cy.get('.details').contains(`Surname ${record.child.name.surname}`);
     cy.get('.details').contains(`Forename(s) ${record.child.name.givenName}`);
     cy.get('.details').contains(`Date of birth ${record.child.dateOfBirth}`);
     cy.get('.details').contains(`Place of birth ${record.child.birthplace}`);
     cy.get('.details').contains(`Sex ${record.child.sex}`);
-    cy.get('.details').contains(`Name ${record.mother.name.fullName}`);
+  }
+
+  static recordDisplaysMotherDetails(record) {
     cy.get('.details').contains(`Maiden name ${record.mother.maidenSurname}`);
     cy.get('.details').contains(`Surname at marriage if different from maiden name ${record.mother.marriageSurname}`);
     cy.get('.details').contains(`Place of birth ${record.mother.birthplace}`);
+    cy.get('.details').contains(`Name ${record.mother.name.fullName}`);
+  }
+
+  static recordDisplaysFatherDetails(record) {
     cy.get('.details').contains(`Name ${record.father.name.fullName}`);
     cy.get('.details').contains(`Place of birth ${record.father.birthplace}`);
+  }
+
+  static recordDisplaysRegistrationDetails(record) {
+    cy.get('.details').contains(`System number ${record.systemNumber}`);
     cy.get('.details').contains('Birth registered by Mother');
     cy.get('.details').contains(`Registration district ${record.registrationDistrict}`);
     cy.get('.details').contains(`Administrative area ${record.administrativeArea}`);
@@ -42,7 +49,7 @@ class BirthDetailsPage extends DetailsPage {
   }
 
   static editSearchLinkVisible() {
-    cy.get('a').contains('Edit search');
+    cy.get('#editSearchLink').contains('Edit search');
   }
 
   static backToSearchResultsDisplayed() {

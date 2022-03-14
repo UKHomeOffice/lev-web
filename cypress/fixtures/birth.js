@@ -1,6 +1,17 @@
 'use strict';
 
 module.exports = {
+  // Search criteria for a record that returns single result
+  searchSingleRecord: {
+    surname: 'Solo',
+    forenames: 'Tester',
+    dob: '29/02/2012'
+  },
+  searchMultipleRecords: {
+    surname: 'Multiple',
+    forenames: 'Tester',
+    dob: '01/01/2010'
+  },
   // Used for test where only one record should be returned
   validRecord: {
     'administrativeArea': 'Reading',

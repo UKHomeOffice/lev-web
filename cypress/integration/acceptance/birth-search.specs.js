@@ -4,7 +4,7 @@ const LoginPage = require('../../pages/LoginPage');
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
 const moment = require('moment');
 const conf = require('../../../fields');
-const { validRecord } = require('../../fixtures/birth');
+const { validRecord, searchSingleRecord } = require('../../fixtures/birth');
 const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const since = conf.dob.validate[2].arguments[0];
 
@@ -14,25 +14,29 @@ describe.only('Birth search', () => {
   });
   describe('submitting a valid query', () => {
     describe('where there is one result', () => {
-      const child = validRecord.child;
-      const name = child.name;
-
       before(() => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
-        });
+        BirthSearchPage.performSearch(searchSingleRecord);
       });
-      it('single record should be displayed', () => {
+      it('single record summary should be displayed', () => {
         BirthDetailsPage.recordSummaryDisplayed(validRecord);
-        BirthDetailsPage.recordDisplayed(validRecord);
+      });
+      it('child details should be displayed', () => {
+        BirthDetailsPage.recordDisplaysChildDetails(validRecord);
+      });
+      it('mother details should be displayed', () => {
+        BirthDetailsPage.recordDisplaysMotherDetails(validRecord);
+      });
+      it('father details should be displayed', () => {
+        BirthDetailsPage.recordDisplaysFatherDetails(validRecord);
+      });
+      it('birth registration details should be displayed', () => {
+        BirthDetailsPage.recordDisplaysRegistrationDetails(validRecord);
       });
       describe('When I select the "New search" button', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({
-            surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
-          });
+          BirthSearchPage.performSearch(searchSingleRecord);
           BirthDetailsPage.clickNewSearchLink();
 
           it('shows the search page', () => {
@@ -46,16 +50,14 @@ describe.only('Birth search', () => {
       describe('When I select the "Edit search" button', () => {
         before(() => {
           BirthSearchPage.visit();
-          BirthSearchPage.performSearch({
-            surname: name.surname, forenames: name.givenName, dob: child.dateOfBirth
-          });
+          BirthSearchPage.performSearch(searchSingleRecord);
           BirthDetailsPage.clickEditSearchLink();
         });
         it('shows the search page', () => {
           BirthSearchPage.shouldBeVisible();
         });
         it('has the correct form values', () => {
-          BirthSearchPage.searchFormRetainedValues(child);
+          BirthSearchPage.searchFormRetainedValues(searchSingleRecord);
         });
       });
     });

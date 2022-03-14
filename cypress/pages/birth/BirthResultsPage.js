@@ -11,19 +11,18 @@ class BirthResultsPage extends ResultsPage {
 
   static multipleRecordsFound(dob) {
     const child = expectedMultipleRec.child;
-    const name = child.name;
-    const birthplace = expectedMultipleRec.child.birthplace;
+    const { surname, givenName } = expectedMultipleRec.child.name;
     const fatherName = expectedMultipleRec.father.name.fullName;
     const motherName = expectedMultipleRec.mother.name.fullName;
-    const dateOfBirth = dob ? dob : child.dateOfBirth;
+    const dateOfBirth = dob ? dob : expectedMultipleRec.child.dateOfBirth;
 
     ResultsPage.shouldBeVisible();
 
     // displays message that multiple records found
-    cy.get('h1').contains(`3 records found for ${name.givenName} ${name.surname} ${dateOfBirth}`);
+    cy.get('h1').contains(`3 records found for ${givenName} ${surname} ${dateOfBirth}`);
 
     // displays a subset of each record in a list
-    cy.get('ul>li').each(() => {}).contains(`Place of birth ${birthplace}`);
+    cy.get('ul>li').each(() => {}).contains(`Place of birth ${child.birthplace}`);
     cy.get('ul>li').each(() => {}).contains(`Mother ${motherName}`);
     cy.get('ul>li').each(() => {}).contains(`Father ${fatherName}`);
   }
@@ -33,7 +32,7 @@ class BirthResultsPage extends ResultsPage {
   }
 
   static editSearchLinkDisplayed() {
-    cy.get('a').contains('Edit search');
+    cy.get('#editSearchLink').contains('Edit search');
   }
 
   static clickNewSearchLink() {
