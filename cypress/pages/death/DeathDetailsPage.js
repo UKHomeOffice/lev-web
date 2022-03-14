@@ -19,6 +19,26 @@ class DeathDetailsPage extends DetailsPage {
     cy.get('h1').contains(`${deceased.forenames} ${deceased.surname} ${deceased.dateOfBirth}`);
   }
 
+  static visitWithFullDetails(search, record, multipleResults = false) {
+
+    // Refresh with "full-details" role
+    cy.visit(`/death/details/${record.id}`, {
+      headers: {
+        'X-Auth-Roles': 'full-details'
+      },
+      qs: multipleResults ? {
+        surname: search.surname,
+        forenames: search.forenames,
+        dobd: search.dobd,
+        multipleResults
+      } : {
+        surname: search.surname,
+        forenames: search.forenames,
+        dobd: search.dobd
+      }
+    });
+  }
+
   /**
    * Check death registrations details page has the expected data
    */
@@ -48,14 +68,6 @@ class DeathDetailsPage extends DetailsPage {
    * Check death registrations details page has the expected data
    */
   static hasCompleteRecord(record) {
-
-    // Refresh with "full-details" role
-    cy.visit(`/death/details/${record.id}`, {
-      headers: {
-        'X-Auth-Roles': 'full-details'
-      }
-    });
-
     const { deceased, informant, registrar } = record;
     const rows = [
       `System number ${record.id}`,

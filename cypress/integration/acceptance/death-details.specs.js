@@ -42,8 +42,28 @@ describe('Death details page', () => {
 
     if (!Cypress.env('e2e')) {
       describe('which shows the full details to select users', () => {
+        before(() => {
+          DeathDetailsPage.visitWithFullDetails(search, result);
+        });
+
+        it('returns a details page', () => {
+          DeathDetailsPage.shouldBeVisible();
+        });
+
+        it('an appropriate message is displayed', () => {
+          DeathDetailsPage.hasExpectedTitle(result);
+        });
+
         it('the complete record is displayed in a table', () => {
           DeathDetailsPage.hasCompleteRecord(result);
+        });
+
+        it('contains a link back to the search screen', () => {
+          DeathDetailsPage.hasEditSearchButton();
+        });
+
+        it('does not contain a link back to the search results screen', () => {
+          DeathDetailsPage.backToSearchResultsNotDisplayed();
         });
       });
     }
@@ -82,8 +102,28 @@ describe('Death details page', () => {
 
     if (!Cypress.env('e2e')) {
       describe('which shows the full details to select users', () => {
+        before(() => {
+          DeathDetailsPage.visitWithFullDetails(search, result, true);
+        });
+
+        it('returns a details page', () => {
+          DeathDetailsPage.shouldBeVisible();
+        });
+
+        it('an appropriate message is displayed', () => {
+          DeathDetailsPage.hasExpectedTitle(result);
+        });
+
         it('the complete record is displayed in a table', () => {
           DeathDetailsPage.hasCompleteRecord(result);
+        });
+
+        it('contains a link back to the search screen', () => {
+          DeathDetailsPage.hasEditSearchButton();
+        });
+
+        it('contains a link back to the search results screen', () => {
+          DeathDetailsPage.backToSearchResultsDisplayed();
         });
       });
     }
