@@ -29,7 +29,7 @@ describe('Death details page', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      DeathDetailsPage.hasExpectedRecord(result);
+      DeathDetailsPage.hasLimitedRecord(result);
     });
 
     it('contains a link back to the search screen', () => {
@@ -39,6 +39,14 @@ describe('Death details page', () => {
     it('does not contain a link back to the search results screen', () => {
       DeathDetailsPage.backToSearchResultsNotDisplayed();
     });
+
+    if (!Cypress.env('e2e')) {
+      describe('which shows the full details to select users', () => {
+        it('the complete record is displayed in a table', () => {
+          DeathDetailsPage.hasCompleteRecord(result);
+        });
+      });
+    }
   });
 
   describe('When there is more than one result', () => {
@@ -61,7 +69,7 @@ describe('Death details page', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      DeathDetailsPage.hasExpectedRecord(result);
+      DeathDetailsPage.hasLimitedRecord(result);
     });
 
     it('contains a link back to the search screen', () => {
@@ -71,6 +79,14 @@ describe('Death details page', () => {
     it('contains a link back to the search results screen', () => {
       DeathDetailsPage.backToSearchResultsDisplayed();
     });
+
+    if (!Cypress.env('e2e')) {
+      describe('which shows the full details to select users', () => {
+        it('the complete record is displayed in a table', () => {
+          DeathDetailsPage.hasCompleteRecord(result);
+        });
+      });
+    }
   });
 
   describe('When I select the "New search" button', () => {

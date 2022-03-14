@@ -22,17 +22,6 @@ class DeathDetailsPage extends DetailsPage {
   /**
    * Check death registrations details page has the expected data
    */
-  static hasExpectedRecord(record) {
-    if (Cypress.env('env') === 'dev') {
-      this.hasCompleteRecord(record);
-    } else {
-      this.hasLimitedRecord(record);
-    }
-  }
-
-  /**
-   * Check death registrations details page has the expected data
-   */
   static hasLimitedRecord(record) {
     const { deceased, registrar } = record;
     const rows = [
@@ -61,6 +50,14 @@ class DeathDetailsPage extends DetailsPage {
    * Check death registrations details page has the expected data
    */
   static hasCompleteRecord(record) {
+
+    // Refresh with "full-details" role
+    cy.visit(`/death/details/${record.id}`, {
+      headers: {
+        'X-Auth-Roles': 'full-details'
+      }
+    });
+
     const { deceased, informant, registrar } = record;
     const rows = [
       `System number ${record.id}`,
