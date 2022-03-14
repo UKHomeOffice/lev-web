@@ -4,7 +4,7 @@ const LoginPage = require('../../pages/LoginPage');
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
 const moment = require('moment');
 const conf = require('../../../fields');
-const { validRecord, searchSingleRecord } = require('../../fixtures/birth');
+const { searchSingleRecord } = require('../../fixtures/birth');
 const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const since = conf.dob.validate[2].arguments[0];
 
@@ -12,30 +12,7 @@ describe.only('Birth search', () => {
   before(() => {
     LoginPage.login();
   });
-  describe('submitting a valid query', () => {
-    describe('where there is one result', () => {
-      before(() => {
-        BirthSearchPage.visit();
-        BirthSearchPage.performSearch(searchSingleRecord);
-      });
-      it('single record summary should be displayed', () => {
-        BirthDetailsPage.recordSummaryDisplayed(validRecord);
-      });
-      it('single record summary should be displayed', () => {
-        BirthDetailsPage.recordDisplaysSystemNumber(validRecord);
-      });
-      it('child details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysChildDetails(validRecord);
-      });
-      it('mother details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysMotherDetails(validRecord);
-      });
-      it('father details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysFatherDetails(validRecord);
-      });
-      it('birth registration details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysRegistrationDetails(validRecord);
-      });
+  describe('after submitting a valid query', () => {
       describe('When I select the "New search" button', () => {
         before(() => {
           BirthSearchPage.visit();
@@ -173,4 +150,3 @@ describe.only('Birth search', () => {
       });
     });
   });
-});
