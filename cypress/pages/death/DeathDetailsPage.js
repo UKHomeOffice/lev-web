@@ -20,22 +20,18 @@ class DeathDetailsPage extends DetailsPage {
   }
 
   static visitWithFullDetails(search, record, multipleResults = false) {
+    const qs = {
+      surname: search.surname,
+      forenames: search.forenames,
+      dobd: search.dobd
+    };
 
     // Refresh with "full-details" role
     cy.visit(`/death/details/${record.id}`, {
       headers: {
         'X-Auth-Roles': 'full-details'
       },
-      qs: multipleResults ? {
-        surname: search.surname,
-        forenames: search.forenames,
-        dobd: search.dobd,
-        multipleResults
-      } : {
-        surname: search.surname,
-        forenames: search.forenames,
-        dobd: search.dobd
-      }
+      qs: multipleResults ? { ...qs, multipleResults } : qs
     });
   }
 
