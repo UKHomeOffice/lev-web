@@ -41,9 +41,7 @@ class DeathDetailsPage extends DetailsPage {
       `Date of registration ${record.date}`,
     ];
 
-    rows.forEach((value, index) => {
-      cy.get('table tr').eq(index).contains(value);
-    });
+    this.hasExpectedRows(rows);
   }
 
   /**
@@ -93,8 +91,12 @@ class DeathDetailsPage extends DetailsPage {
       `Entry number ${record.entryNumber}`
     ];
 
-    rows.forEach((value, index) => {
-      cy.get('table tr').eq(index).contains(value);
+    this.hasExpectedRows(rows);
+  }
+
+  static hasExpectedRows(rows) {
+    cy.get('table.details tr').each((element, index) => {
+      cy.wrap(element).contains(rows[index]);
     });
   }
 }
