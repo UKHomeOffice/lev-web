@@ -8,7 +8,7 @@ const { searchSingleRecord } = require('../../fixtures/birth');
 const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const since = conf.dob.validate[2].arguments[0];
 
-describe.only('Birth search', () => {
+describe('Birth search', () => {
   before(() => {
     LoginPage.login();
   });

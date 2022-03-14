@@ -6,7 +6,7 @@ const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
 const { searchSingleRecord, searchMultipleRecords, validRecord } = require('../../fixtures/birth');
 
-describe.only('Birth details', () => {
+describe('Birth details', () => {
   before(() => {
     LoginPage.login();
   });
