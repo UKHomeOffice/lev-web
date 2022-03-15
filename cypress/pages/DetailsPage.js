@@ -4,6 +4,10 @@ const BackToSearchPage = require('./BackToSearchPage');
 
 class DetailsPage extends BackToSearchPage {
 
+  static shouldBeVisible() {
+    cy.url().should('include', '/details');
+  }
+
   static backToSearchResultsDisplayed() {
     cy.get('#backToSearchResults').should('exist');
   }
