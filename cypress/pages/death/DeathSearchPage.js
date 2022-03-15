@@ -49,6 +49,46 @@ class DeathSearchPage extends SearchPage {
     this.setText('#dobd', dobd);
     this.submit();
   }
+
+  static hasErrorTitle() {
+    cy.get('.validation-summary > h2').contains('Fix the following error');
+  }
+
+  static hasErrorMessage(message) {
+    cy.get('.validation-summary a').contains(message);
+  }
+
+  static hasSystemNumberHint() {
+    cy.get('#system-number-hint').should('exist');
+  }
+
+  static hasSurnameFocused() {
+    cy.get('#surname').should('have.focus');
+  }
+
+  static hasForenamesFocused() {
+    cy.get('#forenames').should('have.focus');
+  }
+
+  static hasDateOfBirthOrDeathFocused() {
+    cy.get('#dobd').should('have.focus');
+  }
+
+  static hasDateOfBirthOrDeathHint() {
+    cy.get('#dobd-extended-hint').should('exist');
+  }
+
+  static hasExpectedValues({
+                             systemNumber,
+                             surname,
+                             forenames,
+                             dobd
+                           }) {
+    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#surname').should('have.value', surname);
+    cy.get('#forenames').should('have.value', forenames);
+    cy.get('#dobd').should('have.value', dobd);
+  }
 }
 
 module.exports = DeathSearchPage;

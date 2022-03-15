@@ -405,7 +405,7 @@ rules:
   max-len:
     - 2
     # line length
-    - 120
+    - 150
   # limits the number of parameters that can be used in the function declaration.
   max-params:
     - 2

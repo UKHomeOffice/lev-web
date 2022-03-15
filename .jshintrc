@@ -1,5 +1,5 @@
 {
-  "esversion": 6,
+  "esversion": 9,
   "boss": true,
   "node": true,
   "strict": true,
@@ -11,7 +11,7 @@
   "sub": true,
 
   "laxcomma": true,
-  "maxlen": 120,
+  "maxlen": 150,
   "asi": true,
   "loopfunc": true,
   "unused": false,

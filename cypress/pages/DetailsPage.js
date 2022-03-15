@@ -1,14 +1,23 @@
 'use strict';
 
-class DetailsPage {
+const BackToSearchPage = require('./BackToSearchPage');
 
-  /**
-   * Check results page is visible
-   */
+class DetailsPage extends BackToSearchPage {
+
   static shouldBeVisible() {
+    cy.url().should('include', '/details');
+  }
 
-    // Has title
-    // cy.get('h1').contains('records found for');
+  static backToSearchResultsDisplayed() {
+    cy.get('#backToSearchResults').should('exist');
+  }
+
+  static backToSearchResultsNotDisplayed() {
+    cy.get('#backToSearchResults').should('not.exist');
+  }
+
+  static clickBackToResultsButton() {
+    cy.get('#backToSearchResults').click();
   }
 }
 

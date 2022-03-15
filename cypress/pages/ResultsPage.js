@@ -1,6 +1,8 @@
 'use strict';
 
-class ResultsPage {
+const BackToSearchPage = require('./BackToSearchPage');
+
+class ResultsPage extends BackToSearchPage {
 
   /**
    * Check results page is visible
@@ -8,7 +10,7 @@ class ResultsPage {
   static shouldBeVisible() {
 
     // Has title
-    // cy.get('h1').contains('records found for');
+    cy.get('h1').contains('records found for');
   }
 }
 
