@@ -267,5 +267,57 @@ describe('Death search', () => {
         });
       });
     });
+
+    describe('with an invalid short date that is', () => {
+      describe('too short', () => {
+        before(() => {
+          DeathSearchPage.visit();
+          DeathSearchPage.performSearch({
+            surname: 'Churchill',
+            forenames: 'Winston',
+            dobd: '112001'
+          });
+        });
+
+        it('displays the error message', () => {
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a British formatted date', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a date in the correct format');
+        });
+
+        it('shows the date of birth/death details hint', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathHint();
+        });
+
+        it('the date of birth/death field should be focused', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathFocused();
+        });
+      });
+
+      describe('a date in the future', () => {
+        before(() => {
+          DeathSearchPage.visit();
+          DeathSearchPage.performSearch({
+            surname: 'Churchill',
+            forenames: 'Winston',
+            dobd: moment().add(1, 'day').format('DDMMYYYY')
+          });
+        });
+
+        it('displays an error message', () => {
+          DeathSearchPage.hasErrorTitle();
+        });
+
+        it('requests a past date', () => {
+          DeathSearchPage.hasErrorMessage('Please enter a date in the past');
+        });
+
+        it('shows the date of birth/death details hint', () => {
+          DeathSearchPage.hasDateOfBirthOrDeathHint();
+        });
+      });
+    });
   });
 });
