@@ -2,6 +2,9 @@ env:
   node: true
   es6: true
 
+parserOptions:
+  ecmaVersion: 9
+
 plugins:
   - filenames
   - one-variable-per-var

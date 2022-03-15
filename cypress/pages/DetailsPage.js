@@ -1,6 +1,6 @@
 'use strict';
 
-class ResultsPage {
+class DetailsPage {
 
   /**
    * Check results page is visible
@@ -12,4 +12,4 @@ class ResultsPage {
   }
 }
 
-module.exports = ResultsPage;
+module.exports = DetailsPage;
