@@ -15,5 +15,5 @@
   "asi": true,
   "loopfunc": true,
   "unused": false,
-  "predef": [ "it", "describe", "before", "beforeEach", "browser", "cy", "Cypress", "expect"]
+  "predef": [ "it", "describe", "before", "browser", "cy", "Cypress", "expect"]
 }
