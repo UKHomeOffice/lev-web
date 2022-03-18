@@ -50,26 +50,6 @@ class DeathSearchPage extends SearchPage {
     this.submit();
   }
 
-  static hasErrorTitle() {
-    cy.get('.validation-summary > h2').contains('Fix the following error');
-  }
-
-  static hasErrorMessage(message) {
-    cy.get('.validation-summary a').contains(message);
-  }
-
-  static hasSystemNumberHint() {
-    cy.get('#system-number-hint').should('exist');
-  }
-
-  static hasSurnameFocused() {
-    cy.get('#surname').should('have.focus');
-  }
-
-  static hasForenamesFocused() {
-    cy.get('#forenames').should('have.focus');
-  }
-
   static hasDateOfBirthOrDeathFocused() {
     cy.get('#dobd').should('have.focus');
   }

@@ -49,6 +49,14 @@ class MarriageSearchPage extends SearchPage {
     this.setText('#dom', dom);
     this.submit();
   }
+
+  static hasDateOfMarriageFocused() {
+    cy.get('#dom').should('have.focus');
+  }
+
+  static hasDateOfMarriageHint() {
+    cy.get('#dom-extended-hint').should('exist');
+  }
 }
 
 module.exports = MarriageSearchPage;

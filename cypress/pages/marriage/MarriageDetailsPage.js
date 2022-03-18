@@ -15,8 +15,8 @@ class MarriageDetailsPage extends DetailsPage {
    * Check marriage registrations details page has the expected result
    */
   static hasExpectedTitle(record) {
-    const { deceased } = record;
-    cy.get('h1').contains(`${deceased.forenames} ${deceased.surname} ${deceased.dateOfBirth}`);
+    const { bride, groom } = record;
+    cy.get('h1').contains(`${bride.forenames} ${bride.surname} & ${groom.forenames} ${groom.surname}`);
   }
 }
 

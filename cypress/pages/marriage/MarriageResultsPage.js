@@ -23,6 +23,22 @@ class MarriageResultsPage extends ResultsPage {
 
     cy.get('h1').contains(title);
   }
+
+  /**
+   * Check expected rows are displayed
+   *
+   * @param expected
+   */
+  static hasExpectedRows(expected) {
+    const { results } = expected;
+
+    cy.get('#records li').each((element, index) => {
+      const { dateOfMarriage, placeOfMarriage } = results[index];
+
+      cy.wrap(element).contains('tr', `Date of marriage ${dateOfMarriage}`);
+      cy.wrap(element).contains('tr', `Place of marriage ${placeOfMarriage.short}`);
+    });
+  }
 }
 
 module.exports = MarriageResultsPage;

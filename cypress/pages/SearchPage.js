@@ -21,6 +21,27 @@ class SearchPage extends Page {
   static submit() {
     cy.get('input[type="submit"]').click();
   }
+
+  static hasErrorTitle() {
+    cy.get('.validation-summary > h2').contains('Fix the following error');
+  }
+
+  static hasErrorMessage(message) {
+    cy.get('.validation-summary a').contains(message);
+  }
+
+  static hasSystemNumberHint() {
+    cy.get('#system-number-hint').should('exist');
+  }
+
+  static hasSurnameFocused() {
+    cy.get('#surname').should('have.focus');
+  }
+
+  static hasForenamesFocused() {
+    cy.get('#forenames').should('have.focus');
+  }
+
 }
 
 module.exports = SearchPage;
