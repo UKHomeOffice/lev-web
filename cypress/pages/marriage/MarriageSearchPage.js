@@ -57,6 +57,18 @@ class MarriageSearchPage extends SearchPage {
   static hasDateOfMarriageHint() {
     cy.get('#dom-extended-hint').should('exist');
   }
+
+  static hasExpectedValues({
+                             systemNumber,
+                             surname,
+                             forenames,
+                             dom
+                           }) {
+    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#surname').should('have.value', surname);
+    cy.get('#forenames').should('have.value', forenames);
+    cy.get('#dom').should('have.value', dom);
+  }
 }
 
 module.exports = MarriageSearchPage;

@@ -19,6 +19,12 @@ class DetailsPage extends BackToSearchPage {
   static clickBackToResultsButton() {
     cy.get('#backToSearchResults').click();
   }
+
+  static hasExpectedRows(rows) {
+    cy.get('table.details tr').each((element, index) => {
+      cy.wrap(element).contains(rows[index]);
+    });
+  }
 }
 
 module.exports = DetailsPage;

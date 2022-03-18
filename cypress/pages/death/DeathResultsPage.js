@@ -40,13 +40,6 @@ class DeathResultsPage extends ResultsPage {
       cy.wrap(element).contains('tr', `Date of death ${dateOfDeath}`);
     });
   }
-
-  /**
-   * Click the first record
-   */
-  static clickFirstRecord() {
-    cy.get('#records a').eq(0).click();
-  }
 }
 
 module.exports = DeathResultsPage;

@@ -101,12 +101,6 @@ class DeathDetailsPage extends DetailsPage {
 
     this.hasExpectedRows(rows);
   }
-
-  static hasExpectedRows(rows) {
-    cy.get('table.details tr').each((element, index) => {
-      cy.wrap(element).contains(rows[index]);
-    });
-  }
 }
 
 module.exports = DeathDetailsPage;

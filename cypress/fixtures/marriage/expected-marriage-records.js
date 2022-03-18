@@ -26,7 +26,7 @@ const result1 = {
     administrativeArea: 'Reading'
   },
   groom: {
-    forenames: 'Tester',
+    forenames: 'Tester One',
     surname: 'MULTIPLE',
     age: 100,
     occupation: 'Unemployed',
@@ -94,10 +94,18 @@ const result1 = {
 
 const result2 = {
   ...result1,
+  groom: {
+    ...result1.groom,
+    forenames: 'Tester Two',
+  }
 };
 
 const result3 = {
   ...result1,
+  groom: {
+    ...result1.groom,
+    forenames: 'Tester Three',
+  }
 };
 
 module.exports = {
