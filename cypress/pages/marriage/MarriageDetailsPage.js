@@ -27,7 +27,7 @@ class MarriageDetailsPage extends DetailsPage {
     };
 
     // Refresh with "full-details" role
-    cy.visit(`/death/details/${record.id}`, {
+    cy.visit(`/marriage/details/${record.id}`, {
       headers: {
         'X-Auth-Roles': 'full-details'
       },
@@ -36,7 +36,7 @@ class MarriageDetailsPage extends DetailsPage {
   }
 
   /**
-   * Check death registrations details page has the expected data
+   * Check marriage registrations details page has the expected data
    */
   static hasLimitedRecord(record) {
     const { groom, bride, registrar } = record;
@@ -64,41 +64,60 @@ class MarriageDetailsPage extends DetailsPage {
   }
 
   /**
-   * Check death registrations details page has the expected data
+   * Check marriage registrations details page has the expected data
    */
   static hasCompleteRecord(record) {
-    const { deceased, informant, registrar } = record;
+    const { groom, bride, fatherOfGroom, fatherOfBride, registrar } = record;
     const rows = [
       `System number ${record.id}`,
+      `Date of marriage ${record.dateOfMarriage}`,
+      `Place of marriage ${record.placeOfMarriage.address}`,
 
-      'Deceased',
-      `Name ${deceased.forenames} ${deceased.surname}`,
-      `Maiden name ${deceased.maidenSurname}`,
-      `Date of birth ${deceased.dateOfBirth}`,
-      `Place of birth ${deceased.birthplace}`,
-      `Sex ${deceased.sex}`,
-      `Address ${deceased.address}`,
-      `Occupation ${deceased.occupation}`,
-      `Date of death ${deceased.dateOfDeath}`,
-      `Place of death ${deceased.deathplace}`,
-      `Age at death ${deceased.ageAtDeath}`,
-      `Cause of death ${deceased.causeOfDeath}`,
-      `Death certified by ${deceased.certifiedBy}`,
+      'Partner 1',
+      `Surname ${groom.surname}`,
+      `Forename(s) ${groom.forenames}`,
+      `Age ${groom.age}`,
+      `Occupation ${groom.occupation}`,
+      `Address ${groom.address}`,
+      `Condition ${groom.condition}`,
+      `Signature ${groom.signature}`,
 
-      'Informant',
-      `Surname ${informant.surname}`,
-      `Forename(s) ${informant.forenames}`,
-      `Address ${informant.address}`,
-      `Qualification ${informant.qualification}`,
-      `Signature ${informant.signature}`,
+      'Partner 2',
+      `Surname ${bride.surname}`,
+      `Forename(s) ${bride.forenames}`,
+      `Age ${bride.age}`,
+      `Occupation ${bride.occupation}`,
+      `Address ${bride.address}`,
+      `Condition ${bride.condition}`,
+      `Signature ${bride.signature}`,
+
+      'Father of partner 1',
+      `Surname ${fatherOfGroom.surname}`,
+      `Forename(s) ${fatherOfGroom.forenames}`,
+      `Occupation ${fatherOfGroom.occupation}`,
+      `Designation ${fatherOfGroom.designation || ''}`,
+      `Deceased ${fatherOfGroom.deceased ? 'Yes' : 'No'}`,
+
+      'Father of partner 2',
+      `Surname ${fatherOfBride.surname}`,
+      `Forename(s) ${fatherOfBride.forenames}`,
+      `Occupation ${fatherOfBride.occupation}`,
+      `Designation ${fatherOfBride.designation || ''}`,
+      `Deceased ${fatherOfBride.deceased ? 'Yes' : 'No'}`,
+
+      'First witness',
+      `Signature ${record.witness1.signature}`,
+
+      'Second witness',
+      `Signature ${record.witness2.signature}`,
 
       'Registration',
       `Registrar signature ${registrar.signature}`,
       `Registrar designation ${registrar.designation}`,
-      `Sub-district ${registrar.subdistrict}`,
+      `Superintendent registrar signature ${registrar.superintendentSignature}`,
+      `Superintendent registrar designation ${registrar.superintendentDesignation}`,
       `District ${registrar.district}`,
       `Administrative area ${registrar.administrativeArea}`,
-      `Date of registration ${record.date}`,
       `Entry number ${record.entryNumber}`
     ];
 
