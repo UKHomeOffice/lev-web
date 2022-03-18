@@ -1,13 +1,13 @@
 'use strict';
 
 const moment = require('moment');
-const expectedNoRecords = require('../../fixtures/death/expected-no-records');
-const expectedSingleRecord = require('../../fixtures/death/expected-death-record');
-const expectedMultipleRecords = require('../../fixtures/death/expected-death-records');
-const DeathDetailsPage = require('../../pages/death/DeathDetailsPage');
-const DeathResultsPage = require('../../pages/death/DeathResultsPage');
-const DeathSearchPage = require('../../pages/death/DeathSearchPage');
-const LoginPage = require('../../pages/LoginPage');
+const expectedNoRecords = require('../../../fixtures/death/expected-no-records');
+const expectedSingleRecord = require('../../../fixtures/death/expected-death-record');
+const expectedMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
+const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
+const LoginPage = require('../../../pages/LoginPage');
 
 describe('Death search', () => {
   before(() => {
@@ -101,7 +101,7 @@ describe('Death search', () => {
     });
   });
 
-  describe.only('submitting an invalid query', () => {
+  describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
         DeathSearchPage.visit();

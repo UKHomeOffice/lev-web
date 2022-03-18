@@ -1,10 +1,10 @@
 'use strict';
 
-const LoginPage = require('../../pages/LoginPage');
-const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
-const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
-const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
-const { searchSingleRecord, searchMultipleRecords, validRecord } = require('../../fixtures/birth');
+const LoginPage = require('../../../pages/LoginPage');
+const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
+const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
+const BirthResultsPage = require('../../../pages/birth/BirthResultsPage');
+const { searchSingleRecord, searchMultipleRecords, validRecord } = require('../../../fixtures/birth');
 
 describe('Birth details', () => {
   before(() => {

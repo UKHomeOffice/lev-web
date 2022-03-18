@@ -1,11 +1,11 @@
 'use strict';
 
-const expectedSingleRecord = require('../../fixtures/death/expected-death-record');
-const expectedMultipleRecords = require('../../fixtures/death/expected-death-records');
-const LoginPage = require('../../pages/LoginPage');
-const DeathDetailsPage = require('../../pages/death/DeathDetailsPage');
-const DeathResultsPage = require('../../pages/death/DeathResultsPage');
-const DeathSearchPage = require('../../pages/death/DeathSearchPage');
+const expectedSingleRecord = require('../../../fixtures/death/expected-death-record');
+const expectedMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const LoginPage = require('../../../pages/LoginPage');
+const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
+const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
 
 describe('Death details page', () => {
   before(() => {
