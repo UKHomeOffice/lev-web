@@ -4,7 +4,7 @@ const search = {
   systemNumber: '',
   forenames: 'Tester',
   surname: 'MULTIPLE',
-  dobd: '29/02/2012',
+  dom: '29/02/2012',
 };
 
 // Used for tests where multiple records are returned
