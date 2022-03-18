@@ -50,14 +50,28 @@ class DeathSearchPage extends SearchPage {
     this.submit();
   }
 
+  /**
+   * Check the date of birth/death has focus
+   */
   static hasDateOfBirthOrDeathFocused() {
     cy.get('#dobd').should('have.focus');
   }
 
+  /**
+   * Check the date of birth/death hint is visible
+   */
   static hasDateOfBirthOrDeathHint() {
     cy.get('#dobd-extended-hint').should('exist');
   }
 
+  /**
+   * Check the search page has the expected values
+   *
+   * @param systemNumber
+   * @param surname
+   * @param forenames
+   * @param dobd
+   */
   static hasExpectedValues({
                              systemNumber,
                              surname,

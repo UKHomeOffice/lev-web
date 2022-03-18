@@ -25,7 +25,7 @@ class DeathResultsPage extends ResultsPage {
   }
 
   /**
-   * Check expected rows are displayed
+   * Check expected results are displayed
    *
    * @param results
    */
