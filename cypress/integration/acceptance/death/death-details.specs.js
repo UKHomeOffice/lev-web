@@ -197,7 +197,7 @@ describe('Death details page', () => {
   });
 
   describe('When I select the "Back to search results link on the details page"', () => {
-    const { search } = expectedMultipleRecords;
+    const { search, results } = expectedMultipleRecords;
 
     before(() => {
       DeathSearchPage.visit();
@@ -214,7 +214,7 @@ describe('Death details page', () => {
 
     it('has the correct rows', () => {
       DeathResultsPage.hasExpectedTitle(expectedMultipleRecords);
-      DeathResultsPage.hasExpectedRows(expectedMultipleRecords);
+      DeathResultsPage.hasExpectedResults(results);
     });
   });
 });
