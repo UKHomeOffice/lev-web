@@ -52,7 +52,7 @@ describe('Marriage search', () => {
     });
 
     describe('that returns more than 1 record', () => {
-      const { search } = expectedMultipleRecords;
+      const { search, results } = expectedMultipleRecords;
 
       before(() => {
         MarriageSearchPage.visit();
@@ -68,7 +68,7 @@ describe('Marriage search', () => {
       });
 
       it('displays a subset of each record in a list', () => {
-        MarriageResultsPage.hasExpectedRows(expectedMultipleRecords);
+        MarriageResultsPage.hasExpectedResults(results);
       });
 
       it('contains a link back to the search screen', () => {

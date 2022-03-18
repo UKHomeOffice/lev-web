@@ -94,17 +94,33 @@ const result1 = {
 
 const result2 = {
   ...result1,
+  id: 999999902,
+  entryNumber: 2,
   groom: {
     ...result1.groom,
     forenames: 'Tester Two',
+    address: '2 Test street',
+    signature: 'T.2. Multiple'
+  },
+  bride: {
+    ...result1.bride,
+    address: '2 Test street',
   }
 };
 
 const result3 = {
   ...result1,
+  id: 999999903,
+  entryNumber: 3,
   groom: {
     ...result1.groom,
     forenames: 'Tester Three',
+    address: '3 Test street',
+    signature: 'T.3. Multiple'
+  },
+  bride: {
+    ...result1.bride,
+    address: '3 Test street',
   }
 };
 

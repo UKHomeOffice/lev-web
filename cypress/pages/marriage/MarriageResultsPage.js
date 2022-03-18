@@ -27,14 +27,13 @@ class MarriageResultsPage extends ResultsPage {
   /**
    * Check expected rows are displayed
    *
-   * @param expected
+   * @param results
    */
-  static hasExpectedRows(expected) {
-    const { results } = expected;
-
+  static hasExpectedResults(results) {
     cy.get('#records li').each((element, index) => {
-      const { dateOfMarriage, placeOfMarriage } = results[index];
+      const { dateOfMarriage, placeOfMarriage, groom, bride } = results[index];
 
+      cy.wrap(element).contains('a h2', `${groom.forenames} ${groom.surname} & ${bride.forenames} ${bride.surname}`);
       cy.wrap(element).contains('tr', `Date of marriage ${dateOfMarriage}`);
       cy.wrap(element).contains('tr', `Place of marriage ${placeOfMarriage.short}`);
     });

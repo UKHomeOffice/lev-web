@@ -197,7 +197,7 @@ describe('Marriage details page', () => {
   });
 
   describe('When I select the "Back to search results link on the details page"', () => {
-    const { search } = expectedMultipleRecords;
+    const { search, results } = expectedMultipleRecords;
 
     before(() => {
       MarriageSearchPage.visit();
@@ -214,7 +214,7 @@ describe('Marriage details page', () => {
 
     it('has the correct rows', () => {
       MarriageResultsPage.hasExpectedTitle(expectedMultipleRecords);
-      MarriageResultsPage.hasExpectedRows(expectedMultipleRecords);
+      MarriageResultsPage.hasExpectedResults(results);
     });
   });
 });
