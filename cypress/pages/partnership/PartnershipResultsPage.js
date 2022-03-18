@@ -1,8 +1,7 @@
 'use strict';
 
 const ResultsPage = require('../ResultsPage');
-const multipleRecords = require("../../fixtures/partnership/expected-partnership-records");
-const {multipleValidRecords: expectedMultipleRec} = require("../../fixtures/birth");
+const multipleRecords = require('../../fixtures/partnership/expected-partnership-records');
 
 class PartnershipResultsPage extends ResultsPage {
 

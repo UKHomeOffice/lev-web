@@ -3,17 +3,14 @@
 const expectedNoRecords = require('../../fixtures/partnership/expected-no-records');
 const expectedSingleRecord = require('../../fixtures/partnership/expected-partnership-record');
 const expectedMultipleRecords = require('../../fixtures/partnership/expected-partnership-records');
-const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
 const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const PartnerSearchPage = require("../../pages/partnership/PartnershipSearchPage");
-const PartnerResultsPage = require("../../pages/partnership/PartnershipResultsPage");
-const DetailsPage = require("../../pages/DetailsPage");
-const ResultsPage = require("../../pages/ResultsPage");
-const PartnerDetailsPage = require("../../pages/partnership/PartnershipDetailsPage");
-const moment = require("moment");
-const conf = require("../../../fields/partnership");
+const PartnerSearchPage = require('../../pages/partnership/PartnershipSearchPage');
+const DetailsPage = require('../../pages/DetailsPage');
+const ResultsPage = require('../../pages/ResultsPage');
+const moment = require('moment');
+const conf = require('../../../fields/partnership');
 const since = conf.dop.validate[2].arguments[0];
 
 describe.only('Partnership search', () => {
