@@ -54,7 +54,7 @@ describe('Marriage details page', () => {
           MarriageDetailsPage.hasExpectedTitle(result);
         });
 
-        it.only('the complete record is displayed in a table', () => {
+        it('the complete record is displayed in a table', () => {
           MarriageDetailsPage.hasCompleteRecord(result);
         });
 
