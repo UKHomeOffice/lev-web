@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchPage = require('../SearchPage');
-const conf = require("../../../fields/partnership");
+const conf = require('../../../fields/partnership');
 
 class PartnershipSearchPage extends SearchPage {
 
