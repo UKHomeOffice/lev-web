@@ -17,25 +17,23 @@ class PartnershipResultsPage extends ResultsPage {
     cy.get('h1').contains(`No records found for ${record.forenames} ${record.surname} ${record.dop}`);
   }
 
-  static multipleRecordsSummary(dop) {
-    const dateOfPartnership = dop ? dop : multipleRecords.result.dateOfPartnership;
-    const { surname, forenames } = multipleRecords.search;
+  static multipleRecordsSummary(record) {
+    const { surname, forenames, dop } = record;
 
-    cy.get('h1').contains(`4 records found for ${forenames} ${surname} ${dateOfPartnership}`);
+    cy.get('h1').contains(`4 records found for ${forenames} ${surname} ${dop}`);
   }
 
-    static multipleRecordsFound() {
-      const { placeOfPartnership, dateOfPartnership, partner1, partner2 } = multipleRecords.result;
+  static multipleRecordsFound() {
+    const { placeOfPartnership, dateOfPartnership, partner1, partner2 } = multipleRecords.result;
 
-      ResultsPage.shouldBeVisible();
+    ResultsPage.shouldBeVisible();
 
-      // displays a subset of each record in a list
-      cy.get('ul>li').each(() => {})
-        .contains(`${partner1.forenames} ${partner1.surname} & ${partner2.forenames} ${partner2.surname}`);
-      cy.get('ul>li').each(() => {}).contains(`Date of civil partnership ${dateOfPartnership}`);
-      cy.get('ul>li').each(() => {}).contains(`Place of civil partnership ${placeOfPartnership.short}`);
-    }
-
+    // displays a subset of each record in a list
+    cy.get('ul>li').each(() => {})
+      .contains(`${partner1.forenames} ${partner1.surname} & ${partner2.forenames} ${partner2.surname}`);
+    cy.get('ul>li').each(() => {}).contains(`Date of civil partnership ${dateOfPartnership}`);
+    cy.get('ul>li').each(() => {}).contains(`Place of civil partnership ${placeOfPartnership.short}`);
+  }
 
   static selectFirstRecord() {
     cy.get('ul>li').eq(1).click();

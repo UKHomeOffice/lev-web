@@ -13,7 +13,7 @@ const moment = require('moment');
 const conf = require('../../../fields/partnership');
 const since = conf.dop.validate[2].arguments[0];
 
-describe.only('Partnership search', () => {
+describe('Partnership search', () => {
   before(() => {
     LoginPage.login();
   });
@@ -31,23 +31,20 @@ describe.only('Partnership search', () => {
         PartnershipSearchPage.visit();
         PartnershipSearchPage.performSearch(search);
       });
-
       it('returns a results page', () => {
         PartnershipResultsPage.shouldBeVisible();
       });
-
       it('displays an appropriate message', () => {
         PartnershipResultsPage.noRecordFound(search);
       });
     });
+
     describe('that contains 1 record', () => {
       const { search } = expectedSingleRecord;
-
       before(() => {
         PartnershipSearchPage.visit();
         PartnershipSearchPage.performSearch(search);
       });
-
       it('redirects to a details page', () => {
         DetailsPage.shouldBeVisible();
       });
@@ -59,12 +56,11 @@ describe.only('Partnership search', () => {
         PartnershipSearchPage.visit();
         PartnershipSearchPage.performSearch(search);
       });
-
       it('returns a results page', () => {
         ResultsPage.shouldBeVisible();
       });
       it('displays an appropriate record summary message', () => {
-        PartnershipResultsPage.multipleRecordsSummary();
+        PartnershipResultsPage.multipleRecordsSummary(search);
       });
       it('displays a subset of each record', () => {
         // should this define order? Think about
@@ -77,23 +73,21 @@ describe.only('Partnership search', () => {
     describe('using the "fast entry" date format', () => {
       describe('completes a search', () => {
         const dop = expectedMultipleRecords.search.dop.replace(/\//g, '');
+        const search = { ...expectedMultipleRecords.search, dop };
         before(() => {
           PartnershipSearchPage.visit();
-          PartnershipSearchPage.performSearch({
-            ...expectedMultipleRecords.search, dop: dop
-          });
+          PartnershipSearchPage.performSearch(search);
         });
         it('returns a results page', () => {
           PartnershipResultsPage.shouldBeVisible();
           PartnershipResultsPage.multipleRecordsFound();
         });
         it('displays an appropriate message', () => {
-          PartnershipResultsPage.multipleRecordsSummary(dop);
+          PartnershipResultsPage.multipleRecordsSummary(search);
         });
       });
     });
   });
-
   describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
@@ -123,7 +117,6 @@ describe.only('Partnership search', () => {
             systemNumber: 12345678, surname: '', forenames: '', dop: ''
           });
         });
-
         it('displays an error message, requests a 9 digit number and shows hint image', () => {
           PartnerSearchPage.invalidLengthSystemNumber();
         });
