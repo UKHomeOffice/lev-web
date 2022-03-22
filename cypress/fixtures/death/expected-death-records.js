@@ -50,6 +50,7 @@ const result2 = {
   ...result1,
   deceased: {
     ...result1.deceased,
+    forenames: 'Tester Two',
     address: '2 Test street'
   }
 };
@@ -58,6 +59,7 @@ const result3 = {
   ...result1,
   deceased: {
     ...result1.deceased,
+    forenames: 'Tester Three',
     address: '3 Test street'
   }
 };

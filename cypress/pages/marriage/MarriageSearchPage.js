@@ -49,6 +49,40 @@ class MarriageSearchPage extends SearchPage {
     this.setText('#dom', dom);
     this.submit();
   }
+
+  /**
+   * Check the date of marriage field has focus
+   */
+  static hasDateOfMarriageFocused() {
+    cy.get('#dom').should('have.focus');
+  }
+
+  /**
+   * Check the date of marriage hint is visible
+   */
+  static hasDateOfMarriageHint() {
+    cy.get('#dom-extended-hint').should('exist');
+  }
+
+  /**
+   * Check the search page has the expected values
+   *
+   * @param systemNumber
+   * @param surname
+   * @param forenames
+   * @param dom
+   */
+  static hasExpectedValues({
+                             systemNumber,
+                             surname,
+                             forenames,
+                             dom
+                           }) {
+    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#surname').should('have.value', surname);
+    cy.get('#forenames').should('have.value', forenames);
+    cy.get('#dom').should('have.value', dom);
+  }
 }
 
 module.exports = MarriageSearchPage;

@@ -25,27 +25,19 @@ class DeathResultsPage extends ResultsPage {
   }
 
   /**
-   * Check expected rows are displayed
+   * Check expected results are displayed
    *
-   * @param expected
+   * @param results
    */
-  static hasExpectedRows(expected) {
-    const { results } = expected;
-
+  static hasExpectedResults(results) {
     cy.get('#records li').each((element, index) => {
-      const { dateOfBirth, address, dateOfDeath } = results[index].deceased;
+      const { deceased } = results[index];
 
-      cy.wrap(element).contains('tr', `Date of birth ${dateOfBirth}`);
-      cy.wrap(element).contains('tr', `Address ${address}`);
-      cy.wrap(element).contains('tr', `Date of death ${dateOfDeath}`);
+      cy.wrap(element).contains('a h2', `${deceased.forenames} ${deceased.surname}`);
+      cy.wrap(element).contains('tr', `Date of birth ${deceased.dateOfBirth}`);
+      cy.wrap(element).contains('tr', `Address ${deceased.address}`);
+      cy.wrap(element).contains('tr', `Date of death ${deceased.dateOfDeath}`);
     });
-  }
-
-  /**
-   * Click the first record
-   */
-  static clickFirstRecord() {
-    cy.get('#records a').eq(0).click();
   }
 }
 

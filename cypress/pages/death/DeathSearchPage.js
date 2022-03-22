@@ -50,34 +50,28 @@ class DeathSearchPage extends SearchPage {
     this.submit();
   }
 
-  static hasErrorTitle() {
-    cy.get('.validation-summary > h2').contains('Fix the following error');
-  }
-
-  static hasErrorMessage(message) {
-    cy.get('.validation-summary a').contains(message);
-  }
-
-  static hasSystemNumberHint() {
-    cy.get('#system-number-hint').should('exist');
-  }
-
-  static hasSurnameFocused() {
-    cy.get('#surname').should('have.focus');
-  }
-
-  static hasForenamesFocused() {
-    cy.get('#forenames').should('have.focus');
-  }
-
+  /**
+   * Check the date of birth/death has focus
+   */
   static hasDateOfBirthOrDeathFocused() {
     cy.get('#dobd').should('have.focus');
   }
 
+  /**
+   * Check the date of birth/death hint is visible
+   */
   static hasDateOfBirthOrDeathHint() {
     cy.get('#dobd-extended-hint').should('exist');
   }
 
+  /**
+   * Check the search page has the expected values
+   *
+   * @param systemNumber
+   * @param surname
+   * @param forenames
+   * @param dobd
+   */
   static hasExpectedValues({
                              systemNumber,
                              surname,

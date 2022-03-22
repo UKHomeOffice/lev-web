@@ -61,8 +61,8 @@
     "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./",
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome",
-    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/acceptance/*.js --headless --browser chrome",
-    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/*.js --headless --browser chrome"
+    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/acceptance/**/*.js --headless --browser chrome",
+    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome"
   },
   "dependencies": {
     "body-parser": "^1.17.1",

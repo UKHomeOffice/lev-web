@@ -12,6 +12,13 @@ class ResultsPage extends BackToSearchPage {
     // Has title
     cy.get('h1').contains('records found for');
   }
+
+  /**
+   * Click the first record
+   */
+  static clickFirstRecord() {
+    cy.get('#records a').eq(0).click();
+  }
 }
 
 module.exports = ResultsPage;
