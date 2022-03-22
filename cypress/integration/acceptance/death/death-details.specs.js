@@ -1,11 +1,11 @@
 'use strict';
 
-const expectedSingleRecord = require('../../fixtures/death/expected-death-record');
-const expectedMultipleRecords = require('../../fixtures/death/expected-death-records');
-const LoginPage = require('../../pages/LoginPage');
-const DeathDetailsPage = require('../../pages/death/DeathDetailsPage');
-const DeathResultsPage = require('../../pages/death/DeathResultsPage');
-const DeathSearchPage = require('../../pages/death/DeathSearchPage');
+const expectedSingleRecord = require('../../../fixtures/death/expected-death-record');
+const expectedMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const LoginPage = require('../../../pages/LoginPage');
+const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
+const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
 
 describe('Death details page', () => {
   before(() => {
@@ -197,7 +197,7 @@ describe('Death details page', () => {
   });
 
   describe('When I select the "Back to search results link on the details page"', () => {
-    const { search } = expectedMultipleRecords;
+    const { search, results } = expectedMultipleRecords;
 
     before(() => {
       DeathSearchPage.visit();
@@ -214,7 +214,7 @@ describe('Death details page', () => {
 
     it('has the correct rows', () => {
       DeathResultsPage.hasExpectedTitle(expectedMultipleRecords);
-      DeathResultsPage.hasExpectedRows(expectedMultipleRecords);
+      DeathResultsPage.hasExpectedResults(results);
     });
   });
 });

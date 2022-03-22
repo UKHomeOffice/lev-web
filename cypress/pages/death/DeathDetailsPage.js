@@ -19,6 +19,13 @@ class DeathDetailsPage extends DetailsPage {
     cy.get('h1').contains(`${deceased.forenames} ${deceased.surname} ${deceased.dateOfBirth}`);
   }
 
+  /**
+   * Visit the details page with the "full-details" role
+   *
+   * @param search
+   * @param record
+   * @param multipleResults
+   */
   static visitWithFullDetails(search, record, multipleResults = false) {
     const qs = {
       surname: search.surname,
@@ -100,12 +107,6 @@ class DeathDetailsPage extends DetailsPage {
     ];
 
     this.hasExpectedRows(rows);
-  }
-
-  static hasExpectedRows(rows) {
-    cy.get('table.details tr').each((element, index) => {
-      cy.wrap(element).contains(rows[index]);
-    });
   }
 }
 
