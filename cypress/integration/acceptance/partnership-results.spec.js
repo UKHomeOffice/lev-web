@@ -42,7 +42,7 @@ describe('Partnership results', () => {
       PartnershipDetailsPage.recordDoesNotDisplayFullPartner2Details(result);
     });
     it('returns me to the results page if I select the back to results link', () => {
-      PartnershipDetailsPage.clickBackToResultsLink();
+      PartnershipDetailsPage.clickBackToResultsButton();
       PartnershipResultsPage.multipleRecordsFound();
     });
     describe('When I select the "New search" button', () => {

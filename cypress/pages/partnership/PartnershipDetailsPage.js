@@ -161,7 +161,6 @@ class PartnershipDetailsPage extends DetailsPage {
       .contains(`Occupation ${record.motherOfPartner2.occupation} ${record.motherOfPartner2.retired ? '(retired)' : ''}`);
     cy.get('.details tr').eq(41).contains(`Designation ${record.motherOfPartner2.designation || ''}`);
     cy.get('.details tr').eq(42).contains(`Deceased ${record.motherOfPartner2.deceased ? 'Yes' : 'No'}`);
-
   }
 
   static clickNewSearchLink() {
@@ -172,20 +171,8 @@ class PartnershipDetailsPage extends DetailsPage {
     cy.get('#editSearchLink').click();
   }
 
-  static clickBackToResultsLink() {
-    cy.get('#backToSearchResults').click();
-  }
-
   static editSearchLinkVisible() {
     cy.get('#editSearchLink').contains('Edit search');
-  }
-
-  static backToSearchResultsDisplayed() {
-    cy.get('#backToSearchResults').should('exist');
-  }
-
-  static backToSearchResultsNotDisplayed() {
-    cy.get('#backToSearchResults').should('not.exist');
   }
 }
 

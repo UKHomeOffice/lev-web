@@ -8,11 +8,7 @@ class ResultsPage extends BackToSearchPage {
    * Check results page is visible
    */
   static shouldBeVisible() {
-
-    // Has title
-    // need to look at
-
-    // cy.get('h1').contains('records found for');
+    cy.get('h1').contains('records found for');
   }
 }
 
