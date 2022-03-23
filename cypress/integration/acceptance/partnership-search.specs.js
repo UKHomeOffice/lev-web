@@ -6,7 +6,6 @@ const expectedMultipleRecords = require('../../fixtures/partnership/expected-par
 const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const PartnerSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const DetailsPage = require('../../pages/DetailsPage');
 const ResultsPage = require('../../pages/ResultsPage');
 const moment = require('moment');
@@ -107,90 +106,90 @@ describe('Partnership search', () => {
           });
         });
         it('displays an error message, requests a number and shows hint image', () => {
-          PartnerSearchPage.noSystemNumber();
+          PartnershipSearchPage.noSystemNumber();
         });
       });
       describe('of an invalid length', () => {
         before(() => {
-          PartnerSearchPage.visit();
-          PartnerSearchPage.performSearch({
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
             systemNumber: 12345678, surname: '', forenames: '', dop: ''
           });
         });
         it('displays an error message, requests a 9 digit number and shows hint image', () => {
-          PartnerSearchPage.invalidLengthSystemNumber();
+          PartnershipSearchPage.invalidLengthSystemNumber();
         });
       });
     });
     describe('with a missing first name', () => {
       before(() => {
-        PartnerSearchPage.visit();
-        PartnerSearchPage.performSearch({
+        PartnershipSearchPage.visit();
+        PartnershipSearchPage.performSearch({
           surname: 'Surname', forenames: '', dop: '5/6/2010'
         });
       });
       it('displays an error message, requests a forename and focuses on forename field', () => {
-        PartnerSearchPage.noForenames();
+        PartnershipSearchPage.noForenames();
       });
     });
     describe('and a missing surname', () => {
       before(() => {
-        PartnerSearchPage.visit();
-        PartnerSearchPage.performSearch({
+        PartnershipSearchPage.visit();
+        PartnershipSearchPage.performSearch({
           surname: '', forenames: '', dop: '5/6/2010'
         });
       });
       it('displays an error message, requests a surname, forename and focuses on ' +
         'surname field (as that comes before forenames)', () => {
-        PartnerSearchPage.noSurname();
+        PartnershipSearchPage.noSurname();
       });
     });
     describe('with an invalid date of Partner that is', () => {
       describe('not a date', () => {
         before(() => {
-          PartnerSearchPage.visit();
-          PartnerSearchPage.shouldBeVisible();
-          PartnerSearchPage.performSearch({
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
             surname: 'TEST', forenames: 'TEST', dop: 'invalid'
           });
         });
         it('displays an error message, requests a valid dop and focuses on dop field', () => {
-          PartnerSearchPage.invalidDOP();
+          PartnershipSearchPage.invalidDOP();
         });
       });
       describe('too short', () => {
         before(() => {
-          PartnerSearchPage.visit();
-          PartnerSearchPage.performSearch({
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr', dop: '112001'
           });
         });
         it('displays an error message', () => {
-          PartnerSearchPage.invalidDOP();
+          PartnershipSearchPage.invalidDOP();
         });
       });
       describe('a date in the future', () => {
         before(() => {
-          PartnerSearchPage.visit();
-          PartnerSearchPage.performSearch({
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr',
             dop: moment().add(1, 'day').format('DD/MM/YYYY')
           });
         });
         it('displays an error message, requests a past date and shows the dop hint', () => {
-          PartnerSearchPage.dopInFuture();
+          PartnershipSearchPage.dopInFuture();
         });
       });
       describe(`a date before records began (${since.format('DD/MM/YYYY')})`, () => {
         before(() => {
-          PartnerSearchPage.visit();
-          PartnerSearchPage.performSearch({
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr',
             dop: moment(since).add(-1, 'day').format('DD/MM/YYYY')
           });
         });
         it('displays an error message and shows dop hint', () => {
-          PartnerSearchPage.dopBeforeRecordsBegan();
+          PartnershipSearchPage.dopBeforeRecordsBegan();
         });
       });
     });
