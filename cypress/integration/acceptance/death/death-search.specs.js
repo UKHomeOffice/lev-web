@@ -1,13 +1,13 @@
 'use strict';
 
 const moment = require('moment');
-const expectedNoRecords = require('../../fixtures/death/expected-no-records');
-const expectedSingleRecord = require('../../fixtures/death/expected-death-record');
-const expectedMultipleRecords = require('../../fixtures/death/expected-death-records');
-const DeathDetailsPage = require('../../pages/death/DeathDetailsPage');
-const DeathResultsPage = require('../../pages/death/DeathResultsPage');
-const DeathSearchPage = require('../../pages/death/DeathSearchPage');
-const LoginPage = require('../../pages/LoginPage');
+const expectedNoRecords = require('../../../fixtures/death/expected-no-records');
+const expectedSingleRecord = require('../../../fixtures/death/expected-death-record');
+const expectedMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
+const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
+const LoginPage = require('../../../pages/LoginPage');
 
 describe('Death search', () => {
   before(() => {
@@ -52,7 +52,7 @@ describe('Death search', () => {
     });
 
     describe('that returns more than 1 record', () => {
-      const { search } = expectedMultipleRecords;
+      const { search, results } = expectedMultipleRecords;
 
       before(() => {
         DeathSearchPage.visit();
@@ -68,7 +68,7 @@ describe('Death search', () => {
       });
 
       it('displays a subset of each record in a list', () => {
-        DeathResultsPage.hasExpectedRows(expectedMultipleRecords);
+        DeathResultsPage.hasExpectedResults(results);
       });
 
       it('contains a link back to the search screen', () => {

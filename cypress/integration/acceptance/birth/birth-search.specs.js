@@ -1,11 +1,11 @@
 'use strict';
 
-const LoginPage = require('../../pages/LoginPage');
-const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
+const LoginPage = require('../../../pages/LoginPage');
+const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
 const moment = require('moment');
-const conf = require('../../../fields');
-const { searchSingleRecord } = require('../../fixtures/birth');
-const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
+const conf = require('../../../../fields');
+const { searchSingleRecord } = require('../../../fixtures/birth');
+const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
 const since = conf.dob.validate[2].arguments[0];
 
 describe('Birth search', () => {
