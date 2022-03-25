@@ -34,6 +34,7 @@ class AuditSearchPage extends SearchPage {
       this.setText('#user', user);
       this.submit();
   }
+
   static noRecordsFound(record) {
     const { from, to, user } = record;
     const userMessage = user && `for \'${user}\' `;

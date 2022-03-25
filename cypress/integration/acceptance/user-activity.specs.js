@@ -2,23 +2,25 @@
 
 const moment = require('moment');
 const testConfig = require('../../../test/acceptance/config');
+const config = require('../../../config');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const env = testConfig.env;
+const env = config.env;
 
 const searchNoRecord = {
   from: '01/01/1800',
   to: '04/01/1800',
-  user: env !== 'local' ? testConfig.username : 'lev-e2e-tests'
+  user: ''
 };
 
 const searchValidRecord = {
   from: '23/12/2016',
   to: '24/12/2021',
-  user: env !== 'local' ? testConfig.username : 'lev-e2e-tests'
+  user: ''
 };
 
 describe('User Activity', () => {
+  const user = env !== 'local' ? Cypress.env('keycloak').username: 'lev-e2e-tests';
   before(() => {
     LoginPage.login();
   });
@@ -78,8 +80,9 @@ describe('User Activity', () => {
           AuditSearchPage.checkboxTicked() || AuditSearchPage.toggleWeekendViewCheckbox();
         });
 
-        it('the username ahould be displayed in the row of users', () => {
-          AuditSearchPage.userDisplayed(searchValidRecord.user);
+        it('the username should be displayed in the row of users', () => {
+          console.log(user);
+          AuditSearchPage.userDisplayed(user);
         });
         it('each row should have a column for each day plus a search count', () => {
           AuditSearchPage.columnForEachDayWithCount();
@@ -142,19 +145,19 @@ describe('User Activity', () => {
         const to = env !== 'local' ? moment().add(3, 'days').format('DD/MM/YYYY') : '26/12/2016';
         before(() => {
           AuditSearchPage.visit();
-          AuditSearchPage.generateReport({ from, to, user: searchValidRecord.user });
+          AuditSearchPage.generateReport({ from, to, user });
         });
         it('shows the User Activity report page', () => {
           AuditSearchPage.shouldBeVisible();
         });
         it('displays an appropriate message including the user filter value', () => {
-          AuditSearchPage.validRecordFound({ from, to, user: searchValidRecord.user });
+          AuditSearchPage.validRecordFound({ from, to, user });
         });
         it('shows only two rows only', () => {
           AuditSearchPage.singleRecordDisplayed();
         });
         it('with a row for the user', () => {
-          AuditSearchPage.userDisplayed(searchValidRecord.user);
+          AuditSearchPage.userDisplayed(user);
         });
         it('with a row for the totals', () => {
           AuditSearchPage.lastRowDayTotals();
@@ -164,7 +167,7 @@ describe('User Activity', () => {
             AuditSearchPage.downloadLinkDisplayed();
           });
           it('with a "download" attribute containing the filename', () => {
-            AuditSearchPage.downloadLink({ from, to, user: searchValidRecord.user });
+            AuditSearchPage.downloadLink({ from, to, user });
           });
         });
       });
