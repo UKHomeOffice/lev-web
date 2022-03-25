@@ -3,19 +3,20 @@
 const moment = require('moment');
 const testConfig = require('../../../config');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
-const LoginPage = require("../../pages/LoginPage");
+const LoginPage = require('../../pages/LoginPage');
 const env = testConfig.env;
 
 const searchNoRecord = {
   from: '01/01/1800',
   to: '04/01/1800',
   user: env !== 'local' ? testConfig.api.username : 'lev-e2e-tests'
-}
+};
+
 const searchValidRecord = {
   from: '23/12/2016',
   to: '24/12/2021',
   user: env !== 'local' ? testConfig.api.username : 'lev-e2e-tests'
-}
+};
 
 describe('User Activity', () => {
   before(() => {
@@ -54,12 +55,12 @@ describe('User Activity', () => {
       });
 
       it('displays an appropriate message including the search dates', () => {
-        AuditSearchPage.validRecordFound({ from, to })
+        AuditSearchPage.validRecordFound({ from, to });
       });
       describe('contains a checkbox to toggle weekend visibility', () => {
         it('weekend days should be hidden by default', () => {
           AuditSearchPage.checkboxTicked(false);
-          AuditSearchPage.weekDayRecordsDisplayed({ from, to })
+          AuditSearchPage.weekDayRecordsDisplayed({ from, to });
         });
         it('clicking the checkbox should show the weekend days', () => {
           AuditSearchPage.toggleWeekendViewCheckbox();
@@ -69,7 +70,7 @@ describe('User Activity', () => {
         it('clicking the checkbox again should hide the weekend days again', () => {
           AuditSearchPage.toggleWeekendViewCheckbox();
           AuditSearchPage.checkboxTicked(false);
-          AuditSearchPage.weekDayRecordsDisplayed({ from, to })
+          AuditSearchPage.weekDayRecordsDisplayed({ from, to });
         });
       });
       describe('displays a table with search counts for each user', () => {
@@ -102,7 +103,7 @@ describe('User Activity', () => {
           AuditSearchPage.downloadLinkDisplayed();
         });
         it('with a "download" attribute containing the filename', () => {
-          AuditSearchPage.downloadLink({ from, to })
+          AuditSearchPage.downloadLink({ from, to });
         });
       });
     });
@@ -112,7 +113,7 @@ describe('User Activity', () => {
 
       before(() => {
         AuditSearchPage.visit();
-        AuditSearchPage.generateReport({ from: from.format('DDMMYY') , to: to.format('DDMMYY') });
+        AuditSearchPage.generateReport({ from: from.format('DDMMYY'), to: to.format('DDMMYY') });
       });
 
       it('shows the User Activity report page', () => {
@@ -120,7 +121,7 @@ describe('User Activity', () => {
       });
 
       it('displays an appropriate message including the search dates', () => {
-        AuditSearchPage.validRecordFound({ from: from.format('DD/MM/YYYY'), to: to.format('DD/MM/YYYY') })
+        AuditSearchPage.validRecordFound({ from: from.format('DD/MM/YYYY'), to: to.format('DD/MM/YYYY') });
       });
     });
     describe('adding a user filter', () => {
@@ -141,13 +142,13 @@ describe('User Activity', () => {
         const to = env !== 'local' ? moment().add(3, 'days').format('DD/MM/YYYY') : '26/12/2016';
         before(() => {
           AuditSearchPage.visit();
-          AuditSearchPage.generateReport({from, to, user: searchValidRecord.user});
+          AuditSearchPage.generateReport({ from, to, user: searchValidRecord.user });
         });
         it('shows the User Activity report page', () => {
           AuditSearchPage.shouldBeVisible();
         });
         it('displays an appropriate message including the user filter value', () => {
-          AuditSearchPage.validRecordFound({from, to, user: searchValidRecord.user});
+          AuditSearchPage.validRecordFound({ from, to, user: searchValidRecord.user });
         });
         it('shows only two rows only', () => {
           AuditSearchPage.singleRecordDisplayed();
@@ -163,7 +164,7 @@ describe('User Activity', () => {
             AuditSearchPage.downloadLinkDisplayed();
           });
           it('with a "download" attribute containing the filename', () => {
-            AuditSearchPage.downloadLink({ from, to, user: searchValidRecord.user })
+            AuditSearchPage.downloadLink({ from, to, user: searchValidRecord.user });
           });
         });
       });
@@ -171,7 +172,7 @@ describe('User Activity', () => {
         describe('with all fields empty', () => {
           before(() => {
             AuditSearchPage.visit();
-            AuditSearchPage.generateReport({ from: '', to: '' })
+            AuditSearchPage.generateReport({ from: '', to: '' });
           });
           it('displays an error message and requests a to and from date', () => {
             AuditSearchPage.noDateSearchCriteria();
@@ -180,7 +181,7 @@ describe('User Activity', () => {
         describe('with all fields empty', () => {
           before(() => {
             AuditSearchPage.visit();
-            AuditSearchPage.generateReport({ from: '', to: '', user: 'some-dude' })
+            AuditSearchPage.generateReport({ from: '', to: '', user: 'some-dude' });
           });
           it('displays an error message and requests a to and from date', () => {
             AuditSearchPage.noDateSearchCriteria();
@@ -189,7 +190,7 @@ describe('User Activity', () => {
         describe('with improper dates', () => {
           before(() => {
             AuditSearchPage.visit();
-            AuditSearchPage.generateReport({ from: 'hell', to: 'back' })
+            AuditSearchPage.generateReport({ from: 'hell', to: 'back' });
           });
           it('displays an error message and requests a to and from date in the correct format', () => {
             AuditSearchPage.invalidDates();
@@ -198,7 +199,7 @@ describe('User Activity', () => {
         describe('with invalid dates', () => {
           before(() => {
             AuditSearchPage.visit();
-            AuditSearchPage.generateReport({ from: '29/02/2015', to: '31/02/2016' })
+            AuditSearchPage.generateReport({ from: '29/02/2015', to: '31/02/2016' });
           });
           it('displays an error message and requests a to and from date in the correct format', () => {
             AuditSearchPage.invalidDates();
@@ -207,8 +208,8 @@ describe('User Activity', () => {
         describe('with a from date in the future', () => {
           before(() => {
             AuditSearchPage.visit();
-            AuditSearchPage.generateReport({ from:  moment().add(2, 'days').format('DD/MM/YYYY'),
-              to: moment().add(5, 'days').format('DD/MM/YYYY') })
+            AuditSearchPage.generateReport({ from: moment().add(2, 'days').format('DD/MM/YYYY'),
+              to: moment().add(5, 'days').format('DD/MM/YYYY') });
           });
           it('displays an error message and requests a date in the past', () => {
             AuditSearchPage.dateInFuture();
@@ -218,7 +219,7 @@ describe('User Activity', () => {
           before(() => {
             AuditSearchPage.visit();
             AuditSearchPage.generateReport({ from: moment().add(-3, 'day').format('DD/MM/YYYY'),
-              to: moment().add(-10, 'days').format('DD/MM/YYYY') })
+              to: moment().add(-10, 'days').format('DD/MM/YYYY') });
           });
 
           it('displays an error message and requests a past date', () => {
@@ -233,7 +234,7 @@ describe('User Activity', () => {
               });
             });
             it('requests a reduced date range', () => {
-              AuditSearchPage.exceedMaxRange(testConfig.MAX_AUDIT_RANGE)
+              AuditSearchPage.exceedMaxRange(testConfig.MAX_AUDIT_RANGE);
             });
           });
           describe('with invalid characters in the user search filter', () => {
@@ -243,7 +244,7 @@ describe('User Activity', () => {
                 to: moment().add(-10, 'days').format('DD/MM/YYYY'),
                 from: moment().add(-3, 'day').format('DD/MM/YYYY'),
                 user: 'this won\'t work!'
-              })
+              });
             });
             it('displays an error message and requests a user with valid characters', () => {
               AuditSearchPage.userInvalidCharacters();

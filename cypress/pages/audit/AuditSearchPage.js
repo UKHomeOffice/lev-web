@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchPage = require('../SearchPage');
-const moment = require("moment");
+const moment = require('moment');
 
 class AuditSearchPage extends SearchPage {
 
@@ -97,9 +97,9 @@ class AuditSearchPage extends SearchPage {
   }
 
   static periodTotalsAccurate() {
-    const toStrings = (cells$) => Cypress._.map(cells$, 'textContent')
-    const toNumbers = (texts) => Cypress._.map(texts, Number)
-    const sum = (numbers) => Cypress._.sum(numbers)
+    const toStrings = (cells$) => Cypress._.map(cells$, 'textContent');
+    const toNumbers = (texts) => Cypress._.map(texts, Number);
+    const sum = (numbers) => Cypress._.sum(numbers);
 
     cy.get('table.audit > tbody > tr:first > th ~ td')
       .then(toStrings)
@@ -110,8 +110,8 @@ class AuditSearchPage extends SearchPage {
           .then(toStrings)
           .then(toNumbers)
           .then(sum)
-          .should('eq', cellsTotal / 2)  // after data transformed, simple assertion
-      })
+          .should('eq', cellsTotal / 2);
+      });
   }
 
   static dayTotalsAccurate() {
@@ -128,8 +128,8 @@ class AuditSearchPage extends SearchPage {
           .then(toStrings)
           .then(toNumbers)
           .then(sum)
-          .should('eq', cellsTotal / 2)  // after data transformed, simple assertion
-      })
+          .should('eq', cellsTotal / 2);
+      });
   }
 
   static downloadLinkDisplayed() {
