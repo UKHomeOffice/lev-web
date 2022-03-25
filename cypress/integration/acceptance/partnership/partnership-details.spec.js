@@ -1,9 +1,9 @@
 'use strict';
 
-const LoginPage = require('../../pages/LoginPage');
-const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
-const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
-const singleRecord = require('../../fixtures/partnership/expected-partnership-record');
+const LoginPage = require('../../../pages/LoginPage');
+const PartnershipSearchPage = require('../../../pages/partnership/PartnershipSearchPage');
+const PartnershipDetailsPage = require('../../../pages/partnership/PartnershipDetailsPage');
+const singleRecord = require('../../../fixtures/partnership/expected-partnership-record');
 
 describe('Partnership details', () => {
   before(() => {

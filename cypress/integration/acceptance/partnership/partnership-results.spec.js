@@ -1,11 +1,11 @@
 'use strict';
 
-const LoginPage = require('../../pages/LoginPage');
-const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
-const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
-const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
-const expectedMultipleRecords = require('../../fixtures/partnership/expected-partnership-records');
-const ResultsPage = require('../../pages/ResultsPage');
+const LoginPage = require('../../../pages/LoginPage');
+const PartnershipSearchPage = require('../../../pages/partnership/PartnershipSearchPage');
+const PartnershipResultsPage = require('../../../pages/partnership/PartnershipResultsPage');
+const PartnershipDetailsPage = require('../../../pages/partnership/PartnershipDetailsPage');
+const expectedMultipleRecords = require('../../../fixtures/partnership/expected-partnership-records');
+const ResultsPage = require('../../../pages/ResultsPage');
 
 describe('Partnership results', () => {
   before(() => {
