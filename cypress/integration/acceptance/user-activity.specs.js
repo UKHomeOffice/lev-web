@@ -13,14 +13,8 @@ const searchNoRecord = {
   user: ''
 };
 
-const searchValidRecord = {
-  from: '23/12/2016',
-  to: '24/12/2021',
-  user: ''
-};
-
 describe('User Activity', () => {
-  const user = env !== 'local' ? Cypress.env('keycloak').username: 'lev-e2e-tests';
+  const user = env !== 'local' ? Cypress.env('keycloak').username : 'lev-e2e-tests';
   before(() => {
     LoginPage.login();
   });
