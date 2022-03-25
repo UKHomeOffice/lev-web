@@ -13,7 +13,7 @@ const searchNoRecord = {
 };
 
 describe('User Activity', () => {
-  const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests'
+  const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests';
   before(() => {
     console.log(user);
     LoginPage.login();
