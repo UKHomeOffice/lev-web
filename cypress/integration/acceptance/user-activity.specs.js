@@ -1,7 +1,7 @@
 'use strict';
 
 const moment = require('moment');
-const testConfig = require('../../../config');
+const testConfig = require('../../../test/acceptance/config');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
 const LoginPage = require('../../pages/LoginPage');
 const env = testConfig.env;
@@ -9,13 +9,13 @@ const env = testConfig.env;
 const searchNoRecord = {
   from: '01/01/1800',
   to: '04/01/1800',
-  user: env !== 'local' ? testConfig.api.username : 'lev-e2e-tests'
+  user: env !== 'local' ? testConfig.username : 'lev-e2e-tests'
 };
 
 const searchValidRecord = {
   from: '23/12/2016',
   to: '24/12/2021',
-  user: env !== 'local' ? testConfig.api.username : 'lev-e2e-tests'
+  user: env !== 'local' ? testConfig.username : 'lev-e2e-tests'
 };
 
 describe('User Activity', () => {
