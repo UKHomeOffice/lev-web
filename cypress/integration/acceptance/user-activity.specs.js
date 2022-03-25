@@ -2,10 +2,9 @@
 
 const moment = require('moment');
 const testConfig = require('../../../test/acceptance/config');
-const config = require('../../../config');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const env = config.env;
+const env = testConfig.env;
 
 const searchNoRecord = {
   from: '01/01/1800',
@@ -13,9 +12,10 @@ const searchNoRecord = {
   user: ''
 };
 
-describe.only('User Activity', () => {
-  const user = (testConfig.username || Cypress.env('keycloak').username);
+describe('User Activity', () => {
+  const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests'
   before(() => {
+    console.log(user);
     LoginPage.login();
   });
   it('returns the report page', () => {
