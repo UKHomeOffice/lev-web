@@ -13,8 +13,8 @@ const searchNoRecord = {
   user: ''
 };
 
-describe('User Activity', () => {
-  const user = env !== 'local' ? Cypress.env('keycloak').username : 'lev-e2e-tests';
+describe.only('User Activity', () => {
+  const user = env !== 'local' ? (testConfig.username || Cypress.env('keycloak').username) : 'lev-e2e-tests';
   before(() => {
     LoginPage.login();
   });
