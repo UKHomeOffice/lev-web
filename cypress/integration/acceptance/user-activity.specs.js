@@ -14,7 +14,7 @@ const searchNoRecord = {
 };
 
 describe.only('User Activity', () => {
-  const user = env !== 'local' ? (testConfig.username || Cypress.env('keycloak').username) : 'lev-e2e-tests';
+  const user = (testConfig.username || Cypress.env('keycloak').username);
   before(() => {
     LoginPage.login();
   });
