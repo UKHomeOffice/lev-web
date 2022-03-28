@@ -1,10 +1,11 @@
 'use strict';
 
 const moment = require('moment');
-const testConfig = require('../../../test/acceptance/config');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const env = testConfig.env;
+const env = Cypress.env('env').env;
+const username = Cypress.env('keycloak').username;
+const range = Cypress.env('MAX_AUDIT_RANGE');
 
 const searchNoRecord = {
   from: '01/01/1800',
@@ -12,10 +13,10 @@ const searchNoRecord = {
   user: ''
 };
 
-describe('User Activity', () => {
-  const user = env !== 'local' ? testConfig.username : 'lev-e2e-tests';
+describe.only('User Activity', () => {
+  console.log(Cypress.env('range'));
+  const user = env !== 'local' ? username : 'lev-e2e-tests';
   before(() => {
-    console.log(user);
     LoginPage.login();
   });
   it('returns the report page', () => {
@@ -222,16 +223,16 @@ describe('User Activity', () => {
           it('displays an error message and requests a past date', () => {
             AuditSearchPage.fromDateAfterToDate();
           });
-          describe(`with a date range greater than ${testConfig.MAX_AUDIT_RANGE} days`, () => {
+          describe(`with a date range greater than ${range} days`, () => {
             before(() => {
               AuditSearchPage.visit();
               AuditSearchPage.generateReport({
-                from: moment().subtract(testConfig.MAX_AUDIT_RANGE + 1, 'days').format('DD/MM/YYYY'),
+                from: moment().subtract(range + 1, 'days').format('DD/MM/YYYY'),
                 to: moment().format('DD/MM/YYYY')
               });
             });
             it('requests a reduced date range', () => {
-              AuditSearchPage.exceedMaxRange(testConfig.MAX_AUDIT_RANGE);
+              AuditSearchPage.exceedMaxRange(range);
             });
           });
           describe('with invalid characters in the user search filter', () => {
