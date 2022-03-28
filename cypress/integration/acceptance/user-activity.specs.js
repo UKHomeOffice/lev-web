@@ -3,7 +3,7 @@
 const moment = require('moment');
 const AuditSearchPage = require('../../pages/audit/AuditSearchPage');
 const LoginPage = require('../../pages/LoginPage');
-const env = Cypress.env('env').env;
+const env = Cypress.env('env');
 const username = Cypress.env('keycloak').username;
 const range = Cypress.env('MAX_AUDIT_RANGE');
 
@@ -13,8 +13,7 @@ const searchNoRecord = {
   user: ''
 };
 
-describe.only('User Activity', () => {
-  console.log(Cypress.env('range'));
+describe('User Activity', () => {
   const user = env !== 'local' ? username : 'lev-e2e-tests';
   before(() => {
     LoginPage.login();
@@ -52,7 +51,7 @@ describe.only('User Activity', () => {
       });
 
       it('displays an appropriate message including the search dates', () => {
-        AuditSearchPage.validRecordFound({ from, to });
+        AuditSearchPage.validRecordFound({ from, to }).debug();
       });
       describe('contains a checkbox to toggle weekend visibility', () => {
         it('weekend days should be hidden by default', () => {
@@ -76,7 +75,6 @@ describe.only('User Activity', () => {
         });
 
         it('the username should be displayed in the row of users', () => {
-          console.log(user);
           AuditSearchPage.userDisplayed(user);
         });
         it('each row should have a column for each day plus a search count', () => {
