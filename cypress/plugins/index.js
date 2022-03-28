@@ -25,6 +25,7 @@ module.exports = (on, config) => {
   // Populate the environment from process.env
   config.env.env = process.env.ENV || 'local';
   config.env.e2e = config.env.env !== 'local';
+  config.env.MAX_AUDIT_RANGE = 366;
   config.env.keycloak = {
     root: process.env.KEYCLOAK_URL,
     realm: 'lev',
