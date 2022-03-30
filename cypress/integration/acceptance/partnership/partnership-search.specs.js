@@ -1,15 +1,15 @@
 'use strict';
 
-const expectedNoRecords = require('../../fixtures/partnership/expected-no-records');
-const expectedSingleRecord = require('../../fixtures/partnership/expected-partnership-record');
-const expectedMultipleRecords = require('../../fixtures/partnership/expected-partnership-records');
-const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
-const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
-const LoginPage = require('../../pages/LoginPage');
-const DetailsPage = require('../../pages/DetailsPage');
-const ResultsPage = require('../../pages/ResultsPage');
 const moment = require('moment');
-const conf = require('../../../fields/partnership');
+const expectedNoRecords = require('../../../fixtures/partnership/expected-no-records');
+const expectedSingleRecord = require('../../../fixtures/partnership/expected-partnership-record');
+const expectedMultipleRecords = require('../../../fixtures/partnership/expected-partnership-records');
+const PartnershipResultsPage = require('../../../pages/partnership/PartnershipResultsPage');
+const PartnershipSearchPage = require('../../../pages/partnership/PartnershipSearchPage');
+const LoginPage = require('../../../pages/LoginPage');
+const DetailsPage = require('../../../pages/DetailsPage');
+const ResultsPage = require('../../../pages/ResultsPage');
+const conf = require('../../../../fields/partnership');
 const since = conf.dop.validate[2].arguments[0];
 
 describe('Partnership search', () => {

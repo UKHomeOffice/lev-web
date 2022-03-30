@@ -7,6 +7,7 @@ if (Cypress.env('e2e')) {
   describe('Login', () => {
     describe('When I try to use the service', () => {
       it('makes me login first', () => {
+        LoginPage.logout();
         HomePage.visit();
         LoginPage.shouldBeVisible();
       });

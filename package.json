@@ -1,7 +1,7 @@
 {
   "name": "lev-web",
   "description": "Life Event Verification Web Interface",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "main": "app.js",
   "scripts": {
     "start": "node .",
@@ -12,7 +12,7 @@
     "dev:frontend-quick": "npm-run-all -p create:trigger watch:sass watch:js",
     "dev:backend-quick": "npm-run-all -p watch:app start:mockapi",
     "dev:up": "npm-run-all -p dev:frontend dev:backend",
-    "dev:frontend": "npm-run-all -p create:trigger watch:sass watch:js watch:chimp",
+    "dev:frontend": "npm-run-all -p create:trigger watch:sass watch:js",
     "dev:backend": "npm-run-all -p watch:app start:mockapi watch:unit",
     "dev:local-api": "npm-run-all -s stop:all acceptance:pause dev:up-local-api",
     "dev:up-local-api": "npm-run-all -p dev:frontend-quick watch:app",
@@ -33,13 +33,8 @@
     "acceptance:play": "rm -f ./.acceptance.lock ; [ -e ./.acceptance.waiting ] && npm run create:trigger || true",
     "acceptance:wait": "touch ./.acceptance.waiting 2>/dev/null",
     "acceptance:done": "rm -f ./.acceptance.waiting",
-    "watch:chimp": "nodemon -d 1 -w test/acceptance -w views -w .acceptance.trgr -w app.js -w config.js -w routes -w middleware -w locales -w lib -w fields -w controllers -w api -e js,json,html,trgr -x 'npm-run-all -s acceptance:wait chimp:check'",
-    "acceptance": "npm-run-all chimp:acceptance cypress:acceptance",
-    "chimp:acceptance": "NODE_ENV=acceptance chimpy --mocha --browser=phantomjs --headless --path=./test/acceptance/spec/ --phantom_ignoreSSLErrors=true",
-    "chimp:check": "[ -e ./.acceptance.lock ] && printf '\n==> NOTE: Waiting for linting and unit tests to complete before running E2E tests\n\n' || npm-run-all -s -c chimp:acceptance acceptance:done",
-    "chimp:ff": "NODE_ENV=acceptance chimpy --mocha --browser=firefox --path=./test/acceptance/spec/ --watch",
-    "chimp:smoke": "chimpy --mocha --browser=phantomjs --headless --path=./test/smoke/ --phantom_ignoreSSLErrors=true",
-    "smoke": "npm-run-all chimp:smoke cypress:smoke",
+    "acceptance": "npm run cypress:acceptance",
+    "smoke": "npm run cypress:smoke",
     "test:browser": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo smoke || echo acceptance)",
     "create:trigger": "touch ./.acceptance.trgr 2>/dev/null",
     "lint": "eslint .",
@@ -86,11 +81,8 @@
     "winston": "^1.0.1"
   },
   "devDependencies": {
-    "broken-link-checker": "^0.7.8",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "chimpy": "^3.0.4",
-    "chromedriver": "^96.0.0",
     "cypress": "^6.5.0",
     "cypress-keycloak": "^1.8.0",
     "eslint": "^3.4.0",
@@ -98,7 +90,6 @@
     "eslint-plugin-filenames": "^1.0.0",
     "eslint-plugin-mocha": "^4.5.0",
     "eslint-plugin-one-variable-per-var": "0.0.3",
-    "fibers": "^5.0.0",
     "http-proxy": "^1.18.1",
     "istanbul": "^0.4.3",
     "jscs": "^3.0.2",
@@ -111,8 +102,7 @@
     "rewire": "^2.5.2",
     "sass-lint": "^1.10.2",
     "sinon": "^7.2.3",
-    "sinon-chai": "^2.8.0",
-    "webdriverio": "^5.0.0"
+    "sinon-chai": "^2.8.0"
   },
   "snyk": true
 }
