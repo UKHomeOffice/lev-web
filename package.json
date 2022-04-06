@@ -71,7 +71,7 @@
     "hogan-express-strict": "^0.5.4",
     "hogan.js": "^3.0.2",
     "lodash": "^4.17.20",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "moment-round": "^1.0.1",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
