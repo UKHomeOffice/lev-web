@@ -65,7 +65,6 @@ steps:
       - IMAGE="$${DOCKER_REPO}$${DOCKER_BASEDIR}$${DOCKER_IMAGE}"
       - docker login -u="$${DOCKER_USERNAME}" -p="$${DOCKER_QUAY_PASSWORD}" "$${DOCKER_REPO}"
       - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:$${TAG}"
-      - docker tag "$${DOCKER_IMAGE}" "$${IMAGE}:latest"
       - docker push "$${IMAGE}:$${TAG}"
       - docker push "$${IMAGE}:latest"
       - E2E_IMAGE="$${IMAGE}-e2e"
