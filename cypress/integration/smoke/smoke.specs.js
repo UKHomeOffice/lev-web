@@ -13,10 +13,6 @@ const SearchErrorPage = require('../../pages/SearchErrorPage');
 
 describe('Smoke Tests', () => {
   describe('Accessing the UI', () => {
-    before(() => {
-      LoginPage.logout();
-    });
-
     it('presents me with the login prompt', () => {
       BirthSearchPage.visit();
       LoginPage.shouldBeVisible();

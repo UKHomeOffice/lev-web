@@ -16,7 +16,6 @@ class LoginPage {
    */
   static login() {
     if (Cypress.env('e2e')) {
-      this.logout();
       cy.login(Cypress.env('keycloak'));
     }
   }

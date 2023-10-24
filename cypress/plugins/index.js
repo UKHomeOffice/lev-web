@@ -34,7 +34,9 @@ module.exports = (on, config) => {
     // eslint-disable-next-line camelcase
     client_id: 'lev-web',
     // eslint-disable-next-line camelcase
-    redirect_uri: process.env.TEST_URL
+    redirect_uri: process.env.TEST_URL,
+    // eslint-disable-next-line camelcase
+    path_prefix: ''
   };
 
   return config;
