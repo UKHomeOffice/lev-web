@@ -52,7 +52,6 @@
     "create:public": "mkdir -p ./public/css ./public/images ./public/js",
     "postinstall": "npm-run-all create:public sass copy:images uglify hooks",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect",
     "hooks": "mkdir -p .git/hooks ; cd .git/hooks/ ; ln -fs ../../hooks/* ./",
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome",
@@ -104,5 +103,5 @@
     "sinon": "^7.2.3",
     "sinon-chai": "^2.8.0"
   },
-  "snyk": true
+  "snyk": false
 }

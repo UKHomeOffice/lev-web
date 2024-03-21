@@ -1,18 +1,21 @@
 FROM cypress/browsers:node10.16.0-chrome77
 
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo 'deb http://archive.debian.org/debian-security stretch/updates main'  > /etc/apt/sources.list
+
 RUN addgroup --system app \
  && adduser --system --home /app/ --uid 31337 --ingroup app app \
  && chown -R app:app /app/ \
  && apt-get update --quiet -y \
  && apt-get upgrade --quiet -y \
- && apt-get install g++ build-essential -y \
+ && apt-get install g++ -y \
  && apt-get install ca-certificates -y
 
 USER app
 WORKDIR /app
 ENV NODE_ENV ci
 
-COPY *node_modules/ package.json package-lock.json .snyk /app/
+COPY *node_modules/ package.json package-lock.json /app/
 RUN npm ci > .npm-install.log 2>&1 \
  && rm .npm-install.log \
  || ( EC=$?; cat .npm-install.log; exit $EC )
